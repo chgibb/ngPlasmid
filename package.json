@@ -1,0 +1,17 @@
+{
+  "name": "ngplasmid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@chgibb/angularplasmid": "^1.0.5",
+    "@chgibb/ng-node-compile": "^1.0.6",
+    "@types/node": "^8.0.34",
+    "jquery": "^3.2.1"
+  }
+}
