@@ -65,10 +65,14 @@ export class PlasmidTrack extends Directive
     {
         return ``;
     }
-    public constructor()
+    public constructor(plasmid : Plasmid)
     {
         super();
         this.tagType = "plasmidtrack";
+        this.markers = new Array<TrackMarker>();
+        this.scales = new Array<TrackScale>();
+        this.labels = new Array<TrackLabel>();
+        this.plasmid = plasmid;
     }
 }
 
@@ -265,6 +269,14 @@ export class Plasmid extends Directive
         if(node.attribs.plasmidwidth)
         {
             this.plasmidwidth = parseInt(node.attribs.plasmidwidth);
+        }
+
+        for(let i = 0; i != node.children.length; ++i)
+        {
+            if(node.children[i].name == "plasmidtrack")
+            {
+                console.log(node.children[i]);
+            }
         }
     }
     public constructor()
