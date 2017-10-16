@@ -3,17 +3,15 @@ import * as fs from "fs";
 let args = process.argv.slice(2);
 
 import * as html from "./req/html";
-import * as tags from "./req/tags";
 import * as directives from "./req/directives";
 
 (async function(){
 
     let nodes = await html.load(args[0]);
 
-    let res = directives.plasmidStart(tags.toPlasmid(nodes[0]));
-    res += "\n";
-    res += directives.plasmidEnd();
+    let plasmid = new directives.Plasmid();
+    plasmid.fromNode(nodes[0]);
 
-    console.log(res);
+    console.log(plasmid.renderStart());
 
 })();

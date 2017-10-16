@@ -1,33 +1,276 @@
-import * as tags from "./tags";
-
-export function plasmidStart(tag : tags.Plasmid) : string
+import * as html from "./html"
+import * as services from "./services";
+export abstract class Directive
 {
-    let res = "";
-
-    res += `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" `;
-
-    if(tag.sequencelength)
-        res += `sequencelength="${tag.sequencelength}" `;
-
-    if(tag.plasmidheight)
-        res += `plasmidheight="${tag.plasmidheight}" `;
-    
-    if(tag.plasmidwidth)
-        res += `plasmidwidth="${tag.plasmidwidth}" `;
-    
-    res += `class="ng-scope ng-isolate-scope" `;
-
-    if(tag.plasmidheight)
-        res += `height="${tag.plasmidheight}"`;
-    
-    if(tag.plasmidwidth)
-        res += `width="${tag.plasmidwidth}"`;
-
-    res += ">";
-    return res;
+    tagType : "plasmid" |
+    "plasmidtrack" |
+    "tracklabel" |
+    "trackscale" |
+    "trackmarker" |
+    "markerlabel" | 
+    "svgelement";
+    public abstract renderStart() : string;
+    public abstract renderEnd() : string;
 }
 
-export function plasmidEnd() : string
+export class PlasmidTrack extends Directive
 {
-    return `</svg>`;
+    public trackStyle : string;
+    public width : number;
+    public radius : number;
+
+    public plasmid : Plasmid;
+    public markers : Array<TrackMarker>;
+    public scales : Array<TrackScale>;
+    public labels : Array<TrackLabel>;
+
+    public getCenter() : services.Point
+    {
+        return this.plasmid.getCenter();
+    }
+    public getPosition(
+        pos : number,
+        positionOption : 0 | 1 | 2,
+        radiusAdjust : number
+    ) : services.Point | undefined {
+        radiusAdjust = Number(radiusAdjust || 0);
+        pos = Number(pos);
+
+        var POSITION_OPTION_MID = 0, POSITION_OPTION_INNER = 1, POSITION_OPTION_OUTER = 2,
+            radius, angle, center = this.getCenter(),
+            seqLen = this.plasmid.sequencelength;
+
+        if (seqLen > 0) {
+            angle = (pos / seqLen) * 360;
+
+            switch (positionOption) {
+            case POSITION_OPTION_INNER:
+                radius = this.radius + radiusAdjust;
+                break;
+            case POSITION_OPTION_OUTER:
+                radius = this.radius + this.width + radiusAdjust;
+                break;
+            default:
+                radius = this.radius + (this.width / 2) + radiusAdjust;
+                break;
+            }
+            return services.polarToCartesian(center.x, center.y, radius, angle);
+        }
+    }
+    public renderStart() : string
+    {
+        return ``;
+    }
+    public renderEnd() : string
+    {
+        return ``;
+    }
+    public constructor()
+    {
+        super();
+        this.tagType = "plasmidtrack";
+    }
+}
+
+export class TrackLabel extends Directive
+{
+    public text : number;
+    public vadjust : number;
+    public hadjust : number;
+    public labelstyle : string;
+    public track : PlasmidTrack;
+
+    public renderStart() : string
+    {
+        return ``;
+    }
+    public renderEnd() : string
+    {
+        return ``;
+    }
+
+    public constructor()
+    {
+        super();
+        this.tagType = "tracklabel";
+    }
+}
+
+export class TrackMarker extends Directive
+{
+    public start : number;
+    public end : number;
+    public vadjust : number;
+    public wadjust : number;
+    public markergroup : string;
+    public arrowstartlength : services.Arrow;
+    public arrowstartwidth : services.Arrow;
+    public arrowstartangle : services.Arrow;
+    public arrowendlength : services.Arrow;
+    public arrowendwidth : services.Arrow;
+    public arrowendangle : services.Arrow;
+    public track : PlasmidTrack;
+    public labels : Array<TrackLabel>;
+
+    public renderStart() : string
+    {
+        return ``;
+    }
+    public renderEnd() : string
+    {
+        return ``;
+    }
+
+    public constructor()
+    {
+        super();
+        this.tagType = "trackmarker";
+    }
+}
+
+export class MarkerLabel extends Directive
+{
+    public text : string;
+    public vadjust : number;
+    public hadjust : number;
+    public valign : "middle" | "inner" | "outer";
+    public halign : "middle" | "inner" | "outer";
+    public type : "path";
+    public showline : 0 | 1;
+    public linestyle : string;
+    public lineclass : string;
+    public linevadjust : string;
+
+    public renderStart() : string
+    {
+        return ``;
+    }
+    public renderEnd() : string
+    {
+        return ``;
+    }
+
+    public constructor()
+    {
+        super();
+        this.tagType = "markerlabel";
+    }
+
+}
+
+export class TrackScale extends Directive
+{
+    public interval : number;
+    public style : string;
+    public direction : "in" | "out";
+    public vadjust : number;
+    public tickSize : number;
+    public showLabels : 0 | 1
+    public labelvadjust : number;
+    public labelstyle : string;
+    public labelclass : string;
+    public track : PlasmidTrack;
+
+    public renderStart() : string
+    {
+        return ``;
+    }
+    public renderEnd() : string
+    {
+        return ``;
+    }
+    
+    public constructor()
+    {
+        super();
+        this.tagType = "trackscale";
+    }
+}
+
+export class Plasmid extends Directive
+{
+    public sequencelength : number;
+    public plasmidheight : number;
+    public plasmidwidth : number;
+    public sequence : string;
+    public plasmidclass : string;
+    public plasmidstyle : string;
+
+    public tracks : Array<PlasmidTrack>;
+
+    public getDimensions() : services.Dimensions
+    {
+        return {
+            height : this.plasmidheight,
+            width : this.plasmidwidth
+        }
+    }
+
+    public getCenter() : services.Point
+    {
+        let d : services.Dimensions = this.getDimensions();
+        return {
+            x : d.width / 2,
+            y : d.height / 2
+        }
+    }
+
+    public renderStart() : string
+    {
+        let res = "";
+
+        res += `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" `;
+
+        if(this.sequencelength)
+            res += `sequencelength="${this.sequencelength}" `;
+
+        if(this.plasmidheight)
+            res += `plasmidheight="${this.plasmidheight}" `;
+    
+        if(this.plasmidwidth)
+            res += `plasmidwidth="${this.plasmidwidth}" `;
+    
+        res += `class="ng-scope ng-isolate-scope" `;
+
+        if(this.plasmidheight)
+            res += `height="${this.plasmidheight}"` ;
+    
+        if(this.plasmidwidth)
+            res += `width="${this.plasmidwidth}"`;
+
+        res += ">";
+        return res;
+    }
+
+    public renderEnd() : string
+    {
+        return `</svg>`;
+    }
+
+    public fromNode(node : html.Node) : void
+    {
+        if(node.type != "tag")
+            throw new Error("Node type is not tag");
+        if(node.name != "plasmid")
+            throw new Error("Node is not a plasmid");
+
+        if(node.attribs.sequencelength)
+        {
+            this.sequencelength = parseInt(node.attribs.sequencelength);
+        }
+        if(node.attribs.plasmidheight)
+        {
+            this.plasmidheight = parseInt(node.attribs.plasmidheight);
+        }
+        if(node.attribs.plasmidwidth)
+        {
+            this.plasmidwidth = parseInt(node.attribs.plasmidwidth);
+        }
+    }
+    public constructor()
+    {
+        super();
+        this.tagType = "plasmid";
+        this.tracks = new Array<PlasmidTrack>();
+    }
 }
