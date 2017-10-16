@@ -1,3 +1,5 @@
+import * as html from "./html"
+
 export class PlasmidTrack
 {
     trackStyle : string;
@@ -44,7 +46,36 @@ export class TrackScale
 
 export class Plasmid
 {
-    sequenceLength : number;
-    height : number;
-    width : number;
+    sequencelength : number;
+    plasmidheight : number;
+    plasmidwidth : number;
+    sequence : string;
+    plasmidclass : string;
+    plasmidstyle : string;
+}
+
+export function toPlasmid(node : html.Node) : Plasmid
+{
+
+    let res = new Plasmid();
+
+    if(node.type != "tag")
+        throw new Error("Node type is not tag");
+    if(node.name != "plasmid")
+        throw new Error("Node is not a plasmid");
+
+    if(node.attribs.sequencelength)
+    {
+        res.sequencelength = parseInt(node.attribs.sequencelength);
+    }
+    if(node.attribs.plasmidheight)
+    {
+        res.plasmidheight = parseInt(node.attribs.plasmidheight);
+    }
+    if(node.attribs.plasmidwidth)
+    {
+        res.plasmidwidth = parseInt(node.attribs.plasmidwidth);
+    }
+
+    return res;
 }
