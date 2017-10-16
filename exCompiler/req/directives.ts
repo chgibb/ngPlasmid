@@ -130,6 +130,10 @@ export class PlasmidTrack extends Directive
         {
             this.width = parseInt(node.attribs.width);
         }
+        else if (!node.attribs.width)
+        {
+            this.width = 25;
+        }
         for(let i = 0; i != node.children.length; ++i)
         {
             if(node.children[i].name == "tracklabel")
