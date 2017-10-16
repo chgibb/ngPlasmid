@@ -132,6 +132,7 @@ export class PlasmidTrack extends Directive
         }
         else if (!node.attribs.width)
         {
+            //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L259
             this.width = 25;
         }
         for(let i = 0; i != node.children.length; ++i)
