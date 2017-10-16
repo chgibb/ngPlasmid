@@ -226,3 +226,8 @@ export function elementScaleLabels(
     }
     return labelArr;
 }
+
+export function Numeric(numberVal : number,numberDefault : number) : number
+{
+    return isNaN(numberVal) ? numberDefault || 0 : Number(numberVal);
+}
