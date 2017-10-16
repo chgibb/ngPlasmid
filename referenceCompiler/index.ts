@@ -14,8 +14,7 @@ function compile() : void
     }
     let ngEnvironment = new ngcompile([{name : "app", path : "@chgibb/angularplasmid"}]);
     let input = fs.readFileSync(args[0]).toString();
-    fs.writeFileSync(
-        "result.svg",
+    console.log(
         ngEnvironment.$compile(input)()
     );
 }
