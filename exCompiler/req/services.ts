@@ -152,3 +152,35 @@ export function pathArc(
 
     return d;
 }
+
+export function pathScale(
+    x : number,
+    y : number,
+    radius : number,
+    interval : number,
+    total : number,
+    tickLength : number
+) : string {
+    x = Number(x || 0);
+    y = Number(y || 0);
+    radius = Number(radius || 0);
+    interval = Number(interval || 0);
+    total = Number(total || 0);
+    tickLength = Number(tickLength || 2);
+    
+    var alpha, sin, cos, i,
+    numTicks = Number(interval) > 0 ? Number(total) / Number(interval) : 0,
+    beta = 2 * Math.PI / numTicks,
+    precision = -1,
+    d = '';
+    
+    for (i = 0; i < numTicks; i += 1) {
+        alpha = beta * i - Math.PI / 2;
+        cos = Math.cos(alpha);
+        sin = Math.sin(alpha);
+        d += "M" + (<any>Math).round10((x + (radius * cos)), precision) + "," + (<any>Math).round10((y + (radius * sin)), precision) + 
+        " L" + (<any>Math).round10((x + ((radius + tickLength) * cos)), precision) + "," + (<any>Math).round10((y + ((radius + tickLength) * sin)), precision) + " ";
+    }
+    d = d || "M 0,0";
+    return d;    
+}
