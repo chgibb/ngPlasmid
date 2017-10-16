@@ -68,7 +68,7 @@ export class PlasmidTrack extends Directive
         if(this.radius)
             res += ` radius="${this.radius}" `;
         res += `>`;
-        res += `<path class="ng-scope ng-isolate-scope" fille-rule="evenodd" `;
+        res += `<path class="ng-scope ng-isolate-scope" fill-rule="evenodd" `;
 
         let d : string = services.pathDonut(
             this.getCenter().x,
