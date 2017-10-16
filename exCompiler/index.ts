@@ -2,9 +2,9 @@ import * as fs from "fs";
 
 let args = process.argv.slice(2);
 
-import * as html from "./html";
-import * as tags from "./tags";
-import * as directives from "./directives";
+import * as html from "./req/html";
+import * as tags from "./req/tags";
+import * as directives from "./req/directives";
 
 (async function(){
 
