@@ -83,16 +83,32 @@ export class PlasmidTrack extends Directive
             res += ` style="${this.trackstyle}">`
         res += `</path>`;
         
-        if(this.markers.length == 0 && this.scales.length == 0 && this.labels.length == 0)
+        if(this.children.length == 0)
             res += "</g>";
+
+        else
+        {
+            for(let i = 0; i != this.children.length; ++i)
+            {
+                res += this.children[i].renderStart();
+            }
+        }
 
         return res;
     }
     public renderEnd() : string
     {
-        if(this.markers.length != 0 || this.scales.length != 0 || this.labels.length != 0)
+        let res = "";
+        if(this.children.length != 0)
             return `</g>`;
-        return "";
+        else
+        {
+            for(let i = 0; i != this.children.length; ++i)
+            {
+                res += this.children[i].renderEnd();
+            }
+        }
+        return res;
     }
 
     public fromNode(node : html.Node) : void
@@ -114,6 +130,16 @@ export class PlasmidTrack extends Directive
         {
             this.width = parseInt(node.attribs.width);
         }
+        for(let i = 0; i != node.children.length; ++i)
+        {
+            if(node.children[i].name == "tracklabel")
+            {
+                let label = new TrackLabel(this);
+                label.fromNode(node.children[i]);
+                this.labels.push(label);
+                this.children.push(label);
+            }
+        }
     }
 
     public constructor(plasmid : Plasmid)
@@ -134,11 +160,35 @@ export class TrackLabel extends Directive
     public vadjust : number;
     public hadjust : number;
     public labelstyle : string;
+    public labelclass : string;
     public track : PlasmidTrack;
 
     public renderStart() : string
     {
-        return ``;
+        let res = "";
+
+        let center = this.track.getCenter();
+
+        res += `<text`;
+        if(this.text)
+        {
+            res += ` text="${this.text}" `;
+        }
+        if(this.labelstyle)
+        {
+            res += ` labelstyle="${this.labelstyle}" `;
+        }
+        res += ` class="ng-scope ng-isolate-scope ${this.labelclass ? this.labelclass : ""}" `;
+        res += ` text-anchor="middle" alignment-baseline="middle" `;
+        res += ` x="${center.x+services.Numeric(this.hadjust,0)}" y="${center.y+services.Numeric(this.vadjust,0)}" `;
+        
+        if(this.labelstyle)
+        {
+            res += ` style="${this.labelstyle}" `;
+        }
+        res += `>${this.text ? this.text : ""}</text>`;
+
+        return res;
     }
     public renderEnd() : string
     {
@@ -168,11 +218,16 @@ export class TrackLabel extends Directive
         {
             this.labelstyle = node.attribs.labelstyle;
         }
+        if(node.attribs.labelclass)
+        {
+            this.labelclass =node.attribs.labelclass;
+        }
     }
 
-    public constructor()
+    public constructor(track : PlasmidTrack)
     {
         super();
+        this.track = track;
         this.tagType = "tracklabel";
     }
 }
