@@ -11,5 +11,5 @@ import * as directives from "./req/directives";
 
     let plasmid = new directives.Plasmid();
     plasmid.fromNode(nodes[0]);
-
+    console.log(plasmid);
 })();

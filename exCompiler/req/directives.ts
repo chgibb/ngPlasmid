@@ -15,7 +15,7 @@ export abstract class Directive
 
 export class PlasmidTrack extends Directive
 {
-    public trackStyle : string;
+    public trackstyle : string;
     public width : number;
     public radius : number;
 
@@ -59,12 +59,61 @@ export class PlasmidTrack extends Directive
     }
     public renderStart() : string
     {
-        return ``;
+        let res = "";
+        res += `<g`;
+        if(this.trackstyle)
+            res += ` trackstyle="${this.trackstyle}" `;
+        if(this.width)
+            res += ` width="${this.width}" `;
+        if(this.radius)
+            res += ` radius="${this.radius}" `;
+        res += `>`;
+        res += `<path class="ng-scope ng-isolate-scope" fille-rule="evenodd" `;
+
+        let d : string = services.pathDonut(
+            this.getCenter().x,
+            this.getCenter().y,
+            this.radius,
+            this.width
+        );
+
+        res += ` d="${d}" `;
+        if(this.trackstyle)
+            res += ` style="${this.trackstyle}"></path>`;
+        
+        if(this.markers.length == 0 && this.scales.length == 0 && this.labels.length == 0)
+            res += "</g>";
+
+        return res;
     }
     public renderEnd() : string
     {
-        return ``;
+        if(this.markers.length != 0 || this.scales.length != 0 || this.labels.length != 0)
+            return `</g>`;
+        return "";
     }
+
+    public fromNode(node : html.Node) : void
+    {
+        if(node.type != "tag")
+            throw new Error("Node type is not tag");
+        if(node.name != "plasmidtrack")
+            throw new Error("Node is not a plasmidtrack");
+        
+        if(node.attribs.trackstyle)
+        {
+            this.trackstyle = node.attribs.trackstyle;
+        }
+        if(node.attribs.radius)
+        {
+            this.radius = parseInt(node.attribs.radius);
+        }
+        if(node.attribs.width)
+        {
+            this.width = parseInt(node.attribs.width);
+        }
+    }
+
     public constructor(plasmid : Plasmid)
     {
         super();
@@ -275,7 +324,9 @@ export class Plasmid extends Directive
         {
             if(node.children[i].name == "plasmidtrack")
             {
-                console.log(node.children[i]);
+                let track : PlasmidTrack = new PlasmidTrack(this);
+                track.fromNode(node.children[i]);
+                this.tracks.push(track);
             }
         }
     }
