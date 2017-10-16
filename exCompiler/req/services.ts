@@ -175,11 +175,14 @@ export function pathScale(
     total = Number(total || 0);
     tickLength = Number(tickLength || 2);
     
-    var alpha, sin, cos, i,
-    numTicks = Number(interval) > 0 ? Number(total) / Number(interval) : 0,
-    beta = 2 * Math.PI / numTicks,
-    precision = -1,
-    d = '';
+    let alpha : number;
+    let sin : number;
+    let cos : number;
+    let i : number;
+    let numTicks : number = Number(interval) > 0 ? Number(total) / Number(interval) : 0;
+    let beta : number = 2 * Math.PI / numTicks;
+    let precision : number = -1;
+    let d : string = '';
     
     for (i = 0; i < numTicks; i += 1) {
         alpha = beta * i - Math.PI / 2;
