@@ -10,6 +10,13 @@ export interface Ring
     end : Point;
 }
 
+export interface Arrow
+{
+    width : number;
+    length : number;
+    angle : number;
+}
+
 export function polarToCartesian(
     centerX : number,
     centerY : number,
@@ -55,4 +62,93 @@ export function pathDonut(
         "A", radius + width, radius + width, 0, 1, 0, outerRing.end.x, outerRing.end.y
     ].join(" ");
     return path;
+}
+
+export function pathArc(
+    x : number,
+    y : number,
+    radius : number,
+    startAngle : number,
+    endAngle : number,
+    width : number,
+    arrowStart : Arrow,
+    arrowEnd : Arrow
+) : string {
+    let d : string;
+    let start : Point; 
+    let start2 : Point
+    let end : Point;
+    let arcSweep : number | string;
+    let arrow_start_1 : Point;
+    let arrow_start_2 : Point;
+    let arrow_start_3 : Point;
+    let arrow_start_4 : Point;
+    let arrow_end_1 : Point;
+    let arrow_end_2 : Point;
+    let arrow_end_3 : Point;
+    let arrow_end_4 : Point;
+
+    x = Number(x);
+    y = Number(y);
+    radius = Number(radius);
+    startAngle = Number(startAngle);
+    endAngle = Number(endAngle);
+    width = Number(width);
+    arrowStart = arrowStart || {width : 0, length : 0, angle: 0};
+    arrowEnd = arrowEnd || {width : 0, length : 0, angle: 0};
+
+    if (startAngle === endAngle) {
+        // Draw a line
+        start = polarToCartesian(x, y, radius, startAngle);
+        end = polarToCartesian(x, y, radius + width, startAngle);
+        d = ["M", start.x, start.y, "L", end.x, end.y].join(" ");
+    } else {
+        //Draw a "simple" arc if the width is 1
+        if (width === 1) {
+            start = polarToCartesian(x, y, radius, startAngle);
+            end = polarToCartesian(x, y, radius, endAngle);
+            if (startAngle < endAngle) {
+                arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
+            } else {
+                arcSweep = endAngle - startAngle <= 180 ? "1" : "0";
+            }
+            d = [
+                "M", start.x, start.y,
+                "A", radius, radius, 0, arcSweep, 1, end.x, end.y
+            ].join(" ");
+        } else {
+
+            // Draw a "complex" arc (We start drawing in reverse, which is why start uses endAngle)
+            endAngle = endAngle - (arrowEnd.length < 0 ? 0 : arrowEnd.length);
+            startAngle = startAngle + (arrowStart.length < 0 ? 0 : arrowStart.length);
+            start = polarToCartesian(x, y, radius, endAngle);
+            end = polarToCartesian(x, y, radius, startAngle);
+            arrow_start_1 = polarToCartesian(x, y, radius - arrowStart.width, startAngle + arrowStart.angle);
+            arrow_start_2 = polarToCartesian(x, y, radius + (width / 2), startAngle - arrowStart.length);
+            arrow_start_3 = polarToCartesian(x, y, radius + width + arrowStart.width, startAngle + arrowStart.angle);
+            arrow_start_4 = polarToCartesian(x, y, radius + width, startAngle);
+            arrow_end_1 = polarToCartesian(x, y, radius + width + arrowEnd.width, endAngle - arrowEnd.angle);
+            arrow_end_2 = polarToCartesian(x, y, radius + (width / 2), endAngle + arrowEnd.length);
+            arrow_end_3 = polarToCartesian(x, y, radius - arrowEnd.width, endAngle - arrowEnd.angle);
+            arrow_end_4 = polarToCartesian(x, y, radius, endAngle);
+            start2 = polarToCartesian(x, y, radius + width, endAngle);
+            arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
+            d = [
+                "M", start.x, start.y, 
+                "A", radius, radius, 0, arcSweep, 0, end.x, end.y, 
+                "L", arrow_start_1.x, arrow_start_1.y,
+                "L", arrow_start_2.x, arrow_start_2.y,
+                "L", arrow_start_3.x, arrow_start_3.y, 
+                "L", arrow_start_4.x, arrow_start_4.y,
+                "A", radius + width, radius + width, 0, arcSweep, 1, start2.x, start2.y,
+                "L", arrow_end_1.x, arrow_end_1.y,
+                "L", arrow_end_2.x, arrow_end_2.y,
+                "L", arrow_end_3.x, arrow_end_3.y,
+                "L", arrow_end_4.x, arrow_end_4.y,
+                "z"
+            ].join(" ");
+        }
+    }
+
+    return d;
 }
