@@ -286,18 +286,28 @@ export class Plasmid extends Directive
         res += `class="ng-scope ng-isolate-scope" `;
 
         if(this.plasmidheight)
-            res += `height="${this.plasmidheight}"` ;
+            res += `height="${this.plasmidheight}" ` ;
     
         if(this.plasmidwidth)
             res += `width="${this.plasmidwidth}"`;
 
         res += ">";
+        for(let i = 0; i != this.tracks.length; ++i)
+        {
+            res += this.tracks[i].renderStart();
+        }
         return res;
     }
 
     public renderEnd() : string
     {
-        return `</svg>`;
+        let res = "";
+        for(let i = 0; i != this.tracks.length; ++i)
+        {
+            res += this.tracks[i].renderEnd();
+        }
+        res += `</svg>`;
+        return res;
     }
 
     public fromNode(node : html.Node) : void
