@@ -4,6 +4,12 @@ export interface Point
     y : number;
 }
 
+export interface Dimensions
+{
+    width : number;
+    height : number;
+}
+
 export interface Ring
 {
     start : Point;
