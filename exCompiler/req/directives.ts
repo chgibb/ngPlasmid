@@ -23,6 +23,7 @@ export class PlasmidTrack extends Directive
     public markers : Array<TrackMarker>;
     public scales : Array<TrackScale>;
     public labels : Array<TrackLabel>;
+    public children : Array<TrackLabel | TrackScale | TrackMarker>;
 
     public getCenter() : services.Point
     {
@@ -122,6 +123,7 @@ export class PlasmidTrack extends Directive
         this.markers = new Array<TrackMarker>();
         this.scales = new Array<TrackScale>();
         this.labels = new Array<TrackLabel>();
+        this.children = new Array<TrackLabel | TrackScale | TrackMarker>();
         this.plasmid = plasmid;
     }
 }
@@ -141,6 +143,31 @@ export class TrackLabel extends Directive
     public renderEnd() : string
     {
         return ``;
+    }
+
+    public fromNode(node : html.Node) : void
+    {
+        if(node.type != "tag")
+            throw new Error("Node type is not tag");
+        if(node.name != "tracklabel")
+            throw new Error("Node is not a tracklabel");
+        
+        if(node.attribs.text)
+        {
+            this.text = node.attribs.text;
+        }
+        if(node.attribs.vadjust)
+        {
+            this.vadjust = parseInt(node.attribs.vadjust);
+        }
+        if(node.attribs.hadjust)
+        {
+            this.hadjust = parseInt(node.attribs.hadjust);
+        }
+        if(node.attribs.labelstyle)
+        {
+            this.labelstyle = node.attribs.labelstyle;
+        }
     }
 
     public constructor()
