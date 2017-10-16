@@ -79,7 +79,8 @@ export class PlasmidTrack extends Directive
 
         res += ` d="${d}" `;
         if(this.trackstyle)
-            res += ` style="${this.trackstyle}"></path>`;
+            res += ` style="${this.trackstyle}">`
+        res += `</path>`;
         
         if(this.markers.length == 0 && this.scales.length == 0 && this.labels.length == 0)
             res += "</g>";
