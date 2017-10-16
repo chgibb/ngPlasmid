@@ -22,6 +22,39 @@ export class PlasmidTrack extends Tag
     public scales : Array<TrackScale>;
     public labels : Array<TrackLabel>;
 
+    public getCenter() : services.Point
+    {
+        return this.plasmid.getCenter();
+    }
+    public getPosition(
+        pos : number,
+        positionOption : 0 | 1 | 2,
+        radiusAdjust : number
+    ) : services.Point | undefined {
+        radiusAdjust = Number(radiusAdjust || 0);
+        pos = Number(pos);
+
+        var POSITION_OPTION_MID = 0, POSITION_OPTION_INNER = 1, POSITION_OPTION_OUTER = 2,
+            radius, angle, center = this.getCenter(),
+            seqLen = this.plasmid.sequencelength;
+
+        if (seqLen > 0) {
+            angle = (pos / seqLen) * 360;
+
+            switch (positionOption) {
+            case POSITION_OPTION_INNER:
+                radius = this.radius + radiusAdjust;
+                break;
+            case POSITION_OPTION_OUTER:
+                radius = this.radius + this.width + radiusAdjust;
+                break;
+            default:
+                radius = this.radius + (this.width / 2) + radiusAdjust;
+                break;
+            }
+            return services.polarToCartesian(center.x, center.y, radius, angle);
+        }
+    }
     public constructor()
     {
         super();
@@ -119,6 +152,22 @@ export class Plasmid extends Tag
 
     public tracks : Array<PlasmidTrack>;
 
+    public getDimensions() : services.Dimensions
+    {
+        return {
+            height : this.plasmidheight,
+            width : this.plasmidwidth
+        }
+    }
+
+    public getCenter() : services.Point
+    {
+        let d : services.Dimensions = this.getDimensions();
+        return {
+            x : d.width / 2,
+            y : d.height / 2
+        }
+    }
     public constructor()
     {
         super();
