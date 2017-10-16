@@ -6,7 +6,7 @@ export interface Node
 {
     type : string;
     name : string;
-    attribs : Array<any>;
+    attribs : any;
     children : Array<Node>;
     next : Node;
     prev : Node;
