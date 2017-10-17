@@ -659,10 +659,16 @@ export class Plasmid extends Directive
             width : this.plasmidwidth
         }
     }
+    private _sequencelength : number;
     public get sequencelength() : number
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L93
-        return this.sequence ? this.sequence.length : 0;
+        return this.sequence ? this.sequence.length : this._sequencelength;
+    }
+    public set sequencelength(sequencelength : number)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L93
+        this._sequencelength = sequencelength;
     }
     public renderStart() : string
     {
