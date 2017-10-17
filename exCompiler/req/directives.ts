@@ -220,6 +220,7 @@ export class TrackLabel extends Directive
 
     public renderStart() : string
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L524
         let res = "";
 
         let center = this.track.center;
@@ -247,6 +248,7 @@ export class TrackLabel extends Directive
     }
     public renderEnd() : string
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L524
         return ``;
     }
 
