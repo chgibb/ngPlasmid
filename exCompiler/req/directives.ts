@@ -54,6 +54,7 @@ export class PlasmidTrack extends Directive
     }
     public set radius(radius : number)
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L253
         this._radius = radius;
     }
     private _width : number;
@@ -64,10 +65,12 @@ export class PlasmidTrack extends Directive
     }
     public set width(width)
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L259
         this._width = width;
     }
     public get center() : services.Point
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L248
         return this.plasmid.center;
     }
     public getPosition(
@@ -75,6 +78,7 @@ export class PlasmidTrack extends Directive
         positionOption : 0 | 1 | 2,
         radiusAdjust : number
     ) : services.Point | undefined {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L222
         radiusAdjust = Number(radiusAdjust || 0);
         pos = Number(pos);
 
@@ -101,6 +105,7 @@ export class PlasmidTrack extends Directive
     }
     public renderStart() : string
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L179
         let res = "";
         res += `<g`;
         if(this.trackstyle)
@@ -139,6 +144,7 @@ export class PlasmidTrack extends Directive
     }
     public renderEnd() : string
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L179
         let res = "";
         if(this.children.length != 0)
             return `</g>`;
@@ -636,9 +642,6 @@ export class Plasmid extends Directive
 {
     public plasmidheight : number;
     public plasmidwidth : number;
-    public sequence : string;
-    public plasmidclass : string;
-    public plasmidstyle : string;
     public $scope : any;
 
     public tracks : Array<PlasmidTrack>;
@@ -669,6 +672,39 @@ export class Plasmid extends Directive
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L93
         this._sequencelength = sequencelength;
+    }
+    private _sequence : string;
+    public get sequence() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L99
+        return this._sequence;
+    }
+    public set sequence(sequence : string)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L99
+        this._sequence = sequence;
+    }
+    private _plasmidclass : string;
+    public get plasmidclass() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L104
+        return this._plasmidclass;
+    }
+    public set plasmidclass(plasmidclass : string)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L104
+        this._plasmidclass = plasmidclass;
+    }
+    private _plasmidtstyle : string;
+    public get plasmidstyle() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L109
+        return this._plasmidtstyle;
+    }
+    public set plasmidstyle(plasmidstyle : string)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L109
+        this._plasmidtstyle = plasmidstyle;
     }
     public renderStart() : string
     {
