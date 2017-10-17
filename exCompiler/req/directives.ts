@@ -43,14 +43,13 @@ export class PlasmidTrack extends Directive
     public trackstyle : string;
     public width : number;
     public radius : number;
-
     public plasmid : Plasmid;
     public markers : Array<TrackMarker>;
     public scales : Array<TrackScale>;
     public labels : Array<TrackLabel>;
     public children : Array<TrackLabel | TrackScale | TrackMarker>;
 
-    public getCenter() : services.Point
+    public get center() : services.Point
     {
         return this.plasmid.center;
     }
@@ -63,7 +62,7 @@ export class PlasmidTrack extends Directive
         pos = Number(pos);
 
         var POSITION_OPTION_MID = 0, POSITION_OPTION_INNER = 1, POSITION_OPTION_OUTER = 2,
-            radius, angle, center = this.getCenter(),
+            radius, angle, center = this.center,
             seqLen = this.plasmid.sequencelength;
 
         if (seqLen > 0) {
@@ -97,8 +96,8 @@ export class PlasmidTrack extends Directive
         res += `<path class="ng-scope ng-isolate-scope" fill-rule="evenodd" `;
 
         let d : string = services.pathDonut(
-            this.getCenter().x,
-            this.getCenter().y,
+            this.center.x,
+            this.center.y,
             this.radius,
             this.width
         );
@@ -197,7 +196,7 @@ export class TrackLabel extends Directive
     {
         let res = "";
 
-        let center = this.track.getCenter();
+        let center = this.track.center;
 
         res += `<text`;
         if(this.text)
