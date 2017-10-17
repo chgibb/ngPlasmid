@@ -50,6 +50,7 @@ export class PlasmidTrack extends Directive
     private _radius : number
     public get radius() : number
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L254
         return this._radius ? this._radius : 100;
     }
     public set radius(radius : number)
