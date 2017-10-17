@@ -1,3 +1,28 @@
+/**
+    Refer to http://angularplasmid.vixis.com/api.php for full explanations of directives and props/methods
+
+    The nesting rules are extremely simple and are as follows:
+    <plasmid>
+        <plasmidtrack>
+            <tracklabel></tracklabel>
+            <trackscale></trackscale>
+            <trackmarker>
+                <markerlabel></markerlabel>
+            </trackmarker>
+        </plasmidtrack>
+        <svgelement></svgelement>  (Can be used anywhere as long as its within the plasmid element)
+    </plasmid>
+    <plasmidapi></plasmidapi>
+    We ignore anything that is not one of the above tags/does not satisfy the nesting rules, as long as the input node is <plasmid>
+
+    i.e. given:
+    <plasmid>
+        <tracklabel></tracklabel>
+    </plasmid>
+    The <plasmid> will be rendered, but the <tracklabel> will be ignored because it does not fit into the above nesting rules
+
+ */
+
 import * as html from "./html"
 import * as services from "./services";
 export abstract class Directive
