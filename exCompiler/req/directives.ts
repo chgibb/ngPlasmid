@@ -41,7 +41,6 @@ export abstract class Directive
 export class PlasmidTrack extends Directive
 {
     public trackstyle : string;
-    public width : number;
     public plasmid : Plasmid;
     public markers : Array<TrackMarker>;
     public scales : Array<TrackScale>;
@@ -56,6 +55,16 @@ export class PlasmidTrack extends Directive
     public set radius(radius : number)
     {
         this._radius = radius;
+    }
+    private _width : number;
+    public get width() : number
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L259
+        return this._width ? this._width : 25;
+    }
+    public set width(width)
+    {
+        this._width = width;
     }
     public get center() : services.Point
     {
@@ -162,11 +171,7 @@ export class PlasmidTrack extends Directive
         {
             this.width = parseInt(node.attribs.width);
         }
-        else if (!node.attribs.width)
-        {
-            //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L259
-            this.width = 25;
-        }
+
         for(let i = 0; i != node.children.length; ++i)
         {
             if(node.children[i].name == "tracklabel")
