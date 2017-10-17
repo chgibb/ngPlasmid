@@ -42,13 +42,20 @@ export class PlasmidTrack extends Directive
 {
     public trackstyle : string;
     public width : number;
-    public radius : number;
     public plasmid : Plasmid;
     public markers : Array<TrackMarker>;
     public scales : Array<TrackScale>;
     public labels : Array<TrackLabel>;
     public children : Array<TrackLabel | TrackScale | TrackMarker>;
-
+    private _radius : number
+    public get radius() : number
+    {
+        return this._radius ? this._radius : 100;
+    }
+    public set radius(radius : number)
+    {
+        this._radius = radius;
+    }
     public get center() : services.Point
     {
         return this.plasmid.center;
