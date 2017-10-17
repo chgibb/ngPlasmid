@@ -23,6 +23,20 @@ export interface Arrow
     angle : number;
 }
 
+export interface Angle
+{
+    start : number;
+    middle : number;
+    end : number;
+}
+
+export interface Radius
+{
+    inner : number;
+    outer : number;
+    middle : number;
+}
+
 export interface Label
 {
     x : number;
