@@ -211,12 +211,68 @@ export class PlasmidTrack extends Directive
 
 export class TrackLabel extends Directive
 {
-    public text : number;
-    public vadjust : number;
-    public hadjust : number;
-    public labelstyle : string;
-    public labelclass : string;
     public track : PlasmidTrack;
+    
+    public get center() : services.Point
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L536
+        return this.track.center;
+    }
+    private _text : string;
+    public get text() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L542
+        return this._text;
+    }
+    public set text(text : string)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L542
+        this._text = text;
+    }
+    private _labelclass : string;
+    public get labelclass() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L547
+        return this._labelclass;
+    }
+    public set labelclass(labelclass : string)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L547
+        this._labelclass = labelclass;
+    }
+    private _labelstyle : string;
+    public get labelstyle() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L552
+        return this._labelstyle;
+    }
+    public set labelstyle(labelstyle : string)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L552
+        this._labelstyle = labelstyle;
+    }
+    private _hadjust : number;
+    public get hadjust() : number
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L557
+        return this.hadjust ? this.hadjust : 0;
+    }
+    public set hadjust(hadjust : number)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L557
+        this._hadjust = hadjust;
+    }
+    private _vadjust : number;
+    public get vadjust() : number
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L562
+        return this._vadjust ? this._vadjust : 0;
+    }
+    public set vadjust(vadjust : number)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L562
+        this._vadjust = vadjust;
+    }
 
     public renderStart() : string
     {
