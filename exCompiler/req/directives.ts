@@ -52,7 +52,7 @@ export class PlasmidTrack extends Directive
 
     public getCenter() : services.Point
     {
-        return this.plasmid.getCenter();
+        return this.plasmid.center;
     }
     public getPosition(
         pos : number,
@@ -309,7 +309,7 @@ export class TrackMarker extends Directive
         if(node.attribs.arrowstartlength)
         {
             this.arrowstartlength = <services.Arrow>{
-                length : parseInt(node.attribs.arrowstartlength);
+                length : parseInt(node.attribs.arrowstartlength)
             }
         }
     }
@@ -392,7 +392,7 @@ export class Plasmid extends Directive
 
     public tracks : Array<PlasmidTrack>;
 
-    public getDimensions() : services.Dimensions
+    public get dimensions() : services.Dimensions
     {
         return {
             height : this.plasmidheight,
@@ -400,9 +400,9 @@ export class Plasmid extends Directive
         }
     }
 
-    public getCenter() : services.Point
+    public get center() : services.Point
     {
-        let d : services.Dimensions = this.getDimensions();
+        let d : services.Dimensions = this.dimensions;
         return {
             x : d.width / 2,
             y : d.height / 2
