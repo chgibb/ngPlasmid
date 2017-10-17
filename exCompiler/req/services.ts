@@ -44,6 +44,20 @@ export interface Label
     text : string;
 }
 
+export interface PositionComponent<T>
+{
+    begin : T;
+    middle : T;
+    end : T;
+}
+
+export interface Position<T>
+{
+    outer : T;
+    middle : T;
+    inner : T;
+}
+
 export function polarToCartesian(
     centerX : number,
     centerY : number,

@@ -291,6 +291,92 @@ export class TrackMarker extends Directive
     public arrowendangle : services.Arrow;
     public track : PlasmidTrack;
     public labels : Array<TrackLabel>;
+    public getPosition(
+        hAdjust : number,
+        vAdjust : number,
+        hAlign : string,
+        vAlign : string
+    ) : services.Position<services.PositionComponent<services.Point>> | services.Point {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L666
+        let HALIGN_MIDDLE = "middle";
+        let HALIGN_START = "start";
+        let HALIGN_END = "end";
+        let VALIGN_MIDDLE = "middle";
+        let VALIGN_INNER = "inner";
+        let VALIGN_OUTER = "outer";
+        let center : services.Point;
+        let radius : services.Radius | number;
+        let angle : services.PositionComponent<number> | number;
+        let markerRadius : services.Radius;
+        let markerAngle : services.Angle;
+
+        center = this.track.center;
+        markerRadius = this.radius;
+        markerAngle = this.angle;
+        hAdjust = (hAdjust ? hAdjust : 0);
+        vAdjust = (vAdjust ? vAdjust : 0);
+
+        if (vAlign !== undefined && hAlign !== undefined) {
+            switch (vAlign) {
+                case VALIGN_INNER:
+                    radius =  markerRadius.inner + vAdjust;
+                break;
+                case VALIGN_OUTER:
+                    radius =  markerRadius.outer + vAdjust;
+                break;
+                default:
+                    radius =  markerRadius.middle + vAdjust;
+                break;
+            }
+
+            switch (hAlign) {
+                case HALIGN_START:
+                    angle = markerAngle.start + hAdjust;
+                break;
+                case HALIGN_END:
+                    angle = markerAngle.end + hAdjust;
+                break;
+                default:
+                    angle = markerAngle.middle + hAdjust;
+                break;
+            }
+
+            return services.polarToCartesian(center.x, center.y, radius, angle);
+        }
+        else 
+        {
+            radius = {
+                outer : markerRadius.outer + vAdjust,
+                inner : markerRadius.inner + vAdjust,
+                middle : markerRadius.middle + vAdjust
+            };
+
+            angle = {
+                begin : markerAngle.start + hAdjust,
+                end : markerAngle.end + hAdjust,
+                middle : markerAngle.middle + hAdjust
+            };
+
+
+            return {
+                outer : {
+                    begin: services.polarToCartesian(center.x, center.y, radius.outer, angle.begin),
+                    middle: services.polarToCartesian(center.x, center.y, radius.outer, angle.middle),
+                    end: services.polarToCartesian(center.x, center.y, radius.outer, angle.end)
+                },
+                middle : {
+                    begin: services.polarToCartesian(center.x, center.y, radius.middle, angle.begin),
+                    middle: services.polarToCartesian(center.x, center.y, radius.middle, angle.middle),
+                    end: services.polarToCartesian(center.x, center.y, radius.middle, angle.end)
+                },
+                inner : {
+                    begin: services.polarToCartesian(center.x, center.y, radius.inner, angle.begin),
+                    middle: services.polarToCartesian(center.x, center.y, radius.inner, angle.middle),
+                    end: services.polarToCartesian(center.x, center.y, radius.inner, angle.end)
+                }
+            };
+        }
+    }
     public get center() : services.Point
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L745
