@@ -291,6 +291,14 @@ export class TrackMarker extends Directive
     public arrowendangle : services.Arrow;
     public track : PlasmidTrack;
     public labels : Array<TrackLabel>;
+    public getPath() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L661
+        let center = this.track.center;
+        let angle = this.angle;
+        let radius = this.radius;
+        return services.pathArc(center.x, center.y, radius.inner, angle.start, angle.end, this.width, this.arrowstart, this.arrowend);
+    }
     public getPosition(
         hAdjust : number,
         vAdjust : number,
