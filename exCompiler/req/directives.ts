@@ -181,6 +181,13 @@ export class PlasmidTrack extends Directive
                 this.labels.push(label);
                 this.children.push(label);
             }
+            else if(node.children[i].name == "trackmarker")
+            {
+                let marker = new TrackMarker(this);
+                marker.fromNode(node.children[i]);
+                this.markers.push(marker);
+                this.children.push(marker);
+            }
         }
     }
 
@@ -276,10 +283,10 @@ export class TrackLabel extends Directive
 
 export class TrackMarker extends Directive
 {
-    public arrowstartlength : services.Arrow;
+    public arrowstartlength : number;
     public arrowstartwidth : services.Arrow;
     public arrowstartangle : services.Arrow;
-    public arrowendlength : services.Arrow;
+    public arrowendlength : number;
     public arrowendwidth : services.Arrow;
     public arrowendangle : services.Arrow;
     public track : PlasmidTrack;
@@ -453,9 +460,11 @@ export class TrackMarker extends Directive
         }
         if(node.attribs.arrowstartlength)
         {
-            this.arrowstartlength = <services.Arrow>{
-                length : parseInt(node.attribs.arrowstartlength)
-            }
+            this.arrowstartlength = parseInt(node.attribs.arrowstartlength)
+        }
+        if(node.attribs.arrowendlength)
+        {
+            this.arrowendlength = parseInt(node.attribs.arrowendlength);
         }
     }
 
