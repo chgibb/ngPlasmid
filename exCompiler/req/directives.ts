@@ -164,7 +164,7 @@ export class PlasmidTrack extends Directive
             throw new Error("Node type is not tag");
         if(node.name != "plasmidtrack")
             throw new Error("Node is not a plasmidtrack");
-        
+
         if(node.attribs.trackstyle)
         {
             this.trackstyle = node.attribs.trackstyle;
@@ -255,7 +255,7 @@ export class TrackLabel extends Directive
     public get hadjust() : number
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L557
-        return this.hadjust ? this.hadjust : 0;
+        return this._hadjust ? this._hadjust : 0;
     }
     public set hadjust(hadjust : number)
     {
@@ -292,14 +292,13 @@ export class TrackLabel extends Directive
         }
         res += ` class="ng-scope ng-isolate-scope ${this.labelclass ? this.labelclass : ""}" `;
         res += ` text-anchor="middle" alignment-baseline="middle" `;
-        res += ` x="${center.x+services.Numeric(this.hadjust,0)}" y="${center.y+services.Numeric(this.vadjust,0)}" `;
+        res += ` x="${center.x+this.hadjust}" y="${center.y+this.vadjust}" `;
         
         if(this.labelstyle)
         {
             res += ` style="${this.labelstyle}" `;
         }
         res += `>${this.text ? this.text : ""}</text>`;
-
         return res;
     }
     public renderEnd() : string
@@ -314,7 +313,7 @@ export class TrackLabel extends Directive
             throw new Error("Node type is not tag");
         if(node.name != "tracklabel")
             throw new Error("Node is not a tracklabel");
-        
+
         if(node.attribs.text)
         {
             this.text = node.attribs.text;
@@ -592,13 +591,30 @@ export class TrackMarker extends Directive
     public renderStart() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L645
-
-        return ``;
+        let res = "";
+        res += `<g`;
+        if(this.start)
+            res += ` start="${this.start}" `;
+        if(this.end)
+            res += ` end="${this.end}" `;
+        if(this.markerstyle)
+            res += ` markerstyle="${this.markerstyle}" `;
+        if(this.arrowendlength)
+            res += ` arrowendlength="${this.arrowendlength}" `;
+        if(this.arrowstartlength)
+            res += ` arrowstartlength="${this.arrowstartlength}" `;
+        
+        res += `>`;
+        res += `<path class="ng-scope ng-isolate-scope" d="${this.getPath()}" `;
+        if(this.markerstyle)
+            res += ` style="${this.markerstyle}"`;
+        res += `></path>`;
+        return res;
     }
     public renderEnd() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L645
-        return ``;
+        return `</g>`;
     }
 
     public fromNode(node : html.Node) : void
