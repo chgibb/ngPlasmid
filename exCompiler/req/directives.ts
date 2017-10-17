@@ -276,12 +276,6 @@ export class TrackLabel extends Directive
 
 export class TrackMarker extends Directive
 {
-    public start : number;
-    public end : number;
-    public vadjust : number;
-    public wadjust : number;
-    public markergroup : string;
-    public markerstyle : string;
     public arrowstartlength : services.Arrow;
     public arrowstartwidth : services.Arrow;
     public arrowstartangle : services.Arrow;
@@ -290,6 +284,145 @@ export class TrackMarker extends Directive
     public arrowendangle : services.Arrow;
     public track : PlasmidTrack;
     public labels : Array<TrackLabel>;
+    public get center() : services.Point
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L745
+        return this.track.center;
+    }
+    public get radius() : services.Radius
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L750
+        return <services.Radius>{
+            inner : this.track.radius + this.vadjust,
+            outer : this.track.radius + this.vadjust + this.width,
+            middle : this.track.radius + this.vadjust + this.width / 2
+        };
+    }
+    public get angle() : services.Angle
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L759
+        let startAngle : number;
+        let endAngle : number;
+        let midAngle : number;
+        let end : number;
+        startAngle = (this.start / this.track.plasmid.sequencelength) * 360;
+
+        end = this.track.plasmid.$scope.end || this.track.plasmid.$scope.start;
+        endAngle = (end ? end : 0 / this.track.plasmid.sequencelength) * 360;
+        endAngle += (endAngle < startAngle) ? 360 : 0;
+
+        midAngle = startAngle + ((endAngle - startAngle) / 2);
+
+        return <services.Angle>{
+            start : startAngle,
+            middle : midAngle,
+            end : endAngle
+        };
+    }
+    private _vadjust : number;
+    public get vadjust() : number
+    {
+        return this._vadjust ? this._vadjust : 0;
+    }
+    public set vadjust(vadjust : number)
+    {
+        this._vadjust = vadjust;
+    }
+    private _wadjust : number;
+    public get wadjust() : number
+    {
+        return this._wadjust ? this._wadjust : 0;
+    }
+    public set wadjust(wadjust : number)
+    {
+        this._wadjust = wadjust;
+    }
+    public get width() : number
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L788
+        return this.track.width + this.wadjust;
+    }
+    private _start : number;
+    public get start() : number
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L793
+        return this._start ? this._start : 0;
+    }
+    public set start(start : number)
+    {
+        this._start = start;
+    }
+    private _end : number;
+    public get end() : number
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L798
+        return this._end ? this._end : 0;
+    }
+    public set end(end : number)
+    {
+        this._end = end;
+    }
+    public get arrowstart() : services.Arrow
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L803
+        return <services.Arrow>{
+            width : this.arrowstartwidth ? this.arrowstartwidth : 0,
+            length : this.arrowstartlength ? this.arrowstartlength : 0,
+            angle : this.arrowstartangle ? this.arrowstartangle : 0
+        };
+    }
+    public get arrowend() : services.Arrow
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L812
+        return <services.Arrow>{
+            width : this.arrowendwidth ? this.arrowendwidth : 0,
+            length : this.arrowendlength ? this.arrowendlength : 0,
+            angle : this.arrowendangle ? this.arrowendangle : 0
+        }
+    }
+    private _markergroup : string;
+    public get markergroup() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L821
+        return this._markergroup;
+    }
+    public set markergroup(markergroup : string)
+    {
+        this._markergroup = markergroup;
+    }
+    private _markerclass : string;
+    public get markerclass() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L826
+        return this._markerclass;
+    }
+    public set markerclass(markerclass : string)
+    {
+        this._markerclass = markerclass;
+    }
+    private _markerstyle : string;
+    public get markerstyle() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L831
+        return this._markerstyle;
+    }
+    public set markerstyle(markerstyle : string)
+    {
+        this._markerstyle = markerstyle;
+    }
+    public get sequence() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L836
+        let plasmidSeq = this.track.plasmid.sequence;
+        let markerSeq = '';
+    
+        if (this.start > this.end) {
+            return plasmidSeq.substring(this.start - 1, plasmidSeq.length - 1) + plasmidSeq.substring(0, this.end - 1);
+        } 
+        else {
+            return plasmidSeq.substring(this.start - 1, this.end - 1);
+        }
+    }
 
     public renderStart() : string
     {
@@ -401,6 +534,7 @@ export class Plasmid extends Directive
     public sequence : string;
     public plasmidclass : string;
     public plasmidstyle : string;
+    public $scope : any;
 
     public tracks : Array<PlasmidTrack>;
 
