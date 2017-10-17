@@ -527,10 +527,13 @@ export class TrackMarker extends Directive
 
     public renderStart() : string
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L645
+
         return ``;
     }
     public renderEnd() : string
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L645
         return ``;
     }
 
@@ -631,7 +634,6 @@ export class TrackScale extends Directive
 
 export class Plasmid extends Directive
 {
-    public sequencelength : number;
     public plasmidheight : number;
     public plasmidwidth : number;
     public sequence : string;
@@ -640,26 +642,31 @@ export class Plasmid extends Directive
     public $scope : any;
 
     public tracks : Array<PlasmidTrack>;
-
-    public get dimensions() : services.Dimensions
-    {
-        return {
-            height : this.plasmidheight,
-            width : this.plasmidwidth
-        }
-    }
-
     public get center() : services.Point
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L76
         let d : services.Dimensions = this.dimensions;
         return {
             x : d.width / 2,
             y : d.height / 2
         }
     }
-
+    public get dimensions() : services.Dimensions
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L86
+        return {
+            height : this.plasmidheight,
+            width : this.plasmidwidth
+        }
+    }
+    public get sequencelength() : number
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L93
+        return this.sequence ? this.sequence.length : 0;
+    }
     public renderStart() : string
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L60
         let res = "";
 
         res += `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" `;
@@ -691,6 +698,7 @@ export class Plasmid extends Directive
 
     public renderEnd() : string
     {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L60
         let res = "";
         for(let i = 0; i != this.tracks.length; ++i)
         {
