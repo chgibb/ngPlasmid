@@ -269,6 +269,7 @@ export class TrackMarker extends Directive
     public vadjust : number;
     public wadjust : number;
     public markergroup : string;
+    public markerstyle : string;
     public arrowstartlength : services.Arrow;
     public arrowstartwidth : services.Arrow;
     public arrowstartangle : services.Arrow;
@@ -287,10 +288,37 @@ export class TrackMarker extends Directive
         return ``;
     }
 
-    public constructor()
+    public fromNode(node : html.Node) : void
+    {
+        if(node.type != "tag")
+            throw new Error("Node type is not tag");
+        if(node.name != "trackmarker")
+            throw new Error("Node is not a trackmarker");
+        if(node.attribs.start)
+        {
+            this.start = parseInt(node.attribs.start);
+        }
+        if(node.attribs.end)
+        {
+            this.end = parseInt(node.attribs.end);
+        }
+        if(node.attribs.markerstyle)
+        {
+            this.markerstyle = node.attribs.markerstyle;
+        }
+        if(node.attribs.arrowstartlength)
+        {
+            this.arrowstartlength = <services.Arrow>{
+                length : parseInt(node.attribs.arrowstartlength);
+            }
+        }
+    }
+
+    public constructor(track : PlasmidTrack)
     {
         super();
         this.tagType = "trackmarker";
+        this.track = track;
     }
 }
 
