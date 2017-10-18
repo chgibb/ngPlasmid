@@ -30,3 +30,4 @@ if [ $? != 0 ]; then
 fi
 
 testFile "2Labels.html"
+testFile "2TrackMarkers.html"
