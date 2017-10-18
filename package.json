@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./scripts/test.bash"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "domhandler2": "^3.0.0",
     "htmlparser2": "^3.9.2",
     "jquery": "^3.2.1",
-    "svgo": "^0.7.2"
+    "svgo": "^0.7.2",
+    "typescript": "^2.5.3"
   }
 }
