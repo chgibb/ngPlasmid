@@ -651,6 +651,14 @@ export class TrackMarker extends Directive
         {
             this.arrowendlength = parseInt(node.attribs.arrowendlength);
         }
+        if(node.attribs.wadjust)
+        {
+            this.wadjust = parseInt(node.attribs.wadjust);
+        }
+        if(node.attribs.vadjust)
+        {
+            this.vadjust = parseInt(node.attribs.vadjust);
+        }
     }
 
     public constructor(track : PlasmidTrack)
