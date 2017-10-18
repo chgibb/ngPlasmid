@@ -353,7 +353,7 @@ export class TrackMarker extends Directive
     public arrowendwidth : services.Arrow;
     public arrowendangle : services.Arrow;
     public track : PlasmidTrack;
-    public labels : Array<TrackLabel>;
+    public labels : Array<MarkerLabel>;
     public getPath() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L661
@@ -471,7 +471,7 @@ export class TrackMarker extends Directive
         let end : number;
         startAngle = (this.start / this.track.plasmid.sequencelength) * 360;
 
-        end = this.track.plasmid.$scope.end || this.track.plasmid.$scope.start;
+        end = this.end || this.start;
         endAngle = (end ? end : 0 / this.track.plasmid.sequencelength) * 360;
         endAngle += (endAngle < startAngle) ? 360 : 0;
 
@@ -609,12 +609,17 @@ export class TrackMarker extends Directive
         if(this.markerstyle)
             res += ` style="${this.markerstyle}"`;
         res += `></path>`;
+        if(this.labels.length == 0)
+            res += `</g>`;
         return res;
     }
     public renderEnd() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L645
-        return `</g>`;
+        if(this.labels.length != 0)
+            return `</g>`;
+        else
+            return "";
     }
 
     public fromNode(node : html.Node) : void
@@ -650,6 +655,7 @@ export class TrackMarker extends Directive
         super();
         this.tagType = "trackmarker";
         this.track = track;
+        this.labels = new Array<MarkerLabel>();
     }
 }
 
