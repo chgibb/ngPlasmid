@@ -254,6 +254,7 @@ export class Plasmid extends Directive
 export class PlasmidTrack extends Directive
 {
     public trackstyle : string;
+
     /**
      * Reference to the parent plasmid element
      * 
@@ -261,6 +262,7 @@ export class PlasmidTrack extends Directive
      * @memberof PlasmidTrack
      */
     public plasmid : Plasmid;
+
     /**
      * An array that represents all of the markers on this track
      * 
@@ -268,6 +270,7 @@ export class PlasmidTrack extends Directive
      * @memberof PlasmidTrack
      */
     public markers : Array<TrackMarker>;
+
     /**
      * An array that represents all of the scales on this track
      * 
@@ -275,6 +278,7 @@ export class PlasmidTrack extends Directive
      * @memberof PlasmidTrack
      */
     public scales : Array<TrackScale>;
+
     /**
      * An array that represents all of the labels on this track
      * 
@@ -282,8 +286,19 @@ export class PlasmidTrack extends Directive
      * @memberof PlasmidTrack
      */
     public labels : Array<TrackLabel>;
+
     public children : Array<TrackLabel | TrackScale | TrackMarker>;
-    private _radius : number
+
+    private _radius : number;
+
+    /**
+     * The radius (in pixels) of the track.
+     * The radius is inherited by any component that is declared within this plasmidtrack. 
+     * Defaults to 100 if nothing provided
+     * 
+     * @type {number}
+     * @memberof PlasmidTrack
+     */
     public get radius() : number
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L254
@@ -294,7 +309,15 @@ export class PlasmidTrack extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L253
         this._radius = radius;
     }
+
     private _width : number;
+
+    /**
+     * The thickness (in pixels) of the plasmid ring. Defaults to 25 if nothing provided
+     * 
+     * @type {number}
+     * @memberof PlasmidTrack
+     */
     public get width() : number
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L259
@@ -305,6 +328,7 @@ export class PlasmidTrack extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L259
         this._width = width;
     }
+
     /**
      * Returns {x,y} coordinates of the center of the track.
      * 
@@ -317,6 +341,7 @@ export class PlasmidTrack extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L248
         return this.plasmid.center;
     }
+    
     /**
      * Returns the {x,y} coordinates of the provided position on the track.
      * 
