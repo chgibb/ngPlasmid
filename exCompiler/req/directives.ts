@@ -39,6 +39,165 @@ export abstract class Directive
 }
 
 /**
+ * A plasmid is the parent element and will generate the svg container within which all of the other graphics are drawn.
+ * The plasmid can be given a sequence or an explicit sequencelength to indicate how large the plasmid is.
+ * Other directives use this length in various calculations
+ * 
+ * @export
+ * @class Plasmid
+ * @extends {Directive}
+ */
+export class Plasmid extends Directive
+{
+    public plasmidheight : number;
+    public plasmidwidth : number;
+    public $scope : any;
+
+    public tracks : Array<PlasmidTrack>;
+    public get center() : services.Point
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L76
+        let d : services.Dimensions = this.dimensions;
+        return {
+            x : d.width / 2,
+            y : d.height / 2
+        }
+    }
+    public get dimensions() : services.Dimensions
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L86
+        return {
+            height : this.plasmidheight,
+            width : this.plasmidwidth
+        }
+    }
+    private _sequencelength : number;
+    public get sequencelength() : number
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L93
+        return this.sequence ? this.sequence.length : this._sequencelength;
+    }
+    public set sequencelength(sequencelength : number)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L93
+        this._sequencelength = sequencelength;
+    }
+    private _sequence : string;
+    public get sequence() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L99
+        return this._sequence;
+    }
+    public set sequence(sequence : string)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L99
+        this._sequence = sequence;
+    }
+    private _plasmidclass : string;
+    public get plasmidclass() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L104
+        return this._plasmidclass;
+    }
+    public set plasmidclass(plasmidclass : string)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L104
+        this._plasmidclass = plasmidclass;
+    }
+    private _plasmidtstyle : string;
+    public get plasmidstyle() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L109
+        return this._plasmidtstyle;
+    }
+    public set plasmidstyle(plasmidstyle : string)
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L109
+        this._plasmidtstyle = plasmidstyle;
+    }
+    public renderStart() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L60
+        let res = "";
+
+        res += `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" `;
+
+        if(this.sequencelength)
+            res += `sequencelength="${this.sequencelength}" `;
+
+        if(this.plasmidheight)
+            res += `plasmidheight="${this.plasmidheight}" `;
+    
+        if(this.plasmidwidth)
+            res += `plasmidwidth="${this.plasmidwidth}" `;
+    
+        res += `class="ng-scope ng-isolate-scope" `;
+
+        if(this.plasmidheight)
+            res += `height="${this.plasmidheight}" ` ;
+    
+        if(this.plasmidwidth)
+            res += `width="${this.plasmidwidth}"`;
+
+        res += ">";
+        for(let i = 0; i != this.tracks.length; ++i)
+        {
+            res += this.tracks[i].renderStart();
+        }
+        return res;
+    }
+
+    public renderEnd() : string
+    {
+        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L60
+        let res = "";
+        for(let i = 0; i != this.tracks.length; ++i)
+        {
+            res += this.tracks[i].renderEnd();
+        }
+        res += `</svg>`;
+        return res;
+    }
+
+    public fromNode(node : html.Node) : void
+    {
+        if(node.type != "tag")
+            throw new Error("Node type is not tag");
+        if(node.name != "plasmid")
+            throw new Error("Node is not a plasmid");
+
+        if(node.attribs.sequencelength)
+        {
+            this.sequencelength = parseInt(node.attribs.sequencelength);
+        }
+        if(node.attribs.plasmidheight)
+        {
+            this.plasmidheight = parseInt(node.attribs.plasmidheight);
+        }
+        if(node.attribs.plasmidwidth)
+        {
+            this.plasmidwidth = parseInt(node.attribs.plasmidwidth);
+        }
+
+        for(let i = 0; i != node.children.length; ++i)
+        {
+            if(node.children[i].name == "plasmidtrack")
+            {
+                let track : PlasmidTrack = new PlasmidTrack(this);
+                track.fromNode(node.children[i]);
+                this.tracks.push(track);
+            }
+        }
+    }
+    public constructor()
+    {
+        super();
+        this.tagType = "plasmid";
+        this.tracks = new Array<PlasmidTrack>();
+    }
+}
+
+/**
  * This element draws the plasmid's circular backbone within which a number of different features can be drawn.
  * The plasmidtrack element is represented by an SVG path for a torus
  * 
@@ -396,6 +555,43 @@ export class TrackLabel extends Directive
         super();
         this.track = track;
         this.tagType = "tracklabel";
+    }
+}
+
+/**
+ * This element provides labels and tickmarks for the track.
+ * It generates an SVG path element representing all the tick marks to be drawn as well as an optional set of SVG text elements for the labels
+ * 
+ * @export
+ * @class TrackScale
+ * @extends {Directive}
+ */
+export class TrackScale extends Directive
+{
+    public interval : number;
+    public style : string;
+    public direction : "in" | "out";
+    public vadjust : number;
+    public tickSize : number;
+    public showLabels : 0 | 1
+    public labelvadjust : number;
+    public labelstyle : string;
+    public labelclass : string;
+    public track : PlasmidTrack;
+
+    public renderStart() : string
+    {
+        return ``;
+    }
+    public renderEnd() : string
+    {
+        return ``;
+    }
+    
+    public constructor()
+    {
+        super();
+        this.tagType = "trackscale";
     }
 }
 
@@ -804,200 +1000,4 @@ export class MarkerLabel extends Directive
         this.tagType = "markerlabel";
     }
 
-}
-
-/**
- * This element provides labels and tickmarks for the track.
- * It generates an SVG path element representing all the tick marks to be drawn as well as an optional set of SVG text elements for the labels
- * 
- * @export
- * @class TrackScale
- * @extends {Directive}
- */
-export class TrackScale extends Directive
-{
-    public interval : number;
-    public style : string;
-    public direction : "in" | "out";
-    public vadjust : number;
-    public tickSize : number;
-    public showLabels : 0 | 1
-    public labelvadjust : number;
-    public labelstyle : string;
-    public labelclass : string;
-    public track : PlasmidTrack;
-
-    public renderStart() : string
-    {
-        return ``;
-    }
-    public renderEnd() : string
-    {
-        return ``;
-    }
-    
-    public constructor()
-    {
-        super();
-        this.tagType = "trackscale";
-    }
-}
-
-/**
- * A plasmid is the parent element and will generate the svg container within which all of the other graphics are drawn.
- * The plasmid can be given a sequence or an explicit sequencelength to indicate how large the plasmid is.
- * Other directives use this length in various calculations
- * 
- * @export
- * @class Plasmid
- * @extends {Directive}
- */
-export class Plasmid extends Directive
-{
-    public plasmidheight : number;
-    public plasmidwidth : number;
-    public $scope : any;
-
-    public tracks : Array<PlasmidTrack>;
-    public get center() : services.Point
-    {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L76
-        let d : services.Dimensions = this.dimensions;
-        return {
-            x : d.width / 2,
-            y : d.height / 2
-        }
-    }
-    public get dimensions() : services.Dimensions
-    {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L86
-        return {
-            height : this.plasmidheight,
-            width : this.plasmidwidth
-        }
-    }
-    private _sequencelength : number;
-    public get sequencelength() : number
-    {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L93
-        return this.sequence ? this.sequence.length : this._sequencelength;
-    }
-    public set sequencelength(sequencelength : number)
-    {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L93
-        this._sequencelength = sequencelength;
-    }
-    private _sequence : string;
-    public get sequence() : string
-    {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L99
-        return this._sequence;
-    }
-    public set sequence(sequence : string)
-    {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L99
-        this._sequence = sequence;
-    }
-    private _plasmidclass : string;
-    public get plasmidclass() : string
-    {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L104
-        return this._plasmidclass;
-    }
-    public set plasmidclass(plasmidclass : string)
-    {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L104
-        this._plasmidclass = plasmidclass;
-    }
-    private _plasmidtstyle : string;
-    public get plasmidstyle() : string
-    {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L109
-        return this._plasmidtstyle;
-    }
-    public set plasmidstyle(plasmidstyle : string)
-    {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L109
-        this._plasmidtstyle = plasmidstyle;
-    }
-    public renderStart() : string
-    {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L60
-        let res = "";
-
-        res += `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" `;
-
-        if(this.sequencelength)
-            res += `sequencelength="${this.sequencelength}" `;
-
-        if(this.plasmidheight)
-            res += `plasmidheight="${this.plasmidheight}" `;
-    
-        if(this.plasmidwidth)
-            res += `plasmidwidth="${this.plasmidwidth}" `;
-    
-        res += `class="ng-scope ng-isolate-scope" `;
-
-        if(this.plasmidheight)
-            res += `height="${this.plasmidheight}" ` ;
-    
-        if(this.plasmidwidth)
-            res += `width="${this.plasmidwidth}"`;
-
-        res += ">";
-        for(let i = 0; i != this.tracks.length; ++i)
-        {
-            res += this.tracks[i].renderStart();
-        }
-        return res;
-    }
-
-    public renderEnd() : string
-    {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L60
-        let res = "";
-        for(let i = 0; i != this.tracks.length; ++i)
-        {
-            res += this.tracks[i].renderEnd();
-        }
-        res += `</svg>`;
-        return res;
-    }
-
-    public fromNode(node : html.Node) : void
-    {
-        if(node.type != "tag")
-            throw new Error("Node type is not tag");
-        if(node.name != "plasmid")
-            throw new Error("Node is not a plasmid");
-
-        if(node.attribs.sequencelength)
-        {
-            this.sequencelength = parseInt(node.attribs.sequencelength);
-        }
-        if(node.attribs.plasmidheight)
-        {
-            this.plasmidheight = parseInt(node.attribs.plasmidheight);
-        }
-        if(node.attribs.plasmidwidth)
-        {
-            this.plasmidwidth = parseInt(node.attribs.plasmidwidth);
-        }
-
-        for(let i = 0; i != node.children.length; ++i)
-        {
-            if(node.children[i].name == "plasmidtrack")
-            {
-                let track : PlasmidTrack = new PlasmidTrack(this);
-                track.fromNode(node.children[i]);
-                this.tracks.push(track);
-            }
-        }
-    }
-    public constructor()
-    {
-        super();
-        this.tagType = "plasmid";
-        this.tracks = new Array<PlasmidTrack>();
-    }
 }
