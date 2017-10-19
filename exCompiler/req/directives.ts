@@ -56,6 +56,7 @@ export class Plasmid extends Directive
      * @memberof Plasmid
      */
     public plasmidheight : number;
+
     /**
      * Width (in pixels) of the box that surrounds the plasmid
      * 
@@ -63,6 +64,7 @@ export class Plasmid extends Directive
      * @memberof Plasmid
      */
     public plasmidwidth : number;
+
     public $scope : any;
 
     /**
@@ -72,6 +74,7 @@ export class Plasmid extends Directive
      * @memberof Plasmid
      */
     public tracks : Array<PlasmidTrack>;
+
     /**
      * Returns {x,y} coordinates of the center of the plasmid
      * 
@@ -88,6 +91,7 @@ export class Plasmid extends Directive
             y : d.height / 2
         }
     }
+
     /**
      * Returns {height,width} of the plasmid
      * 
@@ -103,7 +107,9 @@ export class Plasmid extends Directive
             width : this.plasmidwidth
         }
     }
+
     private _sequencelength : number;
+
     /**
      * Size, in nucleotides, of the plasmid represented.
      * If the sequence attribute is specified, sequencelength will not be used.
@@ -122,7 +128,9 @@ export class Plasmid extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L93
         this._sequencelength = sequencelength;
     }
+
     private _sequence : string;
+
     /**
      * Series of nucleotides (ex. 'ATTACGATG') that represents the plasmid to be drawn
      * 
@@ -139,7 +147,9 @@ export class Plasmid extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L99
         this._sequence = sequence;
     }
+
     private _plasmidclass : string;
+
     public get plasmidclass() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L104
@@ -150,7 +160,9 @@ export class Plasmid extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L104
         this._plasmidclass = plasmidclass;
     }
+
     private _plasmidtstyle : string;
+
     public get plasmidstyle() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L109
@@ -161,6 +173,7 @@ export class Plasmid extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L109
         this._plasmidtstyle = plasmidstyle;
     }
+    
     public renderStart() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L60
@@ -341,7 +354,7 @@ export class PlasmidTrack extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L248
         return this.plasmid.center;
     }
-    
+
     /**
      * Returns the {x,y} coordinates of the provided position on the track.
      * 
