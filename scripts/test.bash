@@ -7,13 +7,13 @@ function testFile {
 
 	printf "With reference compiler:\n"
 	printf "Compile time:\n"
-	time node referenceCompiler/index samples/$f > "$f"Ref.svg
+	time node referenceCompiler/index tests/$f > "$f"Ref.svg
 	printf "Optimization time:\n"
 	./node_modules/.bin/svgo -i "$f"Ref.svg -o "$f"RefO.svg
 
 	printf "With experimental compiler:\n"
 	printf "Compile time:\n"
-	time node exCompiler/index samples/$f > "$f"Ex.svg
+	time node exCompiler/index tests/$f > "$f"Ex.svg
 	printf "Optimization time:\n"
 	./node_modules/.bin/svgo -i "$f"Ex.svg -o "$f"ExO.svg
 	printf "\n"
