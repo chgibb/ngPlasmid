@@ -84,7 +84,7 @@ export class Plasmid extends Directive
      */
     public get center() : services.Point
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L76
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L76
         let d : services.Dimensions = this.dimensions;
         return {
             x : d.width / 2,
@@ -101,7 +101,7 @@ export class Plasmid extends Directive
      */
     public get dimensions() : services.Dimensions
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L86
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L86
         return {
             height : this.plasmidheight,
             width : this.plasmidwidth
@@ -120,12 +120,12 @@ export class Plasmid extends Directive
      */
     public get sequencelength() : number
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L93
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L93
         return this.sequence ? this.sequence.length : this._sequencelength;
     }
     public set sequencelength(sequencelength : number)
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L93
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L93
         this._sequencelength = sequencelength;
     }
 
@@ -139,12 +139,12 @@ export class Plasmid extends Directive
      */
     public get sequence() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L99
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L99
         return this._sequence;
     }
     public set sequence(sequence : string)
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L99
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L99
         this._sequence = sequence;
     }
 
@@ -152,12 +152,12 @@ export class Plasmid extends Directive
 
     public get plasmidclass() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L104
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L104
         return this._plasmidclass;
     }
     public set plasmidclass(plasmidclass : string)
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L104
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L104
         this._plasmidclass = plasmidclass;
     }
 
@@ -165,18 +165,18 @@ export class Plasmid extends Directive
 
     public get plasmidstyle() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L109
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L109
         return this._plasmidtstyle;
     }
     public set plasmidstyle(plasmidstyle : string)
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L109
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L109
         this._plasmidtstyle = plasmidstyle;
     }
     
     public renderStart() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L60
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L60
         let res = "";
 
         res += `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" `;
@@ -208,7 +208,7 @@ export class Plasmid extends Directive
 
     public renderEnd() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L60
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L60
         let res = "";
         for(let i = 0; i != this.tracks.length; ++i)
         {
@@ -314,12 +314,12 @@ export class PlasmidTrack extends Directive
      */
     public get radius() : number
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L254
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L254
         return this._radius ? this._radius : 100;
     }
     public set radius(radius : number)
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L253
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L253
         this._radius = radius;
     }
 
@@ -333,12 +333,12 @@ export class PlasmidTrack extends Directive
      */
     public get width() : number
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L259
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L259
         return this._width ? this._width : 25;
     }
     public set width(width)
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L259
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L259
         this._width = width;
     }
 
@@ -351,7 +351,7 @@ export class PlasmidTrack extends Directive
      */
     public get center() : services.Point
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L248
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L248
         return this.plasmid.center;
     }
 
@@ -369,7 +369,7 @@ export class PlasmidTrack extends Directive
         positionOption : 0 | 1 | 2,
         radiusAdjust : number
     ) : services.Point | undefined {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L222
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L222
         radiusAdjust = Number(radiusAdjust || 0);
         pos = Number(pos);
 
@@ -396,7 +396,7 @@ export class PlasmidTrack extends Directive
     }
     public renderStart() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L179
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L179
         let res = "";
         res += `<g`;
         if(this.trackstyle)
@@ -435,7 +435,7 @@ export class PlasmidTrack extends Directive
     }
     public renderEnd() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L179
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L179
         let res = "";
         if(this.children.length != 0)
             return `</g>`;
@@ -519,7 +519,7 @@ export class TrackLabel extends Directive
     
     public get center() : services.Point
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L536
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L536
         return this.track.center;
     }
 
@@ -533,12 +533,12 @@ export class TrackLabel extends Directive
      */
     public get text() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L542
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L542
         return this._text;
     }
     public set text(text : string)
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L542
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L542
         this._text = text;
     }
 
@@ -546,12 +546,12 @@ export class TrackLabel extends Directive
 
     public get labelclass() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L547
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L547
         return this._labelclass;
     }
     public set labelclass(labelclass : string)
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L547
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L547
         this._labelclass = labelclass;
     }
 
@@ -559,12 +559,12 @@ export class TrackLabel extends Directive
 
     public get labelstyle() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L552
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L552
         return this._labelstyle;
     }
     public set labelstyle(labelstyle : string)
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L552
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L552
         this._labelstyle = labelstyle;
     }
 
@@ -579,12 +579,12 @@ export class TrackLabel extends Directive
      */
     public get hadjust() : number
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L557
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L557
         return this._hadjust ? this._hadjust : 0;
     }
     public set hadjust(hadjust : number)
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L557
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L557
         this._hadjust = hadjust;
     }
 
@@ -599,18 +599,18 @@ export class TrackLabel extends Directive
      */
     public get vadjust() : number
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L562
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L562
         return this._vadjust ? this._vadjust : 0;
     }
     public set vadjust(vadjust : number)
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L562
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L562
         this._vadjust = vadjust;
     }
 
     public renderStart() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L524
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L524
         let res = "";
 
         let center = this.track.center;
@@ -637,7 +637,7 @@ export class TrackLabel extends Directive
     }
     public renderEnd() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L524
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L524
         return ``;
     }
 
@@ -828,7 +828,7 @@ export class TrackMarker extends Directive
 
     public getPath() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L661
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L661
         let center = this.track.center;
         let angle = this.angle;
         let radius = this.radius;
@@ -841,7 +841,7 @@ export class TrackMarker extends Directive
         hAlign : string,
         vAlign : string
     ) : services.Position<services.PositionComponent<services.Point>> | services.Point {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L666
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L666
         let HALIGN_MIDDLE = "middle";
         let HALIGN_START = "start";
         let HALIGN_END = "end";
@@ -923,12 +923,12 @@ export class TrackMarker extends Directive
     }
     public get center() : services.Point
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L745
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L745
         return this.track.center;
     }
     public get radius() : services.Radius
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L750
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L750
         return <services.Radius>{
             inner : this.track.radius + this.vadjust,
             outer : this.track.radius + this.vadjust + this.width,
@@ -937,7 +937,7 @@ export class TrackMarker extends Directive
     }
     public get angle() : services.Angle
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L759
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L759
         let startAngle : number;
         let endAngle : number;
         let midAngle : number;
@@ -985,7 +985,7 @@ export class TrackMarker extends Directive
 
     public get width() : number
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L788
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L788
         return this.track.width + this.wadjust;
     }
 
@@ -993,7 +993,7 @@ export class TrackMarker extends Directive
 
     public get start() : number
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L793
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L793
         return this._start ? this._start : 0;
     }
     public set start(start : number)
@@ -1005,7 +1005,7 @@ export class TrackMarker extends Directive
 
     public get end() : number
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L798
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L798
         return this._end ? this._end : 0;
     }
     public set end(end : number)
@@ -1015,7 +1015,7 @@ export class TrackMarker extends Directive
 
     public get arrowstart() : services.Arrow
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L803
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L803
         return <services.Arrow>{
             width : this.arrowstartwidth ? this.arrowstartwidth : 0,
             length : this.arrowstartlength ? this.arrowstartlength : 0,
@@ -1025,7 +1025,7 @@ export class TrackMarker extends Directive
 
     public get arrowend() : services.Arrow
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L812
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L812
         return <services.Arrow>{
             width : this.arrowendwidth ? this.arrowendwidth : 0,
             length : this.arrowendlength ? this.arrowendlength : 0,
@@ -1037,7 +1037,7 @@ export class TrackMarker extends Directive
 
     public get markergroup() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L821
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L821
         return this._markergroup;
     }
     public set markergroup(markergroup : string)
@@ -1049,7 +1049,7 @@ export class TrackMarker extends Directive
 
     public get markerclass() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L826
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L826
         return this._markerclass;
     }
     public set markerclass(markerclass : string)
@@ -1061,7 +1061,7 @@ export class TrackMarker extends Directive
 
     public get markerstyle() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L831
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L831
         return this._markerstyle;
     }
     public set markerstyle(markerstyle : string)
@@ -1071,7 +1071,7 @@ export class TrackMarker extends Directive
     
     public get sequence() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L836
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L836
         let plasmidSeq = this.track.plasmid.sequence;
         let markerSeq = '';
     
@@ -1085,7 +1085,7 @@ export class TrackMarker extends Directive
 
     public renderStart() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L645
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L645
         let res = "";
         res += `<g`;
         if(this.start)
@@ -1120,7 +1120,7 @@ export class TrackMarker extends Directive
     }
     public renderEnd() : string
     {
-        //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L645
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L645
         if(this.labels.length != 0)
             return `</g>`;
         else
