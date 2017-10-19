@@ -38,12 +38,44 @@ export abstract class Directive
     public abstract renderEnd() : string;
 }
 
+/**
+ * This element draws the plasmid's circular backbone within which a number of different features can be drawn.
+ * The plasmidtrack element is represented by an SVG path for a torus
+ * 
+ * @export
+ * @class PlasmidTrack
+ * @extends {Directive}
+ */
 export class PlasmidTrack extends Directive
 {
     public trackstyle : string;
+    /**
+     * Reference to the parent plasmid element
+     * 
+     * @type {Plasmid}
+     * @memberof PlasmidTrack
+     */
     public plasmid : Plasmid;
+    /**
+     * An array that represents all of the markers on this track
+     * 
+     * @type {Array<TrackMarker>}
+     * @memberof PlasmidTrack
+     */
     public markers : Array<TrackMarker>;
+    /**
+     * An array that represents all of the scales on this track
+     * 
+     * @type {Array<TrackScale>}
+     * @memberof PlasmidTrack
+     */
     public scales : Array<TrackScale>;
+    /**
+     * An array that represents all of the labels on this track
+     * 
+     * @type {Array<TrackLabel>}
+     * @memberof PlasmidTrack
+     */
     public labels : Array<TrackLabel>;
     public children : Array<TrackLabel | TrackScale | TrackMarker>;
     private _radius : number
@@ -68,11 +100,27 @@ export class PlasmidTrack extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L259
         this._width = width;
     }
+    /**
+     * Returns {x,y} coordinates of the center of the track.
+     * 
+     * @readonly
+     * @type {services.Point}
+     * @memberof PlasmidTrack
+     */
     public get center() : services.Point
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L248
         return this.plasmid.center;
     }
+    /**
+     * Returns the {x,y} coordinates of the provided position on the track.
+     * 
+     * @param {number} pos 
+     * @param {(0 | 1 | 2)} positionOption 
+     * @param {number} radiusAdjust 
+     * @returns {(services.Point | undefined)} 
+     * @memberof PlasmidTrack
+     */
     public getPosition(
         pos : number,
         positionOption : 0 | 1 | 2,
@@ -209,6 +257,13 @@ export class PlasmidTrack extends Directive
     }
 }
 
+/**
+ * Draws a label in the middle of a track
+ * 
+ * @export
+ * @class TrackLabel
+ * @extends {Directive}
+ */
 export class TrackLabel extends Directive
 {
     public track : PlasmidTrack;
@@ -344,6 +399,17 @@ export class TrackLabel extends Directive
     }
 }
 
+/**
+ * The primary mechanism to indicate special features on the track is provided by this element using the properties below.
+ * A trackmarker will generate an SVG path that draws an arc on the track.
+ * It has optional attributes to indicate arrow ends on either side of the marker.
+ * In addition, if no end property is provided, the marker will become a line rather than a range.
+ * This is important because the styling of a range will use the fill CSS property, however, a marker line will be styled using the stroke CSS property
+ * 
+ * @export
+ * @class TrackMarker
+ * @extends {Directive}
+ */
 export class TrackMarker extends Directive
 {
     public arrowstartlength : number;
@@ -702,6 +768,14 @@ export class TrackMarker extends Directive
     }
 }
 
+/**
+ * A marker can optionally have a number of markerlabel elements.
+ * These elements will inherit positional attributes of their parent trackmarker elements which can be adjusted using the properties below
+ * 
+ * @export
+ * @class MarkerLabel
+ * @extends {Directive}
+ */
 export class MarkerLabel extends Directive
 {
     public text : string;
@@ -732,6 +806,14 @@ export class MarkerLabel extends Directive
 
 }
 
+/**
+ * This element provides labels and tickmarks for the track.
+ * It generates an SVG path element representing all the tick marks to be drawn as well as an optional set of SVG text elements for the labels
+ * 
+ * @export
+ * @class TrackScale
+ * @extends {Directive}
+ */
 export class TrackScale extends Directive
 {
     public interval : number;
@@ -761,6 +843,15 @@ export class TrackScale extends Directive
     }
 }
 
+/**
+ * A plasmid is the parent element and will generate the svg container within which all of the other graphics are drawn.
+ * The plasmid can be given a sequence or an explicit sequencelength to indicate how large the plasmid is.
+ * Other directives use this length in various calculations
+ * 
+ * @export
+ * @class Plasmid
+ * @extends {Directive}
+ */
 export class Plasmid extends Directive
 {
     public plasmidheight : number;
