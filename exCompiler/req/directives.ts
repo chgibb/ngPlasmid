@@ -794,12 +794,24 @@ export class TrackScale extends Directive
  */
 export class TrackMarker extends Directive
 {
+    /**
+     * The length, width, and angle of a the starting arrow head can be specified here
+     * 
+     * @type {number}
+     * @memberof TrackMarker
+     */
     public arrowstartlength : number;
+
     public arrowstartwidth : services.Arrow;
+
     public arrowstartangle : services.Arrow;
+
     public arrowendlength : number;
+
     public arrowendwidth : services.Arrow;
+
     public arrowendangle : services.Arrow;
+
     /**
      * The API docs don't specify that <trackmarker>s can have a class attribute, but there are official examples which do.
      * We support it to be consistent with the examples. The classList will be output to the class attribute of the output <path>
@@ -809,8 +821,11 @@ export class TrackMarker extends Directive
      * @memberof TrackMarker
      */
     public classList : Array<string>;
+
     public track : PlasmidTrack;
+
     public labels : Array<MarkerLabel>;
+
     public getPath() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L661
@@ -819,6 +834,7 @@ export class TrackMarker extends Directive
         let radius = this.radius;
         return services.pathArc(center.x, center.y, radius.inner, angle.start, angle.end, this.width, this.arrowstart, this.arrowend);
     }
+
     public getPosition(
         hAdjust : number,
         vAdjust : number,
@@ -944,7 +960,9 @@ export class TrackMarker extends Directive
             end : this.end ? end : startAngle
         };
     }
+
     private _vadjust : number;
+
     public get vadjust() : number
     {
         return this._vadjust ? this._vadjust : 0;
@@ -953,7 +971,9 @@ export class TrackMarker extends Directive
     {
         this._vadjust = vadjust;
     }
+
     private _wadjust : number;
+
     public get wadjust() : number
     {
         return this._wadjust ? this._wadjust : 0;
@@ -962,12 +982,15 @@ export class TrackMarker extends Directive
     {
         this._wadjust = wadjust;
     }
+
     public get width() : number
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L788
         return this.track.width + this.wadjust;
     }
+
     private _start : number;
+
     public get start() : number
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L793
@@ -977,7 +1000,9 @@ export class TrackMarker extends Directive
     {
         this._start = start;
     }
+
     private _end : number;
+
     public get end() : number
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L798
@@ -987,6 +1012,7 @@ export class TrackMarker extends Directive
     {
         this._end = end;
     }
+
     public get arrowstart() : services.Arrow
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L803
@@ -996,6 +1022,7 @@ export class TrackMarker extends Directive
             angle : this.arrowstartangle ? this.arrowstartangle : 0
         };
     }
+
     public get arrowend() : services.Arrow
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L812
@@ -1005,7 +1032,9 @@ export class TrackMarker extends Directive
             angle : this.arrowendangle ? this.arrowendangle : 0
         }
     }
+
     private _markergroup : string;
+
     public get markergroup() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L821
@@ -1015,7 +1044,9 @@ export class TrackMarker extends Directive
     {
         this._markergroup = markergroup;
     }
+
     private _markerclass : string;
+
     public get markerclass() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L826
@@ -1025,7 +1056,9 @@ export class TrackMarker extends Directive
     {
         this._markerclass = markerclass;
     }
+
     private _markerstyle : string;
+
     public get markerstyle() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L831
@@ -1035,6 +1068,7 @@ export class TrackMarker extends Directive
     {
         this._markerstyle = markerstyle;
     }
+    
     public get sequence() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L836
