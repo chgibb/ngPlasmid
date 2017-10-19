@@ -688,15 +688,81 @@ export class TrackLabel extends Directive
  */
 export class TrackScale extends Directive
 {
+    /**
+     * How often a tick mark should be placed.
+     * The interval is used along with the plasmid's sequence length to determine how many tick marks to show
+     * 
+     * @type {number}
+     * @memberof TrackScale
+     */
     public interval : number;
+
     public style : string;
+
+    /**
+     * Determine which side of the track the ticks and labels should appear
+     * 
+     * @type {("in" | "out")}
+     * @memberof TrackScale
+     */
     public direction : "in" | "out";
+
+    /**
+     * Offset in pixels from the track.
+     * A positive number means that the ticks will be drawn further away from the track.
+     * A negative number will allow ticks to be plced closer to the center of the track
+     * 
+     * @type {number}
+     * @memberof TrackScale
+     */
     public vadjust : number;
+
+    /**
+     * Vertical size of the tick marks. If negative, the ticks grow inward. The width of the tickmarks can be styled using the CSS stroke-width property
+     * 
+     * @type {number}
+     * @memberof TrackScale
+     */
     public tickSize : number;
-    public showLabels : 0 | 1
+
+    /**
+     * Determines if labels will be shown or not
+     * 
+     * @type {(0 | 1)}
+     * @memberof TrackScale
+     */
+    public showLabels : 0 | 1;
+
+    /**
+     * Distance of the labels to their respective tick marks
+     * 
+     * @type {number}
+     * @memberof TrackScale
+     */
     public labelvadjust : number;
+
+    /**
+     * Indicate the style of the labels directly using this property
+     * 
+     * @type {string}
+     * @memberof TrackScale
+     */
     public labelstyle : string;
+
+    /**
+     * 	Provide a class name to style the labels
+     * 
+     * @type {string}
+     * @memberof TrackScale
+     */
     public labelclass : string;
+
+    /**
+     * A reference to the parent track element
+     * 
+     * @type {PlasmidTrack}
+     * @memberof TrackScale
+     */
     public track : PlasmidTrack;
 
     public renderStart() : string
