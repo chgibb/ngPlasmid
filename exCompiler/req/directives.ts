@@ -352,6 +352,15 @@ export class TrackMarker extends Directive
     public arrowendlength : number;
     public arrowendwidth : services.Arrow;
     public arrowendangle : services.Arrow;
+    /**
+     * The API docs don't specify that <trackmarker>s can have a class attribute, but there are official examples which do.
+     * We support it to be consistent with the examples. The classList will be output to the class attribute of the output <path>
+     * before the standard AngularJS classes.
+     * 
+     * @type {Array<string>}
+     * @memberof TrackMarker
+     */
+    public classList : Array<string>;
     public track : PlasmidTrack;
     public labels : Array<MarkerLabel>;
     public getPath() : string
@@ -471,7 +480,7 @@ export class TrackMarker extends Directive
         let end : number;
 
         startAngle = (this.start / this.track.plasmid.sequencelength) * 360;
-        end = this.end || this.start;
+        end = this.end ? this.end : this.start;
         /*
             In the original implementation of this function, SVGUtil.util.Numeric is used instead of the first ternary below.
             This appears to cause endAngle to equal end in all cases, and as such we simply return end : end.
@@ -480,10 +489,11 @@ export class TrackMarker extends Directive
         endAngle += (endAngle < startAngle) ? 360 : 0;
         midAngle = startAngle + ((endAngle - startAngle) / 2);
 
+        //The original appears to return startAngle as start and end when no end attribute is present on the marker
         return <services.Angle>{
             start : startAngle,
             middle : midAngle,
-            end : end
+            end : this.end ? end : startAngle
         };
     }
     private _vadjust : number;
@@ -608,7 +618,17 @@ export class TrackMarker extends Directive
             res += ` arrowstartlength="${this.arrowstartlength}" `;
         
         res += `>`;
-        res += `<path class="ng-scope ng-isolate-scope" d="${this.getPath()}" `;
+        let classAttrib = "";
+        for(let i = 0; i != this.classList.length; ++i)
+        {
+            classAttrib += this.classList[i];
+            if(i != this.classList.length - 1)
+                classAttrib += " ";
+        }
+        if(this.classList.length == 1)
+            classAttrib += " ";
+        classAttrib += `ng-scope ng-isolate-scope`;
+        res += `<path class="${classAttrib}" d="${this.getPath()}" `;
         if(this.markerstyle)
             res += ` style="${this.markerstyle}"`;
         res += `></path>`;
@@ -659,6 +679,17 @@ export class TrackMarker extends Directive
         {
             this.vadjust = parseInt(node.attribs.vadjust);
         }
+        if(node.attribs.class)
+        {
+            let classAttrib : Array<string> = node.attribs.class.split(" ");
+            for(let i = 0; i != classAttrib.length; ++i)
+            {
+                if(classAttrib[i] && classAttrib[i] != " ")
+                {
+                    this.classList.push(classAttrib[i]);
+                }
+            }
+        }
     }
 
     public constructor(track : PlasmidTrack)
@@ -667,6 +698,7 @@ export class TrackMarker extends Directive
         this.tagType = "trackmarker";
         this.track = track;
         this.labels = new Array<MarkerLabel>();
+        this.classList = new Array<string>();
     }
 }
 
