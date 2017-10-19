@@ -49,11 +49,36 @@ export abstract class Directive
  */
 export class Plasmid extends Directive
 {
+    /**
+     * Height (in pixels) of the box that surrounds the plasmid
+     * 
+     * @type {number}
+     * @memberof Plasmid
+     */
     public plasmidheight : number;
+    /**
+     * Width (in pixels) of the box that surrounds the plasmid
+     * 
+     * @type {number}
+     * @memberof Plasmid
+     */
     public plasmidwidth : number;
     public $scope : any;
 
+    /**
+     * Returns an array that represents all of the tracks declared in this plasmid
+     * 
+     * @type {Array<PlasmidTrack>}
+     * @memberof Plasmid
+     */
     public tracks : Array<PlasmidTrack>;
+    /**
+     * Returns {x,y} coordinates of the center of the plasmid
+     * 
+     * @readonly
+     * @type {services.Point}
+     * @memberof Plasmid
+     */
     public get center() : services.Point
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L76
@@ -63,6 +88,13 @@ export class Plasmid extends Directive
             y : d.height / 2
         }
     }
+    /**
+     * Returns {height,width} of the plasmid
+     * 
+     * @readonly
+     * @type {services.Dimensions}
+     * @memberof Plasmid
+     */
     public get dimensions() : services.Dimensions
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L86
@@ -72,6 +104,14 @@ export class Plasmid extends Directive
         }
     }
     private _sequencelength : number;
+    /**
+     * Size, in nucleotides, of the plasmid represented.
+     * If the sequence attribute is specified, sequencelength will not be used.
+     * Rather, the length of the sequence will be calcaulated from the provided sequence
+     * 
+     * @type {number}
+     * @memberof Plasmid
+     */
     public get sequencelength() : number
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L93
@@ -83,6 +123,12 @@ export class Plasmid extends Directive
         this._sequencelength = sequencelength;
     }
     private _sequence : string;
+    /**
+     * Series of nucleotides (ex. 'ATTACGATG') that represents the plasmid to be drawn
+     * 
+     * @type {string}
+     * @memberof Plasmid
+     */
     public get sequence() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L99
