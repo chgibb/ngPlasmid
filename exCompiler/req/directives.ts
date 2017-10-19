@@ -509,6 +509,12 @@ export class PlasmidTrack extends Directive
  */
 export class TrackLabel extends Directive
 {
+    /**
+     * A reference to the parent track element
+     * 
+     * @type {PlasmidTrack}
+     * @memberof TrackLabel
+     */
     public track : PlasmidTrack;
     
     public get center() : services.Point
@@ -516,7 +522,15 @@ export class TrackLabel extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L536
         return this.track.center;
     }
+
     private _text : string;
+    
+    /**
+     * 	Text of the label to draw
+     * 
+     * @type {string}
+     * @memberof TrackLabel
+     */
     public get text() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L542
@@ -527,7 +541,9 @@ export class TrackLabel extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L542
         this._text = text;
     }
+
     private _labelclass : string;
+
     public get labelclass() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L547
@@ -538,7 +554,9 @@ export class TrackLabel extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L547
         this._labelclass = labelclass;
     }
+
     private _labelstyle : string;
+
     public get labelstyle() : string
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L552
@@ -549,7 +567,16 @@ export class TrackLabel extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L552
         this._labelstyle = labelstyle;
     }
+
     private _hadjust : number;
+    
+    /**
+     * Horizontal offset of the label from the center of the track.
+     * A positive number means that the label will be drawn closer to the right, while a negative number means the label will be be drawn closer to the left
+     * 
+     * @type {number}
+     * @memberof TrackLabel
+     */
     public get hadjust() : number
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L557
@@ -560,7 +587,16 @@ export class TrackLabel extends Directive
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L557
         this._hadjust = hadjust;
     }
+
     private _vadjust : number;
+    
+    /**
+     * Vertical offset of the label from the center of the track.
+     * A positive number means that the label will be drawn further down, while a negative number will make the label be drawn further up
+     * 
+     * @type {number}
+     * @memberof TrackLabel
+     */
     public get vadjust() : number
     {
         //https://github.com/chgibb/angularplasmid/blob/master/src/js/directives.js#L562
