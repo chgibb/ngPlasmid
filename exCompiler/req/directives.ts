@@ -1280,30 +1280,115 @@ export class TrackMarker extends Directive
  */
 export class MarkerLabel extends Directive
 {
+    /**
+     * Text of the label
+     * 
+     * @type {string}
+     * @memberof MarkerLabel
+     */
     public text : string;
+
+    /**
+     * Vertical offset of the label from the marker.
+     * A positive number means that the label will be drawn further away from the marker,
+     * while a negative number will make the label be drawn closer to the center of the track
+     * 
+     * @type {number}
+     * @memberof MarkerLabel
+     */
     public vadjust : number;
+
+    /**
+     * Horizontal offset of the label from the marker.
+     * A positive number means that the label will be drawn closer to the ending position of the marker,
+     * while a negative number means the label will be be drawn closer to the starting position of the marker
+     * 
+     * @type {number}
+     * @memberof MarkerLabel
+     */
     public hadjust : number;
+
+    /**
+     * Vertical alignment of the label with the marker
+     * 
+     * @type {("middle" | "inner" | "outer")}
+     * @memberof MarkerLabel
+     */
     public valign : "middle" | "inner" | "outer";
+
+    /**
+     * Horizontal alignment of the label with the marker
+     * 
+     * @type {("middle" | "inner" | "outer")}
+     * @memberof MarkerLabel
+     */
     public halign : "middle" | "inner" | "outer";
+
+    /**
+     * Labels can either be drawn normally,
+     * or can follow the circular path of the marker
+     * 
+     * @type {"path"}
+     * @memberof MarkerLabel
+     */
     public type : "path";
+
+    /**
+     * Determines if line will be drawn from the label to the marker.
+     * By default, the line connects the middle of the label with the middle of the marker
+     * 
+     * @type {(0 | 1)}
+     * @memberof MarkerLabel
+     */
     public showline : 0 | 1;
+
+    /**
+     * Style of the line going from the label to the marker
+     * 
+     * @type {string}
+     * @memberof MarkerLabel
+     */
     public linestyle : string;
+
+    /**
+     * Class name of the line going from the label to the marker
+     * 
+     * @type {string}
+     * @memberof MarkerLabel
+     */
     public lineclass : string;
+
+    /**
+     * Vertical adjustment of the line to the label
+     * 
+     * @type {string}
+     * @memberof MarkerLabel
+     */
     public linevadjust : string;
 
+    
+    /**
+     * Areference to the parent marker element
+     * 
+     * @type {TrackMarker}
+     * @memberof MarkerLabel
+     */
+    public marker : TrackMarker;
     public renderStart() : string
     {
         return ``;
     }
+
     public renderEnd() : string
     {
         return ``;
     }
 
-    public constructor()
+    public constructor(trackMarker : TrackMarker)
     {
         super();
         this.tagType = "markerlabel";
+        this.marker = trackMarker;
     }
 
 }
