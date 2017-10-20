@@ -877,6 +877,17 @@ export class TrackMarker extends Directive
         return services.pathArc(center.x, center.y, radius.inner, angle.start, angle.end, this.width, this.arrowstart, this.arrowend);
     }
 
+    /**
+     * Returns the marker's {x, y} position offset by some optional parameters.
+     * If no parameters are provided, the function returns {x,y} locations for 9 positions of the marker
+     * 
+     * @param {number} hAdjust 
+     * @param {number} vAdjust 
+     * @param {string} hAlign 
+     * @param {string} vAlign 
+     * @returns {(services.Position<services.PositionComponent<services.Point>> | services.Point)} 
+     * @memberof TrackMarker
+     */
     public getPosition(
         hAdjust : number,
         vAdjust : number,
@@ -1137,6 +1148,13 @@ export class TrackMarker extends Directive
         this._markerstyle = markerstyle;
     }
     
+    /**
+     * Returns the partial sequence designated by the marker's start and end properties
+     * 
+     * @readonly
+     * @type {string}
+     * @memberof TrackMarker
+     */
     public get sequence() : string
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L836
