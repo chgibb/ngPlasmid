@@ -950,7 +950,29 @@ export class TrackScale extends Directive
         }
         res += ` d="${services.pathScale(this.track.center.x,this.track.center.y,this.radius,this.interval,this.total,this.ticksize)}" `;
         res += `></path>`
-        res += `<g></g></g>`;
+        res += `<g>`;
+        if(this.showlabels)
+        {
+            //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L380
+            let labels = services.elementScaleLabels(this.track.center.x,this.track.center.y,this.labelradius,this.interval,this.total);
+            for(let i = 0; i != labels.length; ++i)
+            {
+                res += `<text`;
+                if(this.labelclass)
+                {
+                    res += ` class="${this.labelclass}" `;
+                }
+                if(this.labelstyle)
+                {
+                    res += ` style="${this.labelstyle}" `;
+                }
+                res += ` x="${labels[i].x}" `;
+                res += ` y="${labels[i].y}" `;
+                res += ` text-anchor="middle" alignment-baseline="middle">${labels[i].text}</text>`;
+            }
+        }
+        res += `</g>`;
+        res += `</g>`;
         return res;
     }
     public renderEnd() : string
@@ -972,6 +994,10 @@ export class TrackScale extends Directive
         {
             this.style = node.attribs.style;
         }
+        if(node.attribs.labelstyle)
+        {
+            this.labelstyle = node.attribs.labelstyle;
+        }
         if(node.attribs.direction)
         {
             this.direction = node.attribs.direction;
@@ -979,6 +1005,10 @@ export class TrackScale extends Directive
         if(node.attribs.ticksize)
         {
             this.ticksize = parseInt(node.attribs.ticksize);
+        }
+        if(node.attribs.showlabels)
+        {
+            this.showLabelsAttrib = node.attribs.showlabels;
         }
         
     }
