@@ -1521,22 +1521,67 @@ export class TrackMarker extends Directive
 export class MarkerLabel extends Directive
 {
     /**
-     * Text of the label
+     * Determines if line will be drawn from the label to the marker.
+     * By default, the line connects the middle of the label with the middle of the marker
      * 
-     * @type {string}
+     * @type {("0" | "1")}
      * @memberof MarkerLabel
      */
-    public text : string;
+    public showline : "0" | "1";
 
     /**
-     * Vertical offset of the label from the marker.
-     * A positive number means that the label will be drawn further away from the marker,
-     * while a negative number will make the label be drawn closer to the center of the track
+     * Areference to the parent marker element
      * 
-     * @type {number}
+     * @type {TrackMarker}
      * @memberof MarkerLabel
      */
-    public vadjust : number;
+    public marker : TrackMarker;
+
+    public get showlineflg() : boolean
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1057
+        return this.showline === "1" ? true : false;
+    }
+
+    private _halign : "middle" | "inner" | "outer";
+
+    /**
+     * Horizontal alignment of the label with the marker
+     * 
+     * @type {("middle" | "inner" | "outer")}
+     * @memberof MarkerLabel
+     */
+    public get halign() : "middle" | "inner" | "outer"
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1062
+        return this._halign ? this._halign : "middle";
+    }
+
+    public set halign(halign : "middle" | "inner" | "outer")
+    {
+        this._halign = halign;
+    }
+
+    private _valign : "middle" | "inner" | "outer";
+    
+    /**
+     * Vertical alignment of the label with the marker
+     * 
+     * @type {("middle" | "inner" | "outer")}
+     * @memberof MarkerLabel
+     */
+    public get valign() : "middle" | "inner" | "outer"
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1067
+        return this._valign ? this._valign : "middle";
+    }
+    
+    public set valign(valign : "middle" | "inner" | "outer")
+    {
+        this._valign = valign;
+    }
+
+    private _hadjust : number;
 
     /**
      * Horizontal offset of the label from the marker.
@@ -1546,41 +1591,103 @@ export class MarkerLabel extends Directive
      * @type {number}
      * @memberof MarkerLabel
      */
-    public hadjust : number;
+    public get hadjust() : number
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1072
+        return this._hadjust ? this._hadjust : 0;
+    }
+
+    public set hadjust(hadjust : number)
+    {
+        this._hadjust = hadjust;
+    }
+
+    private _vadjust : number;
 
     /**
-     * Vertical alignment of the label with the marker
+     * Vertical offset of the label from the marker.
+     * A positive number means that the label will be drawn further away from the marker,
+     * while a negative number will make the label be drawn closer to the center of the track
      * 
-     * @type {("middle" | "inner" | "outer")}
+     * @type {number}
      * @memberof MarkerLabel
      */
-    public valign : "middle" | "inner" | "outer";
+    public get vadjust() : number
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1077
+        return this._vadjust ? this._vadjust : 0;
+    }
+
+    public set vadjust(vadjust : number)
+    {
+        this._vadjust = vadjust;
+    }
+
+    private _type : string;
 
     /**
-     * Horizontal alignment of the label with the marker
+     * Labels can either be drawn normally, or can follow the circular path of the marker
      * 
-     * @type {("middle" | "inner" | "outer")}
+     * @type {string}
      * @memberof MarkerLabel
      */
-    public halign : "middle" | "inner" | "outer";
+    public get type() : string
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1082
+        return this._type;   
+    }
 
-    /**
-     * Labels can either be drawn normally,
-     * or can follow the circular path of the marker
-     * 
-     * @type {"path"}
-     * @memberof MarkerLabel
-     */
-    public type : "path";
+    public set type(type : string)
+    {
+        this._type = type;
+    }
 
+    private _linevadjust : number;
+    
     /**
-     * Determines if line will be drawn from the label to the marker.
-     * By default, the line connects the middle of the label with the middle of the marker
+     * Vertical adjustment of the line to the label
      * 
-     * @type {(0 | 1)}
+     * @type {number}
      * @memberof MarkerLabel
      */
-    public showline : 0 | 1;
+    public get linevadjust() : number
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1087
+        return this._linevadjust ? this._linevadjust : 0;
+    }
+
+    public set linevadjust(linevadjust : number)
+    {
+        this._linevadjust = linevadjust;
+    }
+
+    private _labelclass : string;
+
+    public get labelclass() : string
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1092
+        return this._labelclass;
+    }
+
+    public set labelclass(labelclass : string)
+    {
+        this._labelclass = labelclass;
+    }
+
+    private _labelstyle : string;
+
+    public get labelstyle() : string
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1097
+        return this._labelstyle;
+    }
+
+    public set labelstyle(labelstyle : string)
+    {
+        this._labelstyle = labelstyle;
+    }
+
+    private _linestyle : string;
 
     /**
      * Style of the line going from the label to the marker
@@ -1588,7 +1695,18 @@ export class MarkerLabel extends Directive
      * @type {string}
      * @memberof MarkerLabel
      */
-    public linestyle : string;
+    public get linestyle() : string
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1102
+        return this._linestyle;
+    }
+
+    public set linestyle(linestyle : string)
+    {
+        this._linestyle = linestyle;
+    }
+
+    private _lineclass : string;
 
     /**
      * Class name of the line going from the label to the marker
@@ -1596,24 +1714,38 @@ export class MarkerLabel extends Directive
      * @type {string}
      * @memberof MarkerLabel
      */
-    public lineclass : string;
+    public get lineclass() : string
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1107
+        return this._lineclass;
+    }
+
+    public set lineclass(lineclass : string)
+    {
+        this._lineclass = lineclass;
+    }
+
+    private _text : string;
 
     /**
-     * Vertical adjustment of the line to the label
+     * Text of the label
      * 
      * @type {string}
      * @memberof MarkerLabel
      */
-    public linevadjust : string;
+    public get text() : string
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1112
+        return this._text;
+    }
 
-    
-    /**
-     * Areference to the parent marker element
-     * 
-     * @type {TrackMarker}
-     * @memberof MarkerLabel
-     */
-    public marker : TrackMarker;
+    public set text(text : string)
+    {
+        this._text = text;
+    }
+
+
+
     public renderStart() : string
     {
         return ``;
