@@ -688,14 +688,12 @@ export class TrackLabel extends Directive
  */
 export class TrackScale extends Directive
 {
-    /**
-     * How often a tick mark should be placed.
-     * The interval is used along with the plasmid's sequence length to determine how many tick marks to show
-     * 
-     * @type {number}
-     * @memberof TrackScale
-     */
-    public interval : number;
+    //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L339
+    public DEFAULT_LABELVADJUST = 15;
+
+    //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L339
+    public DEFAULT_TICKSIZE = 3;
+
 
     public style : string;
 
@@ -708,6 +706,43 @@ export class TrackScale extends Directive
     public direction : "in" | "out";
 
     /**
+     * A reference to the parent track element
+     * 
+     * @type {PlasmidTrack}
+     * @memberof TrackScale
+     */
+    public track : PlasmidTrack;
+
+    public get radius() : number
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L396
+        return (this.inwardflg ? this.track.radius : this.track.radius + this.track.width) +  ((this.inwardflg ? -1 : 1) * this.vadjust) + (this.inwardflg ? -(this.ticksize) : 0);
+    }
+
+    private _interval : number;
+
+    /**
+     * How often a tick mark should be placed.
+     * The interval is used along with the plasmid's sequence length to determine how many tick marks to show
+     * 
+     * @type {number}
+     * @memberof TrackScale
+     */
+    public get interval() : number
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L401
+        return this._interval;
+    }
+
+    public set interval(interval : number)
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L401
+        this._interval = interval;
+    }
+
+    private _vadjust : number;
+
+    /**
      * Offset in pixels from the track.
      * A positive number means that the ticks will be drawn further away from the track.
      * A negative number will allow ticks to be plced closer to the center of the track
@@ -715,23 +750,78 @@ export class TrackScale extends Directive
      * @type {number}
      * @memberof TrackScale
      */
-    public vadjust : number;
+    public get vadjust() : number
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L406
+        return this._vadjust
+    }
+
+    public set vadjust(vadjust : number)
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L406
+        this._vadjust = vadjust;
+    }
+
+    private _ticksize : number;
 
     /**
-     * Vertical size of the tick marks. If negative, the ticks grow inward. The width of the tickmarks can be styled using the CSS stroke-width property
+     * Vertical size of the tick marks.
+     * If negative, the ticks grow inward.
+     * The width of the tickmarks can be styled using the CSS stroke-width property
      * 
      * @type {number}
      * @memberof TrackScale
      */
-    public tickSize : number;
+    public get ticksize() : number
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L411
+        return this._ticksize ? this._ticksize : this.DEFAULT_TICKSIZE;
+    }
+
+    public set ticksize(ticksize : number)
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L411
+        this._ticksize = ticksize;
+    }
+
+    public get inwardflg() : boolean
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L416
+        return this.direction === "in" ? true : false;
+    }
+
+    public get total() : number
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L421
+        return this.track.plasmid.sequencelength;
+    }
+
+    /**
+     * The original implementation has showlabels constrained to "0" or "1", but when 
+     * reading from it, returns false or true accordingly. This mismatch in accessors in Typescript
+     * is not valid. Write to this variable when setting up a <trackscale> and read from
+     * showlabels
+     * 
+     * @private
+     * @type {("0" | "1")}
+     * @memberof TrackScale
+     */
+    public showLabelsAttrib : "0" | "1";
 
     /**
      * Determines if labels will be shown or not
      * 
-     * @type {(0 | 1)}
+     * @readonly
+     * @type {boolean}
      * @memberof TrackScale
      */
-    public showLabels : 0 | 1;
+    public get showlabels() : boolean
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L426
+        return this.showLabelsAttrib === "1" ? true : false;
+    }
+
+    private _labelvadjust : number;
 
     /**
      * Distance of the labels to their respective tick marks
@@ -739,7 +829,66 @@ export class TrackScale extends Directive
      * @type {number}
      * @memberof TrackScale
      */
-    public labelvadjust : number;
+    public get labelvadjust() : number
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L431
+        return this._labelvadjust ? this._labelvadjust : this.DEFAULT_LABELVADJUST;
+    }
+
+    public set labelvadjust(labelvadjust : number)
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L431
+        this._labelvadjust = labelvadjust;
+    }
+
+    private _tickclass : string;
+
+    public get tickclass() : string
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L436
+        return this._tickclass;
+    }
+
+    public set tickclass(tickclass : string)
+    {
+        this._tickclass = tickclass;
+    }
+
+    private _tickstyle : string;
+
+    public get tickstyle() : string
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L441
+        return this._tickstyle;
+    }
+
+    public set tickstyle(tickstyle : string)
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L441
+        this._tickstyle = tickstyle;
+    }
+
+    private _labelclass : string;
+
+    /**
+     * Provide a class name to style the labels
+     * 
+     * @type {string}
+     * @memberof TrackScale
+     */
+    public get labelclass() : string
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L446
+        return this._labelclass;
+    }
+
+    public set labelclass(labelclass : string)
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L446
+        this._labelclass = labelclass;
+    }
+
+    private _labelstyle : string;
 
     /**
      * Indicate the style of the labels directly using this property
@@ -747,23 +896,23 @@ export class TrackScale extends Directive
      * @type {string}
      * @memberof TrackScale
      */
-    public labelstyle : string;
+    public get labelstyle() : string
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L451
+        return this._labelstyle;
+    }
 
-    /**
-     * 	Provide a class name to style the labels
-     * 
-     * @type {string}
-     * @memberof TrackScale
-     */
-    public labelclass : string;
+    public set labelstyle(labelstyle : string)
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L451
+        this._labelstyle = labelstyle;
+    }
 
-    /**
-     * A reference to the parent track element
-     * 
-     * @type {PlasmidTrack}
-     * @memberof TrackScale
-     */
-    public track : PlasmidTrack;
+    public get labelradius() : number
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L456
+        return this.radius + (this.labelvadjust * (this.inwardflg ? -1 : 1));
+    }
 
     public renderStart() : string
     {
@@ -774,10 +923,11 @@ export class TrackScale extends Directive
         return ``;
     }
     
-    public constructor()
+    public constructor(track : PlasmidTrack)
     {
         super();
         this.tagType = "trackscale";
+        this.track = track;
     }
 }
 
