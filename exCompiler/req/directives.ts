@@ -485,6 +485,14 @@ export class PlasmidTrack extends Directive
                 this.markers.push(marker);
                 this.children.push(marker);
             }
+            else if(node.children[i].name == "trackscale")
+            {
+                let scale = new TrackScale(this);
+                scale.fromNode(node.children[i]);
+                this.scales.push(scale);
+                this.children.push(scale);
+                
+            }
         }
     }
 
@@ -731,7 +739,7 @@ export class TrackScale extends Directive
     public get interval() : number
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L401
-        return this._interval;
+        return this._interval ? this._interval : 0;
     }
 
     public set interval(interval : number)
@@ -753,7 +761,7 @@ export class TrackScale extends Directive
     public get vadjust() : number
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L406
-        return this._vadjust
+        return this._vadjust ? this._vadjust : 0;
     }
 
     public set vadjust(vadjust : number)
@@ -916,13 +924,65 @@ export class TrackScale extends Directive
 
     public renderStart() : string
     {
-        return ``;
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L352
+        let res = "";
+
+        res += `<g`;
+        if(this.interval)
+        {
+            res += ` interval="${this.interval}" `;
+        }
+        if(this.direction)
+        {
+            res += ` direction="${this.direction}" `;
+        }
+        if(this.ticksize)
+        {
+            res += ` ticksize="${this.ticksize}" `;
+        }
+        res += `>`;
+
+        res += `<path`;
+        res += ` class="ng-scope ng-isolate-scope" `;
+        if(this.style)
+        {
+            res += ` style="${this.style}" `;
+        }
+        res += ` d="${services.pathScale(this.track.center.x,this.track.center.y,this.radius,this.interval,this.total,this.ticksize)}" `;
+        res += `></path>`
+        res += `<g></g></g>`;
+        return res;
     }
     public renderEnd() : string
     {
         return ``;
     }
     
+    public fromNode(node : html.Node) : void
+    {
+        if(node.type != "tag")
+            throw new Error("Node type is not tag");
+        if(node.name != "trackscale")
+            throw new Error("Node is not a trackscale");
+        if(node.attribs.interval)
+        {
+            this.interval = parseInt(node.attribs.interval);
+        }
+        if(node.attribs.style)
+        {
+            this.style = node.attribs.style;
+        }
+        if(node.attribs.direction)
+        {
+            this.direction = node.attribs.direction;
+        }
+        if(node.attribs.ticksize)
+        {
+            this.ticksize = parseInt(node.attribs.ticksize);
+        }
+        
+    }
+
     public constructor(track : PlasmidTrack)
     {
         super();
