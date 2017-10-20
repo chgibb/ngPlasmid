@@ -256,8 +256,8 @@ export function elementScaleLabels(
         cos = Math.cos(alpha);
         sin = Math.sin(alpha);
         labelArr.push({
-            x : (<number>(<any>Math).round10((x + (radius * cos)), precision)),
-            y : (<number>(<any>Math).round10((y + (radius * sin)), precision)),
+            x : (round10((x + (radius * cos)), precision)),
+            y : (round10((y + (radius * sin)), precision)),
             text : (<any>(interval * i))
         });
     }
