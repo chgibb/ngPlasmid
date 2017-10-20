@@ -802,14 +802,44 @@ export class TrackMarker extends Directive
      */
     public arrowstartlength : number;
 
+    /**
+     * The length, width, and angle of a the starting arrow head can be specified here
+     * 
+     * @type {services.Arrow}
+     * @memberof TrackMarker
+     */
     public arrowstartwidth : services.Arrow;
 
+    /**
+     * The length, width, and angle of a the starting arrow head can be specified here
+     * 
+     * @type {services.Arrow}
+     * @memberof TrackMarker
+     */
     public arrowstartangle : services.Arrow;
 
+    /**
+     * The length, width, and angle of a the ending arrow head can be specified here
+     * 
+     * @type {number}
+     * @memberof TrackMarker
+     */
     public arrowendlength : number;
 
+    /**
+     * 	The length, width, and angle of a the ending arrow head can be specified here
+     * 
+     * @type {services.Arrow}
+     * @memberof TrackMarker
+     */
     public arrowendwidth : services.Arrow;
 
+    /**
+     * The length, width, and angle of a the ending arrow head can be specified here
+     * 
+     * @type {services.Arrow}
+     * @memberof TrackMarker
+     */
     public arrowendangle : services.Arrow;
 
     /**
@@ -822,8 +852,20 @@ export class TrackMarker extends Directive
      */
     public classList : Array<string>;
 
+    /**
+     * A reference to the parent track element
+     * 
+     * @type {PlasmidTrack}
+     * @memberof TrackMarker
+     */
     public track : PlasmidTrack;
 
+    /**
+     * An array that represents all of the labels attached to this marker
+     * 
+     * @type {Array<MarkerLabel>}
+     * @memberof TrackMarker
+     */
     public labels : Array<MarkerLabel>;
 
     public getPath() : string
@@ -921,11 +963,13 @@ export class TrackMarker extends Directive
             };
         }
     }
+
     public get center() : services.Point
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L745
         return this.track.center;
     }
+
     public get radius() : services.Radius
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L750
@@ -935,6 +979,7 @@ export class TrackMarker extends Directive
             middle : this.track.radius + this.vadjust + this.width / 2
         };
     }
+
     public get angle() : services.Angle
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L759
@@ -963,6 +1008,14 @@ export class TrackMarker extends Directive
 
     private _vadjust : number;
 
+    /**
+     * Offset in pixels from the track. 
+     * A positive number means that the marker will be drawn further away from the track, 
+     * while a negative number will make the marker be drawn closer to the center of the track
+     * 
+     * @type {number}
+     * @memberof TrackMarker
+     */
     public get vadjust() : number
     {
         return this._vadjust ? this._vadjust : 0;
@@ -974,6 +1027,15 @@ export class TrackMarker extends Directive
 
     private _wadjust : number;
 
+    /**
+     * Offset width of the marker in relation the track's width.
+     * A negative number will make the marker thinner than the track,
+     * while a positive number will make it thicker.
+     * A value of 0 means the marker will be the same width of the track
+     * 
+     * @type {number}
+     * @memberof TrackMarker
+     */
     public get wadjust() : number
     {
         return this._wadjust ? this._wadjust : 0;
@@ -1035,6 +1097,12 @@ export class TrackMarker extends Directive
 
     private _markergroup : string;
 
+    /**
+     * Label a group of markers by giving them a unique name using this property
+     * 
+     * @type {string}
+     * @memberof TrackMarker
+     */
     public get markergroup() : string
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L821
