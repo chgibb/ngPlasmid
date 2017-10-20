@@ -32,3 +32,4 @@ fi
 testFile "2Labels.html"
 testFile "2TrackMarkers.html"
 testFile "trackMarkers.html"
+testFile "2trackScales.html"
