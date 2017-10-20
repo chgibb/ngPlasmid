@@ -1744,8 +1744,6 @@ export class MarkerLabel extends Directive
         this._text = text;
     }
 
-
-
     public renderStart() : string
     {
         return ``;
