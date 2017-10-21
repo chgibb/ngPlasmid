@@ -393,6 +393,7 @@ export class PlasmidTrack extends Directive
             }
             return services.polarToCartesian(center.x, center.y, radius, angle);
         }
+        return;
     }
     public renderStart() : string
     {
@@ -1744,9 +1745,69 @@ export class MarkerLabel extends Directive
         this._text = text;
     }
 
+    public getPath(hAdjust : number, vAdjust : number, hAlign : string, vAlign : string)
+    {
+        let VALIGN_MIDDLE = "middle";
+        let VALIGN_INNER = "inner";
+        let VALIGN_OUTER = "outer";
+        let HALIGN_MIDDLE = "middle";
+        let HALIGN_START = "start";
+        let HALIGN_END = "end";
+        let center = this.marker.center;
+        let radius;
+        let markerRadius;
+        let markerAngle;
+        let startAngle;
+        let endAngle;
+
+        markerRadius = this.marker.radius;
+        switch (vAlign) {
+        case VALIGN_INNER:
+            radius = markerRadius.inner;
+            break;
+        case VALIGN_OUTER:
+            radius = markerRadius.outer;
+            break;
+        default:
+            radius = markerRadius.middle;
+            break;
+        }
+
+        markerAngle = this.marker.angle;
+        switch (hAlign) {
+        case HALIGN_START:
+            startAngle = markerAngle.start;
+            endAngle = markerAngle.start + 359.99;
+            break;
+        case HALIGN_END:
+            startAngle = markerAngle.end + 1;
+            endAngle = markerAngle.end;
+            break;
+        default:
+            startAngle = markerAngle.middle + 180.05;
+            endAngle = markerAngle.middle + 179.95;
+            break;
+        }
+        return services.pathArc(this.marker.center.x, this.marker.center.y, radius + Number(vAdjust || 0), startAngle + Number(hAdjust || 0), endAngle + Number(hAdjust || 0), 1);
+    }
+
     public renderStart() : string
     {
-        return ``;
+        let res = "";
+        /*//https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L935
+        let id = 'TPATH' + (Math.random() + 1).toString(36).substring(3, 7);
+
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L950
+        let VALIGN_MIDDLE = "middle";
+        let VALIGN_INNER = "inner";
+        let VALIGN_OUTER = "outer";
+        let HALIGN_MIDDLE = "middle";
+        let HALIGN_START = "start";
+        let HALIGN_END = "end";
+
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L949
+        */
+        return res;
     }
 
     public renderEnd() : string
