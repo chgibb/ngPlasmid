@@ -21,7 +21,11 @@ ngPlasmid aims to fully support the directives of AngularPlasmid as they are use
 - pUC19
 
 ### Breaking Changes, Incompatibility
+#### ```<markerlabel>```  
 We currently do not support the ```<markerlabel>``` directive at all. This is due to the original's use of ```window.getComputedStyle``` to determine font size. If we can find a performant alternative, then we may support ```<markerlabel>``` in the future.
+
+#### String Interpolation ```{{ }}```  
+String interpolation of expressions in attributes is currently not supported though is a work in progress.
 
 ### Speed
 ngPlasmid can be 5-10x faster. Speed, as well as correctness with the reference implementation is tested on each commit. See Travis logs for compilation and optimization time for each test file vs the reference compiler.
