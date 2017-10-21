@@ -1464,7 +1464,7 @@ export class TrackMarker extends Directive
             if(i != this.classList.length - 1)
                 classAttrib += " ";
         }
-        if(this.classList.length == 1)
+        if(this.classList.length != 0)
             classAttrib += " ";
         classAttrib += `ng-scope ng-isolate-scope`;
         res += `<path class="${classAttrib}" d="${this.getPath()}" `;
