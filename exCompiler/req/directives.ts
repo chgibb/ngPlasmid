@@ -1088,13 +1088,7 @@ export class TrackMarker extends Directive
 
     public arrowstartwidth : number
 
-    /**
-     * The length, width, and angle of a the starting arrow head can be specified here
-     * 
-     * @type {services.Arrow}
-     * @memberof TrackMarker
-     */
-    public arrowstartangle : services.Arrow;
+    public arrowstartangle : number;
 
     /**
      * The length, width, and angle of a the ending arrow head can be specified here
@@ -1509,6 +1503,10 @@ export class TrackMarker extends Directive
         if(node.attribs.arrowendlength)
         {
             this.arrowendlength = parseInt(node.attribs.arrowendlength);
+        }
+        if(node.attribs.arrowstartangle)
+        {
+            this.arrowstartangle = parseInt(node.attribs.arrowstartangle);
         }
         if(node.attribs.wadjust)
         {
