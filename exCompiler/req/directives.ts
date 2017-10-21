@@ -686,7 +686,7 @@ export class TrackLabel extends Directive
         }
         if(node.attribs.labelclass)
         {
-            this.labelclass =node.attribs.labelclass;
+            this.labelclass = node.attribs.labelclass;
         }
     }
 
