@@ -112,8 +112,8 @@ export function pathArc(
     startAngle : number,
     endAngle : number,
     width : number,
-    arrowStart : Arrow,
-    arrowEnd : Arrow
+    arrowStart? : Arrow,
+    arrowEnd? : Arrow
 ) : string {
     let d : string;
     let start : Point; 
