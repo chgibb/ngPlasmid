@@ -18,6 +18,7 @@ ngPlasmid aims to fully support the directives of AngularPlasmid as they are use
 - pBR322
 - pLVG440
 - pPMA43C
+- pUC19
 
 ### Breaking Changes, Incompatibility
 We currently do not support the ```<markerlabel>``` directive at all. This is due to the original's use of ```window.getComputedStyle``` to determine font size. If we can find a performant alternative, then we may support ```<markerlabel>``` in the future.
