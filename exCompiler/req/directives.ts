@@ -999,6 +999,10 @@ export class TrackScale extends Directive
         {
             this.labelstyle = node.attribs.labelstyle;
         }
+        if(node.attribs.labelclass)
+        {
+            this.labelclass = node.attribs.labelclass;
+        }
         if(node.attribs.direction)
         {
             this.direction = node.attribs.direction;
@@ -1014,6 +1018,10 @@ export class TrackScale extends Directive
         if(node.attribs.vadjust)
         {
             this.vadjust = parseInt(node.attribs.vadjust);
+        }
+        if(node.attribs.labelvadjust)
+        {
+            this.labelvadjust = parseInt(node.attribs.labelvadjust);
         }
         
     }
