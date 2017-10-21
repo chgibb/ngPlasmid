@@ -1241,20 +1241,19 @@ export class TrackMarker extends Directive
         let end : number;
 
         startAngle = (this.start / this.track.plasmid.sequencelength) * 360;
-        end = this.end ? this.end : this.start;
+        end = this.end || this.start;
         /*
             In the original implementation of this function, SVGUtil.util.Numeric is used instead of the first ternary below.
             This appears to cause endAngle to equal end in all cases, and as such we simply return end : end.
         */
-        endAngle = (end ? end : 0 / this.track.plasmid.sequencelength) * 360;
+        endAngle = ((end ? end : 0) / this.track.plasmid.sequencelength) * 360;
         endAngle += (endAngle < startAngle) ? 360 : 0;
         midAngle = startAngle + ((endAngle - startAngle) / 2);
 
-        //The original appears to return startAngle as start and end when no end attribute is present on the marker
         return <services.Angle>{
             start : startAngle,
             middle : midAngle,
-            end : this.end ? end : startAngle
+            end : endAngle
         };
     }
 
