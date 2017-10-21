@@ -7,3 +7,26 @@ The compiler under ```referenceCompiler/``` uses ```ng-node-compile```, which in
 
 ## Experimental Compiler
 The source for this project is currently under ```exCompiler/```. Instead of simulating a browser environment, we simply parse the templates from HTML and then convert directly to SVG.
+
+## Progress
+### Official Examples Compatibility
+HSP70 (WIP)
+- ~~\<plasmid\>~~
+- ~~\<plasmidtrack\>~~
+- ~~\<tracklabel\>~~
+- ~~\<trackscale\>~~
+- ~~\<trackmarker\>~~
+- \<markerlabel\>
+- Full compatibility
+
+pBCA-RLuc (not started)
+- \<plasmid\>
+- \<plasmidtrack\>
+- \<tracklabel\>
+- \<trackscale\>
+- \<trackmarker\>
+- \<markerlabel\>
+- Full compatibility
+
+### Speed
+ngPlasmid can be 5-10x faster. Speed, as well as correctness with the reference implementation is tested on each commit. See Travis logs for compilation and optimization time for each test file vs the reference compiler.
