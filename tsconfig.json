@@ -3,6 +3,10 @@
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
-    "strict": true
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": true
   }
 }
