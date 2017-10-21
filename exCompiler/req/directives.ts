@@ -25,6 +25,7 @@
 
 import * as html from "./html"
 import * as services from "./services";
+import {interpolate} from "./interpolate";
 export abstract class Directive
 {
     tagType : "plasmid" |
@@ -669,7 +670,7 @@ export class TrackLabel extends Directive
 
         if(node.attribs.text)
         {
-            this.text = node.attribs.text;
+            this.text = interpolate(node.attribs.text,this.$scope);
         }
         if(node.attribs.vadjust)
         {
