@@ -1011,6 +1011,10 @@ export class TrackScale extends Directive
         {
             this.showLabelsAttrib = node.attribs.showlabels;
         }
+        if(node.attribs.vadjust)
+        {
+            this.vadjust = parseInt(node.attribs.vadjust);
+        }
         
     }
 
