@@ -15,7 +15,7 @@ function compile() : void
     let ngEnvironment = new ngcompile([{name : "app", path : "@chgibb/angularplasmid"}]);
     let input = fs.readFileSync(args[0]).toString();
     console.log(
-        ngEnvironment.$compile(input)()
+        ngEnvironment.$compile(input)(args[1] ? JSON.parse(fs.readFileSync(args[1]).toString()) : undefined)
     );
 }
 setTimeout(function(){
