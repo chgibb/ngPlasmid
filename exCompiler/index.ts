@@ -10,6 +10,8 @@ import * as directives from "./req/directives";
     let nodes = await html.load(args[0]);
 
     let plasmid = new directives.Plasmid();
+    if(args[1])
+        plasmid.$scope = JSON.parse(fs.readFileSync(args[1]).toString());
     plasmid.fromNode(nodes[0]);
     console.log(plasmid.renderStart() + plasmid.renderEnd());
 })();
