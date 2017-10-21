@@ -7,13 +7,23 @@ function testFile {
 
 	printf "With reference compiler:\n"
 	printf "Compile time:\n"
-	time node referenceCompiler/index tests/$f > "$f"Ref.svg
+	if [ $# == 1 ]; then
+		time node referenceCompiler/index tests/$f > "$f"Ref.svg
+	fi
+	if [ $# == 2 ]; then
+		time node referenceCompiler/index tests/$f tests/$2 > "$f"Ref.svg
+	fi
 	printf "Optimization time:\n"
 	./node_modules/.bin/svgo -i "$f"Ref.svg -o "$f"RefO.svg
 
 	printf "With experimental compiler:\n"
 	printf "Compile time:\n"
-	time node exCompiler/index tests/$f > "$f"Ex.svg
+	if [ $# == 1 ]; then
+		time node exCompiler/index tests/$f > "$f"Ex.svg
+	fi
+	if [ $# == 2 ]; then
+		time node exCompiler/index tests/$f tests/$2 > "$f"Ex.svg
+	fi
 	printf "Optimization time:\n"
 	./node_modules/.bin/svgo -i "$f"Ex.svg -o "$f"ExO.svg
 	printf "\n"
@@ -41,3 +51,5 @@ testFile "pBR322.html"
 testFile "pLVG440.html"
 testFile "pPMA43C.html"
 testFile "pUC19.html"
+
+testFile "basicInterp.html" "basicInterp.json"
