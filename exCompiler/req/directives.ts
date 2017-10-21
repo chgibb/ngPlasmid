@@ -302,6 +302,11 @@ export class PlasmidTrack extends Directive
 
     public children : Array<TrackLabel | TrackScale | TrackMarker>;
 
+    public get $scope() : any
+    {
+        return this.plasmid.$scope;
+    }
+
     private _radius : number;
 
     /**
@@ -526,6 +531,11 @@ export class TrackLabel extends Directive
      */
     public track : PlasmidTrack;
     
+    public get $scope() : any
+    {
+        return this.track.$scope;
+    }
+
     public get center() : services.Point
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L536
@@ -730,6 +740,11 @@ export class TrackScale extends Directive
      * @memberof TrackScale
      */
     public track : PlasmidTrack;
+
+    public get $scope() : any
+    {
+        return this.track.$scope;
+    }
 
     public get radius() : number
     {
@@ -1133,6 +1148,11 @@ export class TrackMarker extends Directive
      * @memberof TrackMarker
      */
     public labels : Array<MarkerLabel>;
+
+    public get $scope() : any
+    {
+        return this.track.$scope;
+    }
 
     public getPath() : string
     {
@@ -1573,6 +1593,11 @@ export class MarkerLabel extends Directive
      * @memberof MarkerLabel
      */
     public marker : TrackMarker;
+
+    public get $scope() : any
+    {
+        return this.marker.$scope;
+    }
 
     public get showlineflg() : boolean
     {
