@@ -703,6 +703,15 @@ export class TrackScale extends Directive
     //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L339
     public DEFAULT_TICKSIZE = 3;
 
+    /**
+     * The API docs don't specify that <trackscale>s can have a class attribute, but there are official examples which do.
+     * We support it to be consistent with the examples. The classList will be output to the class attribute of the output <path>
+     * before the standard AngularJS classes.
+     * 
+     * @type {Array<string>}
+     * @memberof TrackScale
+     */
+    public classList : Array<string>;
 
     public style : string;
 
@@ -943,8 +952,17 @@ export class TrackScale extends Directive
         }
         res += `>`;
 
-        res += `<path`;
-        res += ` class="ng-scope ng-isolate-scope" `;
+        let classAttrib = "";
+        for(let i = 0; i != this.classList.length; ++i)
+        {
+            classAttrib += this.classList[i];
+            if(i != this.classList.length - 1)
+                classAttrib += " ";
+        }
+        if(this.classList.length == 1)
+            classAttrib += " ";
+        classAttrib += `ng-scope ng-isolate-scope`;
+        res += `<path class="${classAttrib}" `;
         if(this.style)
         {
             res += ` style="${this.style}" `;
@@ -1023,6 +1041,17 @@ export class TrackScale extends Directive
         {
             this.labelvadjust = parseInt(node.attribs.labelvadjust);
         }
+        if(node.attribs.class)
+        {
+            let classAttrib : Array<string> = node.attribs.class.split(" ");
+            for(let i = 0; i != classAttrib.length; ++i)
+            {
+                if(classAttrib[i] && classAttrib[i] != " ")
+                {
+                    this.classList.push(classAttrib[i]);
+                }
+            }
+        }
         
     }
 
@@ -1031,6 +1060,7 @@ export class TrackScale extends Directive
         super();
         this.tagType = "trackscale";
         this.track = track;
+        this.classList = new Array<string>();
     }
 }
 
