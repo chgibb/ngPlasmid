@@ -1,8 +1,23 @@
 export class Token
 {
-    public type : "scopeAccess" | "addition" | "string";
+    public type : "scopeAccess" | "string" | "number" | "addition";
     public value : string;
     
+}
+
+export function determineTokenType(token : Token) : "scopeAccess" | "string" | "number"
+{
+    if(token.value[0] == `'` && token.value[token.value.length-1] == `'`)
+        return "string";
+    else if(!isNaN(parseInt(token.value)))
+        return "number";
+    else
+        return "scopeAccess";
+}
+
+export function trimQuotes(token : string) : string
+{
+    return token.substring(1,token.length-1);
 }
 
 export function tokenize(exp : string) : Array<Token>
@@ -12,10 +27,23 @@ export function tokenize(exp : string) : Array<Token>
     let str : string = "";
     for(let i = 0; i != exp.length; ++i)
     {
+        if(exp[i] == "+")
+        {
+            let token = new Token();
+            token.type = "addition";
+            let previousToken = new Token();
+            previousToken.value = str;
+            previousToken.type = determineTokenType(previousToken);
+            res.push(previousToken);
+            res.push(token);
+            str = "";
+            continue;
+        }
         str += exp[i];
     }
     let token = new Token();
     token.value = str;
+    token.type = determineTokenType(token);
     res.push(token);
 
     return res;
@@ -43,7 +71,14 @@ export function interpolate(value : string,$scope : any) : string
         if(tokens[i].type == "scopeAccess" || tokens[i].type === undefined)
         {
             result += evaluateScopeAccess($scope,tokens[i].value);
-        }   
+        }
+        if(tokens[i].type == "addition")
+        {
+            ++i;
+            if(tokens[i].type == "string")
+                tokens[i].value = trimQuotes(tokens[i].value);
+            result += tokens[i].value;
+        }
     }
     return result;
 }
