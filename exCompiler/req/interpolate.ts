@@ -2,18 +2,48 @@ export class Token
 {
     public type : "scopeAccess" | "string" | "number" | "addition";
     public value : string;
+
+    private determineTokenType() : void
+    {
+        //' quoted string literal
+        if(this.value[0] == `'` && this.value[this.value.length-1] == `'`)
+        {
+            this.type = "string";
+            return;
+        }
+        //one-time bound variable
+        if(this.value[0] == `:` && this.value[1] == `:`)
+        {
+            this.type = "scopeAccess";
+            return;
+        }
+        //number literal
+        else if(!isNaN(parseInt(this.value)))
+        {
+            this.type = "number";
+            return;
+        }
+        else
+        {
+            this.type = "scopeAccess";
+            return;
+        }
+    }
+
+    public constructor(value : string)
+    {
+        if(value == "+")
+        {
+            this.type = "addition";
+            return;
+        }
+        this.value = value;
+        this.determineTokenType();
+    }
     
 }
 
-export function determineTokenType(token : Token) : "scopeAccess" | "string" | "number"
-{
-    if(token.value[0] == `'` && token.value[token.value.length-1] == `'`)
-        return "string";
-    else if(!isNaN(parseInt(token.value)))
-        return "number";
-    else
-        return "scopeAccess";
-}
+
 
 export function trimQuotes(token : string) : string
 {
@@ -29,11 +59,8 @@ export function tokenize(exp : string) : Array<Token>
     {
         if(exp[i] == "+")
         {
-            let token = new Token();
-            token.type = "addition";
-            let previousToken = new Token();
-            previousToken.value = str;
-            previousToken.type = determineTokenType(previousToken);
+            let token = new Token("+");
+            let previousToken = new Token(str);
             res.push(previousToken);
             res.push(token);
             str = "";
@@ -41,9 +68,7 @@ export function tokenize(exp : string) : Array<Token>
         }
         str += exp[i];
     }
-    let token = new Token();
-    token.value = str;
-    token.type = determineTokenType(token);
+    let token = new Token(str);
     res.push(token);
 
     return res;
@@ -51,6 +76,11 @@ export function tokenize(exp : string) : Array<Token>
 
 export function evaluateScopeAccess($scope : any,varAccess : string) : string
 {
+    //trim the leading :: off of one-time bound variable names
+    if(varAccess[0] == `:` && varAccess[1] == `:`)
+    {
+        varAccess = varAccess.substring(2,varAccess.length);
+    }
     //adapted from https://stackoverflow.com/questions/8051975/access-object-child-properties-using-a-dot-notation-string
     let props = varAccess.split(".");
     while(props.length && ($scope = $scope[(<any>props.shift())]));
