@@ -54,3 +54,5 @@ testFile "pUC19.html"
 
 testFile "strPropPlusStrLit.html" "strPropPlusStrLit.json"
 testFile "OTBStrPropPlusStrLit.html" "OTBStrPropPlusStrLit.json"
+
+testFile "strLitPlusStrProp.html" "strLitPlusStrProp.json"
