@@ -12,6 +12,13 @@ import * as directives from "./req/directives";
     let plasmid = new directives.Plasmid();
     if(args[1])
         plasmid.$scope = JSON.parse(fs.readFileSync(args[1]).toString());
-    plasmid.fromNode(nodes[0]);
+    for(let i = 0; i != nodes.length; ++ i)
+    {
+        if(nodes[i].name == "plasmid")
+        {
+            plasmid.fromNode(nodes[i]);
+            break;
+        }
+    }
     console.log(plasmid.renderStart() + plasmid.renderEnd());
 })();
