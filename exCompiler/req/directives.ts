@@ -469,7 +469,7 @@ export class PlasmidTrack extends Directive
         }
         if(node.attribs.radius)
         {
-            this.radius = parseInt(node.attribs.radius);
+            this.radius = parseInt(interpolate(node.attribs.radius,this.$scope));
         }
         if(node.attribs.width)
         {
