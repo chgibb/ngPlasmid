@@ -14,7 +14,7 @@ function testFile {
 		time node referenceCompiler/index tests/$f tests/$2 > "$f"Ref.svg
 	fi
 	printf "Optimization time:\n"
-	./node_modules/.bin/svgo -i "$f"Ref.svg -o "$f"RefO.svg
+	./node_modules/.bin/svgo -i "$f"Ref.svg -o "$f"RefO.svg --multipass --pretty --indent=4
 
 	printf "With experimental compiler:\n"
 	printf "Compile time:\n"
@@ -25,7 +25,7 @@ function testFile {
 		time node exCompiler/index tests/$f tests/$2 > "$f"Ex.svg
 	fi
 	printf "Optimization time:\n"
-	./node_modules/.bin/svgo -i "$f"Ex.svg -o "$f"ExO.svg
+	./node_modules/.bin/svgo -i "$f"Ex.svg -o "$f"ExO.svg --multipass --pretty --indent=4
 	printf "\n"
 	node scripts/fileEquality "$f"ExO.svg "$f"RefO.svg
 	if [ $? != 0 ]; then
