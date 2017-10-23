@@ -3,7 +3,7 @@ export class Token
     public type : "scopeAccess" | "string" | "number" | "addition";
     public value : string;
 
-    public evalledValue : string;
+    public evalledValue : string | number;
 
     private determineTokenType() : void
     {
@@ -60,6 +60,10 @@ export class Token
         else if(this.type == "scopeAccess")
         {
             this.evalledValue = this.evaluateScopeAccess($scope,this.value);
+        }
+        else if(this.type == "number")
+        {
+            this.evalledValue = parseInt(this.value);
         }
     }
 
@@ -126,9 +130,18 @@ export function interpolate(value : string,$scope : any) : string
         if(tokens[i].type == "addition")
         {
             ++i;
-            tokens[i].evalAgainst($scope);
-            result += tokens[i].evalledValue;
-            continue;
+            if(tokens[i].type == "string" || tokens[i-2].type == "string")
+            {
+                tokens[i].evalAgainst($scope);
+                result += tokens[i].evalledValue;
+                continue;
+            }
+            else if(tokens[i].type == "number" || tokens[i-2].type == "number")
+            {
+                tokens[i].evalAgainst($scope);
+                result = (parseInt(result) + <number>tokens[i].evalledValue).toString();
+                continue;
+            }
         }
     }
     return result;
