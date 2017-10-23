@@ -3,6 +3,8 @@ export class Token
     public type : "scopeAccess" | "string" | "number" | "addition";
     public value : string;
 
+    public evalledValue : string;
+
     private determineTokenType() : void
     {
         //' quoted string literal
@@ -30,6 +32,37 @@ export class Token
         }
     }
 
+    private evaluateScopeAccess($scope : any,varAccess : string) : string
+    {
+        //trim the leading :: off of one-time bound variable names
+        if(varAccess[0] == `:` && varAccess[1] == `:`)
+        {
+            varAccess = varAccess.substring(2,varAccess.length);
+        }
+        //adapted from https://stackoverflow.com/questions/8051975/access-object-child-properties-using-a-dot-notation-string
+        let props = varAccess.split(".");
+        while(props.length && ($scope = $scope[(<any>props.shift())]));
+        return $scope;
+    }
+
+    private trimQuotes(token : string) : string
+    {
+        return token.substring(1,token.length-1);
+    }
+
+    public evalAgainst($scope : any) : void
+    {
+        if(this.type == "string")
+        {
+            this.evalledValue = this.trimQuotes(this.value);
+            return;
+        }
+        else if(this.type == "scopeAccess")
+        {
+            this.evalledValue = this.evaluateScopeAccess($scope,this.value);
+        }
+    }
+
     public constructor(value : string)
     {
         if(value == "+")
@@ -41,13 +74,6 @@ export class Token
         this.determineTokenType();
     }
     
-}
-
-
-
-export function trimQuotes(token : string) : string
-{
-    return token.substring(1,token.length-1);
 }
 
 export function tokenize(exp : string) : Array<Token>
@@ -74,18 +100,6 @@ export function tokenize(exp : string) : Array<Token>
     return res;
 }
 
-export function evaluateScopeAccess($scope : any,varAccess : string) : string
-{
-    //trim the leading :: off of one-time bound variable names
-    if(varAccess[0] == `:` && varAccess[1] == `:`)
-    {
-        varAccess = varAccess.substring(2,varAccess.length);
-    }
-    //adapted from https://stackoverflow.com/questions/8051975/access-object-child-properties-using-a-dot-notation-string
-    let props = varAccess.split(".");
-    while(props.length && ($scope = $scope[(<any>props.shift())]));
-    return $scope;
-}
 
 export function interpolate(value : string,$scope : any) : string
 {
@@ -98,16 +112,23 @@ export function interpolate(value : string,$scope : any) : string
     let result = "";
     for(let i = 0; i != tokens.length; ++i)
     {
-        if(tokens[i].type == "scopeAccess" || tokens[i].type === undefined)
+        tokens[i].evalAgainst($scope);
+        if(tokens[i].type == "scopeAccess")
         {
-            result += evaluateScopeAccess($scope,tokens[i].value);
+            result += tokens[i].evalledValue;
+            continue;
+        }
+        if(tokens[i].type == "string")
+        {
+            result += tokens[i].evalledValue;
+            continue;
         }
         if(tokens[i].type == "addition")
         {
             ++i;
-            if(tokens[i].type == "string")
-                tokens[i].value = trimQuotes(tokens[i].value);
-            result += tokens[i].value;
+            tokens[i].evalAgainst($scope);
+            result += tokens[i].evalledValue;
+            continue;
         }
     }
     return result;
