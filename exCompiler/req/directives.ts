@@ -222,7 +222,10 @@ export class Plasmid extends Directive
     public fromNode(node : html.Node) : void
     {
         if(node.type != "tag")
+        {
+            console.error(node);
             throw new Error("Node type is not tag");
+        }
         if(node.name != "plasmid")
             throw new Error("Node is not a plasmid");
 
@@ -459,7 +462,10 @@ export class PlasmidTrack extends Directive
     public fromNode(node : html.Node) : void
     {
         if(node.type != "tag")
+        {
+            console.error(node);
             throw new Error("Node type is not tag");
+        }
         if(node.name != "plasmidtrack")
             throw new Error("Node is not a plasmidtrack");
 
@@ -664,7 +670,10 @@ export class TrackLabel extends Directive
     public fromNode(node : html.Node) : void
     {
         if(node.type != "tag")
+        {
+            console.error(node);
             throw new Error("Node type is not tag");
+        }
         if(node.name != "tracklabel")
             throw new Error("Node is not a tracklabel");
 
@@ -1018,7 +1027,10 @@ export class TrackScale extends Directive
     public fromNode(node : html.Node) : void
     {
         if(node.type != "tag")
+        {
+            console.error(node);
             throw new Error("Node type is not tag");
+        }
         if(node.name != "trackscale")
             throw new Error("Node is not a trackscale");
         if(node.attribs.interval)
@@ -1502,7 +1514,10 @@ export class TrackMarker extends Directive
     public fromNode(node : html.Node) : void
     {
         if(node.type != "tag")
+        {
+            console.error(node);
             throw new Error("Node type is not tag");
+        }
         if(node.name != "trackmarker")
             throw new Error("Node is not a trackmarker");
         if(node.attribs.start)
