@@ -53,3 +53,4 @@ testFile "pPMA43C.html"
 testFile "pUC19.html"
 
 testFile "strPropPlusStrLit.html" "strPropPlusStrLit.json"
+testFile "SBStrPropPlusStrLit.html" "SBStrPropPlusStrLit.json"
