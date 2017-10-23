@@ -56,3 +56,4 @@ testFile "strPropPlusStrLit.html" "strPropPlusStrLit.json"
 testFile "OTBStrPropPlusStrLit.html" "OTBStrPropPlusStrLit.json"
 
 testFile "strLitPlusStrProp.html" "strLitPlusStrProp.json"
+testFile "numPropPlusNumLit.html" "numPropPlusNumLit.json"
