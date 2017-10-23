@@ -47,7 +47,7 @@ Types are coerced according to the literals being operated on. i.e. ```{{'hello 
 One-time bound variables (```::```) are treated as regular variables. They are not handled specially.
 
 ##### Attributes Supporting Interpolation
-In the interests of speed and the requirements of the upstream project, only the following attributes currently support interpolation:
+In the interests of speed and the requirements of the downstream project, only the following attributes currently support interpolation:
 - ```<plasmid>```
     - ```plasmidheight```
     - ```plasmidwidth```
