@@ -52,4 +52,4 @@ testFile "pLVG440.html"
 testFile "pPMA43C.html"
 testFile "pUC19.html"
 
-testFile "basicInterp.html" "basicInterp.json"
+testFile "strPropPlusStrLit.html" "strPropPlusStrLit.json"
