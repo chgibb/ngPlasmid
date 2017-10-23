@@ -232,11 +232,11 @@ export class Plasmid extends Directive
         }
         if(node.attribs.plasmidheight)
         {
-            this.plasmidheight = parseInt(node.attribs.plasmidheight);
+            this.plasmidheight = parseInt(interpolate(node.attribs.plasmidheight,this.$scope));
         }
         if(node.attribs.plasmidwidth)
         {
-            this.plasmidwidth = parseInt(node.attribs.plasmidwidth);
+            this.plasmidwidth = parseInt(interpolate(node.attribs.plasmidwidth,this.$scope));
         }
 
         for(let i = 0; i != node.children.length; ++i)
