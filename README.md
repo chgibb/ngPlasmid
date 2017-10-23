@@ -41,7 +41,7 @@ At the moment we only support integer literals. Floating point literals will be 
 Currently only the ```+``` addition operator is supported. Inserting string or numeric literals into an expression must be done through an operator. i.e. ```{{'hello '+map.myName}}``` or ```{{map.mapWidth+150}}```
 
 ##### Type Coercion
-Types are coerced according to the literals being operated on. i.e. ```{{'hello '+map.radius}}``` where ```map : {radius : 150}``` will attempt to coerce ```'hello '``` to a number and add 150 to it, resulting in ```NaN```. The same behaviour is true for string literals, i.e. ```{{map.radius+' across'}}``` will coerce ```map.radius``` to a string and append ```' across'``` to the end.
+Types are coerced according to the literals being operated on. i.e. ```{{'hello '+map.radius}}``` where ```map : {radius : 150}``` will coerce ```map.radius``` to a string and append it to ```'hello '```. The same behaviour is true for numeric literals, i.e. ```{{map.mapName+100}}``` will coerce ```map.mapName``` to a number and add ```100``` to it. If ```map.mapName``` is not a number, the result will be ```NaN```.
 
 ##### One-Time Variable Bindings
 One-time bound variables (```::```) are treated as regular variables. They are not handled specially.
