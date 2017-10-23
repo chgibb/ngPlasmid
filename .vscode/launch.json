@@ -10,7 +10,7 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/exCompiler/index.js",
-            "args" : ["samples/HSP70.html"],
+            "args" : ["tests/L6R1HPV16Cov.html","tests/L6R1HPV16Cov.json"],
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
