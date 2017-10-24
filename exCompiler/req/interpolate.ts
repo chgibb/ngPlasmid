@@ -30,6 +30,13 @@ export class Token
      */
     public interpValue : string | number;
 
+    /**
+     * Populates type property given value property
+     * 
+     * @private
+     * @returns {void} 
+     * @memberof Token
+     */
     private determineTokenType() : void
     {
         //' quoted string literal
@@ -57,6 +64,15 @@ export class Token
         }
     }
 
+    /**
+     * Attempt to evaluate varAccess in the context of $scope
+     * 
+     * @private
+     * @param {*} $scope 
+     * @param {string} varAccess 
+     * @returns {string} 
+     * @memberof Token
+     */
     private evaluateScopeAccess($scope : any,varAccess : string) : string
     {
         //trim the leading :: off of one-time bound variable names
