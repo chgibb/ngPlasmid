@@ -118,7 +118,7 @@ export class Token
 }
 
 /**
- * Tokenize the given expression. Returns the tokenized expression
+ * Tokenize the given expression. Returns the tokens representing the expression
  * 
  * @export
  * @param {string} exp 
