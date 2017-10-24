@@ -9,6 +9,7 @@ The compiler under ```referenceCompiler/``` uses ```ng-node-compile```, which in
 The source for this project is currently under ```exCompiler/```. Instead of simulating a browser environment, we simply parse the templates from HTML and then convert directly to SVG.
 
 ## Progress
+See AngularPlasmid's [official examples](http://angularplasmid.vixis.com/samples.php)
 ### Compatibility with AngularPlasmid
 ngPlasmid aims to fully support the directives of AngularPlasmid as they are used in the official examples. Directive usage in the examples differs in some ways from what the official documentation states. Where there is a conflict, we defer to compatibility with the example and its output from actually running AngularPlasmid as opposed to what the documentation states. With the exception of ```<markerlabel>```, we support all directives as they are used in the official examples.
 
@@ -21,8 +22,15 @@ ngPlasmid aims to fully support the directives of AngularPlasmid as they are use
 - pUC19
 
 ### Breaking Changes, Incompatibility
+See AngularPlasmid's [official API docs](http://angularplasmid.vixis.com/api.php)
 #### ```<markerlabel>```  
 We currently do not support the ```<markerlabel>``` directive at all. This is due to the original's use of ```window.getComputedStyle``` to determine font size. If we can find a performant alternative, then we may support ```<markerlabel>``` in the future.
+
+#### ```<svgelement>```
+The ```<svgelement>``` directive is (currently) not supported and (currently) outside the scope of this project.
+
+#### ```<plasmidapi>```
+The ```<plasmidapi>``` directive is (currently) not supported and (currently) outside the scope of this project.
 
 #### Attributes Marked ```Numeric``` in the Official Docs
 Every directive attribute marked as ```Type Numeric``` in the official docs is treated as a float. This does not appear to have any negative consequences though is of note.
