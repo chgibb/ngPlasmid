@@ -70,5 +70,5 @@ In the interests of speed and the requirements of the downstream project, only t
 - ```<tracklabel>```
     - ```text```
 
-### Speed
-ngPlasmid can be 5-100x faster. Speed, as well as correctness with the reference implementation is tested on each commit. See Travis logs for compilation and optimization time for each test file vs the reference compiler.
+### Performance
+ngPlasmid can be anywhere from ~5x to ~160x faster. ngPlasmid tends to pull away in terms of speed the larger the input is. Speed, as well as correctness with the reference implementation is tested on each commit. See Travis logs for compilation and optimization time for each test file vs the reference compiler.
