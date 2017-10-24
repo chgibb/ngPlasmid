@@ -28,7 +28,7 @@ export class Token
      * @type {(string | number)}
      * @memberof Token
      */
-    public evalledValue : string | number;
+    public interpValue : string | number;
 
     private determineTokenType() : void
     {
@@ -75,20 +75,20 @@ export class Token
         return token.substring(1,token.length-1);
     }
 
-    public evalAgainst($scope : any) : void
+    public interpolateAgainst($scope : any) : void
     {
         if(this.type == "string")
         {
-            this.evalledValue = this.trimQuotes(this.value);
+            this.interpValue = this.trimQuotes(this.value);
             return;
         }
         else if(this.type == "scopeAccess")
         {
-            this.evalledValue = this.evaluateScopeAccess($scope,this.value);
+            this.interpValue = this.evaluateScopeAccess($scope,this.value);
         }
         else if(this.type == "number")
         {
-            this.evalledValue = parseInt(this.value);
+            this.interpValue = parseInt(this.value);
         }
     }
 
@@ -141,15 +141,15 @@ export function interpolate(value : string,$scope : any) : string
     let result = "";
     for(let i = 0; i != tokens.length; ++i)
     {
-        tokens[i].evalAgainst($scope);
+        tokens[i].interpolateAgainst($scope);
         if(tokens[i].type == "scopeAccess")
         {
-            result += tokens[i].evalledValue;
+            result += tokens[i].interpValue;
             continue;
         }
         if(tokens[i].type == "string")
         {
-            result += tokens[i].evalledValue;
+            result += tokens[i].interpValue;
             continue;
         }
         if(tokens[i].type == "addition")
@@ -157,14 +157,14 @@ export function interpolate(value : string,$scope : any) : string
             ++i;
             if(tokens[i].type == "string" || tokens[i-2].type == "string")
             {
-                tokens[i].evalAgainst($scope);
-                result += tokens[i].evalledValue;
+                tokens[i].interpolateAgainst($scope);
+                result += tokens[i].interpValue;
                 continue;
             }
             else if(tokens[i].type == "number" || tokens[i-2].type == "number")
             {
-                tokens[i].evalAgainst($scope);
-                result = (parseInt(result) + <number>tokens[i].evalledValue).toString();
+                tokens[i].interpolateAgainst($scope);
+                result = (parseInt(result) + <number>tokens[i].interpValue).toString();
                 continue;
             }
         }
