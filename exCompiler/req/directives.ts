@@ -235,11 +235,11 @@ export class Plasmid extends Directive
         }
         if(node.attribs.plasmidheight)
         {
-            this.plasmidheight = parseInt(interpolate(node.attribs.plasmidheight,this.$scope));
+            this.plasmidheight = parseFloat(interpolate(node.attribs.plasmidheight,this.$scope));
         }
         if(node.attribs.plasmidwidth)
         {
-            this.plasmidwidth = parseInt(interpolate(node.attribs.plasmidwidth,this.$scope));
+            this.plasmidwidth = parseFloat(interpolate(node.attribs.plasmidwidth,this.$scope));
         }
 
         for(let i = 0; i != node.children.length; ++i)
@@ -475,7 +475,7 @@ export class PlasmidTrack extends Directive
         }
         if(node.attribs.radius)
         {
-            this.radius = parseInt(interpolate(node.attribs.radius,this.$scope));
+            this.radius = parseFloat(interpolate(node.attribs.radius,this.$scope));
         }
         if(node.attribs.width)
         {
