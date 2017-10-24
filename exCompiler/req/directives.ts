@@ -231,7 +231,7 @@ export class Plasmid extends Directive
 
         if(node.attribs.sequencelength)
         {
-            this.sequencelength = parseInt(node.attribs.sequencelength);
+            this.sequencelength = parseFloat(node.attribs.sequencelength);
         }
         if(node.attribs.plasmidheight)
         {
@@ -479,7 +479,7 @@ export class PlasmidTrack extends Directive
         }
         if(node.attribs.width)
         {
-            this.width = parseInt(node.attribs.width);
+            this.width = parseFloat(node.attribs.width);
         }
 
         for(let i = 0; i != node.children.length; ++i)
@@ -683,11 +683,11 @@ export class TrackLabel extends Directive
         }
         if(node.attribs.vadjust)
         {
-            this.vadjust = parseInt(node.attribs.vadjust);
+            this.vadjust = parseFloat(node.attribs.vadjust);
         }
         if(node.attribs.hadjust)
         {
-            this.hadjust = parseInt(node.attribs.hadjust);
+            this.hadjust = parseFloat(node.attribs.hadjust);
         }
         if(node.attribs.labelstyle)
         {
@@ -1035,7 +1035,7 @@ export class TrackScale extends Directive
             throw new Error("Node is not a trackscale");
         if(node.attribs.interval)
         {
-            this.interval = parseInt(node.attribs.interval);
+            this.interval = parseFloat(node.attribs.interval);
         }
         if(node.attribs.style)
         {
@@ -1055,7 +1055,7 @@ export class TrackScale extends Directive
         }
         if(node.attribs.ticksize)
         {
-            this.ticksize = parseInt(node.attribs.ticksize);
+            this.ticksize = parseFloat(node.attribs.ticksize);
         }
         if(node.attribs.showlabels)
         {
@@ -1063,11 +1063,11 @@ export class TrackScale extends Directive
         }
         if(node.attribs.vadjust)
         {
-            this.vadjust = parseInt(node.attribs.vadjust);
+            this.vadjust = parseFloat(node.attribs.vadjust);
         }
         if(node.attribs.labelvadjust)
         {
-            this.labelvadjust = parseInt(node.attribs.labelvadjust);
+            this.labelvadjust = parseFloat(node.attribs.labelvadjust);
         }
         if(node.attribs.class)
         {
@@ -1522,11 +1522,11 @@ export class TrackMarker extends Directive
             throw new Error("Node is not a trackmarker");
         if(node.attribs.start)
         {
-            this.start = parseInt(node.attribs.start);
+            this.start = parseFloat(node.attribs.start);
         }
         if(node.attribs.end)
         {
-            this.end = parseInt(node.attribs.end);
+            this.end = parseFloat(node.attribs.end);
         }
         if(node.attribs.markerstyle)
         {
@@ -1534,31 +1534,31 @@ export class TrackMarker extends Directive
         }
         if(node.attribs.arrowstartlength)
         {
-            this.arrowstartlength = parseInt(node.attribs.arrowstartlength)
+            this.arrowstartlength = parseFloat(node.attribs.arrowstartlength)
         }
         if(node.attribs.arrowendlength)
         {
-            this.arrowendlength = parseInt(node.attribs.arrowendlength);
+            this.arrowendlength = parseFloat(node.attribs.arrowendlength);
         }
         if(node.attribs.arrowstartangle)
         {
-            this.arrowstartangle = parseInt(node.attribs.arrowstartangle);
+            this.arrowstartangle = parseFloat(node.attribs.arrowstartangle);
         }
         if(node.attribs.wadjust)
         {
-            this.wadjust = parseInt(node.attribs.wadjust);
+            this.wadjust = parseFloat(node.attribs.wadjust);
         }
         if(node.attribs.vadjust)
         {
-            this.vadjust = parseInt(node.attribs.vadjust);
+            this.vadjust = parseFloat(node.attribs.vadjust);
         }
         if(node.attribs.arrowendwidth)
         {
-            this.arrowendwidth = parseInt(node.attribs.arrowendwidth);
+            this.arrowendwidth = parseFloat(node.attribs.arrowendwidth);
         }
         if(node.attribs.arrowstartwidth)
         {
-            this.arrowstartwidth = parseInt(node.attribs.arrowstartwidth);
+            this.arrowstartwidth = parseFloat(node.attribs.arrowstartwidth);
         }
         if(node.attribs.class)
         {
