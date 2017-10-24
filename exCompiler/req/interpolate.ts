@@ -23,7 +23,7 @@ export class Token
     public value : string;
 
     /**
-     * Result of evaluating the token
+     * Result of interpolating the token
      * 
      * @type {(string | number)}
      * @memberof Token
@@ -75,6 +75,13 @@ export class Token
         return token.substring(1,token.length-1);
     }
 
+    /**
+     * Interpolate the token against $scope
+     * 
+     * @param {*} $scope 
+     * @returns {void} 
+     * @memberof Token
+     */
     public interpolateAgainst($scope : any) : void
     {
         if(this.type == "string")
@@ -92,6 +99,11 @@ export class Token
         }
     }
 
+    /**
+     * Creates an instance of Token. Type is determined from value
+     * @param {string} value 
+     * @memberof Token
+     */
     public constructor(value : string)
     {
         if(value == "+")
@@ -105,6 +117,13 @@ export class Token
     
 }
 
+/**
+ * Tokenize the given expression. Returns the tokenized expression
+ * 
+ * @export
+ * @param {string} exp 
+ * @returns {Array<Token>} 
+ */
 export function tokenize(exp : string) : Array<Token>
 {
     let res = new Array<Token>();
@@ -130,6 +149,14 @@ export function tokenize(exp : string) : Array<Token>
 }
 
 
+/**
+ * Interpolate the given expression against $scope. Returns the interpolated expression
+ * 
+ * @export
+ * @param {string} value 
+ * @param {*} $scope 
+ * @returns {string} 
+ */
 export function interpolate(value : string,$scope : any) : string
 {
     //If the entire attribute value is not a valid inerpolation expression, then simply return the value
