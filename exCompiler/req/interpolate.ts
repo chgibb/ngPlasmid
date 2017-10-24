@@ -1,8 +1,33 @@
+/**
+ * Describes a given token in an interpolation expression
+ * 
+ * @export
+ * @class Token
+ */
 export class Token
 {
+    /**
+     * Type of the token
+     * 
+     * @type {("scopeAccess" | "string" | "number" | "addition")}
+     * @memberof Token
+     */
     public type : "scopeAccess" | "string" | "number" | "addition";
+
+    /**
+     * Raw value of the token, as it appears in the expression
+     * 
+     * @type {string}
+     * @memberof Token
+     */
     public value : string;
 
+    /**
+     * Result of evaluating the token
+     * 
+     * @type {(string | number)}
+     * @memberof Token
+     */
     public evalledValue : string | number;
 
     private determineTokenType() : void
