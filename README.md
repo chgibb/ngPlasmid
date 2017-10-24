@@ -24,6 +24,12 @@ ngPlasmid aims to fully support the directives of AngularPlasmid as they are use
 #### ```<markerlabel>```  
 We currently do not support the ```<markerlabel>``` directive at all. This is due to the original's use of ```window.getComputedStyle``` to determine font size. If we can find a performant alternative, then we may support ```<markerlabel>``` in the future.
 
+#### Attributes Marked ```Numeric``` in the Official Docs
+Every directive attribute marked as ```Type Numeric``` in the official docs is treated as a float. This does not appear to have any negative consequences though is of note.
+
+#### ```ng-``` Attributes and Directives
+All AngularJS ```ng-``` attributes and directives are not supported. None are used in the official examples and are (currently) outside the scope of this project.
+
 #### String Interpolation ```{{ }}```  
 ##### Attribute Value
 The entire attribute value to be interpolated must be an interpolation expression. i.e. ```<plasmid radius="{{map.radius}}" ... >```. Something like ```<plasmid radius="1{{map.radius}}" ...>``` is not supported and the expression will be returned into the attribute as is with no interpolation.
