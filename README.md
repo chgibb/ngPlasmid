@@ -35,7 +35,7 @@ Expressions of the form ```"{{map}}"``` where ```map : {...some object...}``` wi
 String literals MUST be quoted using ```'```(single quote). Unquoted strings are treated as variables and will be interpolated as ```undefined``` if they do not exist.
 
 ##### Numeric Literals
-At the moment we only support integer literals. Floating point literals will be truncated. Numeric literals cannot be arbitrarily inserted. i.e. ```{{123map.someProperty}}``` will result in a lookup for the property ```someProperty``` on object ```123map``` which will be interpolated as ```undefined```.
+All numeric literals are treated as floats internally. Numeric literals cannot be arbitrarily inserted. i.e. ```{{123map.someProperty}}``` will result in a lookup for the property ```someProperty``` on object ```123map``` which will be interpolated as ```undefined```.
 
 ##### Operators
 Currently only the ```+``` addition operator is supported. Inserting string or numeric literals into an expression must be done through an operator. i.e. ```{{'hello '+map.myName}}``` or ```{{map.mapWidth+150}}```
