@@ -45,7 +45,7 @@ export class Token
             return;
         }
         //number literal
-        else if(!isNaN(parseInt(this.value)))
+        else if(!isNaN(parseFloat(this.value)))
         {
             this.type = "number";
             return;
@@ -95,7 +95,7 @@ export class Token
         }
         else if(this.type == "number")
         {
-            this.interpValue = parseInt(this.value);
+            this.interpValue = parseFloat(this.value);
         }
     }
 
@@ -191,7 +191,7 @@ export function interpolate(value : string,$scope : any) : string
             else if(tokens[i].type == "number" || tokens[i-2].type == "number")
             {
                 tokens[i].interpolateAgainst($scope);
-                result = (parseInt(result) + <number>tokens[i].interpValue).toString();
+                result = (parseFloat(result) + <number>tokens[i].interpValue).toString();
                 continue;
             }
         }
