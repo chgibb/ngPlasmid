@@ -7,7 +7,10 @@
     "test": "./scripts/test.bash"
   },
   "author": "",
-  "license": "ISC",
+  "license": "GPL3.0",
+  "files": [
+    "lib"
+  ],
   "devDependencies": {
     "@chgibb/angularplasmid": "^1.0.5",
     "@chgibb/ng-node-compile": "^1.0.6",
