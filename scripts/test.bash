@@ -28,8 +28,10 @@ function testFile {
 	./node_modules/.bin/svgo -i "$f"Ex.svg -o "$f"ExO.svg --multipass --pretty --indent=4
 	printf "\n"
 	node scripts/fileEquality "$f"ExO.svg "$f"RefO.svg
-	if [ $? != 0 && $1 != "HPV1630CovTracks.html" ]; then
-		exit 1
+	if [ $? != 0 ]; then
+		if [ $1 != "HPV1630CovTracks.html" ]; then
+			exit 1
+		fi
 	fi
 }
 
