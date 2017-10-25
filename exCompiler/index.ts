@@ -7,7 +7,7 @@ import * as directives from "./../lib//directives";
 
 (async function(){
 
-    let nodes = await html.load(args[0]);
+    let nodes = await html.loadFromString(fs.readFileSync(args[0]).toString());
 
     let plasmid = new directives.Plasmid();
     if(args[1])

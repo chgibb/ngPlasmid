@@ -1,7 +1,5 @@
 import * as fs from "fs";
 
-const htmlparser = require("htmlparser2");
-
 export interface Node
 {
     type : string;
@@ -13,8 +11,9 @@ export interface Node
     parent : Node;
 }
 
-export function load(filePath : string) : Promise<Array<Node>>
+export function loadFromString(htmlString : string) : Promise<Array<Node>>
 {
+    const htmlparser = require("htmlparser2");
     return new Promise<Array<Node>>((resolve,reject) => {
 
         const handler = new htmlparser.DomHandler(function(error : any,dom : any){
@@ -24,9 +23,7 @@ export function load(filePath : string) : Promise<Array<Node>>
                 resolve(dom);
         });
         const parser = new htmlparser.Parser(handler);
-        parser.write(
-            fs.readFileSync(filePath).toString()
-        );
+        parser.write(htmlString);
         parser.end();
 
     });
