@@ -5,4 +5,5 @@ rm lib/*.js
 
 npm version $1
 git push origin --tags
+npm publish
 npm pack
