@@ -11,6 +11,10 @@
   "files": [
     "lib"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chgibb/ngPlasmid"
+  },
   "devDependencies": {
     "@chgibb/angularplasmid": "^1.0.5",
     "@chgibb/ng-node-compile": "^1.0.6",
