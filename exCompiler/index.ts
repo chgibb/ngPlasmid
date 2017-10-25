@@ -2,8 +2,8 @@ import * as fs from "fs";
 
 let args = process.argv.slice(2);
 
-import * as html from "./req/html";
-import * as directives from "./req/directives";
+import * as html from "./../lib/html";
+import * as directives from "./../lib//directives";
 
 (async function(){
 
