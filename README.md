@@ -1,12 +1,67 @@
 # ngPlasmid
 
-Reimplementation of https://github.com/vixis/angularplasmid to compile AngularPlasmid templates to static SVGs. Currently highly experimental and subject to change. Will likely not be fully compatible with all of AngularPlasmid.
+Reimplementation of https://github.com/vixis/angularplasmid to compile AngularPlasmid templates to static SVGs.
+
+This project is available through ```npm``` as a Typescript only package. No Javascript is distributed.
+
+## Usage
+```
+npm install --save @chgibb/ngplasmid
+```
+```javascript
+/*
+    Compiles the file inputFile.html to SVG and dumps the result to standard out.
+*/
+
+//Ensure the files we import get compiled
+/// <reference path="node_modules/@chgibb/ngplasmid/lib/html" />
+/// <reference path="node_modules/@chgibb/ngplasmid/lib/directives" />
+
+import * as fs from "fs";
+
+
+import * as html from "@chgibb/ngplasmid/lib/html";
+import * as directives from "@chgibb/ngplasmid/lib/directives";
+
+(async function(){
+
+    /*
+        The html.loadFromString function makes use of htmlparser2 to parse its input.
+        htmlparser2 is not installed when installing ngplasmid by default. 
+        You must also install htmlparser2 > 3.9.2 for this function to work.
+
+        Plasmid maps can also be constructed programmatically by constructing an instance of html.Node or by manipulating class properties directly.
+    */
+    let nodes : Array<html.Node> = await html.loadFromString(fs.readFileSync("inputFile.html").toString());
+
+    let plasmid : directives.Plasmid = new directives.Plasmid();
+    plasmid.$scope = {
+        someProperty : 1,
+        someOtherProperty : "My Map"
+    };
+
+    //ignore everything in inputFile.html until we find a <plasmid> directive
+    for(let i = 0; i != nodes.length; ++i)
+    {
+        if(nodes[i].name == "plasmid")
+        {
+            //construct the map in memory
+            plasmid.fromNode(nodes[i]);
+            break;
+        }
+    }
+    //compile and dump the SVG to the console
+    console.log(plasmid.renderStart() + plasmid.renderEnd());
+})();
+```
+## Motivation
+This project will be gradually integrated into the SVG compilation infrastructure of [PHAT](https://github.com/chgibb/phat). PHAT makes heavy use of AngularPlasmid for circular genome visualisations. Currently, the method described in the Reference Compiler section and implemented in [```referenceCompiler/index.ts```](https://github.com/chgibb/ngPlasmid/blob/master/referenceCompiler/index.ts) is used in PHAT. As requirements have changed, performance has become a problem. We aim to solve it with this project.
 
 ## Reference Compiler
 The compiler under ```referenceCompiler/``` uses ```ng-node-compile```, which internally makes use of ```jsdom``` and ```AngularJS``` itself to simulate a web browser environment to render the template and then extract the SVG. This is woefully slow and inefficient for obvious reasons.
 
 ## Experimental Compiler
-The source for this project is currently under ```exCompiler/```. Instead of simulating a browser environment, we simply parse the templates from HTML and then convert directly to SVG.
+The source for this project is currently under ```lib/```. Instead of simulating a browser environment, we simply parse the templates from HTML and then convert directly to SVG. Under ```exCompiler/``` is an example implementation which takes an HTML file to compile and a JSON file to use as ```$scope``` and dumps the result to standard out. This is used in testing.
 
 ## Progress
 See AngularPlasmid's [official examples](http://angularplasmid.vixis.com/samples.php)
@@ -71,4 +126,4 @@ In the interests of speed and the requirements of the downstream project, only t
     - ```text```
 
 ### Performance
-ngPlasmid can be anywhere from ~5x to ~160x faster. ngPlasmid tends to pull away in terms of speed the larger the input is. Speed, as well as correctness with the reference implementation is tested on each commit. See Travis logs for compilation and optimization time for each test file vs the reference compiler.
+ngPlasmid can be anywhere from ~5x to ~160x faster. ngPlasmid tends to perform far better in terms of speed over the reference compiler the larger the input is. With small inputs, the main bottleneck is disk I/O and NodeJS' startup time. Speed, as well as correctness with the reference implementation is tested on each commit. See Travis logs for compilation and optimization time for each test file vs the reference compiler.
