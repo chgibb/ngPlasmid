@@ -20,9 +20,11 @@
     "@chgibb/ng-node-compile": "^1.0.6",
     "@types/node": "^8.0.34",
     "domhandler2": "^3.0.0",
-    "htmlparser2": "^3.9.2",
     "jquery": "^3.2.1",
     "svgo": "^0.7.2",
     "typescript": "^2.5.3"
+  },
+  "optionalDependencies": {
+    "htmlparser2": "^3.9.2"
   }
 }
