@@ -402,7 +402,7 @@ export class PlasmidTrack extends Directive
             }
             return services.polarToCartesian(center.x, center.y, radius, angle);
         }
-        return;
+        return undefined;
     }
     public renderStart() : string
     {
