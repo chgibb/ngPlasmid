@@ -23,6 +23,10 @@
 
  */
 
+/// <reference path="./html" />
+/// <reference path="./services" />
+/// <reference path="./interpolate" />
+
 import * as html from "./html"
 import * as services from "./services";
 import {interpolate} from "./interpolate";
