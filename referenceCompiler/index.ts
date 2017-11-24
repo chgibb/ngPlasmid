@@ -14,9 +14,13 @@ function compile() : void
     }
     let ngEnvironment = new ngcompile([{name : "app", path : "@chgibb/angularplasmid"}]);
     let input = fs.readFileSync(args[0]).toString();
-    console.log(
-        ngEnvironment.$compile(input)(args[1] ? JSON.parse(fs.readFileSync(args[1]).toString()) : undefined)
-    );
+    
+    let output : string = ngEnvironment.$compile(input)(args[1] ? JSON.parse(fs.readFileSync(args[1]).toString()) : undefined)
+
+    //emitting of <textPath> elements is broken for some reason
+    output = output.replace(/<textpath /,"<textPath ");
+    output = output.replace(/<\/textpath>/,"</textPath>");
+    console.log(output);
 }
 setTimeout(function(){
     compile();
