@@ -434,16 +434,11 @@ export class PlasmidTrack extends Directive
             res += ` style="${this.trackstyle}"`
         res += `></path>`;
         
-        if(this.children.length == 0)
-            res += "</g>";
-
-        else
+        for(let i = 0; i != this.children.length; ++i)
         {
-            for(let i = 0; i != this.children.length; ++i)
-            {
-                res += this.children[i].renderStart();
-            }
+            res += this.children[i].renderStart();
         }
+
 
         return res;
     }
@@ -451,15 +446,11 @@ export class PlasmidTrack extends Directive
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L179
         let res = "";
-        if(this.children.length != 0)
-            return `</g>`;
-        else
+        for(let i = 0; i != this.children.length; ++i)
         {
-            for(let i = 0; i != this.children.length; ++i)
-            {
-                res += this.children[i].renderEnd();
-            }
+            res += this.children[i].renderEnd();
         }
+        res += `</g>`;
         return res;
     }
 
@@ -1502,17 +1493,23 @@ export class TrackMarker extends Directive
         if(this.markerstyle)
             res += ` style="${this.markerstyle}"`;
         res += `></path>`;
-        if(this.labels.length == 0)
-            res += `</g>`;
+
+        for(let i = 0; i != this.labels.length; ++i)
+        {
+            res += this.labels[i].renderStart();
+        }
+        
         return res;
     }
     public renderEnd() : string
     {
-        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L645
-        if(this.labels.length != 0)
-            return `</g>`;
-        else
-            return "";
+        let res = ``;
+        for(let i = 0; i != this.labels.length; ++i)
+        {
+            res += this.labels[i].renderEnd();
+        }
+        res += `</g>`;
+        return res;
     }
 
     public fromNode(node : html.Node) : void
@@ -1575,6 +1572,15 @@ export class TrackMarker extends Directive
                 }
             }
         }
+        for(let i = 0; i != node.children.length; ++i)
+        {
+            if(node.children[i].name == "markerlabel")
+            {
+                let label = new MarkerLabel(this);
+                label.fromNode(node.children[i]);
+                this.labels.push(label);
+            }
+        }
     }
 
     public constructor(track : PlasmidTrack)
@@ -1613,6 +1619,8 @@ export class MarkerLabel extends Directive
      * @memberof MarkerLabel
      */
     public marker : TrackMarker;
+
+    public classList : Array<string>;
 
     public get $scope() : any
     {
@@ -1875,7 +1883,7 @@ export class MarkerLabel extends Directive
     public renderStart() : string
     {
         let res = "";
-        /*//https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L935
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L935
         let id = 'TPATH' + (Math.random() + 1).toString(36).substring(3, 7);
 
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L950
@@ -1886,8 +1894,82 @@ export class MarkerLabel extends Directive
         let HALIGN_START = "start";
         let HALIGN_END = "end";
 
-        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L949
-        */
+        res += `<g`;
+
+        if(this.type)
+            res += ` type="${this.type}" `;
+        
+        if(this.text)
+            res += ` text="${this.text}" `;
+        
+        res += `><path></path>`
+
+        res += `<path`;
+        res += ` id="${id}" `;
+        res += ` style="fill:none;stroke:none" `;
+        
+        let fontSize = 0;
+        let fontAdjust = (this.valign === VALIGN_OUTER) ? 0 : (this.valign === VALIGN_INNER) ? Number(fontSize || 0) : Number(fontSize || 0) / 2;
+        res += ` d="${this.getPath(this.hadjust,this.vadjust - fontAdjust,this.halign,this.valign)}" `;
+        
+        res += `></path>`;
+
+        res += `<text`;
+        if(this.halign == HALIGN_START)
+        {
+            res += ` text-anchor="start" `;
+        }
+        else if(this.halign == HALIGN_END)
+        {
+            res += ` text-anchor="end" `;
+        }
+        else
+        {
+            res += ` text-anchor="middle" `;
+        }
+        res += ` alignment-baseline="middle" `;
+
+        let classAttrib = "";
+        for(let i = 0; i != this.classList.length; ++i)
+        {
+            classAttrib += this.classList[i];
+            if(i != this.classList.length - 1)
+                classAttrib += " ";
+        }
+        if(this.classList.length != 0)
+            classAttrib += " ";
+        classAttrib += `ng-scope ng-isolate-scope`;
+
+        res += ` class="${classAttrib}" `;
+
+        if(this.type == "path")
+        {
+            res += ` x="" y="" `;
+        }
+
+        res += `>`;
+
+        res += `<textPath href="#${id}" `;
+
+        res += ` class="ng-scope" `;
+
+        if(this.halign == HALIGN_START)
+        {
+            res += ` startOffset="0%" `;
+        }
+        else if(this.halign == HALIGN_END)
+        {
+            res += ` startOffset="100%" `;
+        }
+        else
+        {
+            res += ` startOffset="50%" `;
+        }
+
+        res += `>${this.text}`;
+
+        res += "</textPath></text></g>"
+
         return res;
     }
 
@@ -1896,11 +1978,43 @@ export class MarkerLabel extends Directive
         return ``;
     }
 
+    public fromNode(node : html.Node) : void
+    {
+        if(node.type != "tag")
+        {
+            throw new Error("Node type is not tag");
+        }
+        if(node.name != "markerlabel")
+            throw new Error("Node is not a markerlabel");
+        
+        if(node.attribs.type)
+        {
+            this.type = node.attribs.type;
+        }
+
+        if(node.attribs.class)
+        {
+            let classAttrib : Array<string> = node.attribs.class.split(" ");
+            for(let i = 0; i != classAttrib.length; ++i)
+            {
+                if(classAttrib[i] && classAttrib[i] != " ")
+                {
+                    this.classList.push(classAttrib[i]);
+                }
+            }
+        }
+        if(node.attribs.text)
+        {
+            this.text = node.attribs.text;
+        }
+    }
+
     public constructor(trackMarker : TrackMarker)
     {
         super();
         this.tagType = "markerlabel";
         this.marker = trackMarker;
+        this.classList = new Array<string>();
     }
 
 }
