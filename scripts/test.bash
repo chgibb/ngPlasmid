@@ -47,6 +47,8 @@ testFile "trackMarkers.html"
 testFile "2trackScales.html"
 testFile "3trackScales.html"
 testFile "trackMarkers.html"
+testFile "1MarkerLabel.html"
+
 testFile "HSP70.html"
 testFile "pBCA-RLuc.html"
 testFile "pBR322.html"
