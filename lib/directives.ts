@@ -1498,6 +1498,7 @@ export class TrackMarker extends Directive
         {
             res += this.labels[i].renderStart();
         }
+        res += `</g>`;
         
         return res;
     }
@@ -1508,7 +1509,6 @@ export class TrackMarker extends Directive
         {
             res += this.labels[i].renderEnd();
         }
-        res += `</g>`;
         return res;
     }
 
