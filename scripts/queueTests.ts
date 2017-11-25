@@ -76,5 +76,29 @@ export function queueTests() : Array<TestCase>
         name : "Angular Plasmid Example: pUC19"
     }));
 
+    testCases.push(new TestCase(<TestCaseInit>{
+        htmlFile : "strPropPlusStrLit.html",
+        jsonFile :"strPropPlusStrLit.json",
+        name : "Interpolation: String Property + String Literal"
+    }));
+
+    testCases.push(new TestCase(<TestCaseInit>{
+        htmlFile : "OTBStrPropPlusStrLit.html",
+        jsonFile :"OTBStrPropPlusStrLit.json",
+        name : "Interpolation: One-Time-Bound String Property + String Literal"
+    }));
+
+    testCases.push(new TestCase(<TestCaseInit>{
+        htmlFile : "strLitPlusStrProp.html",
+        jsonFile :"strLitPlusStrProp.json",
+        name : "Interpolation: String Literal + String Property"
+    }));
+
+    testCases.push(new TestCase(<TestCaseInit>{
+        htmlFile : "numPropPlusNumLit.html",
+        jsonFile :"numPropPlusNumLit.json",
+        name : "Interpolation: Number Property + Number Literal"
+    }));
+
     return testCases;
 }
