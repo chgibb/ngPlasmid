@@ -1908,10 +1908,12 @@ export class MarkerLabel extends Directive
         res += ` id="${id}" `;
         res += ` style="fill:none;stroke:none" `;
         
-        let fontSize = 0;
-        let fontAdjust = (this.valign === VALIGN_OUTER) ? 0 : (this.valign === VALIGN_INNER) ? Number(fontSize || 0) : Number(fontSize || 0) / 2;
-        res += ` d="${this.getPath(this.hadjust,this.vadjust - fontAdjust,this.halign,this.valign)}" `;
-        
+        if(this.type == "path")
+        {
+            let fontSize = 0;
+            let fontAdjust = (this.valign === VALIGN_OUTER) ? 0 : (this.valign === VALIGN_INNER) ? Number(fontSize || 0) : Number(fontSize || 0) / 2;
+            res += ` d="${this.getPath(this.hadjust,this.vadjust - fontAdjust,this.halign,this.valign)}" `;
+        }
         res += `></path>`;
 
         res += `<text`;
@@ -1942,33 +1944,43 @@ export class MarkerLabel extends Directive
 
         res += ` class="${classAttrib}" `;
 
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L959
         if(this.type == "path")
         {
             res += ` x="" y="" `;
+            res += `>`;
+
+            res += `<textPath href="#${id}" `;
+
+            res += ` class="ng-scope" `;
+
+            if(this.halign == HALIGN_START)
+            {
+                res += ` startOffset="0%" `;
+            }
+            else if(this.halign == HALIGN_END)
+            {
+                res += ` startOffset="100%" `;
+            }
+            else
+            {
+                res += ` startOffset="50%" `;
+            }
+
+            res += `>${this.text}`;
+
+            res += "</textPath>";
         }
-
-        res += `>`;
-
-        res += `<textPath href="#${id}" `;
-
-        res += ` class="ng-scope" `;
-
-        if(this.halign == HALIGN_START)
-        {
-            res += ` startOffset="0%" `;
-        }
-        else if(this.halign == HALIGN_END)
-        {
-            res += ` startOffset="100%" `;
-        }
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L991
         else
         {
-            res += ` startOffset="50%" `;
+            let pos = this.marker.getPosition(this.hadjust,this.vadjust,this.halign,this.valign);
+            res += ` x="${(<services.Point>pos).x}" y="${(<services.Point>pos).y}" `;
+            res += `>`;
+            res += `${this.text}`;
         }
-
-        res += `>${this.text}`;
-
-        res += "</textPath></text></g>"
+        
+        res +=  "</text></g>"
 
         return res;
     }
@@ -2006,6 +2018,10 @@ export class MarkerLabel extends Directive
         if(node.attribs.text)
         {
             this.text = node.attribs.text;
+        }
+        if(node.attribs.vadjust)
+        {
+            this.vadjust = parseFloat(node.attribs.vadjust);
         }
     }
 
