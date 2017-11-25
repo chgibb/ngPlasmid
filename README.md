@@ -66,7 +66,7 @@ The source for this project is currently under ```lib/```. Instead of simulating
 ## Progress
 See AngularPlasmid's [official examples](http://angularplasmid.vixis.com/samples.php)
 ### Compatibility with AngularPlasmid
-ngPlasmid aims to fully support the directives of AngularPlasmid as they are used in the official examples. Directive usage in the examples differs in some ways from what the official documentation states. Where there is a conflict, we defer to compatibility with the example and its output from actually running AngularPlasmid as opposed to what the documentation states. With the exception of ```<markerlabel>```, we support all directives as they are used in the official examples.
+ngPlasmid aims to fully support the directives of AngularPlasmid as they are used in the official examples. Directive usage in the examples differs in some ways from what the official documentation states. Where there is a conflict, we defer to compatibility with the example and its output from actually running AngularPlasmid as opposed to what the documentation states. We support all directives as they are used in the official examples.
 
 ### Official Examples Compatibility
 - HSP70
@@ -78,8 +78,8 @@ ngPlasmid aims to fully support the directives of AngularPlasmid as they are use
 
 ### Breaking Changes, Incompatibility
 See AngularPlasmid's [official API docs](http://angularplasmid.vixis.com/api.php)
-#### ```<markerlabel>```  
-We currently do not support the ```<markerlabel>``` directive at all. This is due to the original's use of ```window.getComputedStyle``` to determine font size. If we can find a performant alternative, then we may support ```<markerlabel>``` in the future.
+#### ```<markerlabel>``` Font Size
+AngularPlasmid uses ```window.getComputedStyle``` to determine font size. We attempt to parse font size out of the ```<markerlabel>```'s ```labelstyle``` attribute as a substitute. If we are unable to determine font size, it is assumed to be 0. This does not prevent the rendering of ```<markerlabel>```s which do not explicitly specify font style, however the output SVG will be differ slightly in text positioning than if ran through AngularPlasmid in a browser environment. This bug (and substitute behaviour) is currently present in ```JSDom``` as well. As such, there is no intention of trying to correct it at this time.
 
 #### ```<svgelement>```
 The ```<svgelement>``` directive is (currently) not supported and (currently) outside the scope of this project.
