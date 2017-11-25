@@ -3,6 +3,7 @@ const chalk = require("chalk");
 import {TestCase,TestCaseInit} from "./testCase";
 import {validateCompileTime} from "./validateCompileTime"
 import {validateOutputSize} from "./validateOutputSize"
+import {validateFileEquality} from "./validateFileEquality";
 
 let testCases : Array<TestCase> = new Array<TestCase>();
 
@@ -40,7 +41,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
 
         console.log(`   ${chalk.cyan(`Validating`)}`);
         
-        let compileTimeFactor = 2;
+        let compileTimeFactor = 5;
         let outString = `Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
 
         let res = validateCompileTime(testCases[i],compileTimeFactor);
@@ -55,7 +56,19 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         }
         
         outString = `Output Size Less Than Reference's Output Size`;
-        res =validateOutputSize(testCases[i]);
+        res = validateOutputSize(testCases[i]);
+        if(res)
+        {
+            console.log(`       ${chalk.green(outString)}`);
+        }
+        else
+        {
+            console.log(`       ${chalk.red(outString)}`);
+            process.exit(1);
+        }
+
+        outString = `Output Can Be Reduced to the Same as the Reference`;
+        res = validateFileEquality(testCases[i].referenceResultOptimisedPath,testCases[i].exHTMLToSVGResultOptimisedPath);
         if(res)
         {
             console.log(`       ${chalk.green(outString)}`);
