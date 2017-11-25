@@ -26,10 +26,13 @@
 /// <reference path="./html" />
 /// <reference path="./services" />
 /// <reference path="./interpolate" />
+/// <reference path="./parseFontSize" />
+
 
 import * as html from "./html"
 import * as services from "./services";
 import {interpolate} from "./interpolate";
+import {parseFontSize} from "./parseFontSize";
 export abstract class Directive
 {
     tagType : "plasmid" |
@@ -1633,7 +1636,7 @@ export class MarkerLabel extends Directive
         return this.showline === "1" ? true : false;
     }
 
-    private _halign : "middle" | "inner" | "outer";
+    private _halign : "middle" | "inner" | "outer" | "end" | "start";
 
     /**
      * Horizontal alignment of the label with the marker
@@ -1641,13 +1644,13 @@ export class MarkerLabel extends Directive
      * @type {("middle" | "inner" | "outer")}
      * @memberof MarkerLabel
      */
-    public get halign() : "middle" | "inner" | "outer"
+    public get halign() : "middle" | "inner" | "outer" | "end" | "start"
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1062
         return this._halign ? this._halign : "middle";
     }
 
-    public set halign(halign : "middle" | "inner" | "outer")
+    public set halign(halign : "middle" | "inner" | "outer" | "end" | "start")
     {
         this._halign = halign;
     }
@@ -1910,25 +1913,16 @@ export class MarkerLabel extends Directive
         
         if(this.type == "path")
         {
-            let fontSize = 0;
+            //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L973
+            let fontSize = this.labelstyle ? parseFontSize(this.labelstyle) : 0;
             let fontAdjust = (this.valign === VALIGN_OUTER) ? 0 : (this.valign === VALIGN_INNER) ? Number(fontSize || 0) : Number(fontSize || 0) / 2;
             res += ` d="${this.getPath(this.hadjust,this.vadjust - fontAdjust,this.halign,this.valign)}" `;
         }
         res += `></path>`;
 
         res += `<text`;
-        if(this.halign == HALIGN_START)
-        {
-            res += ` text-anchor="start" `;
-        }
-        else if(this.halign == HALIGN_END)
-        {
-            res += ` text-anchor="end" `;
-        }
-        else
-        {
-            res += ` text-anchor="middle" `;
-        }
+        
+        res += ` text-anchor="middle" `;
         res += ` alignment-baseline="middle" `;
 
         let classAttrib = "";
@@ -1943,6 +1937,9 @@ export class MarkerLabel extends Directive
         classAttrib += `ng-scope ng-isolate-scope`;
 
         res += ` class="${classAttrib}" `;
+
+        if(this.labelstyle)
+            res += ` style="${this.labelstyle}" `;
 
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L959
         if(this.type == "path")
@@ -2015,6 +2012,10 @@ export class MarkerLabel extends Directive
                 }
             }
         }
+        if(node.attribs.labelstyle)
+        {
+            this.labelstyle = node.attribs.labelstyle;
+        }
         if(node.attribs.text)
         {
             this.text = node.attribs.text;
@@ -2022,6 +2023,18 @@ export class MarkerLabel extends Directive
         if(node.attribs.vadjust)
         {
             this.vadjust = parseFloat(node.attribs.vadjust);
+        }
+        if(node.attribs.hadjust)
+        {
+            this.hadjust = parseFloat(node.attribs.hadjust);
+        }
+        if(node.attribs.halign)
+        {
+            this.halign = node.attribs.halign;
+        }
+        if(node.attribs.valign)
+        {
+            this.valign = node.attribs.valign;
         }
     }
 
