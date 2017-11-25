@@ -41,28 +41,30 @@ if [ $? != 0 ]; then
 	exit 1
 fi
 
-testFile "2Labels.html"
-testFile "2TrackMarkers.html"
-testFile "trackMarkers.html"
-testFile "2trackScales.html"
-testFile "3trackScales.html"
-testFile "trackMarkers.html"
-testFile "1MarkerLabel.html"
+#testFile "2Labels.html"
+#testFile "2TrackMarkers.html"
+#testFile "trackMarkers.html"
+#testFile "2trackScales.html"
+#testFile "3trackScales.html"
+#testFile "trackMarkers.html"
+#testFile "1MarkerLabel.html"
 
-testFile "HSP70.html"
-testFile "pBCA-RLuc.html"
-testFile "pBR322.html"
-testFile "pLVG440.html"
-testFile "pPMA43C.html"
-testFile "pUC19.html"
+#testFile "HSP70.html"
+#testFile "pBCA-RLuc.html"
+#testFile "pBR322.html"
+#testFile "pLVG440.html"
+#testFile "pPMA43C.html"
+#testFile "pUC19.html"
 
-testFile "strPropPlusStrLit.html" "strPropPlusStrLit.json"
-testFile "OTBStrPropPlusStrLit.html" "OTBStrPropPlusStrLit.json"
+#testFile "strPropPlusStrLit.html" "strPropPlusStrLit.json"
+#testFile "OTBStrPropPlusStrLit.html" "OTBStrPropPlusStrLit.json"
 
-testFile "strLitPlusStrProp.html" "strLitPlusStrProp.json"
-testFile "numPropPlusNumLit.html" "numPropPlusNumLit.json"
+#testFile "strLitPlusStrProp.html" "strLitPlusStrProp.json"
+#testFile "numPropPlusNumLit.html" "numPropPlusNumLit.json"
 
-testFile "L6R1HPV16Cov.html" "L6R1HPV16Cov.json"
-testFile "HPV165CovTracks.html" "HPV165CovTracks.json"
-testFile "HPV1615CovTracks.html" "HPV1615CovTracks.json"
-testFile "HPV1630CovTracks.html" "HPV1630CovTracks.json"
+#testFile "L6R1HPV16Cov.html" "L6R1HPV16Cov.json"
+#testFile "HPV165CovTracks.html" "HPV165CovTracks.json"
+#testFile "HPV1615CovTracks.html" "HPV1615CovTracks.json"
+#testFile "HPV1630CovTracks.html" "HPV1630CovTracks.json"
+
+node scripts/test
