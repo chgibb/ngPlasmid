@@ -18,8 +18,8 @@ function compile() : void
     let output : string = ngEnvironment.$compile(input)(args[1] ? JSON.parse(fs.readFileSync(args[1]).toString()) : undefined)
 
     //emitting of <textPath> elements is broken for some reason
-    output = output.replace(/<textpath /,"<textPath ");
-    output = output.replace(/<\/textpath>/,"</textPath>");
+    output = output.replace(/<textpath /g,"<textPath ");
+    output = output.replace(/<\/textpath>/g,"</textPath>");
     console.log(output);
 }
 setTimeout(function(){
