@@ -40,9 +40,9 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         
         let compileTimeFactor = 5;
         if(testCases[i].htmlFile == "HPV165CovTracks.html")
-            compileTimeFactor = 35
+            compileTimeFactor = 35;
         if(testCases[i].htmlFile == "HPV1615CovTracks.html")
-            compileTimeFactor = 90
+            compileTimeFactor = 90;
         let outString = `Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
 
         let res = validateCompileTime(testCases[i],compileTimeFactor);
