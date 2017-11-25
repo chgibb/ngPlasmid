@@ -60,7 +60,7 @@ export class TestCase
         this.referenceResultOptimisedPath = this.makeReferenceResultOptimisedPath(this.htmlFile);
 
         this.exHTMLToSVGResultPath = this.makeExHTMLToSVGResultPath(this.htmlFile);
-        this.exHTMLToSVGResultOptimisedPath = this.makeReferenceResultOptimisedPath(this.htmlFile);
+        this.exHTMLToSVGResultOptimisedPath = this.makeExHTMLToSVGResultOptimisedPath(this.htmlFile);
     }
 
     public makeReferenceResultPath(file : string) : string
