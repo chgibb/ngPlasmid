@@ -100,5 +100,29 @@ export function queueTests() : Array<TestCase>
         name : "Interpolation: Number Property + Number Literal"
     }));
 
+    testCases.push(new TestCase(<TestCaseInit>{
+        htmlFile : "L6R1HPV16Cov.html",
+        jsonFile :"L6R1HPV16Cov.json",
+        name : "Stress Test: HPV16 With L6R1 Coverage Track"
+    }));
+
+    testCases.push(new TestCase(<TestCaseInit>{
+        htmlFile : "HPV165CovTracks.html",
+        jsonFile :"HPV165CovTracks.json",
+        name : "Stress Test: HPV16 With 5 L6R1 Coverage Tracks"
+    }));
+
+    testCases.push(new TestCase(<TestCaseInit>{
+        htmlFile : "HPV1615CovTracks.html",
+        jsonFile :"HPV1615CovTracks.json",
+        name : "Stress Test: HPV16 With 15 L6R1 Coverage Tracks"
+    }));
+
+    testCases.push(new TestCase(<TestCaseInit>{
+        htmlFile : "HPV1630CovTracks.html",
+        jsonFile :"HPV1630CovTracks.json",
+        name : "Stress Test: HPV16 With 30 L6R1 Coverage Tracks"
+    }));
+
     return testCases;
 }
