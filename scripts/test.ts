@@ -1,6 +1,7 @@
 const chalk = require("chalk");
 
-import {TestCase,TestCaseInit} from "./testCase";
+import {TestCase} from "./testCase";
+import {queueTests} from "./queueTests";
 import {validateCompileTime} from "./validateCompileTime"
 import {validateOutputSize} from "./validateOutputSize"
 import {validateFileEquality} from "./validateFileEquality";
@@ -8,11 +9,7 @@ import {validateFileEquality} from "./validateFileEquality";
 let testCases : Array<TestCase> = new Array<TestCase>();
 
 (async function(){
-    testCases.push(new TestCase(<TestCaseInit>{
-        htmlFile : "2Labels.html",
-        jsonFile : undefined,
-        name : "2 Track Labels"
-    }));
+    testCases = queueTests();
 
     for(let i = 0; i != testCases.length; ++i)
     {
