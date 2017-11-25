@@ -39,6 +39,10 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         console.log(`   ${chalk.cyan(`Validating`)}`);
         
         let compileTimeFactor = 5;
+        if(testCases[i].htmlFile == "HPV165CovTracks.html")
+            compileTimeFactor = 35
+        if(testCases[i].htmlFile == "HPV1615CovTracks.html")
+            compileTimeFactor = 100
         let outString = `Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
 
         let res = validateCompileTime(testCases[i],compileTimeFactor);
