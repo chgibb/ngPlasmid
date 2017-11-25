@@ -1922,21 +1922,42 @@ export class MarkerLabel extends Directive
 
         res += `<text`;
         
-        res += ` text-anchor="middle" `;
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L977
+        switch(this.halign)
+        {
+            case HALIGN_START:
+                res += ` text-anchor="start" `;
+            break;
+            case HALIGN_END:
+                res += ` text-anchor="end" `;
+            break;
+            default:
+                res += ` text-anchor="middle" `;
+            break;
+        }
+
         res += ` alignment-baseline="middle" `;
 
-        let classAttrib = "";
-        for(let i = 0; i != this.classList.length; ++i)
+        //emitting <markerlabel class="..." and <markerlabel labelclass="..." is inconsistent
+        //if labelclass is present, we ignore class
+        if(!this.labelclass)
         {
-            classAttrib += this.classList[i];
-            if(i != this.classList.length - 1)
+            let classAttrib = "";
+            for(let i = 0; i != this.classList.length; ++i)
+            {
+                classAttrib += this.classList[i];
+                if(i != this.classList.length - 1)
+                    classAttrib += " ";
+            }
+            if(this.classList.length != 0)
                 classAttrib += " ";
-        }
-        if(this.classList.length != 0)
-            classAttrib += " ";
-        classAttrib += `ng-scope ng-isolate-scope`;
+            classAttrib += `ng-scope ng-isolate-scope`;
 
-        res += ` class="${classAttrib}" `;
+            res += ` class="${classAttrib}" `;
+        }
+
+        else
+            res += ` class="${this.labelclass}" `;
 
         if(this.labelstyle)
             res += ` style="${this.labelstyle}" `;
@@ -2011,6 +2032,10 @@ export class MarkerLabel extends Directive
                     this.classList.push(classAttrib[i]);
                 }
             }
+        }
+        if(node.attribs.labelclass)
+        {
+            this.labelclass = node.attribs.labelclass;
         }
         if(node.attribs.labelstyle)
         {
