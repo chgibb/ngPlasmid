@@ -13,7 +13,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
 
     for(let i = 0; i != testCases.length; ++i)
     {
-        console.log(`${chalk.blue("Testing")} ${chalk.yellow(testCases[i].htmlFile)}`);
+        console.log(`${chalk.blue("Testing")} ${chalk.yellow(testCases[i].name)}`);
 
         console.log(`   ${chalk.cyan(`Running reference compiler`)}`);    
         testCases[i].runReferenceCompiler();
