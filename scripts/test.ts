@@ -43,7 +43,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             compileTimeFactor = 35;
         if(testCases[i].htmlFile == "HPV1615CovTracks.html")
             compileTimeFactor = 90;
-        console.log(`       ${chalk.yellow(`Compile time was ${testCases[i].referenceCompileTime/testCases[i].exHTMLToSVGCompileTime} faster than the reference`)}`);
+        console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime/testCases[i].exHTMLToSVGCompileTime).toFixed(2)}x faster than the reference`)}`);
         let outString = `Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
 
         let res = validateCompileTime(testCases[i],compileTimeFactor);
