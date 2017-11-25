@@ -97,6 +97,11 @@ export class TestCase
         this.referenceResultSize = getFileSize(this.referenceResultPath);
     }
 
+    public getReferenceResultOptimisezSize()
+    {
+        this.referenceOptimisedResultSize = getFileSize(this.referenceResultOptimisedPath);
+    }
+
     public optimiseReferenceCompilerResult()
     {
         let timer : Timer = new Timer();
