@@ -1186,10 +1186,10 @@ export class TrackMarker extends Directive
      * @memberof TrackMarker
      */
     public getPosition(
-        hAdjust : number,
-        vAdjust : number,
-        hAlign : string,
-        vAlign : string
+        hAdjust? : number,
+        vAdjust? : number,
+        hAlign? : string,
+        vAlign? : string
     ) : services.Position<services.PositionComponent<services.Point>> | services.Point {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L666
         let HALIGN_MIDDLE = "middle";
@@ -1905,7 +1905,29 @@ export class MarkerLabel extends Directive
         if(this.text)
             res += ` text="${this.text}" `;
         
-        res += `><path></path>`
+        res += `>`;
+
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1002
+        if(!this.showlineflg)
+            res += `<path></path>`;
+
+        else
+        {
+            res += `<path`;
+
+            //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1004
+            let src = this.marker.getPosition(this.hadjust, this.vadjust + this.linevadjust, this.halign, this.valign);
+            
+            let dstPos = this.marker.getPosition();
+            let dstV = this.valign === VALIGN_INNER ? (<services.Position<services.PositionComponent<services.Point>>>dstPos).inner : this.valign === VALIGN_MIDDLE ? (<services.Position<services.PositionComponent<services.Point>>>dstPos).middle : (<services.Position<services.PositionComponent<services.Point>>>dstPos).outer;
+            let dst = this.halign === HALIGN_START ? dstV.begin : this.halign === HALIGN_END ? dstV.end : dstV.middle;
+            res += ` d="${["M", (<services.Point>src).x, (<services.Point>src).y, "L", dst.x, dst.y].join(" ")}" `;
+
+            if(this.lineclass)
+                res += ` class="${this.lineclass}" `;
+
+            res += `></path>`;
+        }
 
         res += `<path`;
         res += ` id="${id}" `;
@@ -2060,6 +2082,18 @@ export class MarkerLabel extends Directive
         if(node.attribs.valign)
         {
             this.valign = node.attribs.valign;
+        }
+        if(node.attribs.linevadjust)
+        {
+            this.linevadjust = parseFloat(node.attribs.linevadjust);
+        }
+        if(node.attribs.showline)
+        {
+            this.showline = node.attribs.showline;
+        }
+        if(node.attribs.lineclass)
+        {
+            this.lineclass = node.attribs.lineclass;
         }
     }
 
