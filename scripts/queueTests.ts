@@ -41,6 +41,12 @@ export function queueTests() : Array<TestCase>
     }));
 
     testCases.push(new TestCase(<TestCaseInit>{
+        htmlFile : "1MarkerLabel2.html",
+        jsonFile : undefined,
+        name : "1 Marker Label 2"
+    }));
+
+    testCases.push(new TestCase(<TestCaseInit>{
         htmlFile : "HSP70.html",
         jsonFile : undefined,
         name : "Angular Plasmid Example: HSP70"
