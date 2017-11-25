@@ -45,7 +45,8 @@ export class TestCase
 
     public exHTMLToSVGCompileTime : number;
     public exHTMLToSVGOptimisationTime : number;
-
+    public exHTMLToSVGResultSize : number;
+    public exHTMLToSVGOptimisedResultSize : number;
     public exHTMLToSVGResultPath : string;
     public exHTMLToSVGResultOptimisedPath : string;
 
@@ -109,6 +110,36 @@ export class TestCase
         let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.referenceResultPath} -o ${this.referenceResultOptimisedPath} --multipass --pretty --indent=4`);
 
         this.referenceOptimisationTime = timer.stop();
+    }
+
+    public runExHTMLToSVGCompiler()
+    {
+        let timer : Timer = new Timer();
+
+        let res = cp.execSync(`node exCompiler/index tests/${this.htmlFile}`);
+
+        fs.writeFileSync(this.exHTMLToSVGResultPath,res.toString());
+
+        this.exHTMLToSVGCompileTime = timer.stop();
+    }
+
+    public getExHTMLTOSVGREsultSize()
+    {
+        this.exHTMLToSVGResultSize = getFileSize(this.exHTMLToSVGResultPath);   
+    }
+
+    public getExHTMLToSVGResultOptimisedSize()
+    {
+        this.exHTMLToSVGOptimisedResultSize = getFileSize(this.exHTMLToSVGResultOptimisedPath);
+    }
+
+    public optimiseExHTMLToSVGCompilerResult()
+    {
+        let timer : Timer = new Timer();
+
+        let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.exHTMLToSVGResultPath} -o ${this.exHTMLToSVGResultOptimisedPath} --multipass --pretty --indent=4`);
+
+        this.exHTMLToSVGOptimisationTime = timer.stop();
     }
 }
 
