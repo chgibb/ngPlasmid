@@ -53,6 +53,8 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         else
         {
             console.log(`       ${chalk.red(outString)}`);
+            console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
+            console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExHTMLToSVGCompiler())}`);
             process.exit(1);
         }
         
