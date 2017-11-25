@@ -126,11 +126,21 @@ export class TestCase
         if(!this.jsonFile)
             res = cp.execSync(`node exCompiler/index tests/${this.htmlFile}`);
         else 
-        res = cp.execSync(`node exCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
+            res = cp.execSync(`node exCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
 
         fs.writeFileSync(this.exHTMLToSVGResultPath,res.toString());
 
         this.exHTMLToSVGCompileTime = timer.stop();
+    }
+
+    public getProfilingInformationForExHTMLToSVGCompiler()
+    {
+        if(!this.jsonFile)
+            cp.execSync(`node --prof exCompiler/index tests/${this.htmlFile}`);
+        else 
+            cp.execSync(`node --prof exCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
+        
+        return cp.execSync(`node --prof-process *.log`).toString();
     }
 
     public getExHTMLTOSVGREsultSize()
