@@ -79,7 +79,7 @@ ngPlasmid aims to fully support the directives of AngularPlasmid as they are use
 ### Breaking Changes, Incompatibility
 See AngularPlasmid's [official API docs](http://angularplasmid.vixis.com/api.php)
 #### ```<markerlabel>``` Font Size
-AngularPlasmid uses ```window.getComputedStyle``` to determine font size. We attempt to parse font size out of the ```<markerlabel>```'s ```labelstyle``` attribute as a substitute. If we are unable to determine font size, it is assumed to be 0. This does not prevent the rendering of ```<markerlabel>```s which do not explicitly specify font style, however the output SVG will be differ slightly in text positioning than if ran through AngularPlasmid in a browser environment. This bug (and substitute behaviour) is currently present in ```JSDom``` as well. As such, there is no intention of trying to correct it at this time.
+AngularPlasmid uses ```window.getComputedStyle``` to determine font size. We attempt to parse font size out of the ```<markerlabel>```'s ```labelstyle``` attribute as a substitute. If we are unable to determine font size, it is assumed to be 0. This does not prevent the rendering of ```<markerlabel>```s which do not explicitly specify font style, however the output SVG will differ slightly in text positioning than if ran through AngularPlasmid in a browser environment. This bug (and substitute behaviour) is currently present in ```JSDom``` as well. As such, there is no intention of trying to correct it at this time.
 
 #### ```<svgelement>```
 The ```<svgelement>``` directive is (currently) not supported and (currently) outside the scope of this project.
