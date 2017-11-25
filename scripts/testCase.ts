@@ -86,7 +86,12 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`node referenceCompiler/index tests/${this.htmlFile}`);
+        let res : Buffer 
+        
+        if(!this.jsonFile)
+            res = cp.execSync(`node referenceCompiler/index tests/${this.htmlFile}`);
+        else 
+        res = cp.execSync(`node referenceCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
 
         fs.writeFileSync(this.referenceResultPath,res.toString());
 
@@ -116,7 +121,12 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`node exCompiler/index tests/${this.htmlFile}`);
+        let res : Buffer 
+        
+        if(!this.jsonFile)
+            res = cp.execSync(`node exCompiler/index tests/${this.htmlFile}`);
+        else 
+        res = cp.execSync(`node exCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
 
         fs.writeFileSync(this.exHTMLToSVGResultPath,res.toString());
 
