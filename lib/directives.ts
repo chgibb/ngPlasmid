@@ -184,6 +184,8 @@ export class Plasmid extends Directive
     
     public renderStart() : string
     {
+        this.plasmidheight = parseFloat(interpolate(this.plasmidheight.toString(),this.$scope));
+        this.plasmidwidth = parseFloat(interpolate(this.plasmidwidth.toString(),this.$scope));
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L60
         let res = "";
 
@@ -242,11 +244,11 @@ export class Plasmid extends Directive
         }
         if(node.attribs.plasmidheight)
         {
-            this.plasmidheight = parseFloat(interpolate(node.attribs.plasmidheight,this.$scope));
+            this.plasmidheight = parseFloat(node.attribs.plasmidheight);//parseFloat(interpolate(node.attribs.plasmidheight,this.$scope));
         }
         if(node.attribs.plasmidwidth)
         {
-            this.plasmidwidth = parseFloat(interpolate(node.attribs.plasmidwidth,this.$scope));
+            this.plasmidwidth = parseFloat(node.attribs.plasmidwidth);//parseFloat(interpolate(node.attribs.plasmidwidth,this.$scope));
         }
 
         for(let i = 0; i != node.children.length; ++i)
@@ -413,6 +415,7 @@ export class PlasmidTrack extends Directive
     }
     public renderStart() : string
     {
+        this.radius = parseFloat(interpolate(this.radius.toString(),this.$scope));
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L179
         let res = "";
         res += `<g`;
@@ -473,7 +476,7 @@ export class PlasmidTrack extends Directive
         }
         if(node.attribs.radius)
         {
-            this.radius = parseFloat(interpolate(node.attribs.radius,this.$scope));
+            this.radius = parseFloat(node.attribs.radius);//parseFloat(interpolate(node.attribs.radius,this.$scope));
         }
         if(node.attribs.width)
         {
@@ -634,6 +637,7 @@ export class TrackLabel extends Directive
 
     public renderStart() : string
     {
+        this.text = interpolate(this.text,this.$scope);
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L524
         let res = "";
 
@@ -677,7 +681,7 @@ export class TrackLabel extends Directive
 
         if(node.attribs.text)
         {
-            this.text = interpolate(node.attribs.text,this.$scope);
+            this.text = node.attribs.text;//interpolate(node.attribs.text,this.$scope);
         }
         if(node.attribs.vadjust)
         {
@@ -1471,6 +1475,7 @@ export class TrackMarker extends Directive
 
     public renderStart() : string
     {
+        this.wadjust = parseFloat(interpolate(this.wadjust.toString(),this.$scope));
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L645
         let res = "";
         res += `<g`;
@@ -1561,7 +1566,7 @@ export class TrackMarker extends Directive
         }
         if(node.attribs.wadjust)
         {
-            this.wadjust = parseFloat(interpolate(node.attribs.wadjust,this.$scope));
+            this.wadjust = parseFloat(node.attribs.wadjust);//parseFloat(interpolate(node.attribs.wadjust,this.$scope));
         }
         if(node.attribs.vadjust)
         {
@@ -1900,6 +1905,7 @@ export class MarkerLabel extends Directive
 
     public renderStart() : string
     {
+        this.vadjust = parseFloat(interpolate(this.vadjust.toString(),this.$scope));
         let res = "";
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L935
         let id = 'TPATH' + (Math.random() + 1).toString(36).substring(3, 7);
@@ -2097,7 +2103,7 @@ export class MarkerLabel extends Directive
         }
         if(node.attribs.vadjust)
         {
-            this.vadjust = parseFloat(interpolate(node.attribs.vadjust,this.$scope));
+            this.vadjust = parseFloat(node.attribs.vadjust);//parseFloat(interpolate(node.attribs.vadjust,this.$scope));
         }
         if(node.attribs.hadjust)
         {
