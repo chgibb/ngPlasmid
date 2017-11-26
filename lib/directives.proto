@@ -1,16 +1,16 @@
 syntax = "proto3";
 
 message Plasmid {
-    int64 plasmidheight = 1;
-    int64 plasmidwidth = 2;
-    int64 sequencelength = 3;
-    int64 sequence = 4;
+    string plasmidheight = 1;
+    string plasmidwidth = 2;
+    string sequencelength = 3;
+    string sequence = 4;
     repeated PlasmidTrack tracks = 5;
 }
 
 message PlasmidTrack {
-    int64 radius = 1;
-    int64 width = 2;
+    string radius = 1;
+    string width = 2;
     repeated TrackMarker markers = 3;
     repeated TrackScale scales = 4;
     repeated TrackLabel labels = 5; 
@@ -18,47 +18,47 @@ message PlasmidTrack {
 
 message TrackLabel {
     string text = 1;
-    int64 vadjust = 2;
-    int64 hadjust = 3;
+    string vadjust = 2;
+    string hadjust = 3;
 }
 
 message TrackScale {
-    int64 interval = 1;
-    int64 ticksize = 2;
+    string interval = 1;
+    string ticksize = 2;
     string direction = 3;
-    int64 vadjust = 4;
+    string vadjust = 4;
     string showlabels = 5;
-    int64 labelvadjust = 6;
+    string labelvadjust = 6;
     string labelclass = 7;
     string labelstyle = 8;
 }
 
 message TrackMarker {
-    int64 start = 1;
-    int64 end = 2;
-    int64 vadjust = 3;
-    int64 wadjust = 4;
+    string start = 1;
+    string end = 2;
+    string vadjust = 3;
+    string wadjust = 4;
     string markergroup = 5;
-    int64 arrowstartlength = 6;
-    int64 arrowstartwidth = 7;
-    int64 arrowstartangle = 8;
-    int64 arrowendlength = 9;
-    int64 arrowendwidth = 10;
-    int64 arrowendangle = 11;
+    string arrowstartlength = 6;
+    string arrowstartwidth = 7;
+    string arrowstartangle = 8;
+    string arrowendlength = 9;
+    string arrowendwidth = 10;
+    string arrowendangle = 11;
     string markerclick = 12;
     repeated MarkerLabel labels = 13;
 }
 
 message MarkerLabel {
     string text = 1;
-    int64 vadjust = 2;
-    int64 hadjust = 3;
+    string vadjust = 2;
+    string hadjust = 3;
     string valign = 4;
     string halign = 5;
     string type = 6;
     string showline = 7;
     string linestyle = 8;
     string lineclass = 9;
-    int64 linevadjust = 10;
+    string linevadjust = 10;
     string labelclick = 11;
 }
