@@ -695,6 +695,10 @@ export class TrackLabel extends Directive
         {
             this.labelclass = node.attribs.labelclass;
         }
+        if(node.attribs.class)
+        {
+            this.labelclass = node.attribs.class;
+        }
     }
 
     public constructor(track : PlasmidTrack)
