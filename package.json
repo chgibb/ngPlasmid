@@ -21,6 +21,7 @@
     "@types/node": "^8.0.34",
     "chalk": "^2.3.0",
     "domhandler2": "^3.0.0",
+    "google-protobuf": "^3.5.0",
     "jquery": "^3.2.1",
     "svgo": "^0.7.2",
     "typescript": "^2.5.3"
