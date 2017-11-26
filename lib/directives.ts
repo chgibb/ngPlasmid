@@ -1933,10 +1933,11 @@ export class MarkerLabel extends Directive
         res += ` id="${id}" `;
         res += ` style="fill:none;stroke:none" `;
         
+        let fontSize = 0;
+        fontSize = this.labelstyle ? parseFontSize(this.labelstyle) : 0;
         if(this.type == "path")
         {
             //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L973
-            let fontSize = this.labelstyle ? parseFontSize(this.labelstyle) : 0;
             let fontAdjust = (this.valign === VALIGN_OUTER) ? 0 : (this.valign === VALIGN_INNER) ? Number(fontSize || 0) : Number(fontSize || 0) / 2;
             res += ` d="${this.getPath(this.hadjust,this.vadjust - fontAdjust,this.halign,this.valign)}" `;
         }
@@ -1983,6 +1984,9 @@ export class MarkerLabel extends Directive
 
         if(this.labelstyle)
             res += ` style="${this.labelstyle}" `;
+        
+        if(fontSize)
+            res += ` font-size="${fontSize}" `;
 
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L959
         if(this.type == "path")
@@ -2062,6 +2066,12 @@ export class MarkerLabel extends Directive
         if(node.attribs.labelstyle)
         {
             this.labelstyle = node.attribs.labelstyle;
+        }
+
+        //override labelstyle with style if it exists
+        if(node.attribs.style)
+        {
+            this.labelstyle = node.attribs.style;
         }
         if(node.attribs.text)
         {
