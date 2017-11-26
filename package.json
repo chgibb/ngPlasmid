@@ -22,6 +22,7 @@
     "chalk": "^2.3.0",
     "domhandler2": "^3.0.0",
     "jquery": "^3.2.1",
+    "protobufjs": "^6.8.0",
     "svgo": "^0.7.2",
     "typescript": "^2.5.3"
   },
