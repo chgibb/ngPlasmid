@@ -1,7 +1,6 @@
 export function parseFontSize(style : string) : number
 {
     //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L973
-
     let str = "";
     let res = 0;
     let gettingValue = false;
