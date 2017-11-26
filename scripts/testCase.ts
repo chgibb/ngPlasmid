@@ -112,7 +112,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.referenceResultPath} -o ${this.referenceResultOptimisedPath} --multipass --pretty --indent=4`);
+        let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.referenceResultPath} -o ${this.referenceResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
 
         this.referenceOptimisationTime = timer.stop();
     }
@@ -157,7 +157,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.exHTMLToSVGResultPath} -o ${this.exHTMLToSVGResultOptimisedPath} --multipass --pretty --indent=4`);
+        let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.exHTMLToSVGResultPath} -o ${this.exHTMLToSVGResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
 
         this.exHTMLToSVGOptimisationTime = timer.stop();
     }
