@@ -125,6 +125,12 @@ export function queueTests() : Array<TestCase>
     }));
 
     testCases.push(new TestCase(<TestCaseInit>{
+        htmlFile : "ch38.html",
+        jsonFile :"ch38.json",
+        name : "Stress Test: ch38"
+    }));
+
+    testCases.push(new TestCase(<TestCaseInit>{
         htmlFile : "L6R1HPV16Cov.html",
         jsonFile :"L6R1HPV16Cov.json",
         name : "Stress Test: HPV16 L6R1 Coverage Track"
