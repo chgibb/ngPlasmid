@@ -1,0 +1,94 @@
+<plasmid sequencelength="7907" plasmidheight="{{genome.height}}" plasmidwidth="{{genome.width}}">
+
+
+
+    <plasmidtrack trackstyle="fill:#f0f0f0;stroke:#ccc" radius="{{genome.radius}}">
+
+
+
+        <tracklabel class="trackLabelHover" ng-click="figureNameOnClick()" text="HPV16 L6R1" labelstyle="font-size:20px;font-weight:400">
+
+
+        </tracklabel>
+
+
+        <trackmarker markerclass="trackMarkerHover" markerclick="markerOnClick($event,$marker,'59a492d9-ec0d-4498-93a6-f882849a9fbf')"
+            start="0" end="7906" markerstyle="fill:rgb(132, 84, 114);opacity:1;">
+
+
+
+            <markerlabel type="path" text="HPV16 reference genome" labelstyle="fill:rgb(255, 255, 255);opacity:1;">
+
+
+            </markerlabel>
+        </trackmarker>
+
+
+        <trackmarker markerclass="trackMarkerHover" markerclick="markerOnClick($event,$marker,'filler')" start="7906" end="7907"
+            markerstyle="fill:rgb(132,84,114);opacity:1;">
+
+
+
+            <markerlabel type="path" labelstyle="fill:;opacity:1;">
+
+
+            </markerlabel>
+        </trackmarker>
+
+
+        <trackscale interval="{{genome.circularFigureBPTrackOptions.interval}}" direction="{{genome.circularFigureBPTrackOptions.direction}}"
+            showlabels="{{genome.circularFigureBPTrackOptions.showLabels}}" vadjust="{{genome.circularFigureBPTrackOptions.vAdjust}}">
+
+
+        </trackscale>
+    </plasmidtrack>
+
+    <plasmidtrack width="20" trackstyle="fill-opacity:0.0" radius="{{genome.radius}}">
+        <trackmarker start="1418" markerstyle="stroke:rgb(0, 0, 0);stroke-dasharray:2,2;stroke-width:2px;" wadjust="{{genome.radius+20}}">
+            <markerlabel style="font-size:20px;fill:rgb(0, 0, 0)" text="C1418A" vadjust="{{genome.radius+20}}"></markerlabel>
+        </trackmarker>
+    </plasmidtrack>
+
+    <plasmidtrack width="20" trackstyle="fill-opacity:0.0" radius="{{genome.radius}}">
+        <trackmarker start="1522" markerstyle="stroke:rgb(0, 0, 0);stroke-dasharray:2,2;stroke-width:2px;" wadjust="{{genome.radius+20}}">
+            <markerlabel style="font-size:20px;fill:rgb(0, 0, 0)" text="T1522A" vadjust="{{genome.radius+20}}"></markerlabel>
+        </trackmarker>
+    </plasmidtrack>
+
+    <plasmidtrack width="20" trackstyle="fill-opacity:0.0" radius="{{genome.radius}}">
+        <trackmarker start="3410" markerstyle="stroke:rgb(0, 0, 0);stroke-dasharray:2,2;stroke-width:2px;" wadjust="{{genome.radius+20}}">
+            <markerlabel style="font-size:20px;fill:rgb(0, 0, 0)" text="C3410T" vadjust="{{genome.radius+20}}"></markerlabel>
+        </trackmarker>
+    </plasmidtrack>
+
+    <plasmidtrack width="20" trackstyle="fill-opacity:0.0" radius="{{genome.radius}}">
+        <trackmarker start="3684" markerstyle="stroke:rgb(0, 0, 0);stroke-dasharray:2,2;stroke-width:2px;" wadjust="{{genome.radius+20}}">
+            <markerlabel style="font-size:20px;fill:rgb(0, 0, 0)" text="C3684A" vadjust="{{genome.radius+20}}"></markerlabel>
+        </trackmarker>
+    </plasmidtrack>
+
+    <plasmidtrack width="20" trackstyle="fill-opacity:0.0" radius="{{genome.radius}}">
+        <trackmarker start="3872" markerstyle="stroke:rgb(0, 0, 0);stroke-dasharray:2,2;stroke-width:2px;" wadjust="{{genome.radius+20}}">
+            <markerlabel style="font-size:20px;fill:rgb(0, 0, 0)" text="C3872A" vadjust="{{genome.radius+20}}"></markerlabel>
+        </trackmarker>
+    </plasmidtrack>
+
+    <plasmidtrack width="20" trackstyle="fill-opacity:0.0" radius="{{genome.radius}}">
+        <trackmarker start="5226" markerstyle="stroke:rgb(0, 0, 0);stroke-dasharray:2,2;stroke-width:2px;" wadjust="{{genome.radius+20}}">
+            <markerlabel style="font-size:20px;fill:rgb(0, 0, 0)" text="A5226G" vadjust="{{genome.radius+20}}"></markerlabel>
+        </trackmarker>
+    </plasmidtrack>
+
+    <plasmidtrack width="20" trackstyle="fill-opacity:0.0" radius="{{genome.radius}}">
+        <trackmarker start="5328" markerstyle="stroke:rgb(0, 0, 0);stroke-dasharray:2,2;stroke-width:2px;" wadjust="{{genome.radius+20}}">
+            <markerlabel style="font-size:20px;fill:rgb(0, 0, 0)" text="A5328C" vadjust="{{genome.radius+20}}"></markerlabel>
+        </trackmarker>
+    </plasmidtrack>
+
+    <plasmidtrack width="20" trackstyle="fill-opacity:0.0" radius="{{genome.radius}}">
+        <trackmarker start="7193" markerstyle="stroke:rgb(0, 0, 0);stroke-dasharray:2,2;stroke-width:2px;" wadjust="{{genome.radius+20}}">
+            <markerlabel style="font-size:20px;fill:rgb(0, 0, 0)" text="G7193T" vadjust="{{genome.radius+20}}"></markerlabel>
+        </trackmarker>
+    </plasmidtrack>
+
+</plasmid>
