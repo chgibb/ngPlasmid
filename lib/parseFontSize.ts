@@ -1,3 +1,11 @@
+/**
+ * Parses the value of font-size:valuepx out of the CSS string style.
+ * font-size must be specified in px and not %
+ * 
+ * @export
+ * @param {string} style 
+ * @returns {number} 
+ */
 export function parseFontSize(style : string) : number
 {
     //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L973
