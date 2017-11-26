@@ -1482,16 +1482,23 @@ export class TrackMarker extends Directive
             res += ` arrowstartlength="${this.arrowstartlength}" `;
         
         res += `>`;
+
         let classAttrib = "";
-        for(let i = 0; i != this.classList.length; ++i)
+        //override class with markerclass if it exists
+        if(!this.markerclass)
         {
-            classAttrib += this.classList[i];
-            if(i != this.classList.length - 1)
+            for(let i = 0; i != this.classList.length; ++i)
+            {
+                classAttrib += this.classList[i];
+                if(i != this.classList.length - 1)
+                    classAttrib += " ";
+            }
+            if(this.classList.length != 0)
                 classAttrib += " ";
+            classAttrib += `ng-scope ng-isolate-scope`;
         }
-        if(this.classList.length != 0)
-            classAttrib += " ";
-        classAttrib += `ng-scope ng-isolate-scope`;
+        else
+            classAttrib = this.markerclass;
         res += `<path class="${classAttrib}" d="${this.getPath()}" `;
         if(this.markerstyle)
             res += ` style="${this.markerstyle}"`;
@@ -1574,6 +1581,10 @@ export class TrackMarker extends Directive
                     this.classList.push(classAttrib[i]);
                 }
             }
+        }
+        if(node.attribs.markerclass)
+        {
+            this.markerclass = node.attribs.markerclass;
         }
         for(let i = 0; i != node.children.length; ++i)
         {
@@ -2011,7 +2022,10 @@ export class MarkerLabel extends Directive
                 res += ` startOffset="50%" `;
             }
 
-            res += `>${this.text}`;
+            res += `>`;
+
+            if(this.text)
+                res += `${this.text}`;
 
             res += "</textPath>";
         }
