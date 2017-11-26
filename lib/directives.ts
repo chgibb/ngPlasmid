@@ -648,7 +648,7 @@ export class TrackLabel extends Directive
         {
             res += ` labelstyle="${this.labelstyle}" `;
         }
-        res += ` class="ng-scope ng-isolate-scope ${this.labelclass ? this.labelclass : ""}" `;
+        res += ` class="${this.labelclass ? `${this.labelclass} ` : ""}ng-scope ng-isolate-scope"`;
         res += ` text-anchor="middle" alignment-baseline="middle" `;
         res += ` x="${center.x+this.hadjust}" y="${center.y+this.vadjust}" `;
         
