@@ -1550,7 +1550,7 @@ export class TrackMarker extends Directive
         }
         if(node.attribs.wadjust)
         {
-            this.wadjust = parseFloat(node.attribs.wadjust);
+            this.wadjust = parseFloat(interpolate(node.attribs.wadjust,this.$scope));
         }
         if(node.attribs.vadjust)
         {
@@ -2069,7 +2069,7 @@ export class MarkerLabel extends Directive
         }
         if(node.attribs.vadjust)
         {
-            this.vadjust = parseFloat(node.attribs.vadjust);
+            this.vadjust = parseFloat(interpolate(node.attribs.vadjust,this.$scope));
         }
         if(node.attribs.hadjust)
         {
