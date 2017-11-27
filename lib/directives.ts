@@ -33,6 +33,15 @@ import * as html from "./html"
 import * as services from "./services";
 import {interpolate} from "./interpolate";
 import {parseFontSize} from "./parseFontSize";
+
+interface GenericNode<T>
+{
+    type : string;
+    name : string;
+    attribs : any;
+    children : Array<T>;
+}
+
 export abstract class Directive
 {
     tagType : "plasmid" |
@@ -232,7 +241,7 @@ export class Plasmid extends Directive
         return res;
     }
 
-    public fromNode(node : html.Node) : void
+    public fromNode<T extends GenericNode<T>>(node : T) : void
     {
         if(node.type != "tag")
         {
@@ -466,7 +475,7 @@ export class PlasmidTrack extends Directive
         return res;
     }
 
-    public fromNode(node : html.Node) : void
+    public fromNode<T extends GenericNode<T>>(node : T) : void
     {
         if(node.type != "tag")
         {
@@ -677,7 +686,7 @@ export class TrackLabel extends Directive
         return ``;
     }
 
-    public fromNode(node : html.Node) : void
+    public fromNode<T extends GenericNode<T>>(node : T) : void
     {
         if(node.type != "tag")
         {
@@ -1038,7 +1047,7 @@ export class TrackScale extends Directive
         return ``;
     }
     
-    public fromNode(node : html.Node) : void
+    public fromNode<T extends GenericNode<T>>(node : T) : void
     {
         if(node.type != "tag")
         {
@@ -1541,7 +1550,7 @@ export class TrackMarker extends Directive
         return res;
     }
 
-    public fromNode(node : html.Node) : void
+    public fromNode<T extends GenericNode<T>>(node : T) : void
     {
         if(node.type != "tag")
         {
@@ -2070,7 +2079,7 @@ export class MarkerLabel extends Directive
         return ``;
     }
 
-    public fromNode(node : html.Node) : void
+    public fromNode<T extends GenericNode<T>>(node : T) : void
     {
         if(node.type != "tag")
         {
