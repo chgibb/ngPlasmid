@@ -29,6 +29,23 @@ export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbD
         }
         else if(plasmidTrack.children[i].tagType == "trackmarker")
         {
+            res.children.push(
+                new pbDirectives.Node(
+                    trackMarkertoIPB(
+                        (<ngDirectives.TrackMarker>plasmidTrack.children[i])
+                    )
+                )
+            );
+        }
+        else if(plasmidTrack.children[i].tagType == "trackscale")
+        {
+            res.children.push(
+                new pbDirectives.Node(
+                    trackScaleToIPB(
+                        (<ngDirectives.TrackScale>plasmidTrack.children[i])
+                    )
+                )
+            );
         }
     }
 
