@@ -14,6 +14,7 @@ export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbD
             trackstyle : plasmidTrack.trackstyle.toString()
         }
     });
+    res.children = new Array<pbDirectives.INode>();
     for(let i = 0; i != plasmidTrack.children.length; ++i)
     {
         if(plasmidTrack.children[i].tagType == "tracklabel")
@@ -89,6 +90,7 @@ export function trackMarkertoIPB(trackMarker : ngDirectives.TrackMarker) : pbDir
             markerclass : trackMarker.markerclass.toString()
         }
     };
+    res.children = new Array<pbDirectives.INode>();
     for(let i = 0; i != trackMarker.labels.length; ++i)
     {
         res.children.push(
