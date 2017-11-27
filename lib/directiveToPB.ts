@@ -7,7 +7,7 @@ export function plasmidToPB(plasmid : ngDirectives.Plasmid) : pbDirectives.Node
 {
     let res : pbDirectives.Node = pbDirectives.Node.create(<pbDirectives.INode>{
         name : "plasmid",
-        type : "node",
+        type : "tag",
         attribs : <pbDirectives.IAttributes>{
             sequencelength : attribToString(plasmid.sequencelength),
             plasmidheight : attribToString(plasmid.plasmidheight),
@@ -34,7 +34,7 @@ export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbD
 {
     let res : pbDirectives.Node = pbDirectives.Node.create({
         name : "plasmidtrack",
-        type : "node",
+        type : "tag",
         attribs : <pbDirectives.IAttributes>{
             radius : attribToString(plasmidTrack.radius),
             width : attribToString(plasmidTrack.width),
@@ -83,7 +83,7 @@ export function trackLabelToIPB(trackLabel : ngDirectives.TrackLabel) : pbDirect
 {
     let res : pbDirectives.INode = <pbDirectives.INode>{
         name : "tracklabel",
-        type : "node",
+        type : "tag",
         attribs : <pbDirectives.IAttributes>{
             text : attribToString(trackLabel.text),
             vadjust : attribToString(trackLabel.vadjust),
@@ -98,7 +98,7 @@ export function trackScaleToIPB(trackScale : ngDirectives.TrackScale) : pbDirect
 {
     let res : pbDirectives.INode = <pbDirectives.INode>{
         name : "trackscale",
-        type : "node",
+        type : "tag",
         attribs : <pbDirectives.IAttributes>{
             interval : attribToString(trackScale.interval),
             ticksize : attribToString(trackScale.ticksize),
@@ -118,7 +118,7 @@ export function trackMarkertoIPB(trackMarker : ngDirectives.TrackMarker) : pbDir
 {
     let res : pbDirectives.INode = <pbDirectives.INode>{
         name : "trackmarker",
-        type : "node",
+        type : "tag",
         attribs : <pbDirectives.IAttributes>{
             start : attribToString(trackMarker.start),
             end : attribToString(trackMarker.end),
@@ -153,7 +153,7 @@ export function markerLabelToIPB(markerLabel : ngDirectives.MarkerLabel) : pbDir
 {
     let res : pbDirectives.INode = <pbDirectives.INode>{
         name : "markerlabel",
-        type : "node",
+        type : "tag",
         attribs : <pbDirectives.IAttributes>{
             text : attribToString(markerLabel.text),
             vadjust : attribToString(markerLabel.vadjust),
