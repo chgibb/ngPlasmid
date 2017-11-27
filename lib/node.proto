@@ -1,12 +1,22 @@
 syntax = "proto3";
 
+/** Represent a node in the directive hierarchy */
 message Node {
+
+    /** Node name. Should be the name of the directive this Node represents */
     required string name = 1;
+
+    /** For compatibility with the existing HTML to Directive conversion, should be "node" */
     required string type = 2;
+
+    /** Attribute pack */
     required Attributes attribs = 3;
+
+    /** Top-level nested children */
     repeated Node children = 4;
 }
 
+/** All possible attributes on a Node */
 message Attributes {
     //<plasmid>
     string plasmidheight = 1;
