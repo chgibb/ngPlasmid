@@ -17,5 +17,6 @@ import * as pbDirectives from "./../lib/pb/node";
     let buffer = fs.readFileSync(args[0]);
     plasmid.fromNode<any>(
         pbDirectives.Node.decode(buffer)
-    );    
+    );
+    console.log(plasmid.renderStart() + plasmid.renderEnd());
 })();
