@@ -86,6 +86,24 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 process.exit(1);
         }
 
+        console.log(`   ${chalk.cyan(`Running HTML to Protocol Buffer compiler`)}`);  
+        testCases[i].runExHTMLToPBCompiler();
+        testCases[i].getExHTMLToPBResultSize();
+        console.log(`   ${chalk.blue(`Compile time:`)} ${chalk.yellow(testCases[i].exHTMLtoPBCompileTime+"ms")}`);
+        console.log(`   ${chalk.blue(`Output size:`)} ${chalk.yellow(testCases[i].exHTMLToPBResultSize+"b")}`);
+        console.log(`   ${chalk.cyan(`Validating`)}`);
+        compileTimeFactor = 5;
+        outString = `Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
+        if(testCases[i].exHTMLtoPBCompileTime*compileTimeFactor < testCases[i].referenceCompileTime)
+        {
+            console.log(`       ${chalk.green(outString)}`);
+        }
+        else
+        {
+            console.log(`       ${chalk.red(outString)}`);
+            process.exit(1);
+        }
+
         console.log(``);
         console.log(``);
     }
