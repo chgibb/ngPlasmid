@@ -37,31 +37,35 @@ message Attributes {
     //<trackmarker
     string start = 18;
     string end = 19;
+    string markerstyle = 20;
     //repeated
-    //string vadjust = 20;
-    string wadjust = 21;
-    string markergroup = 22;
-    string arrowstartlength = 23;
-    string arrowstartwidth = 24;
-    string arrowstartangle = 25;
-    string arrowendlength = 26;
-    string arrowendwidth = 27;
-    string arrowendangle = 28;
-    string markerclick = 29;
+    //string vadjust = 21;
+    string wadjust = 22;
+    string markergroup = 23;
+    string arrowstartlength = 24;
+    string arrowstartwidth = 25;
+    string arrowstartangle = 26;
+    string arrowendlength = 27;
+    string arrowendwidth = 28;
+    string arrowendangle = 29;
+    string markerclick = 30;
 
     //<markerlabel
     //repeated
-    //string text = 30;
+    //string text = 31;
     //repeated
-    //string vadjust = 31;
+    //string vadjust = 32;
     //repeated
-    //string hadjust = 32;
-    string valign = 33;
-    string halign = 34;
-    string type = 35;
-    string showline = 36;
-    string linestyle = 37;
-    string lineclass = 38;
-    string linevadjust = 39;
-    string labelclick = 40;
+    //string hadjust = 33;
+    string valign = 34;
+    string halign = 35;
+    string type = 36;
+    string showline = 37;
+    string linestyle = 38;
+    string lineclass = 39;
+    string linevadjust = 40;
+    string labelclick = 41;
+
+    string class = 42;
+    string markerclass = 43;
 }
