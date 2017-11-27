@@ -92,6 +92,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         console.log(`   ${chalk.blue(`Compile time:`)} ${chalk.yellow(testCases[i].exHTMLtoPBCompileTime+"ms")}`);
         console.log(`   ${chalk.blue(`Output size:`)} ${chalk.yellow(testCases[i].exHTMLToPBResultSize+"b")}`);
         console.log(`   ${chalk.cyan(`Validating`)}`);
+        console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime/testCases[i].exHTMLtoPBCompileTime).toFixed(2)}x faster than the reference`)}`);
         compileTimeFactor = 5;
         outString = `Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
         if(testCases[i].exHTMLtoPBCompileTime*compileTimeFactor < testCases[i].referenceCompileTime)
