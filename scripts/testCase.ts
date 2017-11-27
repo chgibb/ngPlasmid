@@ -39,7 +39,6 @@ export class TestCase
     public referenceResultSize : number;
     public referenceOptimisationTime : number;
     public referenceOptimisedResultSize : number;
-
     public referenceResultPath : string;
     public referenceResultOptimisedPath : string;
 
