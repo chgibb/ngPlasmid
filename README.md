@@ -60,8 +60,8 @@ This project will be gradually integrated into the SVG compilation infrastructur
 ## Reference Compiler
 The compiler under ```referenceCompiler/``` uses ```ng-node-compile```, which internally makes use of ```jsdom``` and ```AngularJS``` itself to simulate a web browser environment to render the template and then extract the SVG. This is woefully slow and inefficient for obvious reasons.
 
-## Experimental Compiler
-The source for this project is currently under ```lib/```. Instead of simulating a browser environment, we simply parse the templates from HTML and then convert directly to SVG. Under ```HTMLToSVGCompiler/``` is an example implementation which takes an HTML file to compile and a JSON file to use as ```$scope``` and dumps the result to standard out. This is used in testing.
+## Experimental HTML to SVG Compiler
+Under ```HTMLToSVGCompiler/``` is an example implementation which takes an HTML file to compile and a JSON file to use as ```$scope``` and dumps the result to standard out. This is used in testing.
 
 ## Progress
 See AngularPlasmid's [official examples](http://angularplasmid.vixis.com/samples.php)
