@@ -9,8 +9,8 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/exCompiler/index.js",
-            "args" : ["tests/numPropPlusNumLit.html","tests/numPropPlusNumLit.json"],
+            "program": "${workspaceFolder}/HTMLToPBCompiler/index",
+            "args" : ["tests/1MarkerLabel.html","1MarkerLabel.pb"],
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
