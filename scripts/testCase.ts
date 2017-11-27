@@ -49,6 +49,10 @@ export class TestCase
     public exHTMLToSVGResultPath : string;
     public exHTMLToSVGResultOptimisedPath : string;
 
+    public exHTMLtoPBCompileTime : number;
+    public exHTMLToPBResultSize : number;
+    public exHTMLTOPBResultPath : string;
+
     public constructor(init : TestCaseInit)
     {
         this.htmlFile = init.htmlFile;
@@ -76,9 +80,15 @@ export class TestCase
     {
         return `${file}Ex.svg`;
     }
+
     public makeExHTMLToSVGResultOptimisedPath(file : string) : string
     {
         return `${file}ExO.svg`;
+    }
+    
+    public makeEXHTMLToPBResultPath(file : string) : string
+    {
+        return `${file}.pb`;
     }
 
     public runReferenceCompiler()
@@ -159,6 +169,20 @@ export class TestCase
         let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.exHTMLToSVGResultPath} -o ${this.exHTMLToSVGResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
 
         this.exHTMLToSVGOptimisationTime = timer.stop();
+    }
+
+    public runExHTMLToPBCompiler()
+    {
+        let timer : Timer = new Timer();
+
+        let res = cp.execSync(`node HTMLToPBCompiler/index tests/${this.htmlFile} ${this.exHTMLTOPBResultPath}`);
+
+        this.exHTMLtoPBCompileTime = timer.stop();
+    }
+
+    public getExHTMLToPBResultSize()
+    {
+        this.exHTMLToPBResultSize = fs.readFileSync(this.exHTMLTOPBResultPath).length;
     }
 }
 
