@@ -3,15 +3,42 @@
 import * as ngDirectives from "./directives";
 import * as pbDirectives from "./pb/node.js";
 
+export function plasmidToPB(plasmid : ngDirectives.Plasmid) : pbDirectives.Node
+{
+    let res : pbDirectives.Node = pbDirectives.Node.create(<pbDirectives.INode>{
+        name : "plasmid",
+        type : "node",
+        attribs : <pbDirectives.IAttributes>{
+            sequencelength : attribToString(plasmid.sequencelength),
+            plasmidheight : attribToString(plasmid.plasmidheight),
+            plasmidwidth : attribToString(plasmid.plasmidwidth)
+        }
+    });
+    res.children = new Array<pbDirectives.INode>();
+    for(let i = 0; i != plasmid.tracks.length; ++i)
+    {
+        if(plasmid.tracks[i].tagType == "plasmidtrack")
+        {
+            res.children.push(
+                new pbDirectives.Node(
+                    plasmidTrackToPB(plasmid.tracks[i])
+                )
+            );
+        }
+    }
+
+    return res;
+}
+
 export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbDirectives.Node
 {
-    let res : pbDirectives.Node = new pbDirectives.Node(<pbDirectives.INode>{
+    let res : pbDirectives.Node = pbDirectives.Node.create({
         name : "plasmidtrack",
         type : "node",
         attribs : <pbDirectives.IAttributes>{
-            radius : plasmidTrack.radius.toString(),
-            width : plasmidTrack.width.toString(),
-            trackstyle : plasmidTrack.trackstyle.toString()
+            radius : attribToString(plasmidTrack.radius),
+            width : attribToString(plasmidTrack.width),
+            trackstyle : attribToString(plasmidTrack.trackstyle)
         }
     });
     res.children = new Array<pbDirectives.INode>();
@@ -20,7 +47,7 @@ export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbD
         if(plasmidTrack.children[i].tagType == "tracklabel")
         {
             res.children.push(
-                new pbDirectives.Node(
+                pbDirectives.Node.create(
                     trackLabelToIPB(
                         (<ngDirectives.TrackLabel>plasmidTrack.children[i])
                     )
@@ -30,7 +57,7 @@ export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbD
         else if(plasmidTrack.children[i].tagType == "trackmarker")
         {
             res.children.push(
-                new pbDirectives.Node(
+                pbDirectives.Node.create(
                     trackMarkertoIPB(
                         (<ngDirectives.TrackMarker>plasmidTrack.children[i])
                     )
@@ -40,7 +67,7 @@ export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbD
         else if(plasmidTrack.children[i].tagType == "trackscale")
         {
             res.children.push(
-                new pbDirectives.Node(
+                pbDirectives.Node.create(
                     trackScaleToIPB(
                         (<ngDirectives.TrackScale>plasmidTrack.children[i])
                     )
@@ -58,9 +85,9 @@ export function trackLabelToIPB(trackLabel : ngDirectives.TrackLabel) : pbDirect
         name : "tracklabel",
         type : "node",
         attribs : <pbDirectives.IAttributes>{
-            text : trackLabel.text.toString(),
-            vadjust : trackLabel.vadjust.toString(),
-            hadjust : trackLabel.hadjust.toString()
+            text : attribToString(trackLabel.text),
+            vadjust : attribToString(trackLabel.vadjust),
+            hadjust : attribToString(trackLabel.hadjust)
         }
     };
 
@@ -73,14 +100,14 @@ export function trackScaleToIPB(trackScale : ngDirectives.TrackScale) : pbDirect
         name : "trackscale",
         type : "node",
         attribs : <pbDirectives.IAttributes>{
-            interval : trackScale.interval.toString(),
-            ticksize : trackScale.ticksize.toString(),
-            direction : trackScale.direction.toString(),
-            vadjust : trackScale.vadjust.toString(),
-            showlabels : trackScale.showlabels.toString(),
-            labelvadjust : trackScale.labelvadjust.toString(),
-            labelclass : trackScale.labelclass.toString(),
-            labelstyle : trackScale.labelstyle.toString()
+            interval : attribToString(trackScale.interval),
+            ticksize : attribToString(trackScale.ticksize),
+            direction : attribToString(trackScale.direction),
+            vadjust : attribToString(trackScale.vadjust),
+            showlabels : attribToString(trackScale.showlabels),
+            labelvadjust : attribToString(trackScale.labelvadjust),
+            labelclass : attribToString(trackScale.labelclass),
+            labelstyle : attribToString(trackScale.labelstyle)
         }
     };
 
@@ -93,18 +120,18 @@ export function trackMarkertoIPB(trackMarker : ngDirectives.TrackMarker) : pbDir
         name : "trackmarker",
         type : "node",
         attribs : <pbDirectives.IAttributes>{
-            start : trackMarker.start.toString(),
-            end : trackMarker.end.toString(),
-            markerstyle : trackMarker.markerstyle.toString(),
-            arrowstartlength : trackMarker.arrowstartlength.toString(),
-            arrowendlength : trackMarker.arrowendlength.toString(),
-            arrowstartangle : trackMarker.arrowstartangle.toString(),
-            wadjust : trackMarker.wadjust.toString(),
-            vadjust : trackMarker.vadjust.toString(),
-            arrowendwidth : trackMarker.arrowendwidth.toString(),
-            arrowstartwidth : trackMarker.arrowstartwidth.toString(),
-            class : trackMarker.classList.join(" "),
-            markerclass : trackMarker.markerclass.toString()
+            start : attribToString(trackMarker.start),
+            end : attribToString(trackMarker.end),
+            markerstyle : attribToString(trackMarker.markerstyle),
+            arrowstartlength : attribToString(trackMarker.arrowstartlength),
+            arrowendlength : attribToString(trackMarker.arrowendlength),
+            arrowstartangle : attribToString(trackMarker.arrowstartangle),
+            wadjust : attribToString(trackMarker.wadjust),
+            vadjust : attribToString(trackMarker.vadjust),
+            arrowendwidth : attribToString(trackMarker.arrowendwidth),
+            arrowstartwidth : attribToString(trackMarker.arrowstartwidth),
+            class : trackMarker.classList ? trackMarker.classList.join(" ") : undefined,
+            markerclass : attribToString(trackMarker.markerclass)
         }
     };
     res.children = new Array<pbDirectives.INode>();
@@ -128,18 +155,23 @@ export function markerLabelToIPB(markerLabel : ngDirectives.MarkerLabel) : pbDir
         name : "markerlabel",
         type : "node",
         attribs : <pbDirectives.IAttributes>{
-            text : markerLabel.text.toString(),
-            vadjust : markerLabel.vadjust.toString(),
-            hadjust : markerLabel.hadjust.toString(),
-            valign : markerLabel.valign.toString(),
-            halign : markerLabel.halign.toString(),
-            type : markerLabel.type.toString(),
-            showline : markerLabel.showline.toString(),
-            linestyle : markerLabel.linestyle.toString(),
-            lineclass : markerLabel.lineclass.toString(),
-            linevadjust : markerLabel.linevadjust.toString()
+            text : attribToString(markerLabel.text),
+            vadjust : attribToString(markerLabel.vadjust),
+            hadjust : attribToString(markerLabel.hadjust),
+            valign : attribToString(markerLabel.valign),
+            halign : attribToString(markerLabel.halign),
+            type : attribToString(markerLabel.type),
+            showline : attribToString(markerLabel.showline),
+            linestyle : attribToString(markerLabel.linestyle),
+            lineclass : attribToString(markerLabel.lineclass),
+            linevadjust : attribToString(markerLabel.linevadjust)
         }
     };
 
     return res;
+}
+
+function attribToString(attrib : any) : string | undefined
+{
+    return attrib ? attrib.toString() : undefined;
 }
