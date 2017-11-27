@@ -9,5 +9,7 @@ if [ $? != 0 ]; then
 	exit 1
 fi
 
+rm *.svg
+rm *.pb
 
 node scripts/test
