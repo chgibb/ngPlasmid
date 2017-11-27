@@ -124,9 +124,9 @@ export class TestCase
         let res : Buffer 
         
         if(!this.jsonFile)
-            res = cp.execSync(`node exCompiler/index tests/${this.htmlFile}`);
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile}`);
         else 
-            res = cp.execSync(`node exCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
 
         fs.writeFileSync(this.exHTMLToSVGResultPath,res.toString());
 
@@ -136,9 +136,9 @@ export class TestCase
     public getProfilingInformationForExHTMLToSVGCompiler()
     {
         if(!this.jsonFile)
-            cp.execSync(`node --prof exCompiler/index tests/${this.htmlFile}`);
+            cp.execSync(`node --prof HTMLToSVGCompiler/index tests/${this.htmlFile}`);
         else 
-            cp.execSync(`node --prof exCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
+            cp.execSync(`node --prof HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
         
         return cp.execSync(`node --prof-process *.log`).toString();
     }
