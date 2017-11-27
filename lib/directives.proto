@@ -2,74 +2,66 @@ syntax = "proto3";
 
 message Node {
     required string name = 1;
-    optional Plasmid plasmid = 2;
-    optional PlasmidTrack plasmidTrack = 3;
-    optional TrackLabel trackLabel = 4;
-    optional TrackScale trackScale = 5;
-    optional TrackMarker trackMarker = 6;
-    optional MarkerLabel markerLabel = 7;
-    repeated Node nodes = 8;
+    required string type = 2;
+    required Attributes attribs = 3;
+    repeated Node children = 4;
 }
 
-message Plasmid {
+message Attributes {
+    //<plasmid>
     string plasmidheight = 1;
     string plasmidwidth = 2;
     string sequencelength = 3;
     string sequence = 4;
-    repeated PlasmidTrack tracks = 5;
-}
 
-message PlasmidTrack {
-    string radius = 1;
-    string width = 2;
-    repeated TrackMarker markers = 3;
-    repeated TrackScale scales = 4;
-    repeated TrackLabel labels = 5; 
-}
+    //<plasmidtrack>
+    string radius = 5;
+    string width = 6;
 
-message TrackLabel {
-    string text = 1;
-    string vadjust = 2;
-    string hadjust = 3;
-}
+    //<tracklabel
+    string text = 7;
+    string vadjust = 8;
+    string hadjust = 9;
 
-message TrackScale {
-    string interval = 1;
-    string ticksize = 2;
-    string direction = 3;
-    string vadjust = 4;
-    string showlabels = 5;
-    string labelvadjust = 6;
-    string labelclass = 7;
-    string labelstyle = 8;
-}
+    //<trackscale>
+    string interval = 10;
+    string ticksize = 11;
+    string direction = 12;
+    //repeated
+    //string vadjust = 13;
+    string showlabels = 14;
+    string labelvadjust = 15;
+    string labelclass = 16;
+    string labelstyle = 17;
 
-message TrackMarker {
-    string start = 1;
-    string end = 2;
-    string vadjust = 3;
-    string wadjust = 4;
-    string markergroup = 5;
-    string arrowstartlength = 6;
-    string arrowstartwidth = 7;
-    string arrowstartangle = 8;
-    string arrowendlength = 9;
-    string arrowendwidth = 10;
-    string arrowendangle = 11;
-    string markerclick = 12;
-    repeated MarkerLabel labels = 13;
-}
+    //<trackmarker
+    string start = 18;
+    string end = 19;
+    //repeated
+    //string vadjust = 20;
+    string wadjust = 21;
+    string markergroup = 22;
+    string arrowstartlength = 23;
+    string arrowstartwidth = 24;
+    string arrowstartangle = 25;
+    string arrowendlength = 26;
+    string arrowendwidth = 27;
+    string arrowendangle = 28;
+    string markerclick = 29;
 
-message MarkerLabel {
-    string text = 1;
-    string vadjust = 2;
-    string hadjust = 3;
-    string valign = 4;
-    string halign = 5;
-    string type = 6;
-    string showline = 7;
-    string linestyle = 8;
-    string lineclass = 9;
-    string linevadjust = 10;
-    string labelclick = 11;
+    //<markerlabel
+    //repeated
+    //string text = 30;
+    //repeated
+    //string vadjust = 31;
+    //repeated
+    //string hadjust = 32;
+    string valign = 33;
+    string halign = 34;
+    string type = 35;
+    string showline = 36;
+    string linestyle = 37;
+    string lineclass = 38;
+    string linevadjust = 39;
+    string labelclick = 40;
 }
