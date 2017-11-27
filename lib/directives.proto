@@ -1,5 +1,16 @@
 syntax = "proto3";
 
+message Node {
+    required string name = 1;
+    optional Plasmid plasmid = 2;
+    optional PlasmidTrack plasmidTrack = 3;
+    optional TrackLabel trackLabel = 4;
+    optional TrackScale trackScale = 5;
+    optional TrackMarker trackMarker = 6;
+    optional MarkerLabel markerLabel = 7;
+    repeated Node nodes = 8;
+}
+
 message Plasmid {
     string plasmidheight = 1;
     string plasmidwidth = 2;
