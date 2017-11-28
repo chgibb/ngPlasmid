@@ -11,7 +11,7 @@ fi
 
 function buildBundle {
     f=$1
-    destination=$(echo $f | awk '{gsub("index/","testBundle/");print}')
+    destination=$(echo $f | awk '{gsub("index","testBundle");print}')
 
     printf "Building $f\n"
     printf "Shaking\n"
