@@ -106,7 +106,7 @@ export function trackScaleToIPB(trackScale : ngDirectives.TrackScale) : pbDirect
             ticksize : attribToString(trackScale.ticksize),
             direction : attribToString(trackScale.direction),
             vadjust : attribToString(trackScale.vadjust),
-            showlabels : attribToString(trackScale.showlabels),
+            showlabels : attribToString(trackScale.showLabelsAttrib),
             labelvadjust : attribToString(trackScale.labelvadjust),
             labelclass : attribToString(trackScale.labelclass),
             labelstyle : attribToString(trackScale.labelstyle),
