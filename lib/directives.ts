@@ -66,7 +66,7 @@ export abstract class Directive
  */
 export class Plasmid extends Directive
 {
-    private _IplasmidHeight : string;
+    public _IplasmidHeight : string;
 
     /**
      * Height (in pixels) of the box that surrounds the plasmid
@@ -76,7 +76,7 @@ export class Plasmid extends Directive
      */
     public plasmidheight : number;
 
-    private _IplasmidWidth : string;
+    public _IplasmidWidth : string;
 
     /**
      * Width (in pixels) of the box that surrounds the plasmid
@@ -257,11 +257,11 @@ export class Plasmid extends Directive
         }
         if(node.attribs.plasmidheight)
         {
-            this._IplasmidHeight = node.attribs.plasmidheight;//parseFloat(interpolate(node.attribs.plasmidheight,this.$scope));
+            this._IplasmidHeight = node.attribs.plasmidheight;
         }
         if(node.attribs.plasmidwidth)
         {
-            this._IplasmidWidth = node.attribs.plasmidwidth;//parseFloat(interpolate(node.attribs.plasmidwidth,this.$scope));
+            this._IplasmidWidth = node.attribs.plasmidwidth;
         }
 
         for(let i = 0; i != node.children.length; ++i)
@@ -333,7 +333,7 @@ export class PlasmidTrack extends Directive
         return this.plasmid.$scope;
     }
 
-    private _Iradius : string;
+    public _Iradius : string;
 
     private _radius : number;
 
@@ -491,7 +491,7 @@ export class PlasmidTrack extends Directive
         }
         if(node.attribs.radius)
         {
-            this._Iradius = node.attribs.radius;//parseFloat(interpolate(node.attribs.radius,this.$scope));
+            this._Iradius = node.attribs.radius;
         }
         if(node.attribs.width)
         {
@@ -565,7 +565,7 @@ export class TrackLabel extends Directive
         return this.track.center;
     }
 
-    private _Itext : string;
+    public _Itext : string;
 
     private _text : string;
     
@@ -698,7 +698,7 @@ export class TrackLabel extends Directive
 
         if(node.attribs.text)
         {
-            this._Itext = node.attribs.text;//interpolate(node.attribs.text,this.$scope);
+            this._Itext = node.attribs.text;
         }
         if(node.attribs.vadjust)
         {
@@ -1357,7 +1357,7 @@ export class TrackMarker extends Directive
         this._vadjust = vadjust;
     }
 
-    private _Iwadjust : string;
+    public _Iwadjust : string;
 
     private _wadjust : number;
 
@@ -1585,7 +1585,7 @@ export class TrackMarker extends Directive
         }
         if(node.attribs.wadjust)
         {
-            this._Iwadjust = node.attribs.wadjust;//parseFloat(interpolate(node.attribs.wadjust,this.$scope));
+            this._Iwadjust = node.attribs.wadjust;
         }
         if(node.attribs.vadjust)
         {
@@ -1734,7 +1734,7 @@ export class MarkerLabel extends Directive
         this._hadjust = hadjust;
     }
 
-    private _Ivadjust : string;
+    public _Ivadjust : string;
 
     private _vadjust : number;
 
@@ -2124,7 +2124,7 @@ export class MarkerLabel extends Directive
         }
         if(node.attribs.vadjust)
         {
-            this._Ivadjust = node.attribs.vadjust;//parseFloat(interpolate(node.attribs.vadjust,this.$scope));
+            this._Ivadjust = node.attribs.vadjust;
         }
         if(node.attribs.hadjust)
         {

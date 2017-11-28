@@ -9,9 +9,10 @@ export function plasmidToPB(plasmid : ngDirectives.Plasmid) : pbDirectives.Node
         name : "plasmid",
         type : "tag",
         attribs : <pbDirectives.IAttributes>{
+            //We need to ensure we pass the pre-interpolated values of those attributes which support interpolation
             sequencelength : attribToString(plasmid.sequencelength),
-            plasmidheight : attribToString(plasmid.plasmidheight),
-            plasmidwidth : attribToString(plasmid.plasmidwidth)
+            plasmidheight : attribToString(plasmid._IplasmidHeight),
+            plasmidwidth : attribToString(plasmid._IplasmidWidth)
         }
     });
     res.children = new Array<pbDirectives.INode>();
@@ -26,7 +27,6 @@ export function plasmidToPB(plasmid : ngDirectives.Plasmid) : pbDirectives.Node
             );
         }
     }
-
     return res;
 }
 
@@ -36,7 +36,7 @@ export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbD
         name : "plasmidtrack",
         type : "tag",
         attribs : <pbDirectives.IAttributes>{
-            radius : attribToString(plasmidTrack.radius),
+            radius : attribToString(plasmidTrack._Iradius),
             width : attribToString(plasmidTrack.width),
             trackstyle : attribToString(plasmidTrack.trackstyle)
         }
@@ -85,7 +85,7 @@ export function trackLabelToIPB(trackLabel : ngDirectives.TrackLabel) : pbDirect
         name : "tracklabel",
         type : "tag",
         attribs : <pbDirectives.IAttributes>{
-            text : attribToString(trackLabel.text),
+            text : attribToString(trackLabel._Itext),
             vadjust : attribToString(trackLabel.vadjust),
             hadjust : attribToString(trackLabel.hadjust)
         }
@@ -126,7 +126,7 @@ export function trackMarkertoIPB(trackMarker : ngDirectives.TrackMarker) : pbDir
             arrowstartlength : attribToString(trackMarker.arrowstartlength),
             arrowendlength : attribToString(trackMarker.arrowendlength),
             arrowstartangle : attribToString(trackMarker.arrowstartangle),
-            wadjust : attribToString(trackMarker.wadjust),
+            wadjust : attribToString(trackMarker._Iwadjust),
             vadjust : attribToString(trackMarker.vadjust),
             arrowendwidth : attribToString(trackMarker.arrowendwidth),
             arrowstartwidth : attribToString(trackMarker.arrowstartwidth),
@@ -156,7 +156,7 @@ export function markerLabelToIPB(markerLabel : ngDirectives.MarkerLabel) : pbDir
         type : "tag",
         attribs : <pbDirectives.IAttributes>{
             text : attribToString(markerLabel.text),
-            vadjust : attribToString(markerLabel.vadjust),
+            vadjust : attribToString(markerLabel._Ivadjust),
             hadjust : attribToString(markerLabel.hadjust),
             valign : attribToString(markerLabel.valign),
             halign : attribToString(markerLabel.halign),
@@ -173,5 +173,5 @@ export function markerLabelToIPB(markerLabel : ngDirectives.MarkerLabel) : pbDir
 
 function attribToString(attrib : any) : string | undefined
 {
-    return attrib ? attrib.toString() : undefined;
+    return attrib !== undefined ? attrib.toString() : undefined;
 }
