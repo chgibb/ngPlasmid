@@ -120,9 +120,9 @@ export class TestCase
         let res : Buffer 
         
         if(!this.jsonFile)
-            res = cp.execSync(`node referenceCompiler/testBundle tests/${this.htmlFile}`);
+            res = cp.execSync(`node referenceCompiler/index tests/${this.htmlFile}`);
         else 
-        res = cp.execSync(`node referenceCompiler/testBundle tests/${this.htmlFile} tests/${this.jsonFile}`);
+        res = cp.execSync(`node referenceCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
 
         fs.writeFileSync(this.referenceResultPath,res.toString());
 
@@ -155,9 +155,9 @@ export class TestCase
         let res : Buffer 
         
         if(!this.jsonFile)
-            res = cp.execSync(`node HTMLToSVGCompiler/testBundle tests/${this.htmlFile}`);
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile}`);
         else 
-            res = cp.execSync(`node HTMLToSVGCompiler/testBundle tests/${this.htmlFile} tests/${this.jsonFile}`);
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
 
         fs.writeFileSync(this.exHTMLToSVGResultPath,res.toString());
 
@@ -167,9 +167,9 @@ export class TestCase
     public getProfilingInformationForExHTMLToSVGCompiler()
     {
         if(!this.jsonFile)
-            cp.execSync(`node --prof HTMLToSVGCompiler/testBundle tests/${this.htmlFile}`);
+            cp.execSync(`node --prof HTMLToSVGCompiler/index tests/${this.htmlFile}`);
         else 
-            cp.execSync(`node --prof HTMLToSVGCompiler/testBundle tests/${this.htmlFile} tests/${this.jsonFile}`);
+            cp.execSync(`node --prof HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
         
         return cp.execSync(`node --prof-process *.log`).toString();
     }
@@ -197,7 +197,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`node HTMLToPBCompiler/testBundle tests/${this.htmlFile} ${this.exHTMLTOPBResultPath}`);
+        let res = cp.execSync(`node HTMLToPBCompiler/index tests/${this.htmlFile} ${this.exHTMLTOPBResultPath}`);
 
         this.exHTMLtoPBCompileTime = timer.stop();
     }
@@ -214,9 +214,9 @@ export class TestCase
         let res : Buffer 
         
         if(!this.jsonFile)
-            res = cp.execSync(`node PBToSVGCompiler/testBundle ${this.exHTMLTOPBResultPath}`);
+            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath}`);
         else 
-            res = cp.execSync(`node PBToSVGCompiler/testBundle ${this.exHTMLTOPBResultPath} tests/${this.jsonFile}`);
+            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} tests/${this.jsonFile}`);
 
         fs.writeFileSync(this.exPBToSVGResultPath,res.toString());
 
@@ -226,9 +226,9 @@ export class TestCase
     public getProfilingInformationForExPBToSVGCompiler()
     {
         if(!this.jsonFile)
-            cp.execSync(`node --prof PBToSVGCompiler/testBundle tests/${this.htmlFile}`);
+            cp.execSync(`node --prof PBToSVGCompiler/index tests/${this.htmlFile}`);
         else 
-            cp.execSync(`node --prof PBToSVGCompiler/testBundle tests/${this.htmlFile} tests/${this.jsonFile}`);
+            cp.execSync(`node --prof PBToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
         
         return cp.execSync(`node --prof-process *.log`).toString();
     }
