@@ -16,7 +16,7 @@ message Node {
     repeated Node children = 4;
 }
 
-/** All possible attributes on a Node */
+/** All possible attributes of a Node */
 message Attributes {
     //<plasmid>
     optional string plasmidheight = 1;
