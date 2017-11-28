@@ -87,7 +87,9 @@ export function trackLabelToIPB(trackLabel : ngDirectives.TrackLabel) : pbDirect
         attribs : <pbDirectives.IAttributes>{
             text : attribToString(trackLabel._Itext),
             vadjust : attribToString(trackLabel.vadjust),
-            hadjust : attribToString(trackLabel.hadjust)
+            hadjust : attribToString(trackLabel.hadjust),
+            labelstyle : attribToString(trackLabel.labelstyle),
+            labelclass : attribToString(trackLabel.labelclass)
         }
     };
 

@@ -27,29 +27,32 @@ message Attributes {
     //<plasmidtrack>
     optional string radius = 5;
     optional string width = 6;
+    optional string trackstyle = 7;
 
     //<tracklabel
-    optional string text = 7;
-    optional string vadjust = 8;
-    optional string hadjust = 9;
+    optional string text = 8;
+    optional string vadjust = 9;
+    optional string hadjust = 10;
+    optional string labelstyle = 11;
 
     //<trackscale>
-    optional string interval = 10;
-    optional string ticksize = 11;
-    optional string direction = 12;
+    optional string interval = 12;
+    optional string ticksize = 13;
+    optional string direction = 14;
+    optional string style = 15;
+
     //repeated
-    //string vadjust = 13;
-    optional string showlabels = 14;
-    optional string labelvadjust = 15;
-    optional string labelclass = 16;
-    optional string labelstyle = 17;
+    //string vadjust;
+    optional string showlabels = 16;
+    optional string labelvadjust = 17;
+    optional string labelclass = 18;
 
     //<trackmarker
-    optional string start = 18;
-    optional string end = 19;
-    string markerstyle = 20;
+    optional string start = 19;
+    optional string end = 20;
+    string markerstyle = 21;
     //repeated
-    //optional string vadjust = 21;
+    //optional string vadjust;
     optional string wadjust = 22;
     optional string markergroup = 23;
     optional string arrowstartlength = 24;
@@ -62,20 +65,20 @@ message Attributes {
 
     //<markerlabel
     //repeated
-    //optional string text = 31;
+    //optional string text;
     //repeated
-    //optional string vadjust = 32;
+    //optional string vadjust;
     //repeated
-    //optional string hadjust = 33;
-    optional string valign = 34;
-    optional string halign = 35;
-    optional string type = 36;
-    optional string showline = 37;
-    optional string linestyle = 38;
-    optional string lineclass = 39;
-    optional string linevadjust = 40;
-    optional string labelclick = 41;
+    //optional string hadjust;
+    optional string valign = 31;
+    optional string halign = 32;
+    optional string type = 33;
+    optional string showline = 34;
+    optional string linestyle = 35;
+    optional string lineclass = 36;
+    optional string linevadjust = 37;
+    optional string labelclick = 38;
 
-    optional string class = 42;
-    optional string markerclass = 43;
+    optional string class = 39;
+    optional string markerclass = 40;
 }
