@@ -53,6 +53,13 @@ export class TestCase
     public exHTMLToPBResultSize : number;
     public exHTMLTOPBResultPath : string;
 
+    public exPBToSVGCompileTime : number;
+    public exPBToSVGOptimisationTime : number;
+    public exPBToSVGResultSize : number;
+    public exPBToSVGOptimisedResultSize : number;
+    public exPBToSVGResultPath : string;
+    public exPBToSVGResultOptimisedPath : string;
+
     public constructor(init : TestCaseInit)
     {
         this.htmlFile = init.htmlFile;
@@ -66,6 +73,9 @@ export class TestCase
         this.exHTMLToSVGResultOptimisedPath = this.makeExHTMLToSVGResultOptimisedPath(this.htmlFile);
 
         this.exHTMLTOPBResultPath = this.makeEXHTMLToPBResultPath(this.htmlFile);
+
+        this.exPBToSVGResultPath = this.makeExPBToSVGResultPath(this.htmlFile);
+        this.exPBToSVGResultOptimisedPath = this.makeExPBToSVGResultOptimisedPath(this.htmlFile);
     }
 
     public makeReferenceResultPath(file : string) : string
@@ -91,6 +101,16 @@ export class TestCase
     public makeEXHTMLToPBResultPath(file : string) : string
     {
         return `${file}.pb`;
+    }
+
+    public makeExPBToSVGResultPath(file : string) : string
+    {
+        return `${file}Ex.pb.svg`;
+    }
+
+    public makeExPBToSVGResultOptimisedPath(file : string) : string
+    {
+        return `${file}ExO.pb.svg`;
     }
 
     public runReferenceCompiler()
@@ -185,6 +205,51 @@ export class TestCase
     public getExHTMLToPBResultSize()
     {
         this.exHTMLToPBResultSize = fs.readFileSync(this.exHTMLTOPBResultPath).length;
+    }
+
+    public runExPBToSVGCompiler()
+    {
+        let timer : Timer = new Timer();
+
+        let res : Buffer 
+        
+        if(!this.jsonFile)
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile}`);
+        else 
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
+
+        fs.writeFileSync(this.exPBToSVGResultPath,res.toString());
+
+        this.exPBToSVGCompileTime = timer.stop();
+    }
+
+    public getProfilingInformationForExPBToSVGCompiler()
+    {
+        if(!this.jsonFile)
+            cp.execSync(`node --prof PBToSVGCompiler/index tests/${this.htmlFile}`);
+        else 
+            cp.execSync(`node --prof PBToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
+        
+        return cp.execSync(`node --prof-process *.log`).toString();
+    }
+
+    public getExPBTOSVGREsultSize()
+    {
+        this.exPBToSVGResultSize = getFileSize(this.exPBToSVGResultPath);   
+    }
+
+    public getExPBToSVGResultOptimisedSize()
+    {
+        this.exPBToSVGOptimisedResultSize = getFileSize(this.exPBToSVGResultOptimisedPath);
+    }
+
+    public optimiseExPBToSVGCompilerResult()
+    {
+        let timer : Timer = new Timer();
+
+        let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.exPBToSVGResultPath} -o ${this.exPBToSVGResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
+
+        this.exPBToSVGOptimisationTime = timer.stop();
     }
 }
 
