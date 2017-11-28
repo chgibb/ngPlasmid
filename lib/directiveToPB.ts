@@ -109,7 +109,8 @@ export function trackScaleToIPB(trackScale : ngDirectives.TrackScale) : pbDirect
             showlabels : attribToString(trackScale.showlabels),
             labelvadjust : attribToString(trackScale.labelvadjust),
             labelclass : attribToString(trackScale.labelclass),
-            labelstyle : attribToString(trackScale.labelstyle)
+            labelstyle : attribToString(trackScale.labelstyle),
+            style : attribToString(trackScale.style)
         }
     };
 
