@@ -47,3 +47,4 @@ function buildBundle {
 buildBundle "HTMLToPBCompiler/index.js"
 buildBundle "HTMLToSVGCompiler/index.js"
 buildBundle "PBToSVGCompiler/index.js"
+buildBundle "referenceCompiler/index.js"
