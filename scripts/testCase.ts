@@ -214,9 +214,9 @@ export class TestCase
         let res : Buffer 
         
         if(!this.jsonFile)
-            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile}`);
+            res = cp.execSync(`node PBToSVGCompiler/index tests/${this.htmlFile}`);
         else 
-            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
+            res = cp.execSync(`node PBToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
 
         fs.writeFileSync(this.exPBToSVGResultPath,res.toString());
 
