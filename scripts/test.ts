@@ -56,7 +56,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             console.log(`       ${chalk.red(outString)}`);
             console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
             console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExHTMLToSVGCompiler())}`);
-            process.exit(1);
+            //process.exit(1);
         }
         
         outString = `Output Size Less Than Reference's Output Size`;
