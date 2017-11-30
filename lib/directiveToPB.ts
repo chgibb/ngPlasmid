@@ -167,7 +167,8 @@ export function markerLabelToIPB(markerLabel : ngDirectives.MarkerLabel) : pbDir
             showline : attribToString(markerLabel.showline),
             linestyle : attribToString(markerLabel.linestyle),
             lineclass : attribToString(markerLabel.lineclass),
-            linevadjust : attribToString(markerLabel.linevadjust)
+            linevadjust : attribToString(markerLabel.linevadjust),
+            labelclass : attribToString(markerLabel.labelclass)
         }
     };
 
