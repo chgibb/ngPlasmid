@@ -60,21 +60,19 @@ This project will be gradually integrated into the SVG compilation infrastructur
 ## Reference Compiler
 The compiler under ```referenceCompiler/``` uses ```ng-node-compile```, which internally makes use of ```jsdom``` and ```AngularJS``` itself to simulate a web browser environment to render the template and then extract the SVG. This is woefully slow and inefficient for obvious reasons.
 
-## Experimental HTML to SVG Compiler
+## HTML to SVG Compiler
 Under ```HTMLToSVGCompiler/``` is an example implementation which takes an HTML file to compile and a JSON file to use as ```$scope``` and dumps the result to standard out. This is used in testing.
+
+## HTML to Protocol Buffer Compiler
+Under ```HTMLToPBCompiler/``` is an example implementation which takes an HTML file and compiles it to a protocol buffer. This is used in testing.
+
+## Protocol Buffer to SVG Compiler
+Under ```PBToSVGCompiler/``` is an example implementation which takes a protocol buffer file and a JSON file to use as ```$scope``` and dumps the result to standard out. This is used in testing.
 
 ## Progress
 See AngularPlasmid's [official examples](http://angularplasmid.vixis.com/samples.php)
 ### Compatibility with AngularPlasmid
 ngPlasmid aims to fully support the directives of AngularPlasmid as they are used in the official examples. Directive usage in the examples differs in some ways from what the official documentation states. Where there is a conflict, we defer to compatibility with the example and its output from actually running AngularPlasmid as opposed to what the documentation states. We support all directives as they are used in the official examples.
-
-### Official Examples Compatibility
-- HSP70
-- pBCA-RLuc
-- pBR322
-- pLVG440
-- pPMA43C
-- pUC19
 
 ### Breaking Changes, Incompatibility
 See AngularPlasmid's [official API docs](http://angularplasmid.vixis.com/api.php)
