@@ -224,4 +224,21 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         console.log(``);
     }
 
+    console.log(`Summaries:`);
+    console.log(``)
+    console.log(``);
+    for(let i = 0; i != testCases.length; ++i)
+    {
+        console.log(`${chalk.yellow(testCases[i].name)} ${chalk.yellow(testCases[i].inputSize)}b`);
+        for(let k = 0; k != testCases[i].summary.statuses.length; ++k)
+        {
+            if(testCases[i].summary.statuses[k].status)
+                console.log(`   ${chalk.green(testCases[i].summary.statuses[k].message)}`);
+            else
+            console.log(`   ${chalk.red(testCases[i].summary.statuses[k].message)}`);
+        }
+        console.log(``);
+        console.log(``);
+    }
+
 })();
