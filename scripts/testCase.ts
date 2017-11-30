@@ -27,10 +27,17 @@ export interface TestCaseInit
     htmlFile : string;
     jsonFile : string | undefined;
     name : string;
+    type : "directive" | "example" | "interpolation" | "stress";
+}
+
+export function cleanRawProfiles() : void
+{
+    cp.execSync("rm *.log");
 }
 
 export class TestCase
 {
+    public type : "directive" | "example" | "interpolation" | "stress"
     public htmlFile : string;
     public jsonFile : string | undefined;
     public name : string;
@@ -65,6 +72,7 @@ export class TestCase
         this.htmlFile = init.htmlFile;
         this.jsonFile = init.jsonFile;
         this.name = init.name;
+        this.type = init.type;
 
         this.referenceResultPath = this.makeReferenceResultPath(this.htmlFile);
         this.referenceResultOptimisedPath = this.makeReferenceResultOptimisedPath(this.htmlFile);

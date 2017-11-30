@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-import {TestCase} from "./testCase";
+import {TestCase,cleanRawProfiles} from "./testCase";
 import {queueTests} from "./queueTests";
 import {validateCompileTime} from "./validateCompileTime"
 import {validateOutputSize} from "./validateOutputSize"
@@ -56,7 +56,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             console.log(`       ${chalk.red(outString)}`);
             console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
             console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExHTMLToSVGCompiler())}`);
-            //process.exit(1);
+            cleanRawProfiles();
         }
         
         outString = `Output Size Less Than Reference's Output Size`;
@@ -134,7 +134,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             console.log(`       ${chalk.red(outString)}`);
             console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
             console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExPBToSVGCompiler())}`);
-            //process.exit(1);
+            cleanRawProfiles();
         }
 
         outString = `Output Size Less Than Reference's Output Size`;
