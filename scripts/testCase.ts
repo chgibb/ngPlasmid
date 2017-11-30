@@ -1,6 +1,8 @@
 import * as cp from "child_process";
 import * as fs from "fs";
 
+import {TestSummary,TestStatus} from "./testSummary";
+
 class Timer
 {
     public startEpoch : number;
@@ -41,6 +43,7 @@ export class TestCase
     public htmlFile : string;
     public jsonFile : string | undefined;
     public name : string;
+    public inputSize : number;
 
     public referenceCompileTime : number;
     public referenceResultSize : number;
@@ -67,12 +70,17 @@ export class TestCase
     public exPBToSVGResultPath : string;
     public exPBToSVGResultOptimisedPath : string;
 
+    public summary : TestSummary;
+
     public constructor(init : TestCaseInit)
     {
         this.htmlFile = init.htmlFile;
         this.jsonFile = init.jsonFile;
         this.name = init.name;
         this.type = init.type;
+        this.inputSize = getFileSize("tests/"+this.htmlFile);
+
+        this.summary = new TestSummary(this.name,this.inputSize);
 
         this.referenceResultPath = this.makeReferenceResultPath(this.htmlFile);
         this.referenceResultOptimisedPath = this.makeReferenceResultOptimisedPath(this.htmlFile);

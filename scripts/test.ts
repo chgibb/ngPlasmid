@@ -14,7 +14,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
     for(let i = 0; i != testCases.length; ++i)
     {
         console.log(`${chalk.blue("Testing")} ${chalk.yellow(testCases[i].name)}`);
-        console.log(`${chalk.blue("Size:")} ${chalk.yellow(getFileSize("tests/"+testCases[i].htmlFile))}`);
+        console.log(`${chalk.blue("Size:")} ${chalk.yellow(testCases[i].inputSize)}`);
 
         console.log(`   ${chalk.cyan(`Running reference compiler`)}`);    
         testCases[i].runReferenceCompiler();
@@ -51,6 +51,10 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         if(testCases[i].exHTMLToSVGCompileTime*compileTimeFactor < testCases[i].referenceCompileTime)
         {
             console.log(`       ${chalk.green(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : true
+            });
         }
         else
         {
@@ -58,16 +62,28 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
             console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExHTMLToSVGCompiler())}`);
             cleanRawProfiles();
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : false
+            });
         }
         
         outString = `Output Size Less Than Reference's Output Size`;
         if(testCases[i].exHTMLToSVGResultSize < testCases[i].referenceResultSize)
         {
             console.log(`       ${chalk.green(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : true
+            });
         }
         else
         {
             console.log(`       ${chalk.red(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : false
+            });
             process.exit(1);
         }
 
@@ -76,10 +92,18 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         if(res)
         {
             console.log(`       ${chalk.green(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : true
+            });
         }
         else
         {
             console.log(`       ${chalk.red(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : false
+            });
             //if test is not HPV1630CovTracks.html, consider this a failure
             //output SVG from this test is massive and causes non-determinism in SVGO
             if(testCases[i].htmlFile != "HPV1630CovTracks.html")
@@ -98,10 +122,18 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         if(testCases[i].exHTMLtoPBCompileTime*compileTimeFactor < testCases[i].referenceCompileTime)
         {
             console.log(`       ${chalk.green(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : true
+            });
         }
         else
         {
             console.log(`       ${chalk.red(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : false
+            });
             //process.exit(1);
         }
 
@@ -129,6 +161,10 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         if(testCases[i].exPBToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
         {
             console.log(`       ${chalk.green(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : true
+            });
         }
         else
         {
@@ -136,16 +172,28 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
             console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExPBToSVGCompiler())}`);
             cleanRawProfiles();
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : false
+            });
         }
 
         outString = `Output Size Less Than Reference's Output Size`;
         if(testCases[i].exPBToSVGResultSize < testCases[i].referenceResultSize)
         {
             console.log(`       ${chalk.green(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : true
+            });
         }
         else
         {
             console.log(`       ${chalk.red(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : false
+            });
             process.exit(1);
         }
 
@@ -154,10 +202,18 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         if(res)
         {
             console.log(`       ${chalk.green(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : true
+            });
         }
         else
         {
             console.log(`       ${chalk.red(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : false
+            });
             //if test is not HPV1630CovTracks.html, consider this a failure
             //output SVG from this test is massive and causes non-determinism in SVGO
             if(testCases[i].htmlFile != "HPV1630CovTracks.html")
