@@ -45,7 +45,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         if(testCases[i].htmlFile == "HPV1615CovTracks.html")
             compileTimeFactor = 85;
         console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime/testCases[i].exHTMLToSVGCompileTime).toFixed(2)}x faster than the reference`)}`);
-        let outString = `Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
+        let outString = `HTML to SVG Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
 
         
         if(testCases[i].exHTMLToSVGCompileTime*compileTimeFactor < testCases[i].referenceCompileTime)
@@ -68,7 +68,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             });
         }
         
-        outString = `Output Size Less Than Reference's Output Size`;
+        outString = `HTML to SVG Compiler Output Size Less Than Reference's Output Size`;
         if(testCases[i].exHTMLToSVGResultSize < testCases[i].referenceResultSize)
         {
             console.log(`       ${chalk.green(outString)}`);
@@ -87,7 +87,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             process.exit(1);
         }
 
-        outString = `Output Can Be Reduced to the Same as the Reference`;
+        outString = `HTML to SVG Compiler Output Can Be Reduced to the Same as the Reference`;
         let res = validateFileEquality(testCases[i].referenceResultOptimisedPath,testCases[i].exHTMLToSVGResultOptimisedPath);
         if(res)
         {
@@ -118,7 +118,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         console.log(`   ${chalk.cyan(`Validating`)}`);
         console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime/testCases[i].exHTMLtoPBCompileTime).toFixed(2)}x faster than the reference`)}`);
         compileTimeFactor = 4;
-        outString = `Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
+        outString = `HTML to Protocol Buffer Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
         if(testCases[i].exHTMLtoPBCompileTime*compileTimeFactor < testCases[i].referenceCompileTime)
         {
             console.log(`       ${chalk.green(outString)}`);
@@ -155,7 +155,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         if(testCases[i].htmlFile == "HPV1615CovTracks.html")
             compileTimeFactor = 85;
         console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime/testCases[i].exPBToSVGCompileTime).toFixed(2)}x faster than the reference`)}`);
-        outString = `Compile Time Faster Than HTML to SVG Compiler`;
+        outString = `Protocol Buffer to HTML Compile Time Faster Than HTML to SVG Compiler`;
 
         
         if(testCases[i].exPBToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
@@ -178,7 +178,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             });
         }
 
-        outString = `Output Size Less Than Reference's Output Size`;
+        outString = `PB to SVG Compiler Output Size Less Than Reference's Output Size`;
         if(testCases[i].exPBToSVGResultSize < testCases[i].referenceResultSize)
         {
             console.log(`       ${chalk.green(outString)}`);
@@ -197,7 +197,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             process.exit(1);
         }
 
-        outString = `Output Can Be Reduced to the Same as the Reference`;
+        outString = `PB to SVG Compiler Output Can Be Reduced to the Same as the Reference`;
         res = validateFileEquality(testCases[i].referenceResultOptimisedPath,testCases[i].exPBToSVGResultOptimisedPath);
         if(res)
         {
