@@ -101,7 +101,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         else
         {
             console.log(`       ${chalk.red(outString)}`);
-            process.exit(1);
+            //process.exit(1);
         }
 
         console.log(`   ${chalk.cyan(`Running Protocol Buffer to SVG compiler`)}`);
