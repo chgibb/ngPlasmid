@@ -226,9 +226,9 @@ export class TestCase
     public getProfilingInformationForExPBToSVGCompiler()
     {
         if(!this.jsonFile)
-            cp.execSync(`node --prof PBToSVGCompiler/index tests/${this.htmlFile}`);
+            cp.execSync(`node --prof PBToSVGCompiler/index tests/${this.exHTMLTOPBResultPath}`);
         else 
-            cp.execSync(`node --prof PBToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
+            cp.execSync(`node --prof PBToSVGCompiler/index tests/${this.exHTMLTOPBResultPath} tests/${this.jsonFile}`);
         
         return cp.execSync(`node --prof-process *.log`).toString();
     }
