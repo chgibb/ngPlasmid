@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+/** Represent a node in the directive hierarchy */
+message Node {
+
+    /** Node name. Should be the name of the directive this Node represents */
+    required string name = 1;
+
+    /** For compatibility with the existing HTML to Directive conversion, should be "node" */
+    required string type = 2;
+
+    /** Attribute pack */
+    required Attributes attribs = 3;
+
+    /** Top-level nested children */
+    repeated Node children = 4;
+}
+
+/** All possible attributes of a Node */
+message Attributes {
+    //<plasmid>
+    optional string plasmidheight = 1;
+    optional string plasmidwidth = 2;
+    optional string sequencelength = 3;
+    optional string sequence = 4;
+
+    //<plasmidtrack>
+    optional string radius = 5;
+    optional string width = 6;
+    optional string trackstyle = 7;
+
+    //<tracklabel
+    optional string text = 8;
+    optional string vadjust = 9;
+    optional string hadjust = 10;
+    optional string labelstyle = 11;
+
+    //<trackscale>
+    optional string interval = 12;
+    optional string ticksize = 13;
+    optional string direction = 14;
+    optional string style = 15;
+
+    //repeated
+    //string vadjust;
+    optional string showlabels = 16;
+    optional string labelvadjust = 17;
+    optional string labelclass = 18;
+
+    //<trackmarker
+    optional string start = 19;
+    optional string end = 20;
+    string markerstyle = 21;
+    //repeated
+    //optional string vadjust;
+    optional string wadjust = 22;
+    optional string markergroup = 23;
+    optional string arrowstartlength = 24;
+    optional string arrowstartwidth = 25;
+    optional string arrowstartangle = 26;
+    optional string arrowendlength = 27;
+    optional string arrowendwidth = 28;
+    optional string arrowendangle = 29;
+    optional string markerclick = 30;
+
+    //<markerlabel
+    //repeated
+    //optional string text;
+    //repeated
+    //optional string vadjust;
+    //repeated
+    //optional string hadjust;
+    optional string valign = 31;
+    optional string halign = 32;
+    optional string type = 33;
+    optional string showline = 34;
+    optional string linestyle = 35;
+    optional string lineclass = 36;
+    optional string linevadjust = 37;
+    optional string labelclick = 38;
+
+    optional string class = 39;
+    optional string markerclass = 40;
+}

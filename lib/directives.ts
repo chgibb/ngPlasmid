@@ -33,6 +33,15 @@ import * as html from "./html"
 import * as services from "./services";
 import {interpolate} from "./interpolate";
 import {parseFontSize} from "./parseFontSize";
+
+interface GenericNode<T>
+{
+    type : string;
+    name : string;
+    attribs : any;
+    children : Array<T>;
+}
+
 export abstract class Directive
 {
     tagType : "plasmid" |
@@ -57,6 +66,8 @@ export abstract class Directive
  */
 export class Plasmid extends Directive
 {
+    public _IplasmidHeight : string;
+
     /**
      * Height (in pixels) of the box that surrounds the plasmid
      * 
@@ -64,6 +75,8 @@ export class Plasmid extends Directive
      * @memberof Plasmid
      */
     public plasmidheight : number;
+
+    public _IplasmidWidth : string;
 
     /**
      * Width (in pixels) of the box that surrounds the plasmid
@@ -184,6 +197,8 @@ export class Plasmid extends Directive
     
     public renderStart() : string
     {
+        this.plasmidheight = parseFloat(interpolate(this._IplasmidHeight,this.$scope));
+        this.plasmidwidth = parseFloat(interpolate(this._IplasmidWidth,this.$scope));
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L60
         let res = "";
 
@@ -226,7 +241,7 @@ export class Plasmid extends Directive
         return res;
     }
 
-    public fromNode(node : html.Node) : void
+    public fromNode<T extends GenericNode<T>>(node : T) : void
     {
         if(node.type != "tag")
         {
@@ -242,11 +257,11 @@ export class Plasmid extends Directive
         }
         if(node.attribs.plasmidheight)
         {
-            this.plasmidheight = parseFloat(interpolate(node.attribs.plasmidheight,this.$scope));
+            this._IplasmidHeight = node.attribs.plasmidheight;
         }
         if(node.attribs.plasmidwidth)
         {
-            this.plasmidwidth = parseFloat(interpolate(node.attribs.plasmidwidth,this.$scope));
+            this._IplasmidWidth = node.attribs.plasmidwidth;
         }
 
         for(let i = 0; i != node.children.length; ++i)
@@ -317,6 +332,8 @@ export class PlasmidTrack extends Directive
     {
         return this.plasmid.$scope;
     }
+
+    public _Iradius : string;
 
     private _radius : number;
 
@@ -413,6 +430,7 @@ export class PlasmidTrack extends Directive
     }
     public renderStart() : string
     {
+        this.radius = parseFloat(interpolate(this._Iradius,this.$scope));
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L179
         let res = "";
         res += `<g`;
@@ -457,7 +475,7 @@ export class PlasmidTrack extends Directive
         return res;
     }
 
-    public fromNode(node : html.Node) : void
+    public fromNode<T extends GenericNode<T>>(node : T) : void
     {
         if(node.type != "tag")
         {
@@ -473,7 +491,7 @@ export class PlasmidTrack extends Directive
         }
         if(node.attribs.radius)
         {
-            this.radius = parseFloat(interpolate(node.attribs.radius,this.$scope));
+            this._Iradius = node.attribs.radius;
         }
         if(node.attribs.width)
         {
@@ -546,6 +564,8 @@ export class TrackLabel extends Directive
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L536
         return this.track.center;
     }
+
+    public _Itext : string;
 
     private _text : string;
     
@@ -634,6 +654,7 @@ export class TrackLabel extends Directive
 
     public renderStart() : string
     {
+        this.text = interpolate(this._Itext,this.$scope);
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L524
         let res = "";
 
@@ -665,7 +686,7 @@ export class TrackLabel extends Directive
         return ``;
     }
 
-    public fromNode(node : html.Node) : void
+    public fromNode<T extends GenericNode<T>>(node : T) : void
     {
         if(node.type != "tag")
         {
@@ -677,7 +698,7 @@ export class TrackLabel extends Directive
 
         if(node.attribs.text)
         {
-            this.text = interpolate(node.attribs.text,this.$scope);
+            this._Itext = node.attribs.text;
         }
         if(node.attribs.vadjust)
         {
@@ -1026,7 +1047,7 @@ export class TrackScale extends Directive
         return ``;
     }
     
-    public fromNode(node : html.Node) : void
+    public fromNode<T extends GenericNode<T>>(node : T) : void
     {
         if(node.type != "tag")
         {
@@ -1336,6 +1357,8 @@ export class TrackMarker extends Directive
         this._vadjust = vadjust;
     }
 
+    public _Iwadjust : string;
+
     private _wadjust : number;
 
     /**
@@ -1471,6 +1494,7 @@ export class TrackMarker extends Directive
 
     public renderStart() : string
     {
+        this.wadjust = parseFloat(interpolate(this._Iwadjust,this.$scope));
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L645
         let res = "";
         res += `<g`;
@@ -1526,7 +1550,7 @@ export class TrackMarker extends Directive
         return res;
     }
 
-    public fromNode(node : html.Node) : void
+    public fromNode<T extends GenericNode<T>>(node : T) : void
     {
         if(node.type != "tag")
         {
@@ -1561,7 +1585,7 @@ export class TrackMarker extends Directive
         }
         if(node.attribs.wadjust)
         {
-            this.wadjust = parseFloat(interpolate(node.attribs.wadjust,this.$scope));
+            this._Iwadjust = node.attribs.wadjust;
         }
         if(node.attribs.vadjust)
         {
@@ -1709,6 +1733,8 @@ export class MarkerLabel extends Directive
     {
         this._hadjust = hadjust;
     }
+
+    public _Ivadjust : string;
 
     private _vadjust : number;
 
@@ -1900,6 +1926,7 @@ export class MarkerLabel extends Directive
 
     public renderStart() : string
     {
+        this.vadjust = parseFloat(interpolate(this._Ivadjust,this.$scope));
         let res = "";
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L935
         let id = 'TPATH' + (Math.random() + 1).toString(36).substring(3, 7);
@@ -2052,7 +2079,7 @@ export class MarkerLabel extends Directive
         return ``;
     }
 
-    public fromNode(node : html.Node) : void
+    public fromNode<T extends GenericNode<T>>(node : T) : void
     {
         if(node.type != "tag")
         {
@@ -2097,7 +2124,7 @@ export class MarkerLabel extends Directive
         }
         if(node.attribs.vadjust)
         {
-            this.vadjust = parseFloat(interpolate(node.attribs.vadjust,this.$scope));
+            this._Ivadjust = node.attribs.vadjust;
         }
         if(node.attribs.hadjust)
         {

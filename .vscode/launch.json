@@ -9,8 +9,8 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/exCompiler/index.js",
-            "args" : ["tests/L6R1HPV16Cov.html","tests/L6R1HPV16Cov.json"],
+            "program": "${workspaceFolder}/HTMLToPBCompiler/index",
+            "args" : ["tests/1MarkerLabel.html","1MarkerLabel.pb"],
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]

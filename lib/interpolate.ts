@@ -175,6 +175,8 @@ export function tokenize(exp : string) : Array<Token>
  */
 export function interpolate(value : string,$scope : any) : string
 {
+    if(!$scope || !value)
+        return value;
     //If the entire attribute value is not a valid inerpolation expression, then simply return the value
     if(value[0] != "{" || value[1] != "{" || value[value.length-1] != "}" || value[value.length-2] != "}")
         return value;
