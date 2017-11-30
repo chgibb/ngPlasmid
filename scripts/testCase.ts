@@ -17,7 +17,7 @@ class Timer
     }
 }
 
-function getFileSize(filePath : string) : number
+export function getFileSize(filePath : string) : number
 {
     return fs.readFileSync(filePath).toString().length;
 }

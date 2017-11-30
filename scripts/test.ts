@@ -1,6 +1,6 @@
 const chalk = require("chalk");
 
-import {TestCase,cleanRawProfiles} from "./testCase";
+import {TestCase,cleanRawProfiles,getFileSize} from "./testCase";
 import {queueTests} from "./queueTests";
 import {validateCompileTime} from "./validateCompileTime"
 import {validateOutputSize} from "./validateOutputSize"
@@ -14,6 +14,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
     for(let i = 0; i != testCases.length; ++i)
     {
         console.log(`${chalk.blue("Testing")} ${chalk.yellow(testCases[i].name)}`);
+        console.log(`${chalk.blue("Size:")} ${chalk.yellow(getFileSize("tests/"+testCases[i].htmlFile))}`);
 
         console.log(`   ${chalk.cyan(`Running reference compiler`)}`);    
         testCases[i].runReferenceCompiler();
