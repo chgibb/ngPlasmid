@@ -18,67 +18,116 @@ message Node {
 
 /** All possible attributes of a Node */
 message Attributes {
+
     //<plasmid>
+
+    /** Height (in pixels) of the box that surrounds the plasmid */
     optional string plasmidheight = 1;
+
+    /** Width (in pixels) of the box that surrounds the plasmid */
     optional string plasmidwidth = 2;
+
+    /** Size, in nucleotides, of the plasmid represented. 
+    If the sequence attribute is specified, sequencelength will not be used. 
+    Rather, the length of the sequence will be calcaulated from the provided sequence */
     optional string sequencelength = 3;
+
+    /** Series of nucleotides (ex. 'ATTACGATG') that represents the plasmid to be drawn */
     optional string sequence = 4;
 
     //<plasmidtrack>
+
     optional string radius = 5;
+
     optional string width = 6;
+
     optional string trackstyle = 7;
 
     //<tracklabel
+
     optional string text = 8;
+
     optional string vadjust = 9;
+
     optional string hadjust = 10;
+
     optional string labelstyle = 11;
 
     //<trackscale>
+
     optional string interval = 12;
+
     optional string ticksize = 13;
+
     optional string direction = 14;
+
     optional string style = 15;
 
     //repeated
     //string vadjust;
     optional string showlabels = 16;
+
     optional string labelvadjust = 17;
+
     optional string labelclass = 18;
 
     //<trackmarker
+
     optional string start = 19;
+
     optional string end = 20;
+
     string markerstyle = 21;
+
     //repeated
     //optional string vadjust;
+
     optional string wadjust = 22;
+
     optional string markergroup = 23;
+
     optional string arrowstartlength = 24;
+
     optional string arrowstartwidth = 25;
+
     optional string arrowstartangle = 26;
+
     optional string arrowendlength = 27;
+
     optional string arrowendwidth = 28;
+
     optional string arrowendangle = 29;
+
     optional string markerclick = 30;
 
     //<markerlabel
+
     //repeated
     //optional string text;
+
     //repeated
     //optional string vadjust;
+
     //repeated
     //optional string hadjust;
+
     optional string valign = 31;
+
     optional string halign = 32;
+
     optional string type = 33;
+
     optional string showline = 34;
+
     optional string linestyle = 35;
+
     optional string lineclass = 36;
+
     optional string linevadjust = 37;
+
     optional string labelclick = 38;
 
     optional string class = 39;
+    
     optional string markerclass = 40;
 }
