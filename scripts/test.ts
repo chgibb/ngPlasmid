@@ -122,10 +122,10 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         if(testCases[i].htmlFile == "HPV1615CovTracks.html")
             compileTimeFactor = 85;
         console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime/testCases[i].exPBToSVGCompileTime).toFixed(2)}x faster than the reference`)}`);
-        outString = `Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
+        outString = `Compile Time Faster Than HTML to SVG Compiler`;
 
         
-        if(testCases[i].exPBToSVGCompileTime*compileTimeFactor < testCases[i].referenceCompileTime)
+        if(testCases[i].exPBToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
         {
             console.log(`       ${chalk.green(outString)}`);
         }
