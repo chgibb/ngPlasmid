@@ -34,7 +34,11 @@ export interface TestCaseInit
 
 export function cleanRawProfiles() : void
 {
-    cp.execSync("rm *.log");
+    try
+    {
+        cp.execSync("rm *.log");
+    }
+    catch(err){}
 }
 
 export class TestCase
