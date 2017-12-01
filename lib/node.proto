@@ -37,44 +37,69 @@ message Attributes {
 
     //<plasmidtrack>
 
+    /** The radius (in pixels) of the track.
+    The radius is inherited by any component that is declared within this plasmidtrack. 
+    Defaults to 100 if nothing provided */
     optional string radius = 5;
 
+    /** The thickness (in pixels) of the plasmid ring. 
+    Defaults to 25 if nothing provided */
     optional string width = 6;
 
     optional string trackstyle = 7;
 
     //<tracklabel
 
+    /** Text of the label to draw */
     optional string text = 8;
 
+    /** Vertical offset of the label from the center of the track. 
+    A positive number means that the label will be drawn further down, 
+    while a negative number will make the label be drawn further up */
     optional string vadjust = 9;
 
+    /** Horizontal offset of the label from the center of the track. 
+    A positive number means that the label will be drawn closer to the right, 
+    while a negative number means the label will be be drawn closer to the left */
     optional string hadjust = 10;
 
+    /** Indicate the style of the labels directly using this property */
     optional string labelstyle = 11;
 
     //<trackscale>
 
+    /** How often a tick mark should be placed. 
+    The interval is used along with the plasmid's sequence length to determine how many tick marks to show */
     optional string interval = 12;
 
+    /** Vertical size of the tick marks. 
+    If negative, the ticks grow inward. 
+    The width of the tickmarks can be styled using the CSS stroke-width property */
     optional string ticksize = 13;
 
+    /** Determine which side of the track the ticks and labels should appear */
     optional string direction = 14;
 
     optional string style = 15;
 
     //repeated
     //string vadjust;
+
+    /** Determines if labels will be shown or not */
     optional string showlabels = 16;
 
+    /** Distance of the labels to their respective tick marks */
     optional string labelvadjust = 17;
 
+    /** Provide a class name to style the labels */
     optional string labelclass = 18;
 
     //<trackmarker
 
+    /** Starting position of the marker in relation to the plasmid's sequence */
     optional string start = 19;
 
+    /** Ending position of the marker in relation to the plasmid's sequence */
     optional string end = 20;
 
     string markerstyle = 21;
@@ -82,22 +107,35 @@ message Attributes {
     //repeated
     //optional string vadjust;
 
+    /** Offset width of the marker in relation the track's width. 
+    A negative number will make the marker thinner than the track, 
+    while a positive number will make it thicker. 
+    A value of 0 means the marker will be the same width of the track */
     optional string wadjust = 22;
 
+    /** Label a group of markers by giving them a unique name using this property */
     optional string markergroup = 23;
 
+    /** The length, width, and angle of a the starting arrow head can be specified here */
     optional string arrowstartlength = 24;
 
+    /** The length, width, and angle of a the starting arrow head can be specified here */
     optional string arrowstartwidth = 25;
 
+    /** The length, width, and angle of a the starting arrow head can be specified here */
     optional string arrowstartangle = 26;
 
+    /** The length, width, and angle of a the ending arrow head can be specified here */
     optional string arrowendlength = 27;
 
+    /** The length, width, and angle of a the ending arrow head can be specified here */
     optional string arrowendwidth = 28;
 
+    /** The length, width, and angle of a the ending arrow head can be specified here */
     optional string arrowendangle = 29;
 
+    /** Used to indicate a call-back when a marker is clicked. 
+    The call-back should be defined on the controller scope that contains the plasmid */
     optional string markerclick = 30;
 
     //<markerlabel
@@ -111,20 +149,30 @@ message Attributes {
     //repeated
     //optional string hadjust;
 
+    /** Vertical alignment of the label with the marker */
     optional string valign = 31;
 
+    /** Horizontal alignment of the label with the marker */
     optional string halign = 32;
 
+    /** Labels can either be drawn normally, or can follow the circular path of the marker */
     optional string type = 33;
 
+    /** Determines if line will be drawn from the label to the marker. 
+    By default, the line connects the middle of the label with the middle of the marker */
     optional string showline = 34;
 
+    /** Style of the line going from the label to the marker */
     optional string linestyle = 35;
 
+    /** Class name of the line going from the label to the marker */
     optional string lineclass = 36;
 
+    /** Vertical adjustment of the line to the label */
     optional string linevadjust = 37;
 
+    /** Used to indicate a call-back when a label is clicked. 
+    The call-back should be defined on the controller scope that contains the plasmid */
     optional string labelclick = 38;
 
     optional string class = 39;
