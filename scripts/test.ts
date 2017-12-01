@@ -59,8 +59,8 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         else
         {
             console.log(`       ${chalk.red(outString)}`);
-            console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
-            console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExHTMLToSVGCompiler())}`);
+            //console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
+            //console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExHTMLToSVGCompiler())}`);
             cleanRawProfiles();
             testCases[i].summary.statuses.push({
                 message : outString,
