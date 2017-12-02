@@ -2,6 +2,9 @@
     "genome" : {
         "height" : 1200,
         "radius" : 120,
-        "width" : 1200
+        "width" : 1200,
+        "circularFigureBPTrackOptions" : {
+            "showLabels" : 1
+        }
     }
 }
