@@ -758,6 +758,8 @@ export class TrackScale extends Directive
 
     public style : string;
 
+    public _Idirection : string;
+
     /**
      * Determine which side of the track the ticks and labels should appear
      * 
@@ -785,6 +787,8 @@ export class TrackScale extends Directive
         return (this.inwardflg ? this.track.radius : this.track.radius + this.track.width) +  ((this.inwardflg ? -1 : 1) * this.vadjust) + (this.inwardflg ? -(this.ticksize) : 0);
     }
 
+    public _Iinterval : string;
+
     private _interval : number;
 
     /**
@@ -805,6 +809,8 @@ export class TrackScale extends Directive
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L401
         this._interval = interval;
     }
+
+    public _Ivadjust : string;
 
     private _vadjust : number;
 
@@ -861,6 +867,8 @@ export class TrackScale extends Directive
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L421
         return this.track.plasmid.sequencelength;
     }
+
+    public _IshowLabelsAttrib : string;
 
     /**
      * The original implementation has showlabels constrained to "0" or "1", but when 
@@ -982,6 +990,10 @@ export class TrackScale extends Directive
 
     public renderStart() : string
     {
+        this.interval = parseFloat(interpolate(this._Iinterval,this.$scope));
+        this.direction = <"in"|"out">interpolate(this._Idirection,this.$scope);
+        this.showLabelsAttrib = <"0"|"1">interpolate(this._IshowLabelsAttrib,this.$scope);
+        this.vadjust = parseFloat(interpolate(this._Ivadjust,this.$scope));
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L352
         let res = "";
 
@@ -1058,7 +1070,7 @@ export class TrackScale extends Directive
             throw new Error("Node is not a trackscale");
         if(node.attribs.interval)
         {
-            this.interval = parseFloat(node.attribs.interval);
+            this._Iinterval = node.attribs.interval;
         }
         if(node.attribs.style)
         {
@@ -1074,7 +1086,7 @@ export class TrackScale extends Directive
         }
         if(node.attribs.direction)
         {
-            this.direction = node.attribs.direction;
+            this._Idirection = node.attribs.direction;
         }
         if(node.attribs.ticksize)
         {
@@ -1082,11 +1094,11 @@ export class TrackScale extends Directive
         }
         if(node.attribs.showlabels)
         {
-            this.showLabelsAttrib = node.attribs.showlabels;
+            this._IshowLabelsAttrib = node.attribs.showlabels;
         }
         if(node.attribs.vadjust)
         {
-            this.vadjust = parseFloat(node.attribs.vadjust);
+            this._Ivadjust = node.attribs.vadjust;
         }
         if(node.attribs.labelvadjust)
         {
