@@ -184,7 +184,7 @@ export function queueTests() : Array<TestCase>
         jsonFile : "tests/saacharomycesSim.json",
         name : "Saacharomyces Simulated Alignment",
         type : "stress"
-    });
+    }));
 
     return testCases;
 }
