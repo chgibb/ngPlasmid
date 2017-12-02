@@ -77,6 +77,11 @@ In the interests of speed and the requirements of the downstream project, only t
     - ```radius```
 - ```<tracklabel>```
     - ```text```
+- ```<trackscale>```
+    - ```interval```
+    - ```direction```
+    - ```vadjust```
+    - ```showlabels```
 - ```<trackmarker>```
     - ```wadjust```
 - ```<markerlabel>```
