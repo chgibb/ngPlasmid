@@ -1,0 +1,13 @@
+{
+    "genome" : {
+        "height" : 1200,
+        "radius" : 120,
+        "width" : 1200,
+        "circularFigureBPTrackOptions": {
+            "direction": "out",
+            "interval": 150,
+            "showLabels": 0,
+            "vAdjust": 5
+        }
+    }
+}

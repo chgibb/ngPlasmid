@@ -179,5 +179,12 @@ export function queueTests() : Array<TestCase>
         type : "stress"
     }));
 
+    testCases.push(new TestCase(<TestCaseInit>{
+        htmlFile : "tests/saacharomycesSim.html",
+        jsonFile : "tests/saacharomycesSim.json",
+        name : "Saacharomyces Simulated Alignment",
+        type : "stress"
+    });
+
     return testCases;
 }
