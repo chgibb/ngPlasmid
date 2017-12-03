@@ -234,6 +234,35 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             console.log(``);
             console.log(``);
         }
+        else if(testCases[i].type == "noref")
+        {
+            console.log(`   ${chalk.cyan(`Running HTML to SVG compiler`)}`);  
+            testCases[i].runExHTMLToSVGCompiler();
+            testCases[i].getExHTMLTOSVGREsultSize();
+            console.log(`   ${chalk.blue(`Compile time:`)} ${chalk.yellow(testCases[i].exHTMLToSVGCompileTime+"ms")}`);
+            console.log(`   ${chalk.blue(`Output size:`)} ${chalk.yellow(testCases[i].exHTMLToSVGResultSize+"b")}`);
+            console.log(`   ${chalk.cyan(`Validating`)}`);
+            let outString = `HTML to SVG Compile Time Less Than 5 Seconds`;
+            if(testCases[i].exHTMLToSVGCompileTime < 5000)
+            {
+                console.log(`       ${chalk.green(outString)}`);
+                testCases[i].summary.statuses.push({
+                    message : outString,
+                    status : true
+                });
+            }
+            else
+            {
+                console.log(`       ${chalk.red(outString)}`);
+                console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
+                console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExHTMLToSVGCompiler())}`);
+                cleanRawProfiles();
+                testCases[i].summary.statuses.push({
+                    message : outString,
+                    status : false
+                });
+            }
+        }
     }
     console.log(`Summaries:`);
     console.log(``)
