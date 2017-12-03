@@ -180,9 +180,9 @@ export function queueTests() : Array<TestCase>
     }));
 
     testCases.push(new TestCase(<TestCaseInit>{
-        htmlFile : "saacharomycesSim.html",
-        jsonFile : "saacharomycesSim.json",
-        name : "Saacharomyces Simulated Alignment",
+        htmlFile : "saccharomycesSim.html",
+        jsonFile : "saccharomycesSim.json",
+        name : "Saccharomyces Simulated Alignment",
         type : "stress"
     }));
 
