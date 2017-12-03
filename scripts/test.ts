@@ -255,13 +255,25 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             {
                 console.log(`       ${chalk.red(outString)}`);
                 console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
-                console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExHTMLToSVGCompiler())}`);
-                cleanRawProfiles();
+                //console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExHTMLToSVGCompiler())}`);
+                //cleanRawProfiles();
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : false
                 });
             }
+
+            console.log(`   ${chalk.cyan(`Running HTML to Protocol Buffer compiler`)}`);  
+            testCases[i].runExHTMLToPBCompiler();
+            testCases[i].getExHTMLToPBResultSize();
+            console.log(`   ${chalk.blue(`Compile time:`)} ${chalk.yellow(testCases[i].exHTMLtoPBCompileTime+"ms")}`);
+            console.log(`   ${chalk.blue(`Output size:`)} ${chalk.yellow(testCases[i].exHTMLToPBResultSize+"b")}`);
+
+            console.log(`   ${chalk.cyan(`Running Protocol Buffer to SVG compiler`)}`);
+            testCases[i].runExPBToSVGCompiler();
+            testCases[i].getExPBTOSVGREsultSize();
+            console.log(`   ${chalk.blue(`Compile time:`)} ${chalk.yellow(testCases[i].exPBToSVGCompileTime+"ms")}`);
+            console.log(`   ${chalk.blue(`Output size:`)} ${chalk.yellow(testCases[i].exPBToSVGResultSize+"b")}`);
         }
     }
     console.log(`Summaries:`);
