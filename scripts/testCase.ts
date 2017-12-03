@@ -142,7 +142,7 @@ export class TestCase
         if(!this.jsonFile)
             res = cp.execSync(`node referenceCompiler/index tests/${this.htmlFile}`);
         else 
-        res = cp.execSync(`node referenceCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
+            res = cp.execSync(`node referenceCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
 
         fs.writeFileSync(this.referenceResultPath,res.toString());
 
