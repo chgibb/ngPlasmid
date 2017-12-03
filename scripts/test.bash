@@ -13,3 +13,4 @@ rm *.svg
 rm *.pb
 
 node scripts/test
+exit $?
