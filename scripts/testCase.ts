@@ -29,7 +29,7 @@ export interface TestCaseInit
     htmlFile : string;
     jsonFile : string | undefined;
     name : string;
-    type : "directive" | "example" | "interpolation" | "stress";
+    type : "directive" | "example" | "interpolation" | "stress" | "noref";
 }
 
 export function cleanRawProfiles() : void
@@ -43,7 +43,7 @@ export function cleanRawProfiles() : void
 
 export class TestCase
 {
-    public type : "directive" | "example" | "interpolation" | "stress"
+    public type : "directive" | "example" | "interpolation" | "stress" | "noref"
     public htmlFile : string;
     public jsonFile : string | undefined;
     public name : string;

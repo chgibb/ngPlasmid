@@ -4,7 +4,7 @@ export function queueTests() : Array<TestCase>
 {
     let testCases : Array<TestCase> = new Array<TestCase>();
 
-    testCases.push(new TestCase(<TestCaseInit>{
+  /*  testCases.push(new TestCase(<TestCaseInit>{
         htmlFile : "2Labels.html",
         jsonFile : undefined,
         name : "2 Track Labels",
@@ -178,12 +178,12 @@ export function queueTests() : Array<TestCase>
         name : "Stress Test: HPV16 With 30 L6R1 Coverage Tracks",
         type : "stress"
     }));
-
+*/
     testCases.push(new TestCase(<TestCaseInit>{
         htmlFile : "saccharomycesSim.html",
         jsonFile : "saccharomycesSim.json",
         name : "Saccharomyces Simulated Alignment",
-        type : "stress"
+        type : "noref"
     }));
 
     return testCases;
