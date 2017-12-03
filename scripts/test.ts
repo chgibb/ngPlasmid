@@ -242,8 +242,8 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             console.log(`   ${chalk.blue(`Compile time:`)} ${chalk.yellow(testCases[i].exHTMLToSVGCompileTime+"ms")}`);
             console.log(`   ${chalk.blue(`Output size:`)} ${chalk.yellow(testCases[i].exHTMLToSVGResultSize+"b")}`);
             console.log(`   ${chalk.cyan(`Validating`)}`);
-            let outString = `HTML to SVG Compile Time Less Than 5 Seconds`;
-            if(testCases[i].exHTMLToSVGCompileTime < 5000)
+            let outString = `HTML to SVG Compile Time Less Than 15 Seconds`;
+            if(testCases[i].exHTMLToSVGCompileTime < 15000)
             {
                 console.log(`       ${chalk.green(outString)}`);
                 testCases[i].summary.statuses.push({
@@ -262,6 +262,12 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                     status : false
                 });
             }
+            outString = `HTML to SVG Compiler Didn't Crash`;
+            console.log(`       ${chalk.green(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : true
+            });
 
             console.log(`   ${chalk.cyan(`Running HTML to Protocol Buffer compiler`)}`);  
             testCases[i].runExHTMLToPBCompiler();
@@ -274,6 +280,27 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             testCases[i].getExPBTOSVGREsultSize();
             console.log(`   ${chalk.blue(`Compile time:`)} ${chalk.yellow(testCases[i].exPBToSVGCompileTime+"ms")}`);
             console.log(`   ${chalk.blue(`Output size:`)} ${chalk.yellow(testCases[i].exPBToSVGResultSize+"b")}`);
+
+            outString = `Protocol Buffer to HTML Compile Time Faster Than HTML to SVG Compiler`;
+            if(testCases[i].exPBToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
+            {
+                console.log(`       ${chalk.green(outString)}`);
+                testCases[i].summary.statuses.push({
+                    message : outString,
+                    status : true
+                });
+            }
+            else
+            {
+                console.log(`       ${chalk.red(outString)}`);
+                console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
+                console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExPBToSVGCompiler())}`);
+                cleanRawProfiles();
+                testCases[i].summary.statuses.push({
+                    message : outString,
+                    status : false
+                });
+            }
         }
     }
     console.log(`Summaries:`);
