@@ -51,8 +51,15 @@ export abstract class Directive
     "trackmarker" |
     "markerlabel" | 
     "svgelement";
+
     public abstract renderStart() : string;
+
     public abstract renderEnd() : string;
+
+    public abstract getSVGPath() : string | undefined;
+
+    public abstract interpolateAttributes() : void;
+    
 }
 
 /**
@@ -195,10 +202,15 @@ export class Plasmid extends Directive
         this._plasmidtstyle = plasmidstyle;
     }
     
-    public renderStart() : string
+    public interpolateAttributes() : void
     {
         this.plasmidheight = parseFloat(interpolate(this._IplasmidHeight,this.$scope));
         this.plasmidwidth = parseFloat(interpolate(this._IplasmidWidth,this.$scope));
+    }
+
+    public renderStart() : string
+    {
+        this.interpolateAttributes();
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L60
         let res = "";
 
@@ -274,6 +286,12 @@ export class Plasmid extends Directive
             }
         }
     }
+
+    public getSVGPath() : string | undefined
+    {
+        throw new Error("Not supported by directive");
+    }
+
     public constructor()
     {
         super();
@@ -428,9 +446,25 @@ export class PlasmidTrack extends Directive
         }
         return undefined;
     }
-    public renderStart() : string
+
+    public getSVGPath() : string | undefined
+    {
+        return services.pathDonut(
+            this.center.x,
+            this.center.y,
+            this.radius,
+            this.width
+        );
+    }
+
+    public interpolateAttributes() : void
     {
         this.radius = parseFloat(interpolate(this._Iradius,this.$scope));
+    }
+
+    public renderStart() : string
+    {
+        this.interpolateAttributes();
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L179
         let res = "";
         res += `<g`;
@@ -443,14 +477,7 @@ export class PlasmidTrack extends Directive
         res += `>`;
         res += `<path class="ng-scope ng-isolate-scope" fill-rule="evenodd" `;
 
-        let d : string = services.pathDonut(
-            this.center.x,
-            this.center.y,
-            this.radius,
-            this.width
-        );
-
-        res += ` d="${d}" `;
+        res += ` d="${this.getSVGPath()}" `;
         if(this.trackstyle)
             res += ` style="${this.trackstyle}"`
         res += `></path>`;
@@ -652,9 +679,14 @@ export class TrackLabel extends Directive
         this._vadjust = vadjust;
     }
 
-    public renderStart() : string
+    public interpolateAttributes() : void
     {
         this.text = interpolate(this._Itext,this.$scope);
+    }
+
+    public renderStart() : string
+    {
+        this.interpolateAttributes();
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L524
         let res = "";
 
@@ -720,6 +752,11 @@ export class TrackLabel extends Directive
         {
             this.labelclass = node.attribs.class;
         }
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        throw new Error("Not supported by directive");
     }
 
     public constructor(track : PlasmidTrack)
@@ -988,12 +1025,22 @@ export class TrackScale extends Directive
         return this.radius + (this.labelvadjust * (this.inwardflg ? -1 : 1));
     }
 
-    public renderStart() : string
+    public getSVGPath() : string | undefined
+    {
+        return services.pathScale(this.track.center.x,this.track.center.y,this.radius,this.interval,this.total,this.ticksize);
+    }
+
+    public interpolateAttributes() : void
     {
         this.interval = parseFloat(interpolate(this._Iinterval,this.$scope));
         this.direction = <"in"|"out">interpolate(this._Idirection,this.$scope);
         this.showLabelsAttrib = <"0"|"1">interpolate(this._IshowLabelsAttrib,this.$scope);
         this.vadjust = parseFloat(interpolate(this._Ivadjust,this.$scope));
+    }
+
+    public renderStart() : string
+    {
+        this.interpolateAttributes();
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L352
         let res = "";
 
@@ -1027,7 +1074,7 @@ export class TrackScale extends Directive
         {
             res += ` style="${this.style}" `;
         }
-        res += ` d="${services.pathScale(this.track.center.x,this.track.center.y,this.radius,this.interval,this.total,this.ticksize)}" `;
+        res += ` d="${this.getSVGPath()}" `;
         res += `></path>`
         res += `<g>`;
         if(this.showlabels)
@@ -1504,9 +1551,19 @@ export class TrackMarker extends Directive
         }
     }
 
-    public renderStart() : string
+    public getSVGPath() : string | undefined
+    {
+        return this.getPath();
+    }
+
+    public interpolateAttributes() : void
     {
         this.wadjust = parseFloat(interpolate(this._Iwadjust,this.$scope));
+    }
+
+    public renderStart() : string
+    {
+        this.interpolateAttributes();
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L645
         let res = "";
         res += `<g`;
@@ -1539,7 +1596,7 @@ export class TrackMarker extends Directive
         }
         else
             classAttrib = this.markerclass;
-        res += `<path class="${classAttrib}" d="${this.getPath()}" `;
+        res += `<path class="${classAttrib}" d="${this.getSVGPath()}" `;
         if(this.markerstyle)
             res += ` style="${this.markerstyle}"`;
         res += `></path>`;
@@ -1936,9 +1993,33 @@ export class MarkerLabel extends Directive
         return services.pathArc(this.marker.center.x, this.marker.center.y, radius + Number(vAdjust || 0), startAngle + Number(hAdjust || 0), endAngle + Number(hAdjust || 0), 1);
     }
 
-    public renderStart() : string
+    public getSVGPath() : string | undefined
+    {
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L950
+        let VALIGN_MIDDLE = "middle";
+        let VALIGN_INNER = "inner";
+        let VALIGN_OUTER = "outer";
+        let HALIGN_MIDDLE = "middle";
+        let HALIGN_START = "start";
+        let HALIGN_END = "end";
+        
+        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1004
+        let src = this.marker.getPosition(this.hadjust, this.vadjust + this.linevadjust, this.halign, this.valign);
+        
+        let dstPos = this.marker.getPosition();
+        let dstV = this.valign === VALIGN_INNER ? (<services.Position<services.PositionComponent<services.Point>>>dstPos).inner : this.valign === VALIGN_MIDDLE ? (<services.Position<services.PositionComponent<services.Point>>>dstPos).middle : (<services.Position<services.PositionComponent<services.Point>>>dstPos).outer;
+        let dst = this.halign === HALIGN_START ? dstV.begin : this.halign === HALIGN_END ? dstV.end : dstV.middle;
+        return ["M", (<services.Point>src).x, (<services.Point>src).y, "L", dst.x, dst.y].join(" ");
+    }
+
+    public interpolateAttributes() : void
     {
         this.vadjust = parseFloat(interpolate(this._Ivadjust,this.$scope));
+    }
+
+    public renderStart() : string
+    {
+        this.interpolateAttributes();
         let res = "";
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L935
         let id = 'TPATH' + (Math.random() + 1).toString(36).substring(3, 7);
@@ -1969,13 +2050,7 @@ export class MarkerLabel extends Directive
         {
             res += `<path`;
 
-            //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1004
-            let src = this.marker.getPosition(this.hadjust, this.vadjust + this.linevadjust, this.halign, this.valign);
-            
-            let dstPos = this.marker.getPosition();
-            let dstV = this.valign === VALIGN_INNER ? (<services.Position<services.PositionComponent<services.Point>>>dstPos).inner : this.valign === VALIGN_MIDDLE ? (<services.Position<services.PositionComponent<services.Point>>>dstPos).middle : (<services.Position<services.PositionComponent<services.Point>>>dstPos).outer;
-            let dst = this.halign === HALIGN_START ? dstV.begin : this.halign === HALIGN_END ? dstV.end : dstV.middle;
-            res += ` d="${["M", (<services.Point>src).x, (<services.Point>src).y, "L", dst.x, dst.y].join(" ")}" `;
+            res += ` d="${this.getSVGPath()}" `;
 
             if(this.lineclass)
                 res += ` class="${this.lineclass}" `;
