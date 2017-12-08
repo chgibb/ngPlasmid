@@ -2002,14 +2002,23 @@ export class MarkerLabel extends Directive
         let HALIGN_MIDDLE = "middle";
         let HALIGN_START = "start";
         let HALIGN_END = "end";
-        
-        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1004
-        let src = this.marker.getPosition(this.hadjust, this.vadjust + this.linevadjust, this.halign, this.valign);
-        
-        let dstPos = this.marker.getPosition();
-        let dstV = this.valign === VALIGN_INNER ? (<services.Position<services.PositionComponent<services.Point>>>dstPos).inner : this.valign === VALIGN_MIDDLE ? (<services.Position<services.PositionComponent<services.Point>>>dstPos).middle : (<services.Position<services.PositionComponent<services.Point>>>dstPos).outer;
-        let dst = this.halign === HALIGN_START ? dstV.begin : this.halign === HALIGN_END ? dstV.end : dstV.middle;
-        return ["M", (<services.Point>src).x, (<services.Point>src).y, "L", dst.x, dst.y].join(" ");
+        if(this.type == "path")
+        {
+            //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L973
+            let fontSize = 0;
+            fontSize = this.labelstyle ? parseFontSize(this.labelstyle) : 0;
+            let fontAdjust = (this.valign === VALIGN_OUTER) ? 0 : (this.valign === VALIGN_INNER) ? Number(fontSize || 0) : Number(fontSize || 0) / 2;
+            return this.getPath(this.hadjust,this.vadjust - fontAdjust,this.halign,this.valign)
+        }
+        else
+        {
+            //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1004
+            let src = this.marker.getPosition(this.hadjust, this.vadjust + this.linevadjust, this.halign, this.valign);
+            let dstPos = this.marker.getPosition();
+            let dstV = this.valign === VALIGN_INNER ? (<services.Position<services.PositionComponent<services.Point>>>dstPos).inner : this.valign === VALIGN_MIDDLE ? (<services.Position<services.PositionComponent<services.Point>>>dstPos).middle : (<services.Position<services.PositionComponent<services.Point>>>dstPos).outer;
+            let dst = this.halign === HALIGN_START ? dstV.begin : this.halign === HALIGN_END ? dstV.end : dstV.middle;
+            return ["M", (<services.Point>src).x, (<services.Point>src).y, "L", dst.x, dst.y].join(" ");
+        }
     }
 
     public interpolateAttributes() : void
@@ -2066,9 +2075,8 @@ export class MarkerLabel extends Directive
         fontSize = this.labelstyle ? parseFontSize(this.labelstyle) : 0;
         if(this.type == "path")
         {
-            //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L973
-            let fontAdjust = (this.valign === VALIGN_OUTER) ? 0 : (this.valign === VALIGN_INNER) ? Number(fontSize || 0) : Number(fontSize || 0) / 2;
-            res += ` d="${this.getPath(this.hadjust,this.vadjust - fontAdjust,this.halign,this.valign)}" `;
+            
+            res += ` d="${this.getSVGPath()}" `;
         }
         res += `></path>`;
 
