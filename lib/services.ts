@@ -58,7 +58,7 @@ export interface Position<T>
     inner : T;
 }
 
-export function polarToCartesian(
+function _polarToCartesian(
     centerX : number,
     centerY : number,
     radius : number,
@@ -71,7 +71,14 @@ export function polarToCartesian(
     };
 }
 
-export function pathDonut(
+export let polarToCartesian : (
+    centerX : number,
+    centerY : number,
+    radius : number,
+    angleInDegrees : number
+) => Point = _polarToCartesian;
+
+function pathDonut(
     x : number,
     y : number,
     radius : number,
@@ -105,7 +112,8 @@ export function pathDonut(
     return path;
 }
 
-export function pathArc(
+
+function pathArc(
     x : number,
     y : number,
     radius : number,
@@ -194,7 +202,7 @@ export function pathArc(
     return d;
 }
 
-export function pathScale(
+function pathScale(
     x : number,
     y : number,
     radius : number,
@@ -229,7 +237,7 @@ export function pathScale(
     return d;    
 }
 
-export function elementScaleLabels(
+function elementScaleLabels(
     x : number,
     y : number,
     radius : number,
