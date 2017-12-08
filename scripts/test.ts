@@ -72,7 +72,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 console.log(`       ${chalk.red(outString)}`);
                 //console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
                 //console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExHTMLToSVGCompiler())}`);
-                cleanRawProfiles();
+                //cleanRawProfiles();
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : false
@@ -180,9 +180,9 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             else
             {
                 console.log(`       ${chalk.red(outString)}`);
-                console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
-                console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExPBToSVGCompiler())}`);
-                cleanRawProfiles();
+                //console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
+                //console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExPBToSVGCompiler())}`);
+                //cleanRawProfiles();
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : false
@@ -254,7 +254,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             else
             {
                 console.log(`       ${chalk.red(outString)}`);
-                console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
+                //console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
                 //console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExHTMLToSVGCompiler())}`);
                 //cleanRawProfiles();
                 testCases[i].summary.statuses.push({
@@ -293,9 +293,9 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             else
             {
                 console.log(`       ${chalk.red(outString)}`);
-                console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
-                console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExPBToSVGCompiler())}`);
-                cleanRawProfiles();
+                //console.log(`       ${chalk.red(`Re-running and collecting profiling information`)}`);
+                //console.log(`${chalk.yellow(testCases[i].getProfilingInformationForExPBToSVGCompiler())}`);
+                //cleanRawProfiles();
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : false
