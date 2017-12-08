@@ -9,6 +9,12 @@ if [ $? != 0 ]; then
 	exit 1
 fi
 
+./scripts/buildWasm.bash
+if [ $? != 0 ]; then
+    printf "Building WASM failed\n"
+	exit 1
+fi
+
 rm *.svg
 rm *.pb
 

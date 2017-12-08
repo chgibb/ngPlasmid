@@ -3,6 +3,7 @@
 
 rm lib/*.js
 ./scripts/genPBCode.bash
+./scripts/buildWasm.bash
 
 npm version $1
 git push origin --tags
