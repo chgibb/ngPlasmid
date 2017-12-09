@@ -141,7 +141,7 @@ export class Plasmid extends Directive
     /**
      * Size, in nucleotides, of the plasmid represented.
      * If the sequence attribute is specified, sequencelength will not be used.
-     * Rather, the length of the sequence will be calcaulated from the provided sequence
+     * Rather, the length of the sequence will be calculated from the provided sequence
      * 
      * @type {number}
      * @memberof Plasmid
