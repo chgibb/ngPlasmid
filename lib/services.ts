@@ -96,13 +96,19 @@ export function pathDonut(
         end : polarToCartesian(x, y, radius + width, 0)
     };
 
-    path = [
+    /*path = [
         "M", innerRing.start.x, innerRing.start.y,
         "A", radius, radius, 0, 1, 0, innerRing.end.x, innerRing.end.y,
         "M", outerRing.start.x, outerRing.start.y,
         "A", radius + width, radius + width, 0, 1, 0, outerRing.end.x, outerRing.end.y
     ].join(" ");
-    return path;
+    return path;*/
+    return `
+        M ${innerRing.start.x} ${innerRing.start.y}
+        A ${radius} ${radius} 0 1 0 ${innerRing.end.x} ${innerRing.end.y}
+        M ${outerRing.start.x} ${outerRing.start.y}
+        A ${radius + width} ${radius + width} 0 1 0 ${outerRing.end.x} ${outerHeight.end.y}
+    `;
 }
 
 export function pathArc(
