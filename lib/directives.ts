@@ -1566,19 +1566,19 @@ export class TrackMarker extends Directive
         this.interpolateAttributes();
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L645
         let res = "";
-        res += `<g`;
+        res = res + `<g`;
         if(this.start)
-            res += ` start="${this.start}" `;
+            res = res + ` start="${this.start}" `;
         if(this.end)
-            res += ` end="${this.end}" `;
+            res = res + ` end="${this.end}" `;
         if(this.markerstyle)
-            res += ` markerstyle="${this.markerstyle}" `;
+            res = res + ` markerstyle="${this.markerstyle}" `;
         if(this.arrowendlength)
-            res += ` arrowendlength="${this.arrowendlength}" `;
+            res = res + ` arrowendlength="${this.arrowendlength}" `;
         if(this.arrowstartlength)
-            res += ` arrowstartlength="${this.arrowstartlength}" `;
+            res = res + ` arrowstartlength="${this.arrowstartlength}" `;
         
-        res += `>`;
+        res = res + `>`;
 
         let classAttrib = "";
         //override class with markerclass if it exists
@@ -1586,26 +1586,26 @@ export class TrackMarker extends Directive
         {
             for(let i = 0; i != this.classList.length; ++i)
             {
-                classAttrib += this.classList[i];
+                classAttrib = classAttrib + this.classList[i];
                 if(i != this.classList.length - 1)
-                    classAttrib += " ";
+                    classAttrib = classAttrib + " ";
             }
             if(this.classList.length != 0)
-                classAttrib += " ";
-            classAttrib += `ng-scope ng-isolate-scope`;
+                classAttrib = classAttrib + " ";
+            classAttrib = classAttrib + `ng-scope ng-isolate-scope`;
         }
         else
             classAttrib = this.markerclass;
-        res += `<path class="${classAttrib}" d="${this.getSVGPath()}" `;
+        res = res + `<path class="${classAttrib}" d="${this.getSVGPath()}" `;
         if(this.markerstyle)
-            res += ` style="${this.markerstyle}"`;
-        res += `></path>`;
+            res = res + ` style="${this.markerstyle}"`;
+        res = res + `></path>`;
 
         for(let i = 0; i != this.labels.length; ++i)
         {
-            res += this.labels[i].renderStart();
+            res = res + this.labels[i].renderStart();
         }
-        res += `</g>`;
+        res = res + `</g>`;
         
         return res;
     }
@@ -1614,7 +1614,7 @@ export class TrackMarker extends Directive
         let res = ``;
         for(let i = 0; i != this.labels.length; ++i)
         {
-            res += this.labels[i].renderEnd();
+            res = res + this.labels[i].renderEnd();
         }
         return res;
     }
