@@ -148,7 +148,8 @@ export function pathArc(
         // Draw a line
         start = polarToCartesian(x, y, radius, startAngle);
         end = polarToCartesian(x, y, radius + width, startAngle);
-        d = ["M", start.x, start.y, "L", end.x, end.y].join(" ");
+        //d = ["M", start.x, start.y, "L", end.x, end.y].join(" ");
+        d = `M ${start.x} ${start.y} L ${end.x} ${end.y}`;
     } else {
         //Draw a "simple" arc if the width is 1
         if (width === 1) {
