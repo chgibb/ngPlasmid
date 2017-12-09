@@ -2017,7 +2017,8 @@ export class MarkerLabel extends Directive
             let dstPos = this.marker.getPosition();
             let dstV = this.valign === VALIGN_INNER ? (<services.Position<services.PositionComponent<services.Point>>>dstPos).inner : this.valign === VALIGN_MIDDLE ? (<services.Position<services.PositionComponent<services.Point>>>dstPos).middle : (<services.Position<services.PositionComponent<services.Point>>>dstPos).outer;
             let dst = this.halign === HALIGN_START ? dstV.begin : this.halign === HALIGN_END ? dstV.end : dstV.middle;
-            return ["M", (<services.Point>src).x, (<services.Point>src).y, "L", dst.x, dst.y].join(" ");
+            //return ["M", (<services.Point>src).x, (<services.Point>src).y, "L", dst.x, dst.y].join(" ");
+            return `M ${(<services.Point>src).x} ${(<services.Point>src).y} L ${dst.x} ${dst.y}`;
         }
     }
 
