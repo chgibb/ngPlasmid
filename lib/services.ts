@@ -160,10 +160,11 @@ export function pathArc(
             } else {
                 arcSweep = endAngle - startAngle <= 180 ? "1" : "0";
             }
-            d = [
+            /*d = [
                 "M", start.x, start.y,
                 "A", radius, radius, 0, arcSweep, 1, end.x, end.y
-            ].join(" ");
+            ].join(" ");*/
+            d = `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${arcSweep} 1 ${end.x} ${end.y}`;
         } else {
 
             // Draw a "complex" arc (We start drawing in reverse, which is why start uses endAngle)
