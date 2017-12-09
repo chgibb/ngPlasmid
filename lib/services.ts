@@ -103,12 +103,7 @@ export function pathDonut(
         "A", radius + width, radius + width, 0, 1, 0, outerRing.end.x, outerRing.end.y
     ].join(" ");
     return path;*/
-    return `
-        M ${innerRing.start.x} ${innerRing.start.y}
-        A ${radius} ${radius} 0 1 0 ${innerRing.end.x} ${innerRing.end.y}
-        M ${outerRing.start.x} ${outerRing.start.y}
-        A ${radius + width} ${radius + width} 0 1 0 ${outerRing.end.x} ${outerHeight.end.y}
-    `;
+    return `M ${innerRing.start.x} ${innerRing.start.y} A ${radius} ${radius} 0 1 0 ${innerRing.end.x} ${innerRing.end.y} M ${outerRing.start.x} ${outerRing.start.y} A ${radius + width} ${radius + width} 0 1 0 ${outerRing.end.x} ${outerRing.end.y}`;
 }
 
 export function pathArc(
@@ -182,7 +177,7 @@ export function pathArc(
             arrow_end_4 = polarToCartesian(x, y, radius, endAngle);
             start2 = polarToCartesian(x, y, radius + width, endAngle);
             arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
-            d = [
+            /*d = [
                 "M", start.x, start.y, 
                 "A", radius, radius, 0, arcSweep, 0, end.x, end.y, 
                 "L", arrow_start_1.x, arrow_start_1.y,
@@ -195,7 +190,8 @@ export function pathArc(
                 "L", arrow_end_3.x, arrow_end_3.y,
                 "L", arrow_end_4.x, arrow_end_4.y,
                 "z"
-            ].join(" ");
+            ].join(" ");*/
+            d = `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${arcSweep} 0 ${end.x} ${end.y} L ${arrow_start_1.x} ${arrow_start_1.y} L ${arrow_start_2.x} ${arrow_start_2.y} L ${arrow_start_3.x} ${arrow_start_3.y} L ${arrow_start_4.x} ${arrow_start_4.y} A ${radius + width} ${radius + width} 0 ${arcSweep} 1 ${start2.x} ${start2.y} L ${arrow_end_1.x} ${arrow_end_1.y} L ${arrow_end_2.x} ${arrow_end_2.y} L ${arrow_end_3.x} ${arrow_end_3.y} L ${arrow_end_4.x} ${arrow_end_4.y} z`;
         }
     }
 
