@@ -1387,7 +1387,7 @@ export class TrackMarker extends Directive
             This appears to cause endAngle to equal end in all cases, and as such we simply return end : end.
         */
         endAngle = ((end ? end : 0) / this.track.plasmid.sequencelength) * 360;
-        endAngle += (endAngle < startAngle) ? 360 : 0;
+        endAngle = endAngle + ((endAngle < startAngle) ? 360 : 0);
         midAngle = startAngle + ((endAngle - startAngle) / 2);
 
         return <services.Angle>{
