@@ -150,7 +150,7 @@ export function pathArc(
         } else {
 
             // Draw a "complex" arc (We start drawing in reverse, which is why start uses endAngle)
-            d = pathComplexArc(x,y,radius,startAngle,endAngle,width,arrowStart,arrowEnd);
+            return pathComplexArc(x,y,radius,startAngle,endAngle,width,arrowStart,arrowEnd);
         }
     }
 
@@ -168,7 +168,6 @@ function pathComplexArc(
     arrowEnd : Arrow
 ) : string {
     //https://github.com/vixis/angularplasmid/blob/master/src/js/services.js#L155
-    let d = "";
     let start : Point; 
     let start2 : Point
     let end : Point;
@@ -196,21 +195,21 @@ function pathComplexArc(
     arrow_end_4 = polarToCartesian(x, y, radius, endAngle);
     start2 = polarToCartesian(x, y, radius + width, endAngle);
     arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
-    d = [
-        "M", start.x, start.y, 
-        "A", radius, radius, 0, arcSweep, 0, end.x, end.y, 
-        "L", arrow_start_1.x, arrow_start_1.y,
-        "L", arrow_start_2.x, arrow_start_2.y,
-        "L", arrow_start_3.x, arrow_start_3.y, 
-        "L", arrow_start_4.x, arrow_start_4.y,
-        "A", radius + width, radius + width, 0, arcSweep, 1, start2.x, start2.y,
-        "L", arrow_end_1.x, arrow_end_1.y,
-        "L", arrow_end_2.x, arrow_end_2.y,
-        "L", arrow_end_3.x, arrow_end_3.y,
-        "L", arrow_end_4.x, arrow_end_4.y,
+    let radiusPlusWidth = (radius+width).toString();
+    return (<Array<string>>[
+        "M", start.x.toString(), start.y.toString(), 
+        "A", radius.toString(), radius.toString(), "0", arcSweep, "0", end.x.toString(), end.y.toString(), 
+        "L", arrow_start_1.x.toString(), arrow_start_1.y.toString(),
+        "L", arrow_start_2.x.toString(), arrow_start_2.y.toString(),
+        "L", arrow_start_3.x.toString(), arrow_start_3.y.toString(), 
+        "L", arrow_start_4.x.toString(), arrow_start_4.y.toString(),
+        "A", radiusPlusWidth, radiusPlusWidth, "0", arcSweep, "1", start2.x.toString(), start2.y.toString(),
+        "L", arrow_end_1.x.toString(), arrow_end_1.y.toString(),
+        "L", arrow_end_2.x.toString(), arrow_end_2.y.toString(),
+        "L", arrow_end_3.x.toString(), arrow_end_3.y.toString(),
+        "L", arrow_end_4.x.toString(), arrow_end_4.y.toString(),
         "z"
-    ].join(" ");
-    return d;
+    ]).join(" ");
 }
 
 export function pathScale(
