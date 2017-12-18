@@ -1,7 +1,7 @@
 /// <reference path="./pb/node.d.ts" />
 
 import * as ngDirectives from "./directives";
-import * as pbDirectives from "./pb/node.js";
+import * as pbDirectives from "./pb/node";
 
 export function plasmidToPB(plasmid : ngDirectives.Plasmid) : pbDirectives.Node
 {
