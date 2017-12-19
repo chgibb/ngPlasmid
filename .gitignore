@@ -1,6 +1,6 @@
 node_modules/**/
 *.js
 *.svg
-lib/pb/node.d.ts
+lib/pb/_node.d.ts
 lib/pb/_node.js
 *.pb
