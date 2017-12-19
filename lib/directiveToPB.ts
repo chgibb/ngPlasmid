@@ -1,5 +1,3 @@
-/// <reference path="./pb/node.d.ts" />
-
 import * as ngDirectives from "./directives";
 import * as pbDirectives from "./pb/node";
 
