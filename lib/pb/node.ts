@@ -6,7 +6,9 @@
     this will have to be reconstructed by hand.
 */
 
-import * as $protobuf from "protobufjs";
+/// <reference types="node" />
+
+const $protobuf = require("protobufjs");
 
 let $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = new $protobuf.Root());
 
@@ -71,7 +73,7 @@ export class Node implements INode {
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encode(message: INode, writer?: $protobuf.Writer): $protobuf.Writer {
+    public static encode(message: INode, writer?: any): any {
         if (!writer)
             writer = $Writer.create();
         writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
@@ -89,7 +91,7 @@ export class Node implements INode {
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encodeDelimited(message: INode, writer?: $protobuf.Writer): $protobuf.Writer {
+    public static encodeDelimited(message: INode, writer?: any): any {
         return this.encode(message, writer).ldelim();
     }
 
@@ -101,7 +103,7 @@ export class Node implements INode {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): Node {
+    public static decode(reader: (any | Uint8Array), length?: number): Node {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
         var end = length === undefined ? reader.len : reader.pos + length, message = new Node();
@@ -143,7 +145,7 @@ export class Node implements INode {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): Node {
+    public static decodeDelimited(reader: (any | Uint8Array)): Node {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
@@ -215,7 +217,7 @@ export class Node implements INode {
      * @param [options] Conversion options
      * @returns Plain object
      */
-    public static toObject(message: Node, options?: $protobuf.IConversionOptions): { [k: string]: any } {
+    public static toObject(message: Node, options?: any): { [k: string]: any } {
         if (!options)
             options = {};
         let object: Node = (<any>{});
@@ -602,7 +604,7 @@ export class Attributes implements IAttributes {
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encode(message: IAttributes, writer?: $protobuf.Writer): $protobuf.Writer {
+    public static encode(message: IAttributes, writer?: any): any {
         if (!writer)
             writer = $Writer.create();
         if (message.plasmidheight != null && message.hasOwnProperty("plasmidheight"))
@@ -694,7 +696,7 @@ export class Attributes implements IAttributes {
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encodeDelimited(message: IAttributes, writer?: $protobuf.Writer): $protobuf.Writer {
+    public static encodeDelimited(message: IAttributes, writer?: any): any {
         return this.encode(message, writer).ldelim();
     }
 
@@ -706,7 +708,7 @@ export class Attributes implements IAttributes {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): Attributes {
+    public static decode(reader: (any | Uint8Array), length?: number): Attributes {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
         var end = length === undefined ? reader.len : reader.pos + length, message = new Attributes();
@@ -848,7 +850,7 @@ export class Attributes implements IAttributes {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): Attributes {
+    public static decodeDelimited(reader: (any | Uint8Array)): Attributes {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
@@ -1083,7 +1085,7 @@ export class Attributes implements IAttributes {
      * @param [options] Conversion options
      * @returns Plain object
      */
-    public static toObject(message: Attributes, options?: $protobuf.IConversionOptions): { [k: string]: any } {
+    public static toObject(message: Attributes, options?: any): { [k: string]: any } {
         if (!options)
             options = {};
         let object: Attributes = (<any>{});
