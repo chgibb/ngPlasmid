@@ -1,5 +1,3 @@
-/// <reference path="./../lib/pb/node.d.ts" />
-
 import * as fs from "fs";
 
 let args = process.argv.slice(2);
