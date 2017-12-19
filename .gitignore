@@ -1,12 +1,5 @@
 node_modules/**/
-lib/*.js
-exCompiler/*.js
-HTMLToPBCompiler/*.js
-HTMLToSVGCompiler/*.js
-PBToSVGCompiler/*.js
-referenceCompiler/*.js
-scripts/*.js
-build/*.js
+*.js
 *.svg
 lib/pb/node.d.ts
 lib/pb/_node.js
