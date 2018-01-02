@@ -2063,6 +2063,9 @@ export class MarkerLabel extends Directive
 
             if(this.lineclass)
                 res += ` class="${this.lineclass}" `;
+            
+            if(this.linestyle)
+                res += ` style="${this.linestyle}"`;
 
             res += `></path>`;
         }
@@ -2244,6 +2247,10 @@ export class MarkerLabel extends Directive
         if(node.attribs.lineclass)
         {
             this.lineclass = node.attribs.lineclass;
+        }
+        if(node.attribs.linestyle)
+        {
+            this.linestyle = node.attribs.linestyle;
         }
     }
 
