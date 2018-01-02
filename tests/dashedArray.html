@@ -1,0 +1,55 @@
+<plasmid sequencelength="7907" plasmidheight="{{genome.height}}" plasmidwidth="{{genome.width}}">
+
+
+
+
+    <plasmidtrack width="20" trackstyle="fill-opacity:0.0;" radius="120">
+        <trackmarker start="0" wadjust="12" markerclick="seqSelectionArmOnClick($event,$handler,'left')">
+            <markerlabel linestyle="stroke:rgb(0,0,0);stroke-dasharray:5,10;stroke-width:2px;" lineclass="seqSelectionArm" showline="1"
+                text="" vadjust="1200" labelclick="seqSelectionArmOnClick($event,$handler,'left')"></markerlabel>
+        </trackmarker>
+    </plasmidtrack>
+
+
+
+    <plasmidtrack trackstyle="fill:#f0f0f0;stroke:#ccc" radius="{{genome.radius}}">
+
+
+
+        <tracklabel text="" labelstyle="font-size:20px;font-weight:400">
+
+
+        </tracklabel>
+
+
+        <trackmarker markerclick="markerOnClick($event,$marker,'695bc912-7f3c-4197-b134-89522956102b')" start="0" end="7906" markerstyle="fill:rgb(70,116,35);opacity:1;">
+
+
+
+            <markerlabel type="path" text="" labelstyle="fill:rgb(0,0,0);opacity:1;">
+
+
+            </markerlabel>
+        </trackmarker>
+
+
+        <trackmarker markerclick="markerOnClick($event,$marker,'filler')" start="7906" end="7907" markerstyle="fill:rgb(70,116,35);opacity:1;">
+
+
+
+            <markerlabel type="path" labelstyle="fill:;opacity:1;">
+
+
+            </markerlabel>
+        </trackmarker>
+
+
+        <trackscale interval="{{genome.circularFigureBPTrackOptions.interval}}" direction="{{genome.circularFigureBPTrackOptions.direction}}"
+            showlabels="{{genome.circularFigureBPTrackOptions.showLabels}}" vadjust="{{genome.circularFigureBPTrackOptions.vAdjust}}">
+
+
+        </trackscale>
+    </plasmidtrack>
+
+
+</plasmid>

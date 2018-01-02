@@ -61,6 +61,13 @@ export function queueTests() : Array<TestCase>
     }));
 
     testCases.push(new TestCase(<TestCaseInit>{
+        htmlFile : "dashedArray.html",
+        jsonFile : "dashedArray.json",
+        name : "Dashed Array",
+        type : "directive"
+    }));
+
+    testCases.push(new TestCase(<TestCaseInit>{
         htmlFile : "HSP70.html",
         jsonFile : undefined,
         name : "Angular Plasmid Example: HSP70",
