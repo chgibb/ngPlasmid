@@ -467,14 +467,6 @@ export class PlasmidTrack extends Directive
         this.interpolateAttributes();
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L179
         let res = "";
-        /*res = res + `<g`;
-        if(this.trackstyle)
-            res = res + ` trackstyle="${this.trackstyle}" `;
-        if(this.width)
-            res = res + ` width="${this.width}" `;
-        if(this.radius)
-            res = res + ` radius="${this.radius}" `;
-        res = res + `>`;*/
         res = res + `<path class="ng-scope ng-isolate-scope" fill-rule="evenodd" `;
 
         res = res + ` d="${this.getSVGPath()}" `;
@@ -498,7 +490,7 @@ export class PlasmidTrack extends Directive
         {
             res += this.children[i].renderEnd();
         }
-        //res += `</g>`;
+
         return res;
     }
 
