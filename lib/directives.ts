@@ -1044,7 +1044,7 @@ export class TrackScale extends Directive
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L352
         let res = "";
 
-        /*res += `<g`;
+        res += `<g`;
         if(this.interval)
         {
             res += ` interval="${this.interval}" `;
@@ -1057,7 +1057,7 @@ export class TrackScale extends Directive
         {
             res += ` ticksize="${this.ticksize}" `;
         }
-        res += `>`;*/
+        res += `>`;
 
         let classAttrib = "";
         for(let i = 0; i != this.classList.length; ++i)
@@ -1076,7 +1076,7 @@ export class TrackScale extends Directive
         }
         res += ` d="${this.getSVGPath()}" `;
         res += `></path>`
-        //res += `<g>`;
+        res += `<g>`;
         if(this.showlabels)
         {
             //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L380
