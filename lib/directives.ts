@@ -1557,20 +1557,7 @@ export class TrackMarker extends Directive
     {
         this.interpolateAttributes();
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L645
-        let res = "";
-        res = res + `<g`;
-        if(this.start)
-            res = res + ` start="${this.start}" `;
-        if(this.end)
-            res = res + ` end="${this.end}" `;
-        if(this.markerstyle)
-            res = res + ` markerstyle="${this.markerstyle}" `;
-        if(this.arrowendlength)
-            res = res + ` arrowendlength="${this.arrowendlength}" `;
-        if(this.arrowstartlength)
-            res = res + ` arrowstartlength="${this.arrowstartlength}" `;
-        
-        res = res + `>`;
+        let res = "<g>";
 
         let classAttrib = "";
         //override class with markerclass if it exists
