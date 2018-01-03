@@ -2153,7 +2153,7 @@ export class MarkerLabel extends Directive
 
             res += `>`;
 
-            if(this.text)
+            if(this.text !== undefined)
                 res += `${this.text}`;
 
             res += "</textPath>";
@@ -2164,7 +2164,7 @@ export class MarkerLabel extends Directive
             let pos = this.marker.getPosition(this.hadjust,this.vadjust,this.halign,this.valign);
             res += ` x="${(<services.Point>pos).x}" y="${(<services.Point>pos).y}" `;
             res += `>`;
-            res += `${this.text}`;
+            res += `${this.text !== undefined ? this.text : ""}`;
         }
         
         res +=  "</text></g>"
