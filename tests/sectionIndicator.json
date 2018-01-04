@@ -1,0 +1,45 @@
+{
+    "genome": {
+        "height": 1200,
+        "radius": 120,
+        "width": 1200
+    },
+    "seqSelectionLeftArm": {
+        "armWidth": 20,
+        "armTrackStyle": "fill-opacity:0.0;",
+        "armRadius": 100,
+        "armStart": 10,
+        "armWadjust": 12,
+        "armMarkerClick": "seqSelectionArmOnClick($event,$handler,'left')",
+        "armLineClass": "seqSelectionArm",
+        "armLineStyle": "stroke:rgb(0,0,0);stroke-dasharray:5,10;stroke-width:2px;",
+        "armShowLine": 1,
+        "armVadjust": 1200,
+        "armLabelClick": "seqSelectionArmOnClick($event,$handler,'left')"
+    },
+    "seqSelectionRightArm": {
+        "armWidth": 20,
+        "armTrackStyle": "fill-opacity:0.0;",
+        "armRadius": 100,
+        "armStart": 0,
+        "armWadjust": 12,
+        "armMarkerClick": "seqSelectionArmOnClick($event,$handler,'right')",
+        "armLineClass": "seqSelectionArm",
+        "armLineStyle": "stroke:rgb(0,0,0);stroke-dasharray:5,10;stroke-width:2px;",
+        "armShowLine": 1,
+        "armVadjust": 1200,
+        "armLabelClick": "seqSelectionArmOnClick($event,$handler,'right')"
+    },
+    "seqSelectionArrow": {
+        "arrowTrackStyle": "fill:#f0f0f0;stroke:#ccc",
+        "arrowTrackRadius": 100,
+        "arrowStart": 0,
+        "arrowEnd": 100,
+        "arrowMarkerStyle": "fill:rgba(0,0,0)",
+        "arrowEndLength": 10,
+        "arrowEndWidth": 5,
+        "arrowType": "path",
+        "arrowClass": "",
+        "arrowText": "0-100"
+    }
+}
