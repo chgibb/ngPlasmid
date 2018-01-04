@@ -320,4 +320,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         console.log(``);
     }
 
-})();
+})().catch((err : any) => {
+    console.error(err);
+    process.exit(1);
+});
