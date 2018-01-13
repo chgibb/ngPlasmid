@@ -310,6 +310,8 @@ export class Plasmid extends Directive
  */
 export class PlasmidTrack extends Directive
 {
+    public _Itrackstyle : string;
+
     public trackstyle : string;
 
     /**
@@ -373,6 +375,8 @@ export class PlasmidTrack extends Directive
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L253
         this._radius = radius;
     }
+
+    public _Iwidth : string;
 
     private _width : number;
 
@@ -459,6 +463,8 @@ export class PlasmidTrack extends Directive
 
     public interpolateAttributes() : void
     {
+        this.width = parseFloat(interpolate(this._Iwidth,this.$scope));
+        this.trackstyle = interpolate(this._Itrackstyle,this.$scope);
         this.radius = parseFloat(interpolate(this._Iradius,this.$scope));
     }
 
@@ -506,7 +512,7 @@ export class PlasmidTrack extends Directive
 
         if(node.attribs.trackstyle)
         {
-            this.trackstyle = node.attribs.trackstyle;
+            this._Itrackstyle = node.attribs.trackstyle;
         }
         if(node.attribs.radius)
         {
@@ -514,7 +520,7 @@ export class PlasmidTrack extends Directive
         }
         if(node.attribs.width)
         {
-            this.width = parseFloat(node.attribs.width);
+            this._Iwidth = node.attribs.width;
         }
 
         for(let i = 0; i != node.children.length; ++i)
@@ -1436,6 +1442,8 @@ export class TrackMarker extends Directive
         return this.track.width + this.wadjust;
     }
 
+    public _Istart : string;
+
     private _start : number;
 
     public get start() : number
@@ -1550,6 +1558,7 @@ export class TrackMarker extends Directive
 
     public interpolateAttributes() : void
     {
+        this.start = parseFloat(interpolate(this._Istart,this.$scope));
         this.wadjust = parseFloat(interpolate(this._Iwadjust,this.$scope));
     }
 
@@ -1609,7 +1618,7 @@ export class TrackMarker extends Directive
             throw new Error("Node is not a trackmarker");
         if(node.attribs.start)
         {
-            this.start = parseFloat(node.attribs.start);
+            this._Istart = node.attribs.start;
         }
         if(node.attribs.end)
         {
@@ -1693,6 +1702,8 @@ export class TrackMarker extends Directive
  */
 export class MarkerLabel extends Directive
 {
+    public _Ishowline : string;
+
     /**
      * Determines if line will be drawn from the label to the marker.
      * By default, the line connects the middle of the label with the middle of the marker
@@ -1888,6 +1899,8 @@ export class MarkerLabel extends Directive
         this._linestyle = linestyle;
     }
 
+    public _Ilineclass : string;
+
     private _lineclass : string;
 
     /**
@@ -2003,6 +2016,8 @@ export class MarkerLabel extends Directive
     public interpolateAttributes() : void
     {
         this.vadjust = parseFloat(interpolate(this._Ivadjust,this.$scope));
+        this.lineclass = interpolate(this._Ilineclass,this.$scope);
+        this.showline = (<any>interpolate(this._Ishowline,this.$scope));
     }
 
     public renderStart() : string
@@ -2221,11 +2236,11 @@ export class MarkerLabel extends Directive
         }
         if(node.attribs.showline)
         {
-            this.showline = node.attribs.showline;
+            this._Ishowline = node.attribs.showline;
         }
         if(node.attribs.lineclass)
         {
-            this.lineclass = node.attribs.lineclass;
+            this._Ilineclass = node.attribs.lineclass;
         }
         if(node.attribs.linestyle)
         {

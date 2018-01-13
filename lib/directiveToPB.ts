@@ -35,8 +35,8 @@ export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbD
         type : "tag",
         attribs : <pbDirectives.IAttributes>{
             radius : attribToString(plasmidTrack._Iradius),
-            width : attribToString(plasmidTrack.width),
-            trackstyle : attribToString(plasmidTrack.trackstyle)
+            width : attribToString(plasmidTrack._Iwidth),
+            trackstyle : attribToString(plasmidTrack._Itrackstyle)
         }
     });
     res.children = new Array<pbDirectives.INode>();
@@ -122,7 +122,7 @@ export function trackMarkertoIPB(trackMarker : ngDirectives.TrackMarker) : pbDir
         name : "trackmarker",
         type : "tag",
         attribs : <pbDirectives.IAttributes>{
-            start : attribToString(trackMarker.start),
+            start : attribToString(trackMarker._Istart),
             end : attribToString(trackMarker.end),
             markerstyle : attribToString(trackMarker.markerstyle),
             arrowstartlength : attribToString(trackMarker.arrowstartlength),
@@ -163,9 +163,9 @@ export function markerLabelToIPB(markerLabel : ngDirectives.MarkerLabel) : pbDir
             valign : attribToString(markerLabel.valign),
             halign : attribToString(markerLabel.halign),
             type : attribToString(markerLabel.type),
-            showline : attribToString(markerLabel.showline),
+            showline : attribToString(markerLabel._Ishowline),
             linestyle : attribToString(markerLabel.linestyle),
-            lineclass : attribToString(markerLabel.lineclass),
+            lineclass : attribToString(markerLabel._Ilineclass),
             linevadjust : attribToString(markerLabel.linevadjust),
             labelclass : attribToString(markerLabel.labelclass),
             labelstyle : attribToString(markerLabel.labelstyle),
