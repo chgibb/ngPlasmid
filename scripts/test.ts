@@ -166,7 +166,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             if(testCases[i].htmlFile == "HPV1615CovTracks.html")
                 compileTimeFactor = 85;
             console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime/testCases[i].exPBToSVGCompileTime).toFixed(2)}x faster than the reference`)}`);
-            outString = `Protocol Buffer to HTML Compile Time Faster Than HTML to SVG Compiler`;
+            outString = `Protocol Buffer to SVG Compile Time Faster Than HTML to SVG Compiler`;
 
         
             if(testCases[i].exPBToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
@@ -281,7 +281,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             console.log(`   ${chalk.blue(`Compile time:`)} ${chalk.yellow(testCases[i].exPBToSVGCompileTime+"ms")}`);
             console.log(`   ${chalk.blue(`Output size:`)} ${chalk.yellow(testCases[i].exPBToSVGResultSize+"b")}`);
 
-            outString = `Protocol Buffer to HTML Compile Time Faster Than HTML to SVG Compiler`;
+            outString = `Protocol Buffer to SVG Compile Time Faster Than HTML to SVG Compiler`;
             if(testCases[i].exPBToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
             {
                 console.log(`       ${chalk.green(outString)}`);
