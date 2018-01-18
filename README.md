@@ -86,11 +86,14 @@ In the interests of speed and the requirements of the downstream project, only t
     - ```showlabels```
 - ```<trackmarker>```
     - ```start```
+    - ```end```
     - ```wadjust```
+    - ```markerstyle```
 - ```<markerlabel>```
     - ```lineclass```
     - ```showline```
     - ```vadjust```
+    - ```text```
 
 ### Performance
 ngPlasmid can be anywhere from ~5x to ~160x faster. ngPlasmid tends to perform far better in terms of speed over the reference compiler the larger the input is. With small inputs, the main bottleneck is disk I/O and NodeJS' startup time. Speed, as well as correctness with the reference implementation is tested on each commit. See Travis logs for compilation and optimization time for each test file vs the reference compiler.

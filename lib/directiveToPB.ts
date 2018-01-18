@@ -123,8 +123,8 @@ export function trackMarkertoIPB(trackMarker : ngDirectives.TrackMarker) : pbDir
         type : "tag",
         attribs : <pbDirectives.IAttributes>{
             start : attribToString(trackMarker._Istart),
-            end : attribToString(trackMarker.end),
-            markerstyle : attribToString(trackMarker.markerstyle),
+            end : attribToString(trackMarker._Iend),
+            markerstyle : attribToString(trackMarker._Imarkerstyle),
             arrowstartlength : attribToString(trackMarker.arrowstartlength),
             arrowendlength : attribToString(trackMarker.arrowendlength),
             arrowstartangle : attribToString(trackMarker.arrowstartangle),
@@ -157,7 +157,7 @@ export function markerLabelToIPB(markerLabel : ngDirectives.MarkerLabel) : pbDir
         name : "markerlabel",
         type : "tag",
         attribs : <pbDirectives.IAttributes>{
-            text : attribToString(markerLabel.text),
+            text : attribToString(markerLabel._Itext),
             vadjust : attribToString(markerLabel._Ivadjust),
             hadjust : attribToString(markerLabel.hadjust),
             valign : attribToString(markerLabel.valign),

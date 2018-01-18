@@ -1456,6 +1456,7 @@ export class TrackMarker extends Directive
         this._start = start;
     }
 
+    public _Iend : string;
     private _end : number;
 
     public get end() : number
@@ -1518,6 +1519,8 @@ export class TrackMarker extends Directive
         this._markerclass = markerclass;
     }
 
+    public _Imarkerstyle : string;
+
     private _markerstyle : string;
 
     public get markerstyle() : string
@@ -1559,7 +1562,9 @@ export class TrackMarker extends Directive
     public interpolateAttributes() : void
     {
         this.start = parseFloat(interpolate(this._Istart,this.$scope));
+        this.end = parseFloat(interpolate(this._Iend,this.$scope));
         this.wadjust = parseFloat(interpolate(this._Iwadjust,this.$scope));
+        this.markerstyle = interpolate(this._Imarkerstyle,this.$scope);
     }
 
     public renderStart() : string
@@ -1622,11 +1627,11 @@ export class TrackMarker extends Directive
         }
         if(node.attribs.end)
         {
-            this.end = parseFloat(node.attribs.end);
+            this._Iend = node.attribs.end;
         }
         if(node.attribs.markerstyle)
         {
-            this.markerstyle = node.attribs.markerstyle;
+            this._Imarkerstyle = node.attribs.markerstyle;
         }
         if(node.attribs.arrowstartlength)
         {
@@ -1920,6 +1925,8 @@ export class MarkerLabel extends Directive
         this._lineclass = lineclass;
     }
 
+    public _Itext : string;
+
     private _text : string;
 
     /**
@@ -2018,6 +2025,7 @@ export class MarkerLabel extends Directive
         this.vadjust = parseFloat(interpolate(this._Ivadjust,this.$scope));
         this.lineclass = interpolate(this._Ilineclass,this.$scope);
         this.showline = (<any>interpolate(this._Ishowline,this.$scope));
+        this.text = interpolate(this._Itext,this.$scope);
     }
 
     public renderStart() : string
@@ -2212,7 +2220,7 @@ export class MarkerLabel extends Directive
         }
         if(node.attribs.text)
         {
-            this.text = node.attribs.text;
+            this._Itext = node.attribs.text;
         }
         if(node.attribs.vadjust)
         {
