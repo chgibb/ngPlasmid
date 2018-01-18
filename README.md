@@ -74,6 +74,8 @@ In the interests of speed and the requirements of the downstream project, only t
     - ```plasmidheight```
     - ```plasmidwidth```
 - ```<plasmidtrack>```
+    - ```width```
+    - ```trackstyle```
     - ```radius```
 - ```<tracklabel>```
     - ```text```
@@ -83,8 +85,11 @@ In the interests of speed and the requirements of the downstream project, only t
     - ```vadjust```
     - ```showlabels```
 - ```<trackmarker>```
+    - ```start```
     - ```wadjust```
 - ```<markerlabel>```
+    - ```lineclass```
+    - ```showline```
     - ```vadjust```
 
 ### Performance
