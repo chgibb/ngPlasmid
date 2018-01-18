@@ -27,4 +27,16 @@
             <markerlabel lineclass="{{seqSelectionLeftArm.armLineClass}}" showline="{{seqSelectionLeftArm.armShowLine}}" text="" vadjust="{{seqSelectionLeftArm.armVadjust}}"></markerlabel>
         </trackmarker>
     </plasmidtrack>
+
+    <plasmidtrack width="{{seqSelectionRightArm.armWidth}}" trackstyle="{{seqSelectionRightArm.armTrackStyle}}" radius="{{seqSelectionRightArm.armRadius}}">
+        <trackmarker start="{{seqSelectionRightArm.armStart}}" wadjust="{{seqSelectionRightArm.armWadjust}}">
+            <markerlabel lineclass="{{seqSelectionRightArm.armLineClass}}" showline="{{seqSelectionRightArm.armShowLine}}" text="" vadjust="{{seqSelectionRightArm.armVadjust}}"></markerlabel>
+        </trackmarker>
+    </plasmidtrack>
+
+    <plasmidtrack trackstyle="{{seqSelectionArrow.arrowTrackStyle}}" radius="{{seqSelectionArrow.arrowTrackRadius}}">
+        <trackmarker start="{{seqSelectionArrow.arrowStart}}" end="{{seqSelectionArrow.arrowEnd}}" markerstyle="{{seqSelectionArrow.arrowMarkerStyle}}">
+            <markerlabel type="path" class="" text="{{seqSelectionArrow.arrowText}}"></markerlabel>
+        </trackmarker>
+    </plasmidtrack>
 </plasmid>
