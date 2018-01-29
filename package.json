@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./scripts/test.bash",
+    "test": "bash scripts/test.bash",
     "install": "bash scripts/buildNativeModule.bash"
   },
   "author": "",
