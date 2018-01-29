@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./scripts/test.bash"
+    "test": "./scripts/test.bash",
+    "install": "bash scripts/buildNativeModule.bash"
   },
   "author": "",
   "license": "GPL3.0",
@@ -24,6 +25,7 @@
     "chalk": "^2.3.0",
     "domhandler2": "^3.0.0",
     "jquery": "^3.2.1",
+    "nan": "^2.8.0",
     "optimize-js": "^1.0.3",
     "protobufjs": "^6.8.0",
     "rollup": "^0.52.0",

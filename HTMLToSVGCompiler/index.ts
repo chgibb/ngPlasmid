@@ -6,7 +6,7 @@ import * as html from "./../lib/html";
 import * as directives from "./../lib//directives";
 
 (async function(){
-
+    require("./../ngPlasmid.node").hello();
     let nodes = await html.loadFromString(fs.readFileSync(args[0]).toString());
 
     let plasmid = new directives.Plasmid();
