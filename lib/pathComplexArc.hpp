@@ -1,5 +1,8 @@
 #pragma once
 #include <string>
+
+#include <nan.h>
+
 #include "point.hpp"
 #include "polarToCartesian.hpp"
 namespace ngPlasmid
@@ -41,15 +44,15 @@ namespace ngPlasmid
         start = ngPlasmid::polarToCartesian(x, y, radius, endAngle);
         end = ngPlasmid::polarToCartesian(x, y, radius, startAngle);
 
-        arrow_start_1 = polarToCartesian(x, y, radius - arrowStartWidth, startAngle + arrowStartAngle);
-        arrow_start_2 = polarToCartesian(x, y, radius + (width / 2), startAngle - arrowStartLength);
-        arrow_start_3 = polarToCartesian(x, y, radius + width + arrowStartWidth, startAngle + arrowStartAngle);
-        arrow_start_4 = polarToCartesian(x, y, radius + width, startAngle);
-        arrow_end_1 = polarToCartesian(x, y, radius + width + arrowEndWidth, endAngle - arrowEndAngle);
-        arrow_end_2 = polarToCartesian(x, y, radius + (width / 2), endAngle + arrowEndLength);
-        arrow_end_3 = polarToCartesian(x, y, radius - arrowEndWidth, endAngle - arrowEndAngle);
-        arrow_end_4 = polarToCartesian(x, y, radius, endAngle);
-        start2 = polarToCartesian(x, y, radius + width, endAngle);
+        arrow_start_1 = ngPlasmid::polarToCartesian(x, y, radius - arrowStartWidth, startAngle + arrowStartAngle);
+        arrow_start_2 = ngPlasmid::polarToCartesian(x, y, radius + (width / 2), startAngle - arrowStartLength);
+        arrow_start_3 = ngPlasmid::polarToCartesian(x, y, radius + width + arrowStartWidth, startAngle + arrowStartAngle);
+        arrow_start_4 = ngPlasmid::polarToCartesian(x, y, radius + width, startAngle);
+        arrow_end_1 = ngPlasmid::polarToCartesian(x, y, radius + width + arrowEndWidth, endAngle - arrowEndAngle);
+        arrow_end_2 = ngPlasmid::polarToCartesian(x, y, radius + (width / 2), endAngle + arrowEndLength);
+        arrow_end_3 = ngPlasmid::polarToCartesian(x, y, radius - arrowEndWidth, endAngle - arrowEndAngle);
+        arrow_end_4 = ngPlasmid::polarToCartesian(x, y, radius, endAngle);
+        start2 = ngPlasmid::polarToCartesian(x, y, radius + width, endAngle);
         arcSweep = endAngle - startAngle <= 180 ? '0' : '1';
 
         res += "M";
@@ -152,5 +155,30 @@ namespace ngPlasmid
 
 
         return res;
+    }
+
+    namespace JSExport
+    {
+        void pathComplexArc(const Nan::FunctionCallbackInfo<v8::Value>&args)
+        {
+            args.GetReturnValue().Set(
+                Nan::New(
+                    ngPlasmid::pathComplexArc(
+                        args[0]->NumberValue(),
+                        args[1]->NumberValue(),
+                        args[2]->NumberValue(),
+                        args[3]->NumberValue(),
+                        args[4]->NumberValue(),
+                        args[5]->NumberValue(),
+                        args[6]->NumberValue(),
+                        args[7]->NumberValue(),
+                        args[8]->NumberValue(),
+                        args[9]->NumberValue(),
+                        args[10]->NumberValue(),
+                        args[11]->NumberValue()
+                    )
+                ).ToLocalChecked()
+            );
+        }
     }
 }
