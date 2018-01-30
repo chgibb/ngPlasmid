@@ -13,4 +13,4 @@ if [ $? != 0 ]; then
 	exit 1
 fi
 
-cp build/Release/ngPlasmid.node .
+cp build/Release/ngPlasmid.node lib/
