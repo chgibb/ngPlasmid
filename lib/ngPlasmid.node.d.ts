@@ -2,10 +2,18 @@ import * as services from "./services";
 
 export class ngPlasmidNative
 {
-    public polarToCartesian(
-        centerX : number,
-        centerY : number,
+    public pathComplexArc(
+        x : number,
+        y : number,
         radius : number,
-        angleInDegrees : number
-    ) : services.Point
+        startAngle : number,
+        endAngle : number,
+        width : number,
+        arrowStartWidth : number,
+        arrowStartLength : number,
+        arrowStartAngle : number,
+        arrowEndWidth : number,
+        arrowEndLength : number,
+        arrowEndAngle : number,
+    ) : string;
 }
