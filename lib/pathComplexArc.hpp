@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 
 #include <nan.h>
@@ -8,19 +9,32 @@
 namespace ngPlasmid
 {
     std::string pathComplexArc(
-        float x,
-        float y,
-        float radius,
-        float startAngle,
-        float endAngle,
-        float width,
-        float arrowStartWidth,
-        float arrowStartLength,
-        float arrowStartAngle,
-        float arrowEndWidth,
-        float arrowEndLength,
-        float arrowEndAngle
+        double x,
+        double y,
+        double radius,
+        double startAngle,
+        double endAngle,
+        double width,
+        double arrowStartWidth,
+        double arrowStartLength,
+        double arrowStartAngle,
+        double arrowEndWidth,
+        double arrowEndLength,
+        double arrowEndAngle
     ) {
+        std::cerr<<"C++ Args:\n";
+        std::cerr<<x<<std::endl;
+        std::cerr<<y<<std::endl;
+        std::cerr<<radius<<std::endl;
+        std::cerr<<startAngle<<std::endl;
+        std::cerr<<endAngle<<std::endl;
+        std::cerr<<width<<std::endl;
+        std::cerr<<arrowStartWidth<<std::endl;
+        std::cerr<<arrowStartLength<<std::endl;
+        std::cerr<<arrowStartAngle<<std::endl;
+        std::cerr<<arrowEndWidth<<std::endl;
+        std::cerr<<arrowEndLength<<std::endl;
+        std::cerr<<arrowEndAngle<<std::endl;
         std::string res = "";
 
         ngPlasmid::Point start;
@@ -57,103 +71,103 @@ namespace ngPlasmid
 
         res += "M";
         res += " ";
-        res += start.x;
+        res += std::to_string(start.x);
         res += " ";
-        res += start.y;
-        res += " ";
-
-        res += "A";
-        res += " ";
-        res += radius;
-        res += " ";
-        res += radius;
-        res += " ";
-        res += "0";
-        res += " ";
-        res += arcSweep;
-        res += " ";
-        res += "0";
-        res += " ";
-        res += end.x;
-        res += " ";
-        res += end.y;
-        res += " ";
-
-        res += "L";
-        res += " ";
-        res += arrow_start_1.x;
-        res += " ";
-        res += arrow_start_1.y;
-        res += " ";
-
-        res += "L";
-        res += " ";
-        res += arrow_start_2.x;
-        res += " ";
-        res += arrow_start_2.y;
-        res += " ";
-
-        res += "L";
-        res += " ";
-        res += arrow_start_3.x;
-        res += " ";
-        res += arrow_start_3.y;
-        res += " ";
-
-        res += "L";
-        res += " ";
-        res += arrow_start_4.x;
-        res += " ";
-        res += arrow_start_4.y;
+        res += std::to_string(start.y);
         res += " ";
 
         res += "A";
         res += " ";
-        res += radius + width;
+        res += std::to_string(radius);
         res += " ";
-        res += radius + width;
+        res += std::to_string(radius);
         res += " ";
         res += "0";
         res += " ";
-        res += arcSweep;
+        res += std::to_string(arcSweep);
+        res += " ";
+        res += "0";
+        res += " ";
+        res += std::to_string(end.x);
+        res += " ";
+        res += std::to_string(end.y);
+        res += " ";
+
+        res += "L";
+        res += " ";
+        res += std::to_string(arrow_start_1.x);
+        res += " ";
+        res += std::to_string(arrow_start_1.y);
+        res += " ";
+
+        res += "L";
+        res += " ";
+        res += std::to_string(arrow_start_2.x);
+        res += " ";
+        res += std::to_string(arrow_start_2.y);
+        res += " ";
+
+        res += "L";
+        res += " ";
+        res += std::to_string(arrow_start_3.x);
+        res += " ";
+        res += std::to_string(arrow_start_3.y);
+        res += " ";
+
+        res += "L";
+        res += " ";
+        res += std::to_string(arrow_start_4.x);
+        res += " ";
+        res += std::to_string(arrow_start_4.y);
+        res += " ";
+
+        res += "A";
+        res += " ";
+        res += std::to_string(radius + width);
+        res += " ";
+        res += std::to_string(radius + width);
+        res += " ";
+        res += "0";
+        res += " ";
+        res += std::to_string(arcSweep);
         res += " ";
         res += "1";
-        res += start2.x;
+        res += std::to_string(start2.x);
         res += " ";
-        res += start2.y;
-        res += " ";
-
-        res += "L";
-        res += " ";
-        res += arrow_end_1.x;
-        res += " ";
-        res += arrow_end_1.y;
+        res += std::to_string(start2.y);
         res += " ";
 
         res += "L";
         res += " ";
-        res += arrow_end_2.x;
+        res += std::to_string(arrow_end_1.x);
         res += " ";
-        res += arrow_end_2.y;
+        res += std::to_string(arrow_end_1.y);
+        res += " ";
+
+        res += "L";
+        res += " ";
+        res += std::to_string(arrow_end_2.x);
+        res += " ";
+        res += std::to_string(arrow_end_2.y);
         res += " ";        
 
         res += "L";
         res += " ";
-        res += arrow_end_3.x;
+        res += std::to_string(arrow_end_3.x);
         res += " ";
-        res += arrow_end_3.y;
+        res += std::to_string(arrow_end_3.y);
         res += " ";
 
         res += "L";
         res += " ";
-        res += arrow_end_4.x;
+        res += std::to_string(arrow_end_4.x);
         res += " ";
-        res += arrow_end_4.y;
+        res += std::to_string(arrow_end_4.y);
         res += " ";
 
         res += "z";          
 
-
+        std::cerr<<res<<std::endl;
         return res;
     }
 
@@ -176,7 +190,7 @@ namespace ngPlasmid
                         args[9]->NumberValue(),
                         args[10]->NumberValue(),
                         args[11]->NumberValue()
-                    )
+                    ).c_str()
                 ).ToLocalChecked()
             );
         }
