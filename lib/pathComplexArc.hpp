@@ -12,18 +12,18 @@
 namespace ngPlasmid
 {
     const std::string pathComplexArc(
-        long double x,
-        long double y,
-        long double radius,
-        long double startAngle,
-        long double endAngle,
-        long double width,
-        long double arrowStartWidth,
-        long double arrowStartLength,
-        long double arrowStartAngle,
-        long double arrowEndWidth,
-        long double arrowEndLength,
-        long double arrowEndAngle
+        long double&x,
+        long double&y,
+        long double&radius,
+        long double&startAngle,
+        long double&endAngle,
+        long double&width,
+        long double&arrowStartWidth,
+        long double&arrowStartLength,
+        long double&arrowStartAngle,
+        long double&arrowEndWidth,
+        long double&arrowEndLength,
+        long double&arrowEndAngle
     ) {
         //std::stringstream ss;
         //std::string ss;
