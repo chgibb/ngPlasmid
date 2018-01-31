@@ -315,7 +315,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         let outString = `HTML to SVG Compiler With Native Services Compile Time Faster Than HTML to SVG Compiler`;
         if(testCases[i].exNativeHTMLToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
         {
-            console.log(`   ${chalk.green(outString)}`);
+            console.log(`       ${chalk.green(outString)}`);
             testCases[i].summary.statuses.push({
                 message : outString,
                 status : true
