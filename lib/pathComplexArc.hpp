@@ -183,7 +183,7 @@ namespace ngPlasmid
                         args[9]->NumberValue(),
                         args[10]->NumberValue(),
                         args[11]->NumberValue()
-                    )
+                    ).c_str()
                 ).ToLocalChecked()
             );
         }
