@@ -1,5 +1,5 @@
 #pragma once
-#ifdef _WIN32
+#ifdef _MSC_VER
     #define _USE_MATH_DEFINES
 #endif
 #include <cmath>
