@@ -6,10 +6,10 @@ namespace ngPlasmid
 {
     const long double JS_PI = 3.141592653589793;
     Point polarToCartesian(
-        long double centerX,
-        long double centerY,
-        long double radius,
-        long double angleInDegrees
+        long double&centerX,
+        long double&centerY,
+        long double&radius,
+        long double&angleInDegrees
     ) {
         Point res;
         long double angleInRadians = (angleInDegrees - 90) * JS_PI / 180.0;
