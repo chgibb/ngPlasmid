@@ -27,6 +27,9 @@ namespace ngPlasmid
     ) {
         //std::stringstream ss;
         std::string ss;
+
+        ss.reserve(401);
+
         ngPlasmid::Point start;
         ngPlasmid::Point start2;
         ngPlasmid::Point end;
