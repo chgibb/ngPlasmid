@@ -302,6 +302,16 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 });
             }
         }
+
+        console.log(`   ${chalk.magenta(`Running HTML to SVG Compiler with Native Services`)}`);
+        testCases[i].runExNativeHTMLToSVGCompiler();
+        testCases[i].optimiseExNativeHTMLToSVGCompilerResult();
+        testCases[i].getExNativeHTMLTOSVGREsultSize();
+        console.log(`   ${chalk.magenta(`Compile time:`)} ${chalk.yellow(testCases[i].exNativeHTMLToSVGCompileTime+"ms")}`);
+        console.log(`   ${chalk.magenta(`Output size:`)} ${chalk.yellow(testCases[i].exNativeHTMLToSVGResultSize+"b")}`);
+        console.log(`   ${chalk.magenta(`Optimisation time:`)} ${chalk.yellow(testCases[i].exNativeHTMLToSVGOptimisationTime+"ms")}`);
+        console.log(`   ${chalk.magenta(`Optimised Output size:`)} ${chalk.yellow(testCases[i].exNativeHTMLToSVGOptimisedResultSize+"b")}`);
+
     }
     console.log(`Summaries:`);
     console.log(``)

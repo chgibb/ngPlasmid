@@ -106,10 +106,16 @@ export class TestCase
         this.exHTMLToSVGResultPath = this.makeExHTMLToSVGResultPath(this.htmlFile);
         this.exHTMLToSVGResultOptimisedPath = this.makeExHTMLToSVGResultOptimisedPath(this.htmlFile);
 
+        this.exNativeHTMLToSVGResultPath = this.makeExNativeHTMLToSVGResultPath(this.htmlFile);
+        this.exNativeHTMLToSVGResultOptimisedPath = this.makeExNativeHTMLToSVGResultOptimisedPath(this.htmlFile);
+
         this.exHTMLTOPBResultPath = this.makeEXHTMLToPBResultPath(this.htmlFile);
 
         this.exPBToSVGResultPath = this.makeExPBToSVGResultPath(this.htmlFile);
         this.exPBToSVGResultOptimisedPath = this.makeExPBToSVGResultOptimisedPath(this.htmlFile);
+
+        this.exNativePBToSVGResultPath = this.makeExNativePBToSVGResultPath(this.htmlFile);
+        this.exNativePBToSVGResultOptimisedPath = this.makeExNativePBToSVGResultOptimisedPath(this.htmlFile);
     }
 
     public makeReferenceResultPath(file : string) : string
