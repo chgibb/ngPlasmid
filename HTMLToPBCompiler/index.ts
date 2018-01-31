@@ -1,3 +1,5 @@
+require("./../lib/ngPlasmid");
+
 import * as fs from "fs";
 
 let args = process.argv.slice(2);
