@@ -1,3 +1,5 @@
+/// <reference path="./ngPlasmid.node.d.ts" />
+
 export interface Point
 {
     x : number;
@@ -168,6 +170,24 @@ function pathComplexArc(
     arrowEnd : Arrow
 ) : string {
     //https://github.com/vixis/angularplasmid/blob/master/src/js/services.js#L155
+
+    const ngPlasmidNative : ngPlasmidNative = require("./ngPlasmid");
+    let res =  ngPlasmidNative.pathComplexArc(
+        x,
+        y,
+        radius,
+        startAngle,
+        endAngle,
+        width,
+        arrowStart.width,
+        arrowStart.length,
+        arrowStart.angle,
+        arrowEnd.width,
+        arrowEnd.length,
+        arrowEnd.angle
+    );
+    return res;
+/*
     let start : Point; 
     let start2 : Point
     let end : Point;
@@ -209,7 +229,7 @@ function pathComplexArc(
         "L", arrow_end_3.x.toString(), arrow_end_3.y.toString(),
         "L", arrow_end_4.x.toString(), arrow_end_4.y.toString(),
         "z"
-    ]).join(" ");
+    ]).join(" ");*/
 }
 
 export function pathScale(
