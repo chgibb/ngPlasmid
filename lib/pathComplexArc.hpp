@@ -22,21 +22,6 @@ namespace ngPlasmid
         double arrowEndLength,
         double arrowEndAngle
     ) {
-        std::cerr<<"C++ Args:\n";
-        std::cerr<<x<<std::endl;
-        std::cerr<<y<<std::endl;
-        std::cerr<<radius<<std::endl;
-        std::cerr<<startAngle<<std::endl;
-        std::cerr<<endAngle<<std::endl;
-        std::cerr<<width<<std::endl;
-        std::cerr<<arrowStartWidth<<std::endl;
-        std::cerr<<arrowStartLength<<std::endl;
-        std::cerr<<arrowStartAngle<<std::endl;
-        std::cerr<<arrowEndWidth<<std::endl;
-        std::cerr<<arrowEndLength<<std::endl;
-        std::cerr<<arrowEndAngle<<std::endl;
-        std::string res = "";
-
         ngPlasmid::Point start;
         ngPlasmid::Point start2;
         ngPlasmid::Point end;
@@ -84,7 +69,7 @@ namespace ngPlasmid
         res += " ";
         res += "0";
         res += " ";
-        res += std::to_string(arcSweep);
+        res += arcSweep;
         res += " ";
         res += "0";
         res += " ";
@@ -123,15 +108,16 @@ namespace ngPlasmid
 
         res += "A";
         res += " ";
-        res += std::to_string(radius + width);
+        res += std::to_string(std::round(radius + width));
         res += " ";
-        res += std::to_string(radius + width);
+        res += std::to_string(std::round(radius + width));
         res += " ";
         res += "0";
         res += " ";
-        res += std::to_string(arcSweep);
+        res += arcSweep;
         res += " ";
         res += "1";
+        res += " ";
         res += std::to_string(start2.x);
         res += " ";
         res += std::to_string(start2.y);
@@ -167,7 +153,6 @@ namespace ngPlasmid
 
         res += "z";          
 
-        std::cerr<<res<<std::endl;
         return res;
     }
 
