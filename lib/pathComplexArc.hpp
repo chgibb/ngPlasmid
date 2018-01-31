@@ -22,6 +22,7 @@ namespace ngPlasmid
         double arrowEndLength,
         double arrowEndAngle
     ) {
+        std::string res = "";
         ngPlasmid::Point start;
         ngPlasmid::Point start2;
         ngPlasmid::Point end;
