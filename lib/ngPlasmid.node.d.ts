@@ -1,8 +1,5 @@
-import * as services from "./services";
-
-export class ngPlasmidNative
-{
-    public pathComplexArc(
+declare type ngPlasmidNative = {
+    pathComplexArc(
         x : number,
         y : number,
         radius : number,
