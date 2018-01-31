@@ -328,7 +328,8 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 message : outString,
                 status : false
             });
-            if(testCases[i].type == "stress")
+            console.log(`       ${chalk.red("HTML to SVG Compiler With Native Services Slower By "+(testCases[i].exHTMLToSVGCompileTime - testCases[i].exNativeHTMLToSVGCompileTime))}`);
+            if(testCases[i].type == "stress" && testCases[i].exHTMLToSVGCompileTime - testCases[i].exNativeHTMLToSVGCompileTime <= -25)
             {
                 process.exit(1);
             }
