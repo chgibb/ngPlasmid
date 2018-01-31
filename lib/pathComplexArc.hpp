@@ -58,16 +58,16 @@ namespace ngPlasmid
 
         ss<<"M";
         ss<<" ";
-        ss<<std::to_string(start.x);
+        ss<<std::setprecision(15)<<std::to_string(start.x);
         ss<<" ";
-        ss<<std::to_string(start.y);
+        ss<<std::setprecision(15)<<std::to_string(start.y);
         ss<<" ";
 
         ss<<"A";
         ss<<" ";
-        ss<<std::to_string(radius);
+        ss<<std::setprecision(15)<<std::to_string(radius);
         ss<<" ";
-        ss<<std::to_string(radius);
+        ss<<std::setprecision(15)<<std::to_string(radius);
         ss<<" ";
         ss<<"0";
         ss<<" ";
@@ -75,44 +75,44 @@ namespace ngPlasmid
         ss<<" ";
         ss<<"0";
         ss<<" ";
-        ss<<std::to_string(end.x);
+        ss<<std::setprecision(15)<<std::to_string(end.x);
         ss<<" ";
-        ss<<std::to_string(end.y);
-        ss<<" ";
-
-        ss<<"L";
-        ss<<" ";
-        ss<<std::to_string(arrow_start_1.x);
-        ss<<" ";
-        ss<<std::to_string(arrow_start_1.y);
+        ss<<std::setprecision(15)<<std::to_string(end.y);
         ss<<" ";
 
         ss<<"L";
         ss<<" ";
-        ss<<std::to_string(arrow_start_2.x);
+        ss<<std::setprecision(15)<<std::to_string(arrow_start_1.x);
         ss<<" ";
-        ss<<std::to_string(arrow_start_2.y);
-        ss<<" ";
-
-        ss<<"L";
-        ss<<" ";
-        ss<<std::to_string(arrow_start_3.x);
-        ss<<" ";
-        ss<<std::to_string(arrow_start_3.y);
+        ss<<std::setprecision(15)<<std::to_string(arrow_start_1.y);
         ss<<" ";
 
         ss<<"L";
         ss<<" ";
-        ss<<std::to_string(arrow_start_4.x);
+        ss<<std::setprecision(15)<<std::to_string(arrow_start_2.x);
         ss<<" ";
-        ss<<std::to_string(arrow_start_4.y);
+        ss<<std::setprecision(15)<<std::to_string(arrow_start_2.y);
+        ss<<" ";
+
+        ss<<"L";
+        ss<<" ";
+        ss<<std::setprecision(15)<<std::to_string(arrow_start_3.x);
+        ss<<" ";
+        ss<<std::setprecision(15)<<std::to_string(arrow_start_3.y);
+        ss<<" ";
+
+        ss<<"L";
+        ss<<" ";
+        ss<<std::setprecision(15)<<std::to_string(arrow_start_4.x);
+        ss<<" ";
+        ss<<std::setprecision(15)<<std::to_string(arrow_start_4.y);
         ss<<" ";
 
         ss<<"A";
         ss<<" ";
-        ss<<std::to_string(std::round(radius + width));
+        ss<<std::setprecision(15)<<std::to_string(std::round(radius + width));
         ss<<" ";
-        ss<<std::to_string(std::round(radius + width));
+        ss<<std::setprecision(15)<<std::to_string(std::round(radius + width));
         ss<<" ";
         ss<<"0";
         ss<<" ";
@@ -120,37 +120,37 @@ namespace ngPlasmid
         ss<<" ";
         ss<<"1";
         ss<<" ";
-        ss<<std::to_string(start2.x);
+        ss<<std::setprecision(15)<<std::to_string(start2.x);
         ss<<" ";
-        ss<<std::to_string(start2.y);
-        ss<<" ";
-
-        ss<<"L";
-        ss<<" ";
-        ss<<std::to_string(arrow_end_1.x);
-        ss<<" ";
-        ss<<std::to_string(arrow_end_1.y);
+        ss<<std::setprecision(15)<<std::to_string(start2.y);
         ss<<" ";
 
         ss<<"L";
         ss<<" ";
-        ss<<std::to_string(arrow_end_2.x);
+        ss<<std::setprecision(15)<<std::to_string(arrow_end_1.x);
         ss<<" ";
-        ss<<std::to_string(arrow_end_2.y);
+        ss<<std::setprecision(15)<<std::to_string(arrow_end_1.y);
+        ss<<" ";
+
+        ss<<"L";
+        ss<<" ";
+        ss<<std::setprecision(15)<<std::to_string(arrow_end_2.x);
+        ss<<" ";
+        ss<<std::setprecision(15)<<std::to_string(arrow_end_2.y);
         ss<<" ";        
 
         ss<<"L";
         ss<<" ";
-        ss<<std::to_string(arrow_end_3.x);
+        ss<<std::setprecision(15)<<std::to_string(arrow_end_3.x);
         ss<<" ";
-        ss<<std::to_string(arrow_end_3.y);
+        ss<<std::setprecision(15)<<std::to_string(arrow_end_3.y);
         ss<<" ";
 
         ss<<"L";
         ss<<" ";
-        ss<<std::to_string(arrow_end_4.x);
+        ss<<std::setprecision(15)<<std::to_string(arrow_end_4.x);
         ss<<" ";
-        ss<<std::to_string(arrow_end_4.y);
+        ss<<std::setprecision(15)<<std::to_string(arrow_end_4.y);
         ss<<" ";
 
         ss<<"z";          
