@@ -11,7 +11,7 @@
 #include "polarToCartesian.hpp"
 namespace ngPlasmid
 {
-    std::string pathComplexArc(
+    const std::string pathComplexArc(
         long double x,
         long double y,
         long double radius,
@@ -183,7 +183,7 @@ namespace ngPlasmid
                         args[9]->NumberValue(),
                         args[10]->NumberValue(),
                         args[11]->NumberValue()
-                    ).c_str()
+                    )
                 ).ToLocalChecked()
             );
         }
