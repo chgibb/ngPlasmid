@@ -163,7 +163,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.referenceResultPath} -o ${this.referenceResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.referenceResultPath} -o ${this.referenceResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
 
         this.referenceOptimisationTime = timer.stop();
     }
@@ -208,7 +208,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exHTMLToSVGResultPath} -o ${this.exHTMLToSVGResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exHTMLToSVGResultPath} -o ${this.exHTMLToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
 
         this.exHTMLToSVGOptimisationTime = timer.stop();
     }
@@ -267,7 +267,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exPBToSVGResultPath} -o ${this.exPBToSVGResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exPBToSVGResultPath} -o ${this.exPBToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
 
         this.exPBToSVGOptimisationTime = timer.stop();
     }

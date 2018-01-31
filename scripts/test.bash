@@ -1,11 +1,7 @@
 #!/bin/bash
 (set -o igncr) 2>/dev/null && set -o igncr; # For Cygwin on Windows compatibility
 
-node-gyp build
-if [ $? != 0 ]; then
-    printf "node-gyp failed\n"
-	exit 1
-fi
+bash scripts/buildNativeModule.bash
 
 ./scripts/genPBCode.bash
 
