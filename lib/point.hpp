@@ -3,7 +3,7 @@ namespace ngPlasmid
 {
     struct Point
     {
-        double x;
-        double y;
+        long double x;
+        long double y;
     };
 }
