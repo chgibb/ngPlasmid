@@ -1,7 +1,5 @@
 #pragma once
-#ifdef _MSC_VER
-    #define _USE_MATH_DEFINES
-#endif
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include "point.hpp"
 namespace ngPlasmid
