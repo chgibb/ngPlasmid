@@ -1,7 +1,6 @@
 #pragma once
 #ifdef _MSC_VER
     #define _USE_MATH_DEFINES
-    #warning "Detected windows"
 #endif
 #include <cmath>
 #include "point.hpp"
