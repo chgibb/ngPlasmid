@@ -231,9 +231,9 @@ export class TestCase
         let res : Buffer 
         
         if(!this.jsonFile)
-            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile}`);
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} native`);
         else 
-            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile} native`);
 
         fs.writeFileSync(this.exNativeHTMLToSVGResultPath,res.toString());
 
@@ -325,9 +325,9 @@ export class TestCase
         let res : Buffer 
         
         if(!this.jsonFile)
-            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath}`);
+            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} native`);
         else 
-            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} tests/${this.jsonFile}`);
+            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} tests/${this.jsonFile} native`);
 
         fs.writeFileSync(this.exPBToSVGResultPath,res.toString());
 
