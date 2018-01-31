@@ -1,6 +1,8 @@
 #!/bin/bash
 (set -o igncr) 2>/dev/null && set -o igncr; # For Cygwin on Windows compatibility
 
+rm -rf build/
+
 node-gyp configure
 if [ $? != 0 ]; then
     printf "node-gyp configure failed\n"
