@@ -307,6 +307,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         testCases[i].runExNativeHTMLToSVGCompiler();
         testCases[i].optimiseExNativeHTMLToSVGCompilerResult();
         testCases[i].getExNativeHTMLTOSVGREsultSize();
+        testCases[i].getExNativeHTMLToSVGResultOptimisedSize();
         console.log(`   ${chalk.magenta(`Compile time:`)} ${chalk.yellow(testCases[i].exNativeHTMLToSVGCompileTime+"ms")}`);
         console.log(`   ${chalk.magenta(`Output size:`)} ${chalk.yellow(testCases[i].exNativeHTMLToSVGResultSize+"b")}`);
         console.log(`   ${chalk.magenta(`Optimisation time:`)} ${chalk.yellow(testCases[i].exNativeHTMLToSVGOptimisationTime+"ms")}`);
