@@ -1,5 +1,6 @@
 #pragma once
-#include <iostream>
+#include <sstream>
+#include <iomanip>
 #include <string>
 
 #include <nan.h>
@@ -22,7 +23,7 @@ namespace ngPlasmid
         double arrowEndLength,
         double arrowEndAngle
     ) {
-        std::string res = "";
+        std::stringstream ss;
         ngPlasmid::Point start;
         ngPlasmid::Point start2;
         ngPlasmid::Point end;
@@ -55,106 +56,106 @@ namespace ngPlasmid
         start2 = ngPlasmid::polarToCartesian(x, y, radius + width, endAngle);
         arcSweep = endAngle - startAngle <= 180 ? '0' : '1';
 
-        res += "M";
-        res += " ";
-        res += std::to_string(start.x);
-        res += " ";
-        res += std::to_string(start.y);
-        res += " ";
+        ss<<"M";
+        ss<<" ";
+        ss<<std::to_string(start.x);
+        ss<<" ";
+        ss<<std::to_string(start.y);
+        ss<<" ";
 
-        res += "A";
-        res += " ";
-        res += std::to_string(radius);
-        res += " ";
-        res += std::to_string(radius);
-        res += " ";
-        res += "0";
-        res += " ";
-        res += arcSweep;
-        res += " ";
-        res += "0";
-        res += " ";
-        res += std::to_string(end.x);
-        res += " ";
-        res += std::to_string(end.y);
-        res += " ";
+        ss<<"A";
+        ss<<" ";
+        ss<<std::to_string(radius);
+        ss<<" ";
+        ss<<std::to_string(radius);
+        ss<<" ";
+        ss<<"0";
+        ss<<" ";
+        ss<<arcSweep;
+        ss<<" ";
+        ss<<"0";
+        ss<<" ";
+        ss<<std::to_string(end.x);
+        ss<<" ";
+        ss<<std::to_string(end.y);
+        ss<<" ";
 
-        res += "L";
-        res += " ";
-        res += std::to_string(arrow_start_1.x);
-        res += " ";
-        res += std::to_string(arrow_start_1.y);
-        res += " ";
+        ss<<"L";
+        ss<<" ";
+        ss<<std::to_string(arrow_start_1.x);
+        ss<<" ";
+        ss<<std::to_string(arrow_start_1.y);
+        ss<<" ";
 
-        res += "L";
-        res += " ";
-        res += std::to_string(arrow_start_2.x);
-        res += " ";
-        res += std::to_string(arrow_start_2.y);
-        res += " ";
+        ss<<"L";
+        ss<<" ";
+        ss<<std::to_string(arrow_start_2.x);
+        ss<<" ";
+        ss<<std::to_string(arrow_start_2.y);
+        ss<<" ";
 
-        res += "L";
-        res += " ";
-        res += std::to_string(arrow_start_3.x);
-        res += " ";
-        res += std::to_string(arrow_start_3.y);
-        res += " ";
+        ss<<"L";
+        ss<<" ";
+        ss<<std::to_string(arrow_start_3.x);
+        ss<<" ";
+        ss<<std::to_string(arrow_start_3.y);
+        ss<<" ";
 
-        res += "L";
-        res += " ";
-        res += std::to_string(arrow_start_4.x);
-        res += " ";
-        res += std::to_string(arrow_start_4.y);
-        res += " ";
+        ss<<"L";
+        ss<<" ";
+        ss<<std::to_string(arrow_start_4.x);
+        ss<<" ";
+        ss<<std::to_string(arrow_start_4.y);
+        ss<<" ";
 
-        res += "A";
-        res += " ";
-        res += std::to_string(std::round(radius + width));
-        res += " ";
-        res += std::to_string(std::round(radius + width));
-        res += " ";
-        res += "0";
-        res += " ";
-        res += arcSweep;
-        res += " ";
-        res += "1";
-        res += " ";
-        res += std::to_string(start2.x);
-        res += " ";
-        res += std::to_string(start2.y);
-        res += " ";
+        ss<<"A";
+        ss<<" ";
+        ss<<std::to_string(std::round(radius + width));
+        ss<<" ";
+        ss<<std::to_string(std::round(radius + width));
+        ss<<" ";
+        ss<<"0";
+        ss<<" ";
+        ss<<arcSweep;
+        ss<<" ";
+        ss<<"1";
+        ss<<" ";
+        ss<<std::to_string(start2.x);
+        ss<<" ";
+        ss<<std::to_string(start2.y);
+        ss<<" ";
 
-        res += "L";
-        res += " ";
-        res += std::to_string(arrow_end_1.x);
-        res += " ";
-        res += std::to_string(arrow_end_1.y);
-        res += " ";
+        ss<<"L";
+        ss<<" ";
+        ss<<std::to_string(arrow_end_1.x);
+        ss<<" ";
+        ss<<std::to_string(arrow_end_1.y);
+        ss<<" ";
 
-        res += "L";
-        res += " ";
-        res += std::to_string(arrow_end_2.x);
-        res += " ";
-        res += std::to_string(arrow_end_2.y);
-        res += " ";        
+        ss<<"L";
+        ss<<" ";
+        ss<<std::to_string(arrow_end_2.x);
+        ss<<" ";
+        ss<<std::to_string(arrow_end_2.y);
+        ss<<" ";        
 
-        res += "L";
-        res += " ";
-        res += std::to_string(arrow_end_3.x);
-        res += " ";
-        res += std::to_string(arrow_end_3.y);
-        res += " ";
+        ss<<"L";
+        ss<<" ";
+        ss<<std::to_string(arrow_end_3.x);
+        ss<<" ";
+        ss<<std::to_string(arrow_end_3.y);
+        ss<<" ";
 
-        res += "L";
-        res += " ";
-        res += std::to_string(arrow_end_4.x);
-        res += " ";
-        res += std::to_string(arrow_end_4.y);
-        res += " ";
+        ss<<"L";
+        ss<<" ";
+        ss<<std::to_string(arrow_end_4.x);
+        ss<<" ";
+        ss<<std::to_string(arrow_end_4.y);
+        ss<<" ";
 
-        res += "z";          
+        ss<<"z";          
 
-        return res;
+        return ss.str();
     }
 
     namespace JSExport
