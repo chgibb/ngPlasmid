@@ -95,7 +95,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                     message : outString,
                     status : false
                 });
-                //process.exit(1);
+                process.exit(1);
             }
 
             outString = `HTML to SVG Compiler Output Can Be Reduced to the Same as the Reference`;
@@ -117,8 +117,8 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 });
                 //if test is not HPV1630CovTracks.html, consider this a failure
                 //output SVG from this test is massive and causes non-determinism in SVGO
-                //if(testCases[i].htmlFile != "HPV1630CovTracks.html" && testCases[i].htmlFile != "saccharomycesSim.html")
-                 //   process.exit(1);
+                if(testCases[i].htmlFile != "HPV1630CovTracks.html" && testCases[i].htmlFile != "saccharomycesSim.html")
+                    process.exit(1);
             }
 
             console.log(`   ${chalk.cyan(`Running HTML to Protocol Buffer compiler`)}`);  
@@ -205,7 +205,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                     message : outString,
                     status : false
                 });
-                //process.exit(1);
+                process.exit(1);
             }
 
             outString = `PB to SVG Compiler Output Can Be Reduced to the Same as the Reference`;
@@ -227,8 +227,8 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 });
                 //if test is not HPV1630CovTracks.html, consider this a failure
                 //output SVG from this test is massive and causes non-determinism in SVGO
-                //if(testCases[i].htmlFile != "HPV1630CovTracks.html")
-                 //   process.exit(1);
+                if(testCases[i].htmlFile != "HPV1630CovTracks.html")
+                    process.exit(1);
             }
 
             console.log(``);
