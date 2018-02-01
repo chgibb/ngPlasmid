@@ -1,5 +1,15 @@
 const memoize = require("fast-memoize");
 
+export function enableMemoization()
+{
+
+}
+
+export function disableMemoization()
+{
+    
+}
+
 export interface Point
 {
     x : number;
