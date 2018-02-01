@@ -63,6 +63,13 @@ export class TestCase
     public exHTMLToSVGResultPath : string;
     public exHTMLToSVGResultOptimisedPath : string;
 
+    public exMemoizeHTMLToSVGCompileTime : number;
+    public exMemoizeHTMLToSVGOptimisationTime : number;
+    public exMemoizeHTMLToSVGResultSize : number;
+    public exMemoizeHTMLToSVGOptimisedResultSize : number;
+    public exMemoizeHTMLToSVGResultPath : string;
+    public exMemoizeHTMLToSVGResultOptimisedPath : string;
+
     public exHTMLtoPBCompileTime : number;
     public exHTMLToPBResultSize : number;
     public exHTMLTOPBResultPath : string;
@@ -73,6 +80,13 @@ export class TestCase
     public exPBToSVGOptimisedResultSize : number;
     public exPBToSVGResultPath : string;
     public exPBToSVGResultOptimisedPath : string;
+
+    public exMemoizePBToSVGCompileTime : number;
+    public exMemoizePBToSVGOptimisationTime : number;
+    public exMemoizePBToSVGResultSize : number;
+    public exMemoizePBToSVGOptimisedResultSize : number;
+    public exMemoizePBToSVGResultPath : string;
+    public exMemoizePBToSVGResultOptimisedPath : string;
 
     public summary : TestSummary;
 
@@ -92,10 +106,16 @@ export class TestCase
         this.exHTMLToSVGResultPath = this.makeExHTMLToSVGResultPath(this.htmlFile);
         this.exHTMLToSVGResultOptimisedPath = this.makeExHTMLToSVGResultOptimisedPath(this.htmlFile);
 
+        this.exMemoizeHTMLToSVGResultPath = this.makeExMemoizeHTMLToSVGResultPath(this.htmlFile);
+        this.exMemoizeHTMLToSVGResultOptimisedPath = this.makeExMemoizeHTMLToSVGResultOptimisedPath(this.htmlFile);
+
         this.exHTMLTOPBResultPath = this.makeEXHTMLToPBResultPath(this.htmlFile);
 
         this.exPBToSVGResultPath = this.makeExPBToSVGResultPath(this.htmlFile);
         this.exPBToSVGResultOptimisedPath = this.makeExPBToSVGResultOptimisedPath(this.htmlFile);
+
+        this.exMemoizePBToSVGResultPath = this.makeExMemoizePBToSVGResultPath(this.htmlFile);
+        this.exMemoizePBToSVGResultOptimisedPath = this.makeExMemoizePBToSVGResultOptimisedPath(this.htmlFile);
     }
 
     public makeReferenceResultPath(file : string) : string
@@ -113,9 +133,19 @@ export class TestCase
         return `${file}Ex.svg`;
     }
 
+    public makeExMemoizeHTMLToSVGResultPath(file : string) : string
+    {
+        return `${file}ExMemoize.svg`;
+    }
+
     public makeExHTMLToSVGResultOptimisedPath(file : string) : string
     {
         return `${file}ExO.svg`;
+    }
+
+    public makeExMemoizeHTMLToSVGResultOptimisedPath(file : string) : string
+    {
+        return `${file}ExMemoizeO.svg`;
     }
     
     public makeEXHTMLToPBResultPath(file : string) : string
@@ -128,9 +158,19 @@ export class TestCase
         return `${file}Ex.pb.svg`;
     }
 
+    public makeExMemoizePBToSVGResultPath(file : string) : string
+    {
+        return `${file}ExMemoize.pb.svg`;
+    }
+
     public makeExPBToSVGResultOptimisedPath(file : string) : string
     {
         return `${file}ExO.pb.svg`;
+    }
+
+    public makeExMemoizePBToSVGResultOptimisedPath(file : string) : string
+    {
+        return `${file}ExMemoizeO.pb.svg`;
     }
 
     public runReferenceCompiler()
@@ -163,7 +203,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.referenceResultPath} -o ${this.referenceResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.referenceResultPath} -o ${this.referenceResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
 
         this.referenceOptimisationTime = timer.stop();
     }
@@ -184,6 +224,22 @@ export class TestCase
         this.exHTMLToSVGCompileTime = timer.stop();
     }
 
+    public runExMemoizeHTMLToSVGCompiler()
+    {
+        let timer : Timer = new Timer();
+
+        let res : Buffer 
+        
+        if(!this.jsonFile)
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} memoize`);
+        else 
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile} memoize`);
+
+        fs.writeFileSync(this.exMemoizeHTMLToSVGResultPath,res.toString());
+
+        this.exMemoizeHTMLToSVGCompileTime = timer.stop();
+    }
+
     public getProfilingInformationForExHTMLToSVGCompiler()
     {
         if(!this.jsonFile)
@@ -199,18 +255,37 @@ export class TestCase
         this.exHTMLToSVGResultSize = getFileSize(this.exHTMLToSVGResultPath);   
     }
 
+    public getExMemoizeHTMLTOSVGREsultSize()
+    {
+        this.exMemoizeHTMLToSVGResultSize = getFileSize(this.exMemoizeHTMLToSVGResultPath);   
+    }
+
     public getExHTMLToSVGResultOptimisedSize()
     {
         this.exHTMLToSVGOptimisedResultSize = getFileSize(this.exHTMLToSVGResultOptimisedPath);
+    }
+
+    public getExMemoizeHTMLToSVGResultOptimisedSize()
+    {
+        this.exMemoizeHTMLToSVGOptimisedResultSize = getFileSize(this.exMemoizeHTMLToSVGResultOptimisedPath);
     }
 
     public optimiseExHTMLToSVGCompilerResult()
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.exHTMLToSVGResultPath} -o ${this.exHTMLToSVGResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exHTMLToSVGResultPath} -o ${this.exHTMLToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
 
         this.exHTMLToSVGOptimisationTime = timer.stop();
+    }
+
+    public optimiseExMemoizeHTMLToSVGCompilerResult()
+    {
+        let timer : Timer = new Timer();
+
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exMemoizeHTMLToSVGResultPath} -o ${this.exMemoizeHTMLToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
+
+        this.exMemoizeHTMLToSVGOptimisationTime = timer.stop();
     }
 
     public runExHTMLToPBCompiler()
@@ -243,6 +318,22 @@ export class TestCase
         this.exPBToSVGCompileTime = timer.stop();
     }
 
+    public runExMemoizePBToSVGCompiler()
+    {
+        let timer : Timer = new Timer();
+
+        let res : Buffer 
+        
+        if(!this.jsonFile)
+            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} memoize`);
+        else 
+            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} tests/${this.jsonFile} memoize`);
+
+        fs.writeFileSync(this.exPBToSVGResultPath,res.toString());
+
+        this.exMemoizePBToSVGCompileTime = timer.stop();
+    }
+
     public getProfilingInformationForExPBToSVGCompiler()
     {
         if(!this.jsonFile)
@@ -258,18 +349,36 @@ export class TestCase
         this.exPBToSVGResultSize = getFileSize(this.exPBToSVGResultPath);   
     }
 
+    public getExMemoizePBTOSVGREsultSize()
+    {
+        this.exMemoizePBToSVGResultSize = getFileSize(this.exMemoizePBToSVGResultPath);   
+    }
+
     public getExPBToSVGResultOptimisedSize()
     {
         this.exPBToSVGOptimisedResultSize = getFileSize(this.exPBToSVGResultOptimisedPath);
     }
 
+
+    public getExMemoizePBToSVGResultOptimisedSize()
+    {
+        this.exMemoizePBToSVGOptimisedResultSize = getFileSize(this.exMemoizePBToSVGResultOptimisedPath);
+    }
     public optimiseExPBToSVGCompilerResult()
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.exPBToSVGResultPath} -o ${this.exPBToSVGResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exPBToSVGResultPath} -o ${this.exPBToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
 
         this.exPBToSVGOptimisationTime = timer.stop();
     }
-}
 
+    public optimiseExMemoizePBToSVGCompilerResult()
+    {
+        let timer : Timer = new Timer();
+
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exMemoizePBToSVGResultPath} -o ${this.exMemoizePBToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
+
+        this.exMemoizePBToSVGOptimisationTime = timer.stop();
+    }
+}

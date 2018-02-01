@@ -302,6 +302,42 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 });
             }
         }
+
+        console.log(`   ${chalk.magentaBright(`Running HTML to SVG Compiler With Memoized Services`)}`);
+        testCases[i].runExMemoizeHTMLToSVGCompiler();
+        testCases[i].optimiseExMemoizeHTMLToSVGCompilerResult();
+        testCases[i].getExMemoizeHTMLTOSVGREsultSize();
+        testCases[i].getExMemoizeHTMLToSVGResultOptimisedSize();
+        console.log(`   ${chalk.magenta(`Compile time:`)} ${chalk.yellow(testCases[i].exMemoizeHTMLToSVGCompileTime+"ms")}`);
+        console.log(`   ${chalk.magenta(`Output size:`)} ${chalk.yellow(testCases[i].exMemoizeHTMLToSVGResultSize+"b")}`);
+        console.log(`   ${chalk.magenta(`Optimisation time:`)} ${chalk.yellow(testCases[i].exMemoizeHTMLToSVGOptimisationTime+"ms")}`);
+        console.log(`   ${chalk.magenta(`Optimised Output size:`)} ${chalk.yellow(testCases[i].exMemoizeHTMLToSVGOptimisedResultSize+"b")}`);
+        let outString = `HTML to SVG Compiler With Memoize Services Compile Time Faster Than HTML to SVG Compiler`;
+        if(testCases[i].exMemoizeHTMLToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
+        {
+            console.log(`       ${chalk.green(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : true
+            });
+        }
+        else
+        {
+            console.log(`       ${chalk.red(outString)}`);
+            testCases[i].summary.statuses.push({
+                message : outString,
+                status : false
+            });
+            console.log(`       ${chalk.red("HTML to SVG Compiler With Memoize Services Slower By "+(testCases[i].exHTMLToSVGCompileTime - testCases[i].exMemoizeHTMLToSVGCompileTime))}`);
+            if(testCases[i].type == "stress" && testCases[i].exHTMLToSVGCompileTime - testCases[i].exMemoizeHTMLToSVGCompileTime <= -35)
+            {
+                process.exit(1);
+            }
+        }
+
+        console.log(`-----------------------------------------------------------------------------------------------------`);
+
+
     }
     console.log(`Summaries:`);
     console.log(``)
