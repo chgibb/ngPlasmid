@@ -6,10 +6,6 @@
 #include <limits>
 #include <string>
 
-#ifdef _NODEJS_
-    #include <nan.h>
-#endif
-
 #include "point.hpp"
 #include "polarToCartesian.hpp"
 
@@ -172,7 +168,7 @@ namespace ngPlasmid
         return ss.str();
     }
 
-    #ifdef _NODEJS_
+    #ifdef NAN_H_
         namespace JSExport
         {
             void pathComplexArc(const Nan::FunctionCallbackInfo<v8::Value>&args)
