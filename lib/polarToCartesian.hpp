@@ -1,7 +1,10 @@
 #pragma once
+
 #define _USE_MATH_DEFINES
 #include <cmath>
+
 #include "point.hpp"
+
 namespace ngPlasmid
 {
     const long double JS_PI = 3.141592653589793;
