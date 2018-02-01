@@ -1,3 +1,5 @@
+const memoize = require("fast-memoize");
+
 export interface Point
 {
     x : number;
@@ -157,7 +159,7 @@ export function pathArc(
     return d;
 }
 
-function pathComplexArc(
+function _pathComplexArc(
     x : number,
     y : number,
     radius : number,
@@ -211,6 +213,17 @@ function pathComplexArc(
         "z"
     ]).join(" ");
 }
+
+const pathComplexArc : (
+    x : number,
+    y : number,
+    radius : number,
+    startAngle : number,
+    endAngle : number,
+    width : number,
+    arrowStart : Arrow,
+    arrowEnd : Arrow
+) => string = memoize(_pathComplexArc);
 
 export function pathScale(
     x : number,
