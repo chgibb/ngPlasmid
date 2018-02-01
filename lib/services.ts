@@ -159,7 +159,7 @@ export function pathArc(
     return d;
 }
 
-function _pathComplexArc(
+function pathComplexArc(
     x : number,
     y : number,
     radius : number,
@@ -213,17 +213,6 @@ function _pathComplexArc(
         "z"
     ]).join(" ");
 }
-
-const pathComplexArc : (
-    x : number,
-    y : number,
-    radius : number,
-    startAngle : number,
-    endAngle : number,
-    width : number,
-    arrowStart : Arrow,
-    arrowEnd : Arrow
-) => string = memoize(_pathComplexArc);
 
 export function pathScale(
     x : number,
