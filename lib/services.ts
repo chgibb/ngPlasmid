@@ -2,8 +2,8 @@ const memoize = require("fast-memoize");
 
 let useMemoization : boolean = false;
 
-let round10 : (value : any,exp : any) => number = _round10;
-let polarToCartesian : (centerX : number,centerY : number,radius : number,angleInDegrees : number) => Point = _polarToCartesian;
+export let round10 : (value : any,exp : any) => number = _round10;
+export let polarToCartesian : (centerX : number,centerY : number,radius : number,angleInDegrees : number) => Point = _polarToCartesian;
 
 export function enableMemoization()
 {
