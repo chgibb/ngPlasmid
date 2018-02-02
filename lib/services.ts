@@ -8,7 +8,8 @@ export let polarToCartesian : (centerX : number,centerY : number,radius : number
 export function enableMemoization()
 {
     round10 = memoize(_round10);
-    polarToCartesian = memoize(_polarToCartesian);
+    //polarToCartesian = memoize(_polarToCartesian);
+    polarToCartesian = _polarToCartesian;
 }
 
 export function disableMemoization()
