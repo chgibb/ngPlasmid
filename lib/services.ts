@@ -1,13 +1,19 @@
 const memoize = require("fast-memoize");
 
+let useMemoization : boolean = false;
+
+let round10 : (value : any,exp : any) => number = _round10;
+let polarToCartesian : (centerX : number,centerY : number,radius : number,angleInDegrees : number) => Point = _polarToCartesian;
+
 export function enableMemoization()
 {
-
+    round10 = memoize(_round10);
+    polarToCartesian = memoize(_polarToCartesian);
 }
 
 export function disableMemoization()
 {
-    
+
 }
 
 export interface Point
@@ -70,7 +76,7 @@ export interface Position<T>
     inner : T;
 }
 
-export function polarToCartesian(
+function _polarToCartesian(
     centerX : number,
     centerY : number,
     radius : number,
@@ -299,7 +305,7 @@ export function Numeric(numberVal : number,numberDefault : number) : number
     return isNaN(numberVal) ? numberDefault || 0 : Number(numberVal);
 }
 
-function round10(value : any, exp : any) : number
+function _round10(value : any, exp : any) : number
 {
     //https://github.com/vixis/angularplasmid/blob/9ea10c4ed21ee5c2879659dc0b5d3d57086ef873/src/js/services.js#L21
     var type = 'round';
