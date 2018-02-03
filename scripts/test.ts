@@ -303,17 +303,17 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             }
         }
 
-        console.log(`   ${chalk.magentaBright(`Running HTML to SVG Compiler With Native Services`)}`);
-        testCases[i].runExNativeHTMLToSVGCompiler();
-        testCases[i].optimiseExNativeHTMLToSVGCompilerResult();
-        testCases[i].getExNativeHTMLTOSVGREsultSize();
-        testCases[i].getExNativeHTMLToSVGResultOptimisedSize();
-        console.log(`   ${chalk.magenta(`Compile time:`)} ${chalk.yellow(testCases[i].exNativeHTMLToSVGCompileTime+"ms")}`);
-        console.log(`   ${chalk.magenta(`Output size:`)} ${chalk.yellow(testCases[i].exNativeHTMLToSVGResultSize+"b")}`);
-        console.log(`   ${chalk.magenta(`Optimisation time:`)} ${chalk.yellow(testCases[i].exNativeHTMLToSVGOptimisationTime+"ms")}`);
-        console.log(`   ${chalk.magenta(`Optimised Output size:`)} ${chalk.yellow(testCases[i].exNativeHTMLToSVGOptimisedResultSize+"b")}`);
-        let outString = `HTML to SVG Compiler With Native Services Compile Time Faster Than HTML to SVG Compiler`;
-        if(testCases[i].exNativeHTMLToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
+        console.log(`   ${chalk.magentaBright(`Running HTML to SVG Compiler With Batched Services`)}`);
+        testCases[i].runExBatchedHTMLToSVGCompiler();
+        testCases[i].optimiseExBatchedHTMLToSVGCompilerResult();
+        testCases[i].getExBatchedHTMLTOSVGREsultSize();
+        testCases[i].getExBatchedHTMLToSVGResultOptimisedSize();
+        console.log(`   ${chalk.magenta(`Compile time:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGCompileTime+"ms")}`);
+        console.log(`   ${chalk.magenta(`Output size:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGResultSize+"b")}`);
+        console.log(`   ${chalk.magenta(`Optimisation time:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGOptimisationTime+"ms")}`);
+        console.log(`   ${chalk.magenta(`Optimised Output size:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGOptimisedResultSize+"b")}`);
+        let outString = `HTML to SVG Compiler With Batched Services Compile Time Faster Than HTML to SVG Compiler`;
+        if(testCases[i].exBatchedHTMLToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
         {
             console.log(`       ${chalk.green(outString)}`);
             testCases[i].summary.statuses.push({
@@ -328,8 +328,8 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 message : outString,
                 status : false
             });
-            console.log(`       ${chalk.red("HTML to SVG Compiler With Native Services Slower By "+(testCases[i].exHTMLToSVGCompileTime - testCases[i].exNativeHTMLToSVGCompileTime))}`);
-            if(testCases[i].type == "stress" && testCases[i].exHTMLToSVGCompileTime - testCases[i].exNativeHTMLToSVGCompileTime <= -35)
+            console.log(`       ${chalk.red("HTML to SVG Compiler With Batched Services Slower By "+(testCases[i].exHTMLToSVGCompileTime - testCases[i].exBatchedHTMLToSVGCompileTime))}`);
+            if(testCases[i].type == "stress" && testCases[i].exHTMLToSVGCompileTime - testCases[i].exBatchedHTMLToSVGCompileTime <= -35)
             {
                 process.exit(1);
             }

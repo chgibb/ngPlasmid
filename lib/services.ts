@@ -1,17 +1,5 @@
 /// <reference path="./ngPlasmid.node.d.ts" />
 
-let useNativeHelpers : boolean = false;
-
-export function enableNativeHelpers()
-{
-    useNativeHelpers = true;
-}
-
-export function disableNativeHelpers()
-{
-    useNativeHelpers = false;
-}
-
 export interface Point
 {
     x : number;

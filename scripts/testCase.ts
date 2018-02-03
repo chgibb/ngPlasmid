@@ -63,12 +63,12 @@ export class TestCase
     public exHTMLToSVGResultPath : string;
     public exHTMLToSVGResultOptimisedPath : string;
 
-    public exNativeHTMLToSVGCompileTime : number;
-    public exNativeHTMLToSVGOptimisationTime : number;
-    public exNativeHTMLToSVGResultSize : number;
-    public exNativeHTMLToSVGOptimisedResultSize : number;
-    public exNativeHTMLToSVGResultPath : string;
-    public exNativeHTMLToSVGResultOptimisedPath : string;
+    public exBatchedHTMLToSVGCompileTime : number;
+    public exBatchedHTMLToSVGOptimisationTime : number;
+    public exBatchedHTMLToSVGResultSize : number;
+    public exBatchedHTMLToSVGOptimisedResultSize : number;
+    public exBatchedHTMLToSVGResultPath : string;
+    public exBatchedHTMLToSVGResultOptimisedPath : string;
 
     public exHTMLtoPBCompileTime : number;
     public exHTMLToPBResultSize : number;
@@ -81,12 +81,12 @@ export class TestCase
     public exPBToSVGResultPath : string;
     public exPBToSVGResultOptimisedPath : string;
 
-    public exNativePBToSVGCompileTime : number;
-    public exNativePBToSVGOptimisationTime : number;
-    public exNativePBToSVGResultSize : number;
-    public exNativePBToSVGOptimisedResultSize : number;
-    public exNativePBToSVGResultPath : string;
-    public exNativePBToSVGResultOptimisedPath : string;
+    public exBatchedPBToSVGCompileTime : number;
+    public exBatchedPBToSVGOptimisationTime : number;
+    public exBatchedPBToSVGResultSize : number;
+    public exBatchedPBToSVGOptimisedResultSize : number;
+    public exBatchedPBToSVGResultPath : string;
+    public exBatchedPBToSVGResultOptimisedPath : string;
 
     public summary : TestSummary;
 
@@ -106,16 +106,16 @@ export class TestCase
         this.exHTMLToSVGResultPath = this.makeExHTMLToSVGResultPath(this.htmlFile);
         this.exHTMLToSVGResultOptimisedPath = this.makeExHTMLToSVGResultOptimisedPath(this.htmlFile);
 
-        this.exNativeHTMLToSVGResultPath = this.makeExNativeHTMLToSVGResultPath(this.htmlFile);
-        this.exNativeHTMLToSVGResultOptimisedPath = this.makeExNativeHTMLToSVGResultOptimisedPath(this.htmlFile);
+        this.exBatchedHTMLToSVGResultPath = this.makeExBatchedHTMLToSVGResultPath(this.htmlFile);
+        this.exBatchedHTMLToSVGResultOptimisedPath = this.makeExBatchedHTMLToSVGResultOptimisedPath(this.htmlFile);
 
         this.exHTMLTOPBResultPath = this.makeEXHTMLToPBResultPath(this.htmlFile);
 
         this.exPBToSVGResultPath = this.makeExPBToSVGResultPath(this.htmlFile);
         this.exPBToSVGResultOptimisedPath = this.makeExPBToSVGResultOptimisedPath(this.htmlFile);
 
-        this.exNativePBToSVGResultPath = this.makeExNativePBToSVGResultPath(this.htmlFile);
-        this.exNativePBToSVGResultOptimisedPath = this.makeExNativePBToSVGResultOptimisedPath(this.htmlFile);
+        this.exBatchedPBToSVGResultPath = this.makeExBatchedPBToSVGResultPath(this.htmlFile);
+        this.exBatchedPBToSVGResultOptimisedPath = this.makeExBatchedPBToSVGResultOptimisedPath(this.htmlFile);
     }
 
     public makeReferenceResultPath(file : string) : string
@@ -133,9 +133,9 @@ export class TestCase
         return `${file}Ex.svg`;
     }
 
-    public makeExNativeHTMLToSVGResultPath(file : string) : string
+    public makeExBatchedHTMLToSVGResultPath(file : string) : string
     {
-        return `${file}ExNative.svg`;
+        return `${file}ExBatched.svg`;
     }
 
     public makeExHTMLToSVGResultOptimisedPath(file : string) : string
@@ -143,9 +143,9 @@ export class TestCase
         return `${file}ExO.svg`;
     }
 
-    public makeExNativeHTMLToSVGResultOptimisedPath(file : string) : string
+    public makeExBatchedHTMLToSVGResultOptimisedPath(file : string) : string
     {
-        return `${file}ExNativeO.svg`;
+        return `${file}ExBatchedO.svg`;
     }
     
     public makeEXHTMLToPBResultPath(file : string) : string
@@ -158,9 +158,9 @@ export class TestCase
         return `${file}Ex.pb.svg`;
     }
 
-    public makeExNativePBToSVGResultPath(file : string) : string
+    public makeExBatchedPBToSVGResultPath(file : string) : string
     {
-        return `${file}ExNative.pb.svg`;
+        return `${file}ExBatched.pb.svg`;
     }
 
     public makeExPBToSVGResultOptimisedPath(file : string) : string
@@ -168,9 +168,9 @@ export class TestCase
         return `${file}ExO.pb.svg`;
     }
 
-    public makeExNativePBToSVGResultOptimisedPath(file : string) : string
+    public makeExBatchedPBToSVGResultOptimisedPath(file : string) : string
     {
-        return `${file}ExNativeO.pb.svg`;
+        return `${file}ExBatchedO.pb.svg`;
     }
 
     public runReferenceCompiler()
@@ -224,20 +224,20 @@ export class TestCase
         this.exHTMLToSVGCompileTime = timer.stop();
     }
 
-    public runExNativeHTMLToSVGCompiler()
+    public runExBatchedHTMLToSVGCompiler()
     {
         let timer : Timer = new Timer();
 
         let res : Buffer 
         
         if(!this.jsonFile)
-            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} native`);
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} batched`);
         else 
-            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile} native`);
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile} batched`);
 
-        fs.writeFileSync(this.exNativeHTMLToSVGResultPath,res.toString());
+        fs.writeFileSync(this.exBatchedHTMLToSVGResultPath,res.toString());
 
-        this.exNativeHTMLToSVGCompileTime = timer.stop();
+        this.exBatchedHTMLToSVGCompileTime = timer.stop();
     }
 
     public getProfilingInformationForExHTMLToSVGCompiler()
@@ -255,9 +255,9 @@ export class TestCase
         this.exHTMLToSVGResultSize = getFileSize(this.exHTMLToSVGResultPath);   
     }
 
-    public getExNativeHTMLTOSVGREsultSize()
+    public getExBatchedHTMLTOSVGREsultSize()
     {
-        this.exNativeHTMLToSVGResultSize = getFileSize(this.exNativeHTMLToSVGResultPath);   
+        this.exBatchedHTMLToSVGResultSize = getFileSize(this.exBatchedHTMLToSVGResultPath);   
     }
 
     public getExHTMLToSVGResultOptimisedSize()
@@ -265,9 +265,9 @@ export class TestCase
         this.exHTMLToSVGOptimisedResultSize = getFileSize(this.exHTMLToSVGResultOptimisedPath);
     }
 
-    public getExNativeHTMLToSVGResultOptimisedSize()
+    public getExBatchedHTMLToSVGResultOptimisedSize()
     {
-        this.exNativeHTMLToSVGOptimisedResultSize = getFileSize(this.exNativeHTMLToSVGResultOptimisedPath);
+        this.exBatchedHTMLToSVGOptimisedResultSize = getFileSize(this.exBatchedHTMLToSVGResultOptimisedPath);
     }
 
     public optimiseExHTMLToSVGCompilerResult()
@@ -279,13 +279,13 @@ export class TestCase
         this.exHTMLToSVGOptimisationTime = timer.stop();
     }
 
-    public optimiseExNativeHTMLToSVGCompilerResult()
+    public optimiseExBatchedHTMLToSVGCompilerResult()
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exNativeHTMLToSVGResultPath} -o ${this.exNativeHTMLToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exBatchedHTMLToSVGResultPath} -o ${this.exBatchedHTMLToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
 
-        this.exNativeHTMLToSVGOptimisationTime = timer.stop();
+        this.exBatchedHTMLToSVGOptimisationTime = timer.stop();
     }
 
     public runExHTMLToPBCompiler()
@@ -318,20 +318,20 @@ export class TestCase
         this.exPBToSVGCompileTime = timer.stop();
     }
 
-    public runExNativePBToSVGCompiler()
+    public runExBatchedPBToSVGCompiler()
     {
         let timer : Timer = new Timer();
 
         let res : Buffer 
         
         if(!this.jsonFile)
-            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} native`);
+            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} batched`);
         else 
-            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} tests/${this.jsonFile} native`);
+            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} tests/${this.jsonFile} batched`);
 
         fs.writeFileSync(this.exPBToSVGResultPath,res.toString());
 
-        this.exNativePBToSVGCompileTime = timer.stop();
+        this.exBatchedPBToSVGCompileTime = timer.stop();
     }
 
     public getProfilingInformationForExPBToSVGCompiler()
@@ -349,9 +349,9 @@ export class TestCase
         this.exPBToSVGResultSize = getFileSize(this.exPBToSVGResultPath);   
     }
 
-    public getExNativePBTOSVGREsultSize()
+    public getExBatchedPBTOSVGREsultSize()
     {
-        this.exNativePBToSVGResultSize = getFileSize(this.exNativePBToSVGResultPath);   
+        this.exBatchedPBToSVGResultSize = getFileSize(this.exBatchedPBToSVGResultPath);   
     }
 
     public getExPBToSVGResultOptimisedSize()
@@ -360,9 +360,9 @@ export class TestCase
     }
 
 
-    public getExNativePBToSVGResultOptimisedSize()
+    public getExBatchedPBToSVGResultOptimisedSize()
     {
-        this.exNativePBToSVGOptimisedResultSize = getFileSize(this.exNativePBToSVGResultOptimisedPath);
+        this.exBatchedPBToSVGOptimisedResultSize = getFileSize(this.exBatchedPBToSVGResultOptimisedPath);
     }
     public optimiseExPBToSVGCompilerResult()
     {
@@ -373,13 +373,13 @@ export class TestCase
         this.exPBToSVGOptimisationTime = timer.stop();
     }
 
-    public optimiseExNativePBToSVGCompilerResult()
+    public optimiseExBatchedPBToSVGCompilerResult()
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exNativePBToSVGResultPath} -o ${this.exNativePBToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exBatchedPBToSVGResultPath} -o ${this.exBatchedPBToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
 
-        this.exNativePBToSVGOptimisationTime = timer.stop();
+        this.exBatchedPBToSVGOptimisationTime = timer.stop();
     }
 }
 
