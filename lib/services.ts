@@ -181,25 +181,6 @@ function pathComplexArc(
     arrowStart : Arrow,
     arrowEnd : Arrow
 ) : string {
-    if(useNativeHelpers)
-    {
-        const ngPlasmidNative : ngPlasmidNative = require("./ngPlasmid");
-        return ngPlasmidNative.pathComplexArc(
-            x,
-            y,
-            radius,
-            startAngle,
-            endAngle,
-            width,
-            arrowStart.width,
-            arrowStart.length,
-            arrowStart.angle,
-            arrowEnd.width,
-            arrowEnd.length,
-            arrowEnd.angle
-        );
-    }
-
     //https://github.com/vixis/angularplasmid/blob/master/src/js/services.js#L155
 
     let start : Point; 
