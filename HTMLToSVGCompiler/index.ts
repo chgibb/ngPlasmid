@@ -6,11 +6,10 @@ let args = process.argv.slice(2);
 
 import * as html from "./../lib/html";
 import * as directives from "./../lib//directives";
-import {enableNativeHelpers} from "./../lib/services";
 
 (async function(){
-    if(args[args.length-1] == "native")
-        enableNativeHelpers();
+    if(args[args.length-1] == "batched")
+    {}
         
     let nodes = await html.loadFromString(fs.readFileSync(args[0]).toString());
 
