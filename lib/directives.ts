@@ -52,7 +52,7 @@ export abstract class Directive
     "markerlabel" | 
     "svgelement";
 
-    protected _batchedSVGPath : string;
+    public _batchedSVGPath : string;
 
     public abstract generateSVGPath() : string;
 
@@ -299,6 +299,14 @@ export class Plasmid extends Directive
     public getSVGPath() : string | undefined
     {
         throw new Error("Not supported by directive");
+    }
+
+    public batchGenerateSVGPaths() : void
+    {
+        for(let i = 0; i != this.tracks.length; ++i)
+        {
+            this.tracks[i]._batchedSVGPath = this.tracks[i].generateSVGPath();
+        }
     }
 
     public constructor()
