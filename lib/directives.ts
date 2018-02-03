@@ -307,6 +307,8 @@ export class Plasmid extends Directive
         {
             this.tracks[i]._batchedSVGPath = this.tracks[i].generateSVGPath();
         }
+        let ngPlasmidNative = require("./ngPlasmid");
+        ngPlasmidNative.batchGenerateSVGPaths(this);
     }
 
     public constructor()

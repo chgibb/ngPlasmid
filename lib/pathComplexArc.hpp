@@ -167,31 +167,4 @@ namespace ngPlasmid
         //return ss.str();
         return ss.str();
     }
-
-    #ifdef NAN_H_
-        namespace JSExport
-        {
-            void pathComplexArc(const Nan::FunctionCallbackInfo<v8::Value>&args)
-            {
-                args.GetReturnValue().Set(
-                    Nan::New(
-                        ngPlasmid::pathComplexArc(
-                            args[0]->NumberValue(),
-                            args[1]->NumberValue(),
-                            args[2]->NumberValue(),
-                            args[3]->NumberValue(),
-                            args[4]->NumberValue(),
-                            args[5]->NumberValue(),
-                            args[6]->NumberValue(),
-                            args[7]->NumberValue(),
-                            args[8]->NumberValue(),
-                            args[9]->NumberValue(),
-                            args[10]->NumberValue(),
-                            args[11]->NumberValue()
-                        ).c_str()
-                    ).ToLocalChecked()
-                );
-            }
-        }
-    #endif
 }

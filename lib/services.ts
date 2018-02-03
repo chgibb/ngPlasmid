@@ -1,5 +1,3 @@
-/// <reference path="./ngPlasmid.node.d.ts" />
-
 export interface Point
 {
     x : number;
