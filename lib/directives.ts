@@ -474,7 +474,9 @@ export class PlasmidTrack extends Directive
     {
         if(this._batchedSVGPath)
         {
-            return this._batchedSVGPath;
+            let res = this._batchedSVGPath;
+            this._batchedSVGPath = "";
+            return res;
         }
         
         return this.generateSVGPath();
@@ -1056,7 +1058,9 @@ export class TrackScale extends Directive
     {
         if(this._batchedSVGPath)
         {
-            return this._batchedSVGPath;
+            let res = this._batchedSVGPath;
+            this._batchedSVGPath = "";
+            return res;
         }
         return this.generateSVGPath();
     }
@@ -1596,7 +1600,9 @@ export class TrackMarker extends Directive
     {
         if(this._batchedSVGPath)
         {
-            return this._batchedSVGPath;
+            let res = this._batchedSVGPath;
+            this._batchedSVGPath = "";
+            return res;
         }
         return this.generateSVGPath();
     }
@@ -2066,7 +2072,9 @@ export class MarkerLabel extends Directive
     {
         if(this._batchedSVGPath)
         {
-            return this._batchedSVGPath;
+            let res = this._batchedSVGPath;
+            this._batchedSVGPath = "";
+            return res;
         }
         return this.generateSVGPath();
     }
