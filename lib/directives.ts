@@ -44,13 +44,17 @@ interface GenericNode<T>
 
 export abstract class Directive
 {
-    tagType : "plasmid" |
+    public tagType : "plasmid" |
     "plasmidtrack" |
     "tracklabel" |
     "trackscale" |
     "trackmarker" |
     "markerlabel" | 
     "svgelement";
+
+    protected _batchedSVGPath : string;
+
+    public abstract generateSVGPath() : string;
 
     public abstract renderStart() : string;
 
@@ -287,6 +291,11 @@ export class Plasmid extends Directive
         }
     }
 
+    public generateSVGPath() : string
+    {
+        return "";
+    }
+
     public getSVGPath() : string | undefined
     {
         throw new Error("Not supported by directive");
@@ -451,7 +460,7 @@ export class PlasmidTrack extends Directive
         return undefined;
     }
 
-    public getSVGPath() : string | undefined
+    public generateSVGPath() : string
     {
         return services.pathDonut(
             this.center.x,
@@ -459,6 +468,16 @@ export class PlasmidTrack extends Directive
             this.radius,
             this.width
         );
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        if(this._batchedSVGPath)
+        {
+            return this._batchedSVGPath;
+        }
+        
+        return this.generateSVGPath();
     }
 
     public interpolateAttributes() : void
@@ -752,6 +771,11 @@ export class TrackLabel extends Directive
         }
     }
 
+    public generateSVGPath() : string
+    {
+        return "";
+    }
+
     public getSVGPath() : string | undefined
     {
         throw new Error("Not supported by directive");
@@ -1023,9 +1047,18 @@ export class TrackScale extends Directive
         return this.radius + (this.labelvadjust * (this.inwardflg ? -1 : 1));
     }
 
-    public getSVGPath() : string | undefined
+    public generateSVGPath() : string
     {
         return services.pathScale(this.track.center.x,this.track.center.y,this.radius,this.interval,this.total,this.ticksize);
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        if(this._batchedSVGPath)
+        {
+            return this._batchedSVGPath;
+        }
+        return this.generateSVGPath();
     }
 
     public interpolateAttributes() : void
@@ -1554,9 +1587,18 @@ export class TrackMarker extends Directive
         }
     }
 
-    public getSVGPath() : string | undefined
+    public generateSVGPath() : string
     {
         return this.getPath();
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        if(this._batchedSVGPath)
+        {
+            return this._batchedSVGPath;
+        }
+        return this.generateSVGPath();
     }
 
     public interpolateAttributes() : void
@@ -1992,7 +2034,7 @@ export class MarkerLabel extends Directive
         return services.pathArc(this.marker.center.x, this.marker.center.y, radius + Number(vAdjust || 0), startAngle + Number(hAdjust || 0), endAngle + Number(hAdjust || 0), 1);
     }
 
-    public getSVGPath() : string | undefined
+    public generateSVGPath() : string
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L950
         let VALIGN_MIDDLE = "middle";
@@ -2018,6 +2060,15 @@ export class MarkerLabel extends Directive
             let dst = this.halign === HALIGN_START ? dstV.begin : this.halign === HALIGN_END ? dstV.end : dstV.middle;
             return ["M", (<services.Point>src).x, (<services.Point>src).y, "L", dst.x, dst.y].join(" ");
         }
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        if(this._batchedSVGPath)
+        {
+            return this._batchedSVGPath;
+        }
+        return this.generateSVGPath();
     }
 
     public interpolateAttributes() : void
