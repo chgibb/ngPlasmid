@@ -484,7 +484,7 @@ export class PlasmidTrack extends Directive
     {
         if(this._batchedSVGPath)
         {
-            console.error("SVG path was batch generated");
+            //console.error("SVG path was batch generated");
             let res = this._batchedSVGPath;
             this._batchedSVGPath = "";
             return res;
