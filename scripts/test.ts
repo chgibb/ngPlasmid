@@ -305,9 +305,9 @@ let testCases : Array<TestCase> = new Array<TestCase>();
 
         console.log(`   ${chalk.magentaBright(`Running HTML to SVG Compiler With Batched Services`)}`);
         testCases[i].runExBatchedHTMLToSVGCompiler();
-        testCases[i].optimiseExBatchedHTMLToSVGCompilerResult();
+        //testCases[i].optimiseExBatchedHTMLToSVGCompilerResult();
         testCases[i].getExBatchedHTMLTOSVGREsultSize();
-        testCases[i].getExBatchedHTMLToSVGResultOptimisedSize();
+        //testCases[i].getExBatchedHTMLToSVGResultOptimisedSize();
         console.log(`   ${chalk.magenta(`Compile time:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGCompileTime+"ms")}`);
         console.log(`   ${chalk.magenta(`Output size:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGResultSize+"b")}`);
         console.log(`   ${chalk.magenta(`Optimisation time:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGOptimisationTime+"ms")}`);
