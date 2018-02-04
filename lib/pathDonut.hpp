@@ -95,16 +95,16 @@ namespace ngPlasmid
 
         res += "M";
         res += " ";
-        res += innerRingStart.x;
+        res += std::to_string(innerRingStart.x);
         res += " ";
-        res += innerRingStart.y;
+        res += std::to_string(innerRingStart.y);
         res += " ";
 
         res += "A";
         res += " ";
-        res += radius;
+        res += std::to_string(radius);
         res += " ";
-        res += radius;
+        res += std::to_string(radius);
         res += " ";
         res += "0";
         res += " ";
@@ -112,23 +112,23 @@ namespace ngPlasmid
         res += " ";
         res += "0";
         res += " ";
-        res += innerRingEnd.x;
+        res += std::to_string(innerRingEnd.x);
         res += " ";
-        res += innerRingEnd.y;
+        res += std::to_string(innerRingEnd.y);
         res += " ";
 
         res += "M";
         res += " ";
-        res += outerRingStart.x;
+        res += std::to_string(outerRingStart.x);
         res += " ";
-        res += outerRingStart.y;
+        res += std::to_string(outerRingStart.y);
         res += " ";
 
         res += "A";
         res += " ";
-        res += radius+width;
+        res += std::to_string(radius+width);
         res += " ";
-        res += radius+width;
+        res += std::to_string(radius+width);
         res += " ";
         res += "0";
         res += " ";
@@ -136,9 +136,9 @@ namespace ngPlasmid
         res += " ";
         res += "0";
         res += " ";
-        res += outerRingEnd.x;
+        res += std::to_string(outerRingEnd.x);
         res += " ";
-        res += outerRingEnd.y;
+        res += std::to_string(outerRingEnd.y);
         res += " ";
 
         return res;
