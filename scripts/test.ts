@@ -331,7 +331,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             console.log(`       ${chalk.red("HTML to SVG Compiler With Batched Services Slower By "+(testCases[i].exHTMLToSVGCompileTime - testCases[i].exBatchedHTMLToSVGCompileTime))}`);
             if(testCases[i].type == "stress" && testCases[i].exHTMLToSVGCompileTime - testCases[i].exBatchedHTMLToSVGCompileTime <= -100)
             {
-                process.exit(1);
+                //process.exit(1);
             }
         }
 
