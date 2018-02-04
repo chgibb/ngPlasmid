@@ -303,10 +303,10 @@ export class Plasmid extends Directive
 
     public batchGenerateSVGPaths() : void
     {
-        for(let i = 0; i != this.tracks.length; ++i)
+        /*for(let i = 0; i != this.tracks.length; ++i)
         {
             this.tracks[i]._batchedSVGPath = this.tracks[i].generateSVGPath();
-        }
+        }*/
         let ngPlasmidNative = require("./ngPlasmid");
         ngPlasmidNative.batchGenerateSVGPaths(this);
     }
@@ -484,6 +484,7 @@ export class PlasmidTrack extends Directive
     {
         if(this._batchedSVGPath)
         {
+            console.error("SVG path was batch generated");
             let res = this._batchedSVGPath;
             this._batchedSVGPath = "";
             return res;

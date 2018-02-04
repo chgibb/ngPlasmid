@@ -6,6 +6,7 @@
 #include <nan.h>
 
 #include "polarToCartesian.hpp"
+#include "point.hpp"
 
 namespace ngPlasmid
 {
@@ -21,7 +22,7 @@ namespace ngPlasmid
         void pathDonut(const v8::Handle<v8::Object>&track)
         {
             //v8::Handle<v8::Object> track = v8::Handle<v8::Object>::Cast(args[0]);
-            std::cerr<<"getting center\n";
+            //std::cerr<<"getting center\n";
 
             v8::Handle<v8::Object> center = v8::Handle<v8::Object>::Cast(
                 Nan::Get(   
@@ -32,28 +33,28 @@ namespace ngPlasmid
             
 
 
-            std::cerr<<"getting x\n";
+            //std::cerr<<"getting x\n";
             v8::Handle<v8::Value> xProp = Nan::Get(
                 center,
                 Nan::New("x").ToLocalChecked()
             ).ToLocalChecked();
             long double x = xProp->NumberValue();
 
-            std::cerr<<"getting y\n";
+            //std::cerr<<"getting y\n";
             v8::Local<v8::Value> yProp = Nan::Get(
                 center,
                 Nan::New("y").ToLocalChecked()
             ).ToLocalChecked();
             long double y = yProp->NumberValue();
             
-            std::cerr<<"radius \n";
+            //std::cerr<<"radius \n";
             v8::Local<v8::Value> radiusProp = Nan::Get(
                 track,
                 Nan::New("radius").ToLocalChecked()
             ).ToLocalChecked();
             long double radius = radiusProp->NumberValue();
             
-            std::cerr<<"width \n";
+            //std::cerr<<"width \n";
             v8::Local<v8::Value> widthProp = Nan::Get(
                 track,
                 Nan::New("width").ToLocalChecked()
@@ -82,10 +83,64 @@ namespace ngPlasmid
         long double radius,
         long double width
     ) {
-        std::cerr<<"called pathdonut\n";
+        //std::cerr<<"called pathdonut\n";
         std::string res;
         res.reserve(200);
-        res = "test";
+        
+        ngPlasmid::Point innerRingStart = ngPlasmid::polarToCartesian(x,y,radius,359.99);
+        ngPlasmid::Point innerRingEnd = ngPlasmid::polarToCartesian(x,y,radius,0);
+
+        ngPlasmid::Point outerRingStart = ngPlasmid::polarToCartesian(x,y,radius+width,359.99);
+        ngPlasmid::Point outerRingEnd = ngPlasmid::polarToCartesian(x,y,radius+width,0);
+
+        res += "M";
+        res += " ";
+        res += innerRingStart.x;
+        res += " ";
+        res += innerRingStart.y;
+        res += " ";
+
+        res += "A";
+        res += " ";
+        res += radius;
+        res += " ";
+        res += radius;
+        res += " ";
+        res += "0";
+        res += " ";
+        res += "1";
+        res += " ";
+        res += "0";
+        res += " ";
+        res += innerRingEnd.x;
+        res += " ";
+        res += innerRingEnd.y;
+        res += " ";
+
+        res += "M";
+        res += " ";
+        res += outerRingStart.x;
+        res += " ";
+        res += outerRingStart.y;
+        res += " ";
+
+        res += "A";
+        res += " ";
+        res += radius+width;
+        res += " ";
+        res += radius+width;
+        res += " ";
+        res += "0";
+        res += " ";
+        res += "1";
+        res += " ";
+        res += "0";
+        res += " ";
+        res += outerRingEnd.x;
+        res += " ";
+        res += outerRingEnd.y;
+        res += " ";
+
         return res;
     }    
 }
