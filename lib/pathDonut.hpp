@@ -30,8 +30,6 @@ namespace ngPlasmid
                     ::Nan::New("center").ToLocalChecked()
                 ).ToLocalChecked()
             );
-            
-
 
             //std::cerr<<"getting x\n";
             ::v8::Handle<::v8::Value> xProp = ::Nan::Get(
@@ -92,6 +90,16 @@ namespace ngPlasmid
 
         ::ngPlasmid::Point outerRingStart = ::ngPlasmid::polarToCartesian(x,y,radius+width,359.99);
         ::ngPlasmid::Point outerRingEnd = ::ngPlasmid::polarToCartesian(x,y,radius+width,0);
+
+        std::cerr<<x<<"\n";
+        std::cerr<<y<<"\n";
+        std::cerr<<radius<<"\n";
+        std::cerr<<width<<"\n";
+
+        std::cerr<<innerRingStart.x<<"\n";
+        std::cerr<<innerRingStart.y<<"\n";
+        std::cerr<<innerRingEnd.x<<"\n";
+        std::cerr<<innerRingEnd.x<<"\n";
 
         res += "M";
         res += " ";

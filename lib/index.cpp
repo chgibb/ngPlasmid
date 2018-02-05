@@ -21,7 +21,8 @@ namespace ngPlasmid
             int length = tracks->Length();
             for(int i = 0; i != length; ++i)
             {
-                ::ngPlasmid::JSAware::pathDonut(::v8::Handle<::v8::Object>::Cast(tracks->Get(i)));
+                ::v8::Handle<::v8::Object> track = ::v8::Handle<::v8::Object>::Cast(tracks->Get(i));
+                ::ngPlasmid::JSAware::pathDonut(track);
             }
         }
     }
