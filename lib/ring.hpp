@@ -8,5 +8,5 @@ namespace ngPlasmid
     {
         ::ngPlasmid::Point start;
         ::ngPlasmid::Point end;
-    }
+    };
 }
