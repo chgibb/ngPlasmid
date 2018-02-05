@@ -31,36 +31,36 @@ namespace ngPlasmid
 
         //ss.reserve(401);
 
-        ngPlasmid::Point start;
-        ngPlasmid::Point start2;
-        ngPlasmid::Point end;
+        ::ngPlasmid::Point start;
+        ::ngPlasmid::Point start2;
+        ::ngPlasmid::Point end;
         char arcSweep;
         
-        ngPlasmid::Point arrow_start_1;
-        ngPlasmid::Point arrow_start_2;
-        ngPlasmid::Point arrow_start_3;
-        ngPlasmid::Point arrow_start_4;
+        ::ngPlasmid::Point arrow_start_1;
+        ::ngPlasmid::Point arrow_start_2;
+        ::ngPlasmid::Point arrow_start_3;
+        ::ngPlasmid::Point arrow_start_4;
 
-        ngPlasmid::Point arrow_end_1;
-        ngPlasmid::Point arrow_end_2;
-        ngPlasmid::Point arrow_end_3;
-        ngPlasmid::Point arrow_end_4;
+        ::ngPlasmid::Point arrow_end_1;
+        ::ngPlasmid::Point arrow_end_2;
+        ::ngPlasmid::Point arrow_end_3;
+        ::ngPlasmid::Point arrow_end_4;
 
         endAngle = endAngle - (arrowEndLength < 0 ? 0 : arrowEndLength);
         startAngle = startAngle + (arrowStartLength < 0 ? 0 : arrowStartLength);
 
-        start = ngPlasmid::polarToCartesian(x, y, radius, endAngle);
-        end = ngPlasmid::polarToCartesian(x, y, radius, startAngle);
+        start = ::ngPlasmid::polarToCartesian(x, y, radius, endAngle);
+        end = ::ngPlasmid::polarToCartesian(x, y, radius, startAngle);
 
-        arrow_start_1 = ngPlasmid::polarToCartesian(x, y, radius - arrowStartWidth, startAngle + arrowStartAngle);
-        arrow_start_2 = ngPlasmid::polarToCartesian(x, y, radius + (width / 2), startAngle - arrowStartLength);
-        arrow_start_3 = ngPlasmid::polarToCartesian(x, y, radius + width + arrowStartWidth, startAngle + arrowStartAngle);
-        arrow_start_4 = ngPlasmid::polarToCartesian(x, y, radius + width, startAngle);
-        arrow_end_1 = ngPlasmid::polarToCartesian(x, y, radius + width + arrowEndWidth, endAngle - arrowEndAngle);
-        arrow_end_2 = ngPlasmid::polarToCartesian(x, y, radius + (width / 2), endAngle + arrowEndLength);
-        arrow_end_3 = ngPlasmid::polarToCartesian(x, y, radius - arrowEndWidth, endAngle - arrowEndAngle);
-        arrow_end_4 = ngPlasmid::polarToCartesian(x, y, radius, endAngle);
-        start2 = ngPlasmid::polarToCartesian(x, y, radius + width, endAngle);
+        arrow_start_1 = ::ngPlasmid::polarToCartesian(x, y, radius - arrowStartWidth, startAngle + arrowStartAngle);
+        arrow_start_2 = ::ngPlasmid::polarToCartesian(x, y, radius + (width / 2), startAngle - arrowStartLength);
+        arrow_start_3 = ::ngPlasmid::polarToCartesian(x, y, radius + width + arrowStartWidth, startAngle + arrowStartAngle);
+        arrow_start_4 = ::ngPlasmid::polarToCartesian(x, y, radius + width, startAngle);
+        arrow_end_1 = ::ngPlasmid::polarToCartesian(x, y, radius + width + arrowEndWidth, endAngle - arrowEndAngle);
+        arrow_end_2 = ::ngPlasmid::polarToCartesian(x, y, radius + (width / 2), endAngle + arrowEndLength);
+        arrow_end_3 = ::ngPlasmid::polarToCartesian(x, y, radius - arrowEndWidth, endAngle - arrowEndAngle);
+        arrow_end_4 = ::ngPlasmid::polarToCartesian(x, y, radius, endAngle);
+        start2 = ::ngPlasmid::polarToCartesian(x, y, radius + width, endAngle);
         arcSweep = endAngle - startAngle <= 180 ? '0' : '1';
 
         //ss.precision(std::numeric_limits<long double>::digits10 + 1);

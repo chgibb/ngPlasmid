@@ -6,7 +6,7 @@ namespace ngPlasmid
 {
     struct Ring
     {
-        ngPlasmid::Point start;
-        ngPlasmid::Point end;
+        ::ngPlasmid::Point start;
+        ::ngPlasmid::Point end;
     }
 }

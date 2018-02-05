@@ -19,53 +19,53 @@ namespace ngPlasmid
 
     namespace JSAware
     {
-        void pathDonut(const v8::Handle<v8::Object>&track)
+        void pathDonut(const ::v8::Handle<::v8::Object>&track)
         {
-            //v8::Handle<v8::Object> track = v8::Handle<v8::Object>::Cast(args[0]);
+            //::v8::Handle<::v8::Object> track = ::v8::Handle<::v8::Object>::Cast(args[0]);
             //std::cerr<<"getting center\n";
 
-            v8::Handle<v8::Object> center = v8::Handle<v8::Object>::Cast(
-                Nan::Get(   
+            ::v8::Handle<::v8::Object> center = ::v8::Handle<::v8::Object>::Cast(
+                ::Nan::Get(   
                     track,
-                    Nan::New("center").ToLocalChecked()
+                    ::Nan::New("center").ToLocalChecked()
                 ).ToLocalChecked()
             );
             
 
 
             //std::cerr<<"getting x\n";
-            v8::Handle<v8::Value> xProp = Nan::Get(
+            ::v8::Handle<::v8::Value> xProp = ::Nan::Get(
                 center,
-                Nan::New("x").ToLocalChecked()
+                ::Nan::New("x").ToLocalChecked()
             ).ToLocalChecked();
             long double x = xProp->NumberValue();
 
             //std::cerr<<"getting y\n";
-            v8::Local<v8::Value> yProp = Nan::Get(
+            ::v8::Local<::v8::Value> yProp = ::Nan::Get(
                 center,
-                Nan::New("y").ToLocalChecked()
+                ::Nan::New("y").ToLocalChecked()
             ).ToLocalChecked();
             long double y = yProp->NumberValue();
             
             //std::cerr<<"radius \n";
-            v8::Local<v8::Value> radiusProp = Nan::Get(
+            ::v8::Local<::v8::Value> radiusProp = ::Nan::Get(
                 track,
-                Nan::New("radius").ToLocalChecked()
+                ::Nan::New("radius").ToLocalChecked()
             ).ToLocalChecked();
             long double radius = radiusProp->NumberValue();
             
             //std::cerr<<"width \n";
-            v8::Local<v8::Value> widthProp = Nan::Get(
+            ::v8::Local<::v8::Value> widthProp = ::Nan::Get(
                 track,
-                Nan::New("width").ToLocalChecked()
+                ::Nan::New("width").ToLocalChecked()
             ).ToLocalChecked();
             long double width = widthProp->NumberValue();
 
 
-            Nan::Set(
+            ::Nan::Set(
                 track,
-                Nan::New("_batchedSVGPath").ToLocalChecked(),
-                Nan::New(
+                ::Nan::New("_batchedSVGPath").ToLocalChecked(),
+                ::Nan::New(
                     ::ngPlasmid::pathDonut(
                         x,
                         y,
@@ -87,11 +87,11 @@ namespace ngPlasmid
         std::string res;
         res.reserve(200);
         
-        ngPlasmid::Point innerRingStart = ngPlasmid::polarToCartesian(x,y,radius,359.99);
-        ngPlasmid::Point innerRingEnd = ngPlasmid::polarToCartesian(x,y,radius,0);
+        ::ngPlasmid::Point innerRingStart = ::ngPlasmid::polarToCartesian(x,y,radius,359.99);
+        ::ngPlasmid::Point innerRingEnd = ::ngPlasmid::polarToCartesian(x,y,radius,0);
 
-        ngPlasmid::Point outerRingStart = ngPlasmid::polarToCartesian(x,y,radius+width,359.99);
-        ngPlasmid::Point outerRingEnd = ngPlasmid::polarToCartesian(x,y,radius+width,0);
+        ::ngPlasmid::Point outerRingStart = ::ngPlasmid::polarToCartesian(x,y,radius+width,359.99);
+        ::ngPlasmid::Point outerRingEnd = ::ngPlasmid::polarToCartesian(x,y,radius+width,0);
 
         res += "M";
         res += " ";
