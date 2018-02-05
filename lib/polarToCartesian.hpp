@@ -1,7 +1,7 @@
 #pragma once
 
 #define _USE_MATH_DEFINES
-#include <cmath>
+#include <tgmath.h>
 
 #include "point.hpp"
 
@@ -16,8 +16,8 @@ namespace ngPlasmid
     ) {
         ::ngPlasmid::Point res;
         long double angleInRadians = (angleInDegrees - 90) * JS_PI / 180.0;
-        res.x = centerX + (radius * std::cos(angleInRadians));
-        res.y = centerY + (radius * std::sin(angleInRadians));
+        res.x = centerX + (radius * ::cosl(angleInRadians));
+        res.y = centerY + (radius * ::sinl(angleInRadians));
         return res;
     }
 }
