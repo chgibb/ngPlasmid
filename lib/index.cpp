@@ -3,10 +3,13 @@
 #include "pathComplexArc.hpp"
 #include "pathDonut.hpp"
 
+void Init(::v8::Local<::v8::Object>);
+
 namespace ngPlasmid
 {    
     namespace JSExport
     {
+        void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&);
         void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&args)
         {
             ::v8::Isolate*isolate = args.GetIsolate();
