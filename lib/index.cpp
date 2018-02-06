@@ -39,7 +39,7 @@ namespace ngPlasmid
                 int markersLength = markers->Length();
                 for(int k = 0; k != markersLength; ++k)
                 {
-                    ::v8::Handle<::v8::Object> marker = ::v8::Handle<::v8::Object>::Cast(markers->Get(i));
+                    ::v8::Handle<::v8::Object> marker = ::v8::Handle<::v8::Object>::Cast(markers->Get(k));
                     ::ngPlasmid::JSAware::getPath(marker);
                 }
             }
