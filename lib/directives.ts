@@ -308,6 +308,10 @@ export class Plasmid extends Directive
         for(let i = 0; i != this.tracks.length; ++i)
         {
             this.tracks[i].interpolateAttributes();
+            for(let k = 0; k != this.tracks[i].markers.length; ++k)
+            {
+                this.tracks[i].markers[k].interpolateAttributes();
+            }
         }
         
         let ngPlasmidNative = require("./ngPlasmid");
