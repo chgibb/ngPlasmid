@@ -1,3 +1,21 @@
+
+#ifdef PROFILE_NGPLASMID
+    #include <iostream>
+    #include <algorithm>
+    #include <fstream>
+    #include <cstring>
+    #include <unistd.h>
+    std::ofstream profOut("prof.out",std::ios::out);
+    void profileOut(const char *szText)
+    {
+        ::profOut<<szText;
+    }
+    #define USE_PROFILER 1
+    #define LIB_PROFILER_IMPLEMENTATION
+    #define LIB_PROFILER_PRINTF profileOut
+    #include "../libProfiler/libProfiler.h"
+#endif
+
 #include <nan.h>
 
 #include "pathComplexArc.hpp"
@@ -13,6 +31,10 @@ namespace ngPlasmid
         void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&);
         void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&args)
         {
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_ENABLE;
+                PROFILER_START(batchGenerateSVGPaths);
+            #endif
             ::v8::Isolate*isolate = args.GetIsolate();
 
             ::v8::Handle<::v8::Object> plasmid = ::v8::Handle<::v8::Object>::Cast(args[0]);
@@ -43,6 +65,11 @@ namespace ngPlasmid
                     ::ngPlasmid::JSAware::getPath(marker);
                 }
             }
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+                ::LogProfiler();
+                PROFILER_DISABLE;
+            #endif
         }
     }
 }
