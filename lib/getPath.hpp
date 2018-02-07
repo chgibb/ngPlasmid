@@ -115,21 +115,26 @@ namespace ngPlasmid
                 ::Nan::New("angle").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
 
-            ::ngPlasmid::pathArc(
-                centerX,
-                centerY,
-                radiusInner,
-                angleStart,
-                angleEnd,
-                width,
-                arrowStartWidth,
-                arrowStartLength,
-                arrowStartAngle,
-                arrowEndWidth,
-                arrowEndLength,
-                arrowEndAngle
+            ::Nan::Set(
+                marker,
+                ::Nan::New("_batchedSVGPath").ToLocalChecked(),
+                ::Nan::New(
+                    ::ngPlasmid::pathArc(
+                        centerX,
+                        centerY,
+                        radiusInner,
+                        angleStart,
+                        angleEnd,
+                        width,
+                        arrowStartWidth,
+                        arrowStartLength,
+                        arrowStartAngle,
+                        arrowEndWidth,
+                        arrowEndLength,
+                        arrowEndAngle
+                    )
+                ).ToLocalChecked()
             );
-
         }
     }
 }
