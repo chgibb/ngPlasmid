@@ -37,31 +37,63 @@ namespace ngPlasmid
             #endif
             ::v8::Isolate*isolate = args.GetIsolate();
 
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_START(get#plasmid);
+            #endif
             ::v8::Handle<::v8::Object> plasmid = ::v8::Handle<::v8::Object>::Cast(args[0]);
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
 
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_START(get#plasmid#tracks);
+            #endif
             ::v8::Handle<::v8::Array> tracks = ::v8::Handle<::v8::Array>::Cast(
                 plasmid->Get(
                     ::v8::String::NewFromUtf8(isolate,"tracks")
                 )
             );
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
 
             int tracksLength = tracks->Length();
             for(int i = 0; i != tracksLength; ++i)
             {
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_START(get#plasmid#tracks[]);
+                #endif
                 ::v8::Handle<::v8::Object> track = ::v8::Handle<::v8::Object>::Cast(tracks->Get(i));
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_END();
+                #endif
+
                 ::ngPlasmid::JSAware::pathDonut(track);
 
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_START(get#plasmid#tracks[]#markers);
+                #endif
                 ::v8::Handle<::v8::Array> markers = ::v8::Handle<::v8::Array>::Cast(
                     ::Nan::Get(
                         track,
                         ::Nan::New("markers").ToLocalChecked()
                     ).ToLocalChecked()
                 );
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_END();
+                #endif
 
                 int markersLength = markers->Length();
                 for(int k = 0; k != markersLength; ++k)
                 {
+                    #ifdef PROFILE_NGPLASMID
+                        PROFILER_START(get#plasmid#tracks[]#markers[]);
+                    #endif
                     ::v8::Handle<::v8::Object> marker = ::v8::Handle<::v8::Object>::Cast(markers->Get(k));
+                    #ifdef PROFILE_NGPLASMID
+                        PROFILER_END();
+                    #endif
+                    
                     ::ngPlasmid::JSAware::getPath(marker);
                 }
             }
