@@ -6,62 +6,19 @@
 
 #include "pathArc.hpp"
 #include "angle.hpp"
+#include "point.hpp"
 
 namespace ngPlasmid
 {
     namespace JSAware
     {
-        void getPath(const ::v8::Handle<::v8::Object>&,::ngPlasmid::Angle);
-        void getPath(const ::v8::Handle<::v8::Object>&marker,::ngPlasmid::Angle angle)
+        void getPath(const ::v8::Handle<::v8::Object>&,::ngPlasmid::Angle,::ngPlasmid::Point&);
+        void getPath(const ::v8::Handle<::v8::Object>&marker,::ngPlasmid::Angle angle,::ngPlasmid::Point&center)
         {
             #ifdef PROFILE_NGPLASMID
-                PROFILER_START(get#marker#track);
-            #endif
-            ::v8::Handle<::v8::Object> track = ::v8::Handle<::v8::Object>::Cast(
-                ::Nan::Get(
-                    marker,
-                    ::Nan::New("track").ToLocalChecked()
-                ).ToLocalChecked()
-            );
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
+                PROFILER_START(JSAware::getPath);
             #endif
 
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(get#marker#track#center);
-            #endif
-            ::v8::Handle<::v8::Object> center = ::v8::Handle<::v8::Object>::Cast(
-                ::Nan::Get(
-                    track,
-                    ::Nan::New("center").ToLocalChecked()
-                ).ToLocalChecked()
-            );
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
-            #endif
-
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(get#marker#track#center#x);
-            #endif
-            long double centerX = ::Nan::Get(
-                center,
-                ::Nan::New("x").ToLocalChecked()
-            ).ToLocalChecked()->NumberValue();
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
-            #endif
-
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(get#marker#track#center#y);
-            #endif
-            long double centerY = ::Nan::Get(
-                center,
-                ::Nan::New("y").ToLocalChecked()
-            ).ToLocalChecked()->NumberValue();
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
-            #endif
-            
             ::v8::Handle<::v8::Object> radius = ::v8::Handle<::v8::Object>::Cast(
                 ::Nan::Get(
                     marker,
@@ -128,8 +85,8 @@ namespace ngPlasmid
                 ::Nan::New("_batchedSVGPath").ToLocalChecked(),
                 ::Nan::New(
                     ::ngPlasmid::pathArc(
-                        centerX,
-                        centerY,
+                        center.x,
+                        center.y,
                         radiusInner,
                         angle.start,
                         angle.end,
@@ -143,6 +100,10 @@ namespace ngPlasmid
                     )
                 ).ToLocalChecked()
             );
+
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
         }
     }
 }

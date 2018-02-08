@@ -15,6 +15,7 @@ namespace ngPlasmid
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(getAngle);
             #endif
+            
             long double startAngle;
             long double endAngle;
             long double end;

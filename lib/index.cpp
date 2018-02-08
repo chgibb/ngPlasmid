@@ -46,6 +46,26 @@ namespace ngPlasmid
                 PROFILER_END();
             #endif
 
+            ::ngPlasmid::Point center;
+
+            ::v8::Handle<::v8::Object> centerProp = ::v8::Handle<::v8::Object>::Cast(
+                ::Nan::Get(
+                    plasmid,
+                    ::Nan::New("center").ToLocalChecked()
+                ).ToLocalChecked()
+            );
+
+            center.x = ::Nan::Get(
+                centerProp,
+                ::Nan::New("x").ToLocalChecked()
+            ).ToLocalChecked()->NumberValue();
+
+            center.y = ::Nan::Get(
+                centerProp,
+                ::Nan::New("y").ToLocalChecked()
+            ).ToLocalChecked()->NumberValue();
+
+
             long double seqLength = ::Nan::Get(
                 plasmid,
                 ::Nan::New("sequencelength").ToLocalChecked()
@@ -102,7 +122,8 @@ namespace ngPlasmid
                     
                     ::ngPlasmid::JSAware::getPath(
                         marker,
-                        ::ngPlasmid::JSAware::getAngle(marker,seqLength)
+                        ::ngPlasmid::JSAware::getAngle(marker,seqLength),
+                        center
                     );
                 }
             }
