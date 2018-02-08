@@ -22,12 +22,22 @@ namespace ngPlasmid
         void pathDonut(const ::v8::Handle<::v8::Object>&);
         void pathDonut(const ::v8::Handle<::v8::Object>&track)
         {
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_START(JSAware::pathDonut);
+            #endif
+
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_START(get#track#center);
+            #endif
             ::v8::Handle<::v8::Object> center = ::v8::Handle<::v8::Object>::Cast(
                 ::Nan::Get(   
                     track,
                     ::Nan::New("center").ToLocalChecked()
                 ).ToLocalChecked()
             );
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
 
             ::v8::Handle<::v8::Value> xProp = ::Nan::Get(
                 center,
@@ -65,6 +75,10 @@ namespace ngPlasmid
                     )
                 ).ToLocalChecked()
             );
+
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
         }
     }
 
@@ -74,6 +88,10 @@ namespace ngPlasmid
         long double radius,
         long double width
     ) {
+        #ifdef PROFILE_NGPLASMID
+            PROFILER_START(pathDonut);
+        #endif
+
         std::string res;
         res.reserve(200);
         
@@ -131,6 +149,11 @@ namespace ngPlasmid
         res += std::to_string(outerRingEnd.y);
         res += " ";
 
+        #ifdef PROFILE_NGPLASMID
+            PROFILER_END();
+        #endif
+
         return res;
+
     }    
 }

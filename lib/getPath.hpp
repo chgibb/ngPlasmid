@@ -13,19 +13,31 @@ namespace ngPlasmid
         void getPath(const ::v8::Handle<::v8::Object>&);
         void getPath(const ::v8::Handle<::v8::Object>&marker)
         {
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_START(get#marker#track);
+            #endif
             ::v8::Handle<::v8::Object> track = ::v8::Handle<::v8::Object>::Cast(
                 ::Nan::Get(
                     marker,
                     ::Nan::New("track").ToLocalChecked()
                 ).ToLocalChecked()
             );
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
 
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_START(get#marker#track#center);
+            #endif
             ::v8::Handle<::v8::Object> center = ::v8::Handle<::v8::Object>::Cast(
                 ::Nan::Get(
                     track,
                     ::Nan::New("center").ToLocalChecked()
                 ).ToLocalChecked()
             );
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
 
             long double centerX = ::Nan::Get(
                 center,
