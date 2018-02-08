@@ -23,6 +23,10 @@ namespace ngPlasmid
         long double arrowEndLength,
         long double arrowEndAngle
     ) {
+        #ifdef PROFILE_NGPLASMID
+            PROFILER_START(pathArc);
+        #endif
+
         std::string res;
         res.reserve(401);
 
@@ -46,6 +50,9 @@ namespace ngPlasmid
             res += std::to_string(end.x);
             res += " ";
             res += std::to_string(end.y);
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
             return res;
         }
         else
@@ -84,6 +91,9 @@ namespace ngPlasmid
             }
             else
             {
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_END();
+                #endif
                 return ::ngPlasmid::pathComplexArc(
                     x,
                     y,
@@ -100,6 +110,9 @@ namespace ngPlasmid
                 );
             }
         }
+        #ifdef PROFILE_NGPLASMID
+            PROFILER_END();
+        #endif
         return "";
     }
 }
