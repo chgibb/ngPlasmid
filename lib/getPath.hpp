@@ -5,13 +5,14 @@
 #include <nan.h>
 
 #include "pathArc.hpp"
+#include "angle.hpp"
 
 namespace ngPlasmid
 {
     namespace JSAware
     {
-        void getPath(const ::v8::Handle<::v8::Object>&);
-        void getPath(const ::v8::Handle<::v8::Object>&marker)
+        void getPath(const ::v8::Handle<::v8::Object>&,::ngPlasmid::Angle);
+        void getPath(const ::v8::Handle<::v8::Object>&marker,::ngPlasmid::Angle angle)
         {
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(get#marker#track);
@@ -60,42 +61,6 @@ namespace ngPlasmid
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
             #endif
-
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(get#marker#angle);
-            #endif
-            ::v8::Handle<::v8::Object> angle = ::v8::Handle<::v8::Object>::Cast(
-                ::Nan::Get(
-                    marker,
-                    ::Nan::New("angle").ToLocalChecked()
-                ).ToLocalChecked()
-            );
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
-            #endif
-
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(get#marker#angle#start);
-            #endif
-            long double angleStart = ::Nan::Get(
-                angle,
-                ::Nan::New("start").ToLocalChecked()
-            ).ToLocalChecked()->NumberValue();
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
-            #endif
-
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(get#marker#angle#end);
-            #endif
-            long double angleEnd = ::Nan::Get(
-                angle,
-                ::Nan::New("end").ToLocalChecked()
-            ).ToLocalChecked()->NumberValue();
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
-            #endif
-
             
             ::v8::Handle<::v8::Object> radius = ::v8::Handle<::v8::Object>::Cast(
                 ::Nan::Get(
@@ -166,8 +131,8 @@ namespace ngPlasmid
                         centerX,
                         centerY,
                         radiusInner,
-                        angleStart,
-                        angleEnd,
+                        angle.start,
+                        angle.end,
                         width,
                         arrowStartWidth,
                         arrowStartLength,

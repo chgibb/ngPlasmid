@@ -21,6 +21,7 @@
 #include "pathComplexArc.hpp"
 #include "pathDonut.hpp"
 #include "getPath.hpp"
+#include "getAngle.hpp"
 
 void Init(::v8::Local<::v8::Object>);
 
@@ -44,6 +45,11 @@ namespace ngPlasmid
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
             #endif
+
+            long double seqLength = ::Nan::Get(
+                plasmid,
+                ::Nan::New("sequencelength").ToLocalChecked()
+            ).ToLocalChecked()->NumberValue();
 
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(get#plasmid#tracks);
@@ -94,7 +100,10 @@ namespace ngPlasmid
                         PROFILER_END();
                     #endif
                     
-                    ::ngPlasmid::JSAware::getPath(marker);
+                    ::ngPlasmid::JSAware::getPath(
+                        marker,
+                        ::ngPlasmid::JSAware::getAngle(marker,seqLength)
+                    );
                 }
             }
             #ifdef PROFILE_NGPLASMID
