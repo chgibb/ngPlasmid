@@ -20,15 +20,27 @@ namespace ngPlasmid
             long double endAngle;
             long double end;
 
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_START(get#marker#start);
+            #endif
             long double markerStart = ::Nan::Get(
                 marker,
-                ::Nan::New("start").ToLocalChecked()
+                ::Nan::New("_start").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
 
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_START(get#marker#end);
+            #endif
             long double markerEnd = ::Nan::Get(
                 marker,
-                ::Nan::New("end").ToLocalChecked()
+                ::Nan::New("_end").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
             
             startAngle = (markerStart / seqLength) * 360;
             end = markerEnd || markerStart;
