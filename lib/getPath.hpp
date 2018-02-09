@@ -55,92 +55,66 @@ namespace ngPlasmid
             #endif
 
             #ifdef PROFILE_NGPLASMID
-                PROFILER_START(marker#arrowstart);
-            #endif
-            ::v8::Handle<::v8::Object> arrowStart = ::v8::Handle<::v8::Object>::Cast(
-                ::Nan::Get(
-                    marker,
-                    ::Nan::New("arrowstart").ToLocalChecked()
-                ).ToLocalChecked()
-            );
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
-            #endif
-
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(marker#arrowstart#width);
+                PROFILER_START(marker#arrowstartwidth);
             #endif
             long double arrowStartWidth = ::Nan::Get(
-                arrowStart,
-                ::Nan::New("width").ToLocalChecked()
+                marker,
+                ::Nan::New("arrowstartwidth").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
             #endif
 
             #ifdef PROFILE_NGPLASMID
-                PROFILER_START(marker#arrowstart#length);
+                PROFILER_START(marker#arrowstartlength);
             #endif
             long double arrowStartLength = ::Nan::Get(
-                arrowStart,
-                ::Nan::New("length").ToLocalChecked()
+                marker,
+                ::Nan::New("arrowstartlength").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
             #endif
 
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(marker#arrowstart#angle);
+             #ifdef PROFILE_NGPLASMID
+                PROFILER_START(marker#arrowstartangle);
             #endif
             long double arrowStartAngle = ::Nan::Get(
-                arrowStart,
-                ::Nan::New("angle").ToLocalChecked()
+                marker,
+                ::Nan::New("arrowstartangle").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
             #endif
 
             #ifdef PROFILE_NGPLASMID
-                PROFILER_START(marker#arrowend);
-            #endif
-             ::v8::Handle<::v8::Object> arrowEnd = ::v8::Handle<::v8::Object>::Cast(
-                ::Nan::Get(
-                    marker,
-                    ::Nan::New("arrowend").ToLocalChecked()
-                ).ToLocalChecked()
-            );
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
-            #endif
-
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(makrer#arrowend#width);
+                PROFILER_START(marker#arrowendwidth);
             #endif
             long double arrowEndWidth = ::Nan::Get(
-                arrowEnd,
-                ::Nan::New("width").ToLocalChecked()
+                marker,
+                ::Nan::New("arrowendwidth").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
             #endif
 
             #ifdef PROFILE_NGPLASMID
-                PROFILER_START(marker#arrowend#length);
+                PROFILER_START(marker#arrowendlength);
             #endif
             long double arrowEndLength = ::Nan::Get(
-                arrowEnd,
-                ::Nan::New("length").ToLocalChecked()
+                marker,
+                ::Nan::New("arrowendlength").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
             #endif
 
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(marker#arrowend#angle);
+             #ifdef PROFILE_NGPLASMID
+                PROFILER_START(marker#arrowendangle);
             #endif
             long double arrowEndAngle = ::Nan::Get(
-                arrowEnd,
-                ::Nan::New("angle").ToLocalChecked()
+                marker,
+                ::Nan::New("arrowendangle").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
