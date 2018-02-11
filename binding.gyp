@@ -13,7 +13,8 @@
                 "-std=c++11",
                 "-O3",
                 "-Werror",
-                "-Wno-comment"
+                "-Wno-comment",
+                "-s"
             ]
         }
     ]
