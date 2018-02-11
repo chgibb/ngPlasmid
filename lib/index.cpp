@@ -1,4 +1,3 @@
-
 #ifdef PROFILE_NGPLASMID
     #include <iostream>
     #include <algorithm>
@@ -6,7 +5,7 @@
     #include <cstring>
     #include <unistd.h>
     std::ofstream profOut("prof.out",std::ios::out);
-    void profileOut(const char *szText)
+    void profileOut(const char*szText)
     {
         ::profOut<<szText;
     }
@@ -36,6 +35,7 @@ namespace ngPlasmid
                 PROFILER_ENABLE;
                 PROFILER_START(batchGenerateSVGPaths);
             #endif
+            
             ::v8::Isolate*isolate = args.GetIsolate();
 
             #ifdef PROFILE_NGPLASMID
@@ -94,6 +94,28 @@ namespace ngPlasmid
                     PROFILER_END();
                 #endif
 
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_START(get#plasmid#tracks[]#interpolateAttributes);
+                #endif
+                ::v8::Handle<::v8::Function> trackInterpolateAttributes = ::v8::Local<::v8::Function>::Cast(
+                    ::Nan::Get(
+                        track,
+                        ::Nan::New("interpolateAttributes").ToLocalChecked()
+                    ).ToLocalChecked()
+                );
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_END();
+                #endif
+
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_START(get#plasmid#tracks[]#interpolateAttributes());
+                #endif
+                trackInterpolateAttributes->Call(track,0,NULL);
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_END();
+                #endif
+                
+
                 ::ngPlasmid::JSAware::pathDonut(track);
 
                 #ifdef PROFILE_NGPLASMID
@@ -120,6 +142,27 @@ namespace ngPlasmid
                         PROFILER_END();
                     #endif
                     
+                    #ifdef PROFILE_NGPLASMID
+                        PROFILER_START(get#plasmid#tracks[]#markers[]#interpolateAttributes);
+                    #endif
+                    ::v8::Handle<::v8::Function> trackMarkerInterpolateAttributes = ::v8::Local<::v8::Function>::Cast(
+                        ::Nan::Get(
+                            marker,
+                            ::Nan::New("interpolateAttributes").ToLocalChecked()
+                        ).ToLocalChecked()
+                    );
+                    #ifdef PROFILE_NGPLASMID
+                        PROFILER_END();
+                    #endif
+
+                    #ifdef PROFILE_NGPLASMID
+                        PROFILER_START(get#plasmid#tracks[]#markers#interpolateAttributes());
+                    #endif
+                        trackMarkerInterpolateAttributes->Call(marker,0,NULL);
+                    #ifdef PROFILE_NGPLASMID
+                        PROFILER_END();
+                    #endif
+
                     ::ngPlasmid::JSAware::getPath(
                         marker,
                         ::ngPlasmid::JSAware::getAngle(marker,seqLength),
