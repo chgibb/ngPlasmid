@@ -4,7 +4,7 @@ export function queueTests() : Array<TestCase>
 {
     let testCases : Array<TestCase> = new Array<TestCase>();
 
-    testCases.push(new TestCase(<TestCaseInit>{
+    /*testCases.push(new TestCase(<TestCaseInit>{
         htmlFile : "2Labels.html",
         jsonFile : undefined,
         name : "2 Track Labels",
@@ -142,7 +142,7 @@ export function queueTests() : Array<TestCase>
         jsonFile :"numPropPlusNumLit.json",
         name : "Interpolation: Number Property + Number Literal",
         type : "interpolation"
-    }));
+    }));*/
 
     testCases.push(new TestCase(<TestCaseInit>{
         htmlFile : "HPV16L6R1BareSNPs.html",
