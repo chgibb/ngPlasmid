@@ -7,7 +7,7 @@
 #include "pathArc.hpp"
 #include "angle.hpp"
 #include "point.hpp"
-#include "propIndexConstants.hpp"
+#include "SVGPathParameterPackConstants.hpp"
 
 namespace ngPlasmid
 {
@@ -16,6 +16,7 @@ namespace ngPlasmid
         void getPath(const ::v8::Handle<::v8::Object>&,::ngPlasmid::Angle,::ngPlasmid::Point&);
         void getPath(const ::v8::Handle<::v8::Object>&marker,::ngPlasmid::Angle angle,::ngPlasmid::Point&center)
         {
+            /*
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(JSAware::getPath);
             #endif
@@ -140,7 +141,7 @@ namespace ngPlasmid
                         arrowEndAngle
                     )
                 ).ToLocalChecked()
-            );
+            );*/
 
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();

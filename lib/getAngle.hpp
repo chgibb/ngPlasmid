@@ -3,6 +3,7 @@
 #include <nan.h>
 
 #include "angle.hpp"
+#include "SVGPathParameterPackConstants.hpp"
 
 namespace ngPlasmid
 {

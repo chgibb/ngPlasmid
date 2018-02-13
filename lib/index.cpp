@@ -46,7 +46,7 @@ namespace ngPlasmid
                 PROFILER_END();
             #endif
 
-            ::ngPlasmid::Point center;
+            /*::ngPlasmid::Point center;
 
             ::v8::Handle<::v8::Object> centerProp = ::v8::Handle<::v8::Object>::Cast(
                 ::Nan::Get(
@@ -141,6 +141,11 @@ namespace ngPlasmid
                     #ifdef PROFILE_NGPLASMID
                         PROFILER_END();
                     #endif
+
+                    std::cerr<<::v8::StringObject::Cast(*::Nan::Get(
+                        marker,
+                        0
+                    ).ToLocalChecked())->ValueOf();
                     
                     #ifdef PROFILE_NGPLASMID
                         PROFILER_START(get#plasmid#tracks[]#markers[]#interpolateAttributes);
@@ -169,7 +174,57 @@ namespace ngPlasmid
                         center
                     );
                 }
+            }*/
+
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_START(get#plasmid#tracks);
+            #endif
+            ::v8::Handle<::v8::Array> tracks = ::v8::Handle<::v8::Array>::Cast(
+                plasmid->Get(
+                    ::v8::String::NewFromUtf8(isolate,"tracks")
+                )
+            );
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
+
+            int tracksLength = tracks->Length();
+            for(int i = 0; i != tracksLength; ++i)
+            {
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_START(get#plasmid#tracks[]);
+                #endif
+                ::v8::Handle<::v8::Object> track = ::v8::Handle<::v8::Object>::Cast(tracks->Get(i));
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_END();
+                #endif
+
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_START(get#plasmid#tracks[]#interpolateAttributes);
+                #endif
+                ::v8::Handle<::v8::Function> trackInterpolateAttributes = ::v8::Local<::v8::Function>::Cast(
+                    ::Nan::Get(
+                        track,
+                        ::Nan::New("interpolateAttributes").ToLocalChecked()
+                    ).ToLocalChecked()
+                );
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_END();
+                #endif
+
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_START(get#plasmid#tracks[]#interpolateAttributes());
+                #endif
+                trackInterpolateAttributes->Call(track,0,NULL);
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_END();
+                #endif
+
+                ::ngPlasmid::JSAware::pathDonut(track);
+
+
             }
+
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
                 ::LogProfiler();
