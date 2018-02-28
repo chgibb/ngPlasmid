@@ -25,12 +25,19 @@
 void Init(::v8::Local<::v8::Object>);
 
 namespace ngPlasmid
-{    
+{
+    namespace JSAware
+    {
+        ::v8::Local<::v8::String> interpolateAttributes;
+        ::v8::Local<::v8::String> markers;
+    }    
     namespace JSExport
     {
         void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&);
         void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&args)
         {
+            ::ngPlasmid::JSAware::interpolateAttributes = ::Nan::New("interpolateAttributes").ToLocalChecked();
+
             ::ngPlasmid::JSAware::radius = ::Nan::New("radius").ToLocalChecked();
 
             #ifdef PROFILE_NGPLASMID
@@ -102,7 +109,7 @@ namespace ngPlasmid
                 ::v8::Handle<::v8::Function> trackInterpolateAttributes = ::v8::Local<::v8::Function>::Cast(
                     ::Nan::Get(
                         track,
-                        ::Nan::New("interpolateAttributes").ToLocalChecked()
+                        ::ngPlasmid::JSAware::interpolateAttributes
                     ).ToLocalChecked()
                 );
                 #ifdef PROFILE_NGPLASMID
@@ -150,7 +157,7 @@ namespace ngPlasmid
                     ::v8::Handle<::v8::Function> trackMarkerInterpolateAttributes = ::v8::Local<::v8::Function>::Cast(
                         ::Nan::Get(
                             marker,
-                            ::Nan::New("interpolateAttributes").ToLocalChecked()
+                            ::ngPlasmid::JSAware::interpolateAttributes
                         ).ToLocalChecked()
                     );
                     #ifdef PROFILE_NGPLASMID

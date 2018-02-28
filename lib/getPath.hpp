@@ -13,6 +13,14 @@ namespace ngPlasmid
     namespace JSAware
     {
         ::v8::Local<::v8::String> radius;
+        ::v8::Local<::v8::String> inner;
+        ::v8::Local<::v8::String> arrowstartwidth;
+        ::v8::Local<::v8::String> arrowstartlength;
+        ::v8::Local<::v8::String> arrowstartangle;
+        ::v8::Local<::v8::String> arrowendwidth;
+        ::v8::Local<::v8::String> arrowendlength;
+        ::v8::Local<::v8::String> arrowendangle;
+        ::v8::Local<::v8::String> _batchedSVGPath;
         void getPath(const ::v8::Handle<::v8::Object>&,::ngPlasmid::Angle,::ngPlasmid::Point&);
         void getPath(const ::v8::Handle<::v8::Object>&marker,::ngPlasmid::Angle angle,::ngPlasmid::Point&center)
         {
