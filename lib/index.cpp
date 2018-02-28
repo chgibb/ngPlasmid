@@ -17,6 +17,28 @@
 
 #include <nan.h>
 
+namespace ngPlasmid
+{
+    namespace JSAware
+    {
+        ::v8::Local<::v8::String> interpolateAttributes;
+        ::v8::Local<::v8::String> markers;
+        ::v8::Local<::v8::String> radius;
+        ::v8::Local<::v8::String> inner;
+        ::v8::Local<::v8::String> arrowstartwidth;
+        ::v8::Local<::v8::String> arrowstartlength;
+        ::v8::Local<::v8::String> arrowstartangle;
+        ::v8::Local<::v8::String> arrowendwidth;
+        ::v8::Local<::v8::String> arrowendlength;
+        ::v8::Local<::v8::String> arrowendangle;
+        ::v8::Local<::v8::String> center;
+        ::v8::Local<::v8::String> x;
+        ::v8::Local<::v8::String> y;
+        ::v8::Local<::v8::String> width;
+        ::v8::Local<::v8::String> _batchedSVGPath;
+    }
+}
+
 #include "pathComplexArc.hpp"
 #include "pathDonut.hpp"
 #include "getPath.hpp"
@@ -26,11 +48,6 @@ void Init(::v8::Local<::v8::Object>);
 
 namespace ngPlasmid
 {
-    namespace JSAware
-    {
-        ::v8::Local<::v8::String> interpolateAttributes;
-        ::v8::Local<::v8::String> markers;
-    }    
     namespace JSExport
     {
         void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&);

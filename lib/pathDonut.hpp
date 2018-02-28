@@ -19,10 +19,6 @@ namespace ngPlasmid
 
     namespace JSAware
     {
-        ::v8::Local<::v8::String> center;
-        ::v8::Local<::v8::String> x;
-        ::v8::Local<::v8::String> y;
-        ::v8::Local<::v8::String> width;
         void pathDonut(const ::v8::Handle<::v8::Object>&);
         void pathDonut(const ::v8::Handle<::v8::Object>&track)
         {

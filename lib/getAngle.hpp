@@ -9,7 +9,6 @@ namespace ngPlasmid
     namespace JSAware
     {
         ::ngPlasmid::Angle getAngle(const ::v8::Handle<::v8::Object>&,long double);
-
         ::ngPlasmid::Angle getAngle(const ::v8::Handle<::v8::Object>&marker,long double seqLength)
         {
             #ifdef PROFILE_NGPLASMID
