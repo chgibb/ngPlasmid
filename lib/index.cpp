@@ -31,6 +31,8 @@ namespace ngPlasmid
         void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&);
         void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&args)
         {
+            ::ngPlasmid::JSAware::radius = ::Nan::New("radius").ToLocalChecked();
+
             #ifdef PROFILE_NGPLASMID
                 PROFILER_ENABLE;
                 PROFILER_START(batchGenerateSVGPaths);

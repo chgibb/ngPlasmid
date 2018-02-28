@@ -12,6 +12,7 @@ namespace ngPlasmid
 {
     namespace JSAware
     {
+        ::v8::Local<::v8::String> radius;
         void getPath(const ::v8::Handle<::v8::Object>&,::ngPlasmid::Angle,::ngPlasmid::Point&);
         void getPath(const ::v8::Handle<::v8::Object>&marker,::ngPlasmid::Angle angle,::ngPlasmid::Point&center)
         {
@@ -25,7 +26,7 @@ namespace ngPlasmid
             ::v8::Handle<::v8::Object> radius = ::v8::Handle<::v8::Object>::Cast(
                 ::Nan::Get(
                     marker,
-                    ::Nan::New("radius").ToLocalChecked()
+                    ::ngPlasmid::JSAware::radius
                 ).ToLocalChecked()
             );
             #ifdef PROFILE_NGPLASMID
