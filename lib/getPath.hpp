@@ -37,7 +37,7 @@ namespace ngPlasmid
             #endif
             long double radiusInner = ::Nan::Get(
                 radius,
-                ::Nan::New("inner").ToLocalChecked()
+                ::ngPlasmid::JSAware::inner
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -48,7 +48,7 @@ namespace ngPlasmid
             #endif
             long double width = ::Nan::Get(
                 marker,
-                ::Nan::New("width").ToLocalChecked()
+                ::ngPlasmid::JSAware::width
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -59,7 +59,7 @@ namespace ngPlasmid
             #endif
             long double arrowStartWidth = ::Nan::Get(
                 marker,
-                ::Nan::New("arrowstartwidth").ToLocalChecked()
+                ::ngPlasmid::JSAware::arrowstartwidth
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -70,7 +70,7 @@ namespace ngPlasmid
             #endif
             long double arrowStartLength = ::Nan::Get(
                 marker,
-                ::Nan::New("arrowstartlength").ToLocalChecked()
+                ::ngPlasmid::JSAware::arrowstartlength
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -81,7 +81,7 @@ namespace ngPlasmid
             #endif
             long double arrowStartAngle = ::Nan::Get(
                 marker,
-                ::Nan::New("arrowstartangle").ToLocalChecked()
+                ::ngPlasmid::JSAware::arrowstartangle
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -92,7 +92,7 @@ namespace ngPlasmid
             #endif
             long double arrowEndWidth = ::Nan::Get(
                 marker,
-                ::Nan::New("arrowendwidth").ToLocalChecked()
+                ::ngPlasmid::JSAware::arrowendwidth
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -103,7 +103,7 @@ namespace ngPlasmid
             #endif
             long double arrowEndLength = ::Nan::Get(
                 marker,
-                ::Nan::New("arrowendlength").ToLocalChecked()
+                ::ngPlasmid::JSAware::arrowendlength
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -114,7 +114,7 @@ namespace ngPlasmid
             #endif
             long double arrowEndAngle = ::Nan::Get(
                 marker,
-                ::Nan::New("arrowendangle").ToLocalChecked()
+                ::ngPlasmid::JSAware::arrowendangle
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -122,7 +122,7 @@ namespace ngPlasmid
 
             ::Nan::Set(
                 marker,
-                ::Nan::New("_batchedSVGPath").ToLocalChecked(),
+                ::ngPlasmid::JSAware::_batchedSVGPath,
                 ::Nan::New(
                     ::ngPlasmid::pathArc(
                         center.x,

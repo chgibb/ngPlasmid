@@ -62,6 +62,14 @@ namespace ngPlasmid
             ::ngPlasmid::JSAware::x = ::Nan::New("x").ToLocalChecked();
             ::ngPlasmid::JSAware::y = ::Nan::New("y").ToLocalChecked();
             ::ngPlasmid::JSAware::width = ::Nan::New("width").ToLocalChecked();
+            ::ngPlasmid::JSAware::inner = ::Nan::New("inner").ToLocalChecked();
+            ::ngPlasmid::JSAware::width = ::Nan::New("width").ToLocalChecked();
+            ::ngPlasmid::JSAware::arrowstartwidth = ::Nan::New("arrowstartwidth").ToLocalChecked();
+            ::ngPlasmid::JSAware::arrowstartlength = ::Nan::New("arrowstartlength").ToLocalChecked();
+            ::ngPlasmid::JSAware::arrowstartangle = ::Nan::New("arrowstartangle").ToLocalChecked();
+            ::ngPlasmid::JSAware::arrowendwidth = ::Nan::New("arrowendwidth").ToLocalChecked();
+            ::ngPlasmid::JSAware::arrowendlength = ::Nan::New("arrowendlength").ToLocalChecked();
+            ::ngPlasmid::JSAware::arrowendangle = ::Nan::New("arrowendangle").ToLocalChecked();
 
             #ifdef PROFILE_NGPLASMID
                 PROFILER_ENABLE;
