@@ -32,7 +32,7 @@ namespace ngPlasmid
             ::v8::Handle<::v8::Object> center = ::v8::Handle<::v8::Object>::Cast(
                 ::Nan::Get(   
                     track,
-                    ::Nan::New("center").ToLocalChecked()
+                    ::ngPlasmid::JSAware::center
                 ).ToLocalChecked()
             );
             #ifdef PROFILE_NGPLASMID
@@ -41,31 +41,31 @@ namespace ngPlasmid
 
             ::v8::Handle<::v8::Value> xProp = ::Nan::Get(
                 center,
-                ::Nan::New("x").ToLocalChecked()
+                ::ngPlasmid::JSAware::x
             ).ToLocalChecked();
             long double x = xProp->NumberValue();
 
             ::v8::Local<::v8::Value> yProp = ::Nan::Get(
                 center,
-                ::Nan::New("y").ToLocalChecked()
+                ::ngPlasmid::JSAware::y
             ).ToLocalChecked();
             long double y = yProp->NumberValue();
             
             ::v8::Local<::v8::Value> radiusProp = ::Nan::Get(
                 track,
-                ::Nan::New("radius").ToLocalChecked()
+                ::ngPlasmid::JSAware::radius
             ).ToLocalChecked();
             long double radius = radiusProp->NumberValue();
             
             ::v8::Local<::v8::Value> widthProp = ::Nan::Get(
                 track,
-                ::Nan::New("width").ToLocalChecked()
+                ::ngPlasmid::JSAware::width
             ).ToLocalChecked();
             long double width = widthProp->NumberValue();
 
             ::Nan::Set(
                 track,
-                ::Nan::New("_batchedSVGPath").ToLocalChecked(),
+                ::ngPlasmid::JSAware::_batchedSVGPath,
                 ::Nan::New(
                     ::ngPlasmid::pathDonut(
                         x,

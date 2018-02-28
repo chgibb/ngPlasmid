@@ -54,8 +54,14 @@ namespace ngPlasmid
         void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&args)
         {
             ::ngPlasmid::JSAware::interpolateAttributes = ::Nan::New("interpolateAttributes").ToLocalChecked();
+            ::ngPlasmid::JSAware::_batchedSVGPath = ::Nan::New("_batchedSVGPath").ToLocalChecked();
 
             ::ngPlasmid::JSAware::radius = ::Nan::New("radius").ToLocalChecked();
+
+            ::ngPlasmid::JSAware::center = ::Nan::New("center").ToLocalChecked();
+            ::ngPlasmid::JSAware::x = ::Nan::New("x").ToLocalChecked();
+            ::ngPlasmid::JSAware::y = ::Nan::New("y").ToLocalChecked();
+            ::ngPlasmid::JSAware::width = ::Nan::New("width").ToLocalChecked();
 
             #ifdef PROFILE_NGPLASMID
                 PROFILER_ENABLE;
