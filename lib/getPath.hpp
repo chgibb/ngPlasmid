@@ -7,7 +7,6 @@
 #include "pathArc.hpp"
 #include "angle.hpp"
 #include "point.hpp"
-#include "SVGPathParameterPackConstants.hpp"
 
 namespace ngPlasmid
 {
@@ -16,7 +15,6 @@ namespace ngPlasmid
         void getPath(const ::v8::Handle<::v8::Object>&,::ngPlasmid::Angle,::ngPlasmid::Point&);
         void getPath(const ::v8::Handle<::v8::Object>&marker,::ngPlasmid::Angle angle,::ngPlasmid::Point&center)
         {
-            /*
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(JSAware::getPath);
             #endif
@@ -61,7 +59,7 @@ namespace ngPlasmid
             #endif
             long double arrowStartWidth = ::Nan::Get(
                 marker,
-                ::ngPlasmid::propConstants::trackMarker::arrowstartwidth
+                ::Nan::New("arrowstartwidth").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -72,7 +70,7 @@ namespace ngPlasmid
             #endif
             long double arrowStartLength = ::Nan::Get(
                 marker,
-                ::ngPlasmid::propConstants::trackMarker::arrowstartlength
+                ::Nan::New("arrowstartlength").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -83,7 +81,7 @@ namespace ngPlasmid
             #endif
             long double arrowStartAngle = ::Nan::Get(
                 marker,
-                ::ngPlasmid::propConstants::trackMarker::arrowstartangle
+                ::Nan::New("arrowstartangle").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -94,7 +92,7 @@ namespace ngPlasmid
             #endif
             long double arrowEndWidth = ::Nan::Get(
                 marker,
-                ::ngPlasmid::propConstants::trackMarker::arrowendwidth
+                ::Nan::New("arrowendwidth").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -105,7 +103,7 @@ namespace ngPlasmid
             #endif
             long double arrowEndLength = ::Nan::Get(
                 marker,
-                ::ngPlasmid::propConstants::trackMarker::arrowendlength
+                ::Nan::New("arrowendlength").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -116,7 +114,7 @@ namespace ngPlasmid
             #endif
             long double arrowEndAngle = ::Nan::Get(
                 marker,
-                ::ngPlasmid::propConstants::trackMarker::arrowendangle
+                ::Nan::New("arrowendangle").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -141,7 +139,7 @@ namespace ngPlasmid
                         arrowEndAngle
                     )
                 ).ToLocalChecked()
-            );*/
+            );
 
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();

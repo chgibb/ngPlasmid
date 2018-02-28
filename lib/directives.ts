@@ -54,8 +54,6 @@ export abstract class Directive
 
     public _batchedSVGPath : string;
 
-    public abstract getSVGPathParametersPack() : Array<number | string> | undefined;
-
     public abstract generateSVGPath() : string;
 
     public abstract renderStart() : string;
@@ -294,11 +292,6 @@ export class Plasmid extends Directive
         }
     }
 
-    public getSVGPathParametersPack() : Array<number | string> | undefined
-    {
-        return undefined;
-    }
-
     public generateSVGPath() : string
     {
         return "";
@@ -471,16 +464,6 @@ export class PlasmidTrack extends Directive
             return services.polarToCartesian(center.x, center.y, radius, angle);
         }
         return undefined;
-    }
-
-    public getSVGPathParametersPack() : Array<number | string> | undefined
-    {
-        return <Array<number | string>>[
-            this.center.x,
-            this.center.y,
-            this.radius,
-            this.width
-        ];
     }
 
     public generateSVGPath() : string
@@ -798,11 +781,6 @@ export class TrackLabel extends Directive
         }
     }
 
-    public getSVGPathParametersPack() : Array<number | string> | undefined
-    {
-        throw new Error("Operation not supported");
-    }
-
     public generateSVGPath() : string
     {
         return "";
@@ -1074,11 +1052,6 @@ export class TrackScale extends Directive
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L456
         return this.radius + (this.labelvadjust * (this.inwardflg ? -1 : 1));
-    }
-
-    public getSVGPathParametersPack() : Array<number | string> | undefined
-    {
-        throw new Error("Operation not supported");
     }
 
     public generateSVGPath() : string
@@ -1620,30 +1593,6 @@ export class TrackMarker extends Directive
         }
     }
 
-    public getSVGPathParametersPack() : Array<number | string> | undefined
-    {
-        let center = this.track.center;
-        let angle = this.angle;
-        let radius = this.radius;
-        let arrowstart = this.arrowstart;
-        let arrowend = this.arrowend;
-
-        return <Array<number | string>>[
-            center.x,
-            center.y,
-            radius.inner,
-            angle.start,
-            angle.end,
-            this.width,
-            arrowstart.angle,
-            arrowstart.length,
-            arrowstart.width,
-            arrowend.angle,
-            arrowend.length,
-            arrowend.width
-        ];
-    }
-
     public generateSVGPath() : string
     {
         return this.getPath();
@@ -2089,11 +2038,6 @@ export class MarkerLabel extends Directive
             break;
         }
         return services.pathArc(this.marker.center.x, this.marker.center.y, radius + Number(vAdjust || 0), startAngle + Number(hAdjust || 0), endAngle + Number(hAdjust || 0), 1);
-    }
-
-    public getSVGPathParametersPack() : Array<number | string> | undefined
-    {
-        throw new Error("Operation not supported");
     }
 
     public generateSVGPath() : string

@@ -7,7 +7,6 @@
 
 #include "polarToCartesian.hpp"
 #include "point.hpp"
-#include "SVGPathParameterPackConstants.hpp"
 
 namespace ngPlasmid
 {
@@ -27,7 +26,7 @@ namespace ngPlasmid
                 PROFILER_START(JSAware::pathDonut);
             #endif
 
-            /*#ifdef PROFILE_NGPLASMID
+            #ifdef PROFILE_NGPLASMID
                 PROFILER_START(get#track#center);
             #endif
             ::v8::Handle<::v8::Object> center = ::v8::Handle<::v8::Object>::Cast(
@@ -75,57 +74,7 @@ namespace ngPlasmid
                         width
                     )
                 ).ToLocalChecked()
-            );*/
-
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(get#track#getSVGPathParametersPack);
-            #endif
-            ::v8::Handle<::v8::Function> getSVGPathParametersPack = ::v8::Local<::v8::Function>::Cast(
-                ::Nan::Get(
-                    track,
-                    ::Nan::New("getSVGPathParametersPack").ToLocalChecked()
-                ).ToLocalChecked()
             );
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
-            #endif
-
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(get#track#getSVGPathParametersPack());
-            #endif
-            ::v8::Handle<::v8::Array> SVGPathParameterPack = ::v8::Handle<::v8::Array>::Cast(
-                getSVGPathParametersPack->Call(track,0,NULL)
-            );
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
-            #endif
-
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(pathDonut_callsite);
-            #endif
-            ::Nan::Set(
-                track,
-                ::Nan::New("_batchedSVGPath").ToLocalChecked(),
-                ::Nan::New(
-                    ::ngPlasmid::pathDonut(
-                        SVGPathParameterPack->Get(
-                            ::ngPlasmid::SVGPathParameterPacks::plasmidTrack::centerX
-                        )->NumberValue(),
-                        SVGPathParameterPack->Get(
-                            ::ngPlasmid::SVGPathParameterPacks::plasmidTrack::centerY
-                        )->NumberValue(),
-                        SVGPathParameterPack->Get(
-                            ::ngPlasmid::SVGPathParameterPacks::plasmidTrack::radius
-                        )->NumberValue(),
-                        SVGPathParameterPack->Get(
-                            ::ngPlasmid::SVGPathParameterPacks::plasmidTrack::width
-                        )->NumberValue()
-                    )
-                ).ToLocalChecked()
-            );
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
-            #endif
 
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
