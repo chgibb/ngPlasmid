@@ -12,36 +12,25 @@ namespace ngPlasmid
 {
     namespace JSAware
     {
-        void getPath(const ::v8::Handle<::v8::Object>&,::ngPlasmid::Angle,::ngPlasmid::Point&);
-        void getPath(const ::v8::Handle<::v8::Object>&marker,::ngPlasmid::Angle angle,::ngPlasmid::Point&center)
+        void getPath(const ::v8::Handle<::v8::Object>&,::ngPlasmid::Angle,::ngPlasmid::Point&,long double);
+        void getPath(const ::v8::Handle<::v8::Object>&marker,::ngPlasmid::Angle angle,::ngPlasmid::Point&center,long double trackRadius)
         {
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(JSAware::getPath);
             #endif
 
             #ifdef PROFILE_NGPLASMID
-                PROFILER_START(marker#radius);
+                PROFILER_START(marker#_vadjust);
             #endif
-            ::v8::Handle<::v8::Object> radius = ::v8::Handle<::v8::Object>::Cast(
-                ::Nan::Get(
-                    marker,
-                    ::ngPlasmid::JSAware::radius
-                ).ToLocalChecked()
-            );
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_END();
-            #endif
-
-            #ifdef PROFILE_NGPLASMID
-                PROFILER_START(marker#radius#inner);
-            #endif
-            long double radiusInner = ::Nan::Get(
-                radius,
-                ::ngPlasmid::JSAware::inner
+            long double vadjust = ::Nan::Get(
+                marker,
+                ::ngPlasmid::JSAware::_vadjust
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
             #endif
+
+            long double radiusInner = trackRadius + vadjust;
 
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(marker#width);

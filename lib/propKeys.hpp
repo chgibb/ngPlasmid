@@ -22,6 +22,7 @@ namespace ngPlasmid
         ::v8::Local<::v8::String> width;
         ::v8::Local<::v8::String> _start;
         ::v8::Local<::v8::String> _end;
+        ::v8::Local<::v8::String> _vadjust;
         ::v8::Local<::v8::String> _batchedSVGPath;
 
         void initPropKeys();
@@ -46,6 +47,7 @@ namespace ngPlasmid
             ::ngPlasmid::JSAware::arrowendangle = ::Nan::New("arrowendangle").ToLocalChecked();
             ::ngPlasmid::JSAware::_start = ::Nan::New("_start").ToLocalChecked();
             ::ngPlasmid::JSAware::_end = ::Nan::New("_end").ToLocalChecked();
+            ::ngPlasmid::JSAware::_vadjust = ::Nan::New("_vadjust").ToLocalChecked();
         }
     }
 }

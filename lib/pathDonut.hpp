@@ -19,8 +19,8 @@ namespace ngPlasmid
 
     namespace JSAware
     {
-        void pathDonut(const ::v8::Handle<::v8::Object>&);
-        void pathDonut(const ::v8::Handle<::v8::Object>&track)
+        void pathDonut(const ::v8::Handle<::v8::Object>&,long double);
+        void pathDonut(const ::v8::Handle<::v8::Object>&track,long double radius)
         {
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(JSAware::pathDonut);
@@ -50,12 +50,6 @@ namespace ngPlasmid
                 ::ngPlasmid::JSAware::y
             ).ToLocalChecked();
             long double y = yProp->NumberValue();
-            
-            ::v8::Local<::v8::Value> radiusProp = ::Nan::Get(
-                track,
-                ::ngPlasmid::JSAware::radius
-            ).ToLocalChecked();
-            long double radius = radiusProp->NumberValue();
             
             ::v8::Local<::v8::Value> widthProp = ::Nan::Get(
                 track,

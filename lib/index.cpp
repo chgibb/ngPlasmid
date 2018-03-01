@@ -117,9 +117,20 @@ namespace ngPlasmid
                 #ifdef PROFILE_NGPLASMID
                     PROFILER_END();
                 #endif
-                
 
-                ::ngPlasmid::JSAware::pathDonut(track);
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_START(get#plasmid#tracks[]#radius);
+                #endif
+                long double trackRadius = ::Nan::Get(
+                    track,
+                    ::ngPlasmid::JSAware::radius
+                ).ToLocalChecked()->NumberValue();
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_END();
+                #endif
+
+                
+                ::ngPlasmid::JSAware::pathDonut(track,trackRadius);
 
                 #ifdef PROFILE_NGPLASMID
                     PROFILER_START(get#plasmid#tracks[]#markers);
@@ -169,7 +180,8 @@ namespace ngPlasmid
                     ::ngPlasmid::JSAware::getPath(
                         marker,
                         ::ngPlasmid::JSAware::getAngle(marker,seqLength),
-                        center
+                        center,
+                        trackRadius
                     );
                 }
             }
