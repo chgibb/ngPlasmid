@@ -480,7 +480,6 @@ export class PlasmidTrack extends Directive
     {
         if(this._batchedSVGPath)
         {
-            //console.error("SVG path was batch generated");
             let res = this._batchedSVGPath;
             this._batchedSVGPath = "";
             return res;
@@ -491,7 +490,6 @@ export class PlasmidTrack extends Directive
 
     public interpolateAttributes() : void
     {
-        //console.error(this.$scope);
         this.width = parseFloat(interpolate(this._Iwidth,this.$scope));
         this.trackstyle = interpolate(this._Itrackstyle,this.$scope);
         this.radius = parseFloat(interpolate(this._Iradius,this.$scope));
