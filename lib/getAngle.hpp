@@ -24,7 +24,7 @@ namespace ngPlasmid
             #endif
             long double markerStart = ::Nan::Get(
                 marker,
-                ::Nan::New("_start").ToLocalChecked()
+                ::ngPlasmid::JSAware::_start
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
@@ -35,7 +35,7 @@ namespace ngPlasmid
             #endif
             long double markerEnd = ::Nan::Get(
                 marker,
-                ::Nan::New("_end").ToLocalChecked()
+                ::ngPlasmid::JSAware::_end
             ).ToLocalChecked()->NumberValue();
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();

@@ -35,6 +35,8 @@ namespace ngPlasmid
         ::v8::Local<::v8::String> x;
         ::v8::Local<::v8::String> y;
         ::v8::Local<::v8::String> width;
+        ::v8::Local<::v8::String> _start;
+        ::v8::Local<::v8::String> _end;
         ::v8::Local<::v8::String> _batchedSVGPath;
     }
 }
@@ -70,6 +72,8 @@ namespace ngPlasmid
             ::ngPlasmid::JSAware::arrowendwidth = ::Nan::New("arrowendwidth").ToLocalChecked();
             ::ngPlasmid::JSAware::arrowendlength = ::Nan::New("arrowendlength").ToLocalChecked();
             ::ngPlasmid::JSAware::arrowendangle = ::Nan::New("arrowendangle").ToLocalChecked();
+            ::ngPlasmid::JSAware::_start = ::Nan::New("_start").ToLocalChecked();
+            ::ngPlasmid::JSAware::_end = ::Nan::New("_end").ToLocalChecked();
 
             #ifdef PROFILE_NGPLASMID
                 PROFILER_ENABLE;
