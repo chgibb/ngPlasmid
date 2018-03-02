@@ -1,3 +1,5 @@
+require("./../lib/ngPlasmid");
+
 import * as fs from "fs";
 
 const ngcompile = require('@chgibb/ng-node-compile');

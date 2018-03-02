@@ -44,13 +44,17 @@ interface GenericNode<T>
 
 export abstract class Directive
 {
-    tagType : "plasmid" |
+    public tagType : "plasmid" |
     "plasmidtrack" |
     "tracklabel" |
     "trackscale" |
     "trackmarker" |
     "markerlabel" | 
     "svgelement";
+
+    public _batchedSVGPath : string;
+
+    public abstract generateSVGPath() : string;
 
     public abstract renderStart() : string;
 
@@ -281,15 +285,29 @@ export class Plasmid extends Directive
             if(node.children[i].name == "plasmidtrack")
             {
                 let track : PlasmidTrack = new PlasmidTrack(this);
+                track.$scope = this.$scope;
                 track.fromNode(node.children[i]);
                 this.tracks.push(track);
             }
         }
     }
 
+    public generateSVGPath() : string
+    {
+        return "";
+    }
+
     public getSVGPath() : string | undefined
     {
         throw new Error("Not supported by directive");
+    }
+
+    public batchGenerateSVGPaths() : void
+    {
+        this.interpolateAttributes();
+        
+        let ngPlasmidNative = require("./ngPlasmid");
+        ngPlasmidNative.batchGenerateSVGPaths(this);
     }
 
     public constructor()
@@ -348,10 +366,7 @@ export class PlasmidTrack extends Directive
 
     public children : Array<TrackLabel | TrackScale | TrackMarker>;
 
-    public get $scope() : any
-    {
-        return this.plasmid.$scope;
-    }
+    public $scope : any;
 
     public _Iradius : string;
 
@@ -451,7 +466,7 @@ export class PlasmidTrack extends Directive
         return undefined;
     }
 
-    public getSVGPath() : string | undefined
+    public generateSVGPath() : string
     {
         return services.pathDonut(
             this.center.x,
@@ -459,6 +474,18 @@ export class PlasmidTrack extends Directive
             this.radius,
             this.width
         );
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        if(this._batchedSVGPath)
+        {
+            let res = this._batchedSVGPath;
+            this._batchedSVGPath = "";
+            return res;
+        }
+        
+        return this.generateSVGPath();
     }
 
     public interpolateAttributes() : void
@@ -528,6 +555,7 @@ export class PlasmidTrack extends Directive
             if(node.children[i].name == "tracklabel")
             {
                 let label = new TrackLabel(this);
+                label.$scope = this.plasmid.$scope;
                 label.fromNode(node.children[i]);
                 this.labels.push(label);
                 this.children.push(label);
@@ -535,6 +563,7 @@ export class PlasmidTrack extends Directive
             else if(node.children[i].name == "trackmarker")
             {
                 let marker = new TrackMarker(this);
+                marker.$scope = this.plasmid.$scope;
                 marker.fromNode(node.children[i]);
                 this.markers.push(marker);
                 this.children.push(marker);
@@ -542,6 +571,7 @@ export class PlasmidTrack extends Directive
             else if(node.children[i].name == "trackscale")
             {
                 let scale = new TrackScale(this);
+                scale.$scope = this.plasmid.$scope;
                 scale.fromNode(node.children[i]);
                 this.scales.push(scale);
                 this.children.push(scale);
@@ -579,10 +609,7 @@ export class TrackLabel extends Directive
      */
     public track : PlasmidTrack;
     
-    public get $scope() : any
-    {
-        return this.track.$scope;
-    }
+    public $scope : any;
 
     public get center() : services.Point
     {
@@ -752,6 +779,11 @@ export class TrackLabel extends Directive
         }
     }
 
+    public generateSVGPath() : string
+    {
+        return "";
+    }
+
     public getSVGPath() : string | undefined
     {
         throw new Error("Not supported by directive");
@@ -811,10 +843,7 @@ export class TrackScale extends Directive
      */
     public track : PlasmidTrack;
 
-    public get $scope() : any
-    {
-        return this.track.$scope;
-    }
+    public $scope : any;
 
     public get radius() : number
     {
@@ -1023,9 +1052,20 @@ export class TrackScale extends Directive
         return this.radius + (this.labelvadjust * (this.inwardflg ? -1 : 1));
     }
 
-    public getSVGPath() : string | undefined
+    public generateSVGPath() : string
     {
         return services.pathScale(this.track.center.x,this.track.center.y,this.radius,this.interval,this.total,this.ticksize);
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        if(this._batchedSVGPath)
+        {
+            let res = this._batchedSVGPath;
+            this._batchedSVGPath = "";
+            return res;
+        }
+        return this.generateSVGPath();
     }
 
     public interpolateAttributes() : void
@@ -1242,10 +1282,7 @@ export class TrackMarker extends Directive
      */
     public labels : Array<MarkerLabel>;
 
-    public get $scope() : any
-    {
-        return this.track.$scope;
-    }
+    public $scope : any;
 
     public getPath() : string
     {
@@ -1554,9 +1591,20 @@ export class TrackMarker extends Directive
         }
     }
 
-    public getSVGPath() : string | undefined
+    public generateSVGPath() : string
     {
         return this.getPath();
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        if(this._batchedSVGPath)
+        {
+            let res = this._batchedSVGPath;
+            this._batchedSVGPath = "";
+            return res;
+        }
+        return this.generateSVGPath();
     }
 
     public interpolateAttributes() : void
@@ -1681,6 +1729,7 @@ export class TrackMarker extends Directive
             if(node.children[i].name == "markerlabel")
             {
                 let label = new MarkerLabel(this);
+                label.$scope = this.track.plasmid.$scope;
                 label.fromNode(node.children[i]);
                 this.labels.push(label);
             }
@@ -1728,10 +1777,7 @@ export class MarkerLabel extends Directive
 
     public classList : Array<string>;
 
-    public get $scope() : any
-    {
-        return this.marker.$scope;
-    }
+    public $scope : any;
 
     public get showlineflg() : boolean
     {
@@ -1992,7 +2038,7 @@ export class MarkerLabel extends Directive
         return services.pathArc(this.marker.center.x, this.marker.center.y, radius + Number(vAdjust || 0), startAngle + Number(hAdjust || 0), endAngle + Number(hAdjust || 0), 1);
     }
 
-    public getSVGPath() : string | undefined
+    public generateSVGPath() : string
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L950
         let VALIGN_MIDDLE = "middle";
@@ -2018,6 +2064,17 @@ export class MarkerLabel extends Directive
             let dst = this.halign === HALIGN_START ? dstV.begin : this.halign === HALIGN_END ? dstV.end : dstV.middle;
             return ["M", (<services.Point>src).x, (<services.Point>src).y, "L", dst.x, dst.y].join(" ");
         }
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        if(this._batchedSVGPath)
+        {
+            let res = this._batchedSVGPath;
+            this._batchedSVGPath = "";
+            return res;
+        }
+        return this.generateSVGPath();
     }
 
     public interpolateAttributes() : void

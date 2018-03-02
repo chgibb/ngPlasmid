@@ -4,3 +4,5 @@ node_modules/**/
 lib/pb/_node.d.ts
 lib/pb/_node.js
 *.pb
+build/**/*
+*.node

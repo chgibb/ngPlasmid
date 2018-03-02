@@ -168,6 +168,7 @@ function pathComplexArc(
     arrowEnd : Arrow
 ) : string {
     //https://github.com/vixis/angularplasmid/blob/master/src/js/services.js#L155
+
     let start : Point; 
     let start2 : Point
     let end : Point;
