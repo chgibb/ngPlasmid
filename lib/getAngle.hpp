@@ -41,6 +41,9 @@ namespace ngPlasmid
                 PROFILER_END();
             #endif
             
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_START(getAngleMath);
+            #endif
             startAngle = (markerStart / seqLength) * 360;
             end = markerEnd || markerStart;
 
@@ -50,6 +53,9 @@ namespace ngPlasmid
             ::ngPlasmid::Angle res;
             res.start = startAngle;
             res.end = endAngle;
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
             
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
