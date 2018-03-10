@@ -17,11 +17,15 @@
 
 #include <nan.h>
 
+#include "cpp/directivePacks/trackMarker.hpp"
+#include "cpp/parallelize.hpp"
+
 #include "propKeys.hpp"
 #include "pathComplexArc.hpp"
 #include "pathDonut.hpp"
 #include "getPath.hpp"
 #include "getAngle.hpp"
+
 
 void Init(::v8::Local<::v8::Object>);
 
@@ -177,11 +181,28 @@ namespace ngPlasmid
                         PROFILER_END();
                     #endif
 
-                    ::ngPlasmid::JSAware::getPath(
+                    ::ngPlasmid::TrackMarkerPack pack;
+                    ::ngPlasmid::JSAware::setTrackMarkerPackProps(
                         marker,
-                        ::ngPlasmid::JSAware::getAngle(marker,seqLength),
+                        pack,
+                        seqLength,
                         center,
                         trackRadius
+                    );
+
+                    //std::string path = ::ngPlasmid::getTrackMarkerSVGPath(pack);
+
+                    std::future<const std::string> pathFuture = ::launchParallelRef<const std::string,::ngPlasmid::TrackMarkerPack&>(
+                        &::ngPlasmid::getTrackMarkerSVGPath,
+                        pack
+                    );
+
+                    std::string path = pathFuture.get();
+
+                    ::Nan::Set(
+                        marker,
+                        ::ngPlasmid::JSAware::_batchedSVGPath,
+                        ::Nan::New(path).ToLocalChecked()
                     );
                 }
             }

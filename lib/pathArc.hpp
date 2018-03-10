@@ -6,6 +6,7 @@
 
 #include "polarToCartesian.hpp"
 #include "point.hpp"
+#include "pathComplexArc.hpp"
 
 namespace ngPlasmid
 {
