@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include <nan.h>
 
 #include "../../propKeys.hpp"
@@ -11,6 +13,8 @@
 namespace ngPlasmid
 {
     class TrackMarkerPack;
+    inline void getTrackMarkerSVGPath(std::vector<TrackMarkerPack>*&);
+
     class TrackMarkerPack
     {
         public:
@@ -32,40 +36,54 @@ namespace ngPlasmid
             long double seqLength;
             ::ngPlasmid::Point center;
             long double trackRadius;
+
+            int index;
+            std::string path;
             TrackMarkerPack() = default;
     };
 
-    inline const std::string getTrackMarkerSVGPath(TrackMarkerPack&);
-    inline const std::string getTrackMarkerSVGPath(TrackMarkerPack&pack)
+    inline void getTrackMarkerSVGPath(std::vector<TrackMarkerPack>*&packs)
     {
-        long double startAngle;
-        long double endAngle;
-        long double end;
+        #ifdef PROFILE_NGPLASMID
+            PROFILER_START(getTrackMarkerSVGPath);
+        #endif
 
-        startAngle = (pack.start / pack.seqLength) * 360;
-        end = pack.end || pack.start;
+        auto end = packs->end();
+        for(auto it = packs->begin(); it != end; ++it)
+        {
+            long double startAngle;
+            long double endAngle;
+            long double end;
 
-        endAngle = ((end ? end : 0) / pack.seqLength) * 360;
-        endAngle = endAngle + ((endAngle < startAngle) ? 360 : 0);
+            startAngle = (it->start / it->seqLength) * 360;
+            end = it->end || it->start;
 
-        ::ngPlasmid::Angle angle;
-        angle.start = startAngle;
-        angle.end = endAngle;
+            endAngle = ((end ? end : 0) / it->seqLength) * 360;
+            endAngle = endAngle + ((endAngle < startAngle) ? 360 : 0);
 
-        return ::ngPlasmid::pathArc(
-            pack.center.x,
-            pack.center.y,
-            pack.radiusInner,
-            angle.start,
-            angle.end,
-            pack.width,
-            pack.arrowStartWidth,
-            pack.arrowStartLength,
-            pack.arrowStartAngle,
-            pack.arrowEndWidth,
-            pack.arrowEndLength,
-            pack.arrowEndAngle
-        );
+            ::ngPlasmid::Angle angle;
+            angle.start = startAngle;
+            angle.end = endAngle;
+
+            it->path =  ::ngPlasmid::pathArc(
+                it->center.x,
+                it->center.y,
+                it->radiusInner,
+                angle.start,
+                angle.end,
+                it->width,
+                it->arrowStartWidth,
+                it->arrowStartLength,
+                it->arrowStartAngle,
+                it->arrowEndWidth,
+                it->arrowEndLength,
+                it->arrowEndAngle
+            );
+        }
+
+        #ifdef PROFILE_NGPLASMID
+            PROFILER_END();
+        #endif
     }
 
     namespace JSAware

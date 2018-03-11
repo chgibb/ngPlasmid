@@ -29,8 +29,45 @@
 
 void Init(::v8::Local<::v8::Object>);
 
+template <class Container>
+void split(Container*in,Container*&l,Container*&r)
+{
+    #ifdef PROFILE_NGPLASMID
+        PROFILER_START(split);
+    #endif
+
+    size_t middle = in->size()/2;
+
+    l = new Container(in->begin(),in->begin() + middle);
+    r = new Container(in->begin() + middle,in->end());
+    
+    #ifdef PROFILE_NGPLASMID
+        PROFILER_END();
+    #endif
+}
+
 namespace ngPlasmid
 {
+    inline void assignPaths(::v8::Handle<::v8::Array>&markers,std::vector<::ngPlasmid::TrackMarkerPack>&packs)
+    {
+        #ifdef PROFILE_NGPLASMID
+            PROFILER_START(assignPaths);
+        #endif
+
+        auto end = packs.end();
+        for(auto it = packs.begin(); it != end; ++it)
+        {
+            ::Nan::Set(
+                ::v8::Handle<::v8::Object>::Cast(markers->Get(it->index)),
+                ::ngPlasmid::JSAware::_batchedSVGPath,
+                ::Nan::New(it->path).ToLocalChecked()
+            );
+        }
+
+        #ifdef PROFILE_NGPLASMID
+            PROFILER_END();
+        #endif
+    }
     namespace JSExport
     {
         void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&);
@@ -149,9 +186,9 @@ namespace ngPlasmid
                     PROFILER_END();
                 #endif
 
-                std::string path;
-                std::future<const std::string>*pathFuture = nullptr;
-
+                std::vector<::ngPlasmid::TrackMarkerPack> markerPacks;
+                int markerPacksSize = 0;
+                
                 int markersLength = markers->Length();
                 for(int k = 0; k != markersLength; ++k)
                 {
@@ -185,6 +222,7 @@ namespace ngPlasmid
                     #endif
 
                     ::ngPlasmid::TrackMarkerPack pack;
+                    pack.index = k;
                     ::ngPlasmid::JSAware::setTrackMarkerPackProps(
                         marker,
                         pack,
@@ -192,6 +230,8 @@ namespace ngPlasmid
                         center,
                         trackRadius
                     );
+                    markerPacks.push_back(pack);
+                    markerPacksSize++;
 
                     //std::string path = ::ngPlasmid::getTrackMarkerSVGPath(pack);
 
@@ -200,7 +240,7 @@ namespace ngPlasmid
                         pack
                     );*/
 
-                    if(pathFuture)
+                    /*if(pathFuture)
                     {
                         path = pathFuture->get();
 
@@ -218,8 +258,50 @@ namespace ngPlasmid
                                 pack
                             )
                         );
-                    }
+                    }*/
                 }
+
+                //std::cerr<<"marker packs "<<markerPacks.size()<<"\n";
+
+                if(markerPacksSize < 2000)
+                {
+                    assignPaths(markers,markerPacks);
+                    continue;
+                }
+
+                std::vector<::ngPlasmid::TrackMarkerPack>*first = nullptr;
+                std::vector<::ngPlasmid::TrackMarkerPack>*second = nullptr;
+
+                ::split<std::vector<::ngPlasmid::TrackMarkerPack>>(&markerPacks,first,second);
+
+                std::future<void> firstFuture = ::launchParallelRef<void,std::vector<TrackMarkerPack>*&>(
+                    &::ngPlasmid::getTrackMarkerSVGPath,
+                    first
+                );
+
+                std::future<void> secondFuture = ::launchParallelRef<void,std::vector<TrackMarkerPack>*&>(
+                    &::ngPlasmid::getTrackMarkerSVGPath,
+                    second
+                );
+
+                firstFuture.get();
+                
+                assignPaths(markers,*first);
+
+                secondFuture.get();
+
+                assignPaths(markers,*second);
+
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_START(delete vectors);
+                #endif
+                delete first;
+                delete second;
+                #ifdef PROFILE_NGPLASMID
+                    PROFILER_END();
+                #endif
+
+                
             }
             #ifdef PROFILE_NGPLASMID
                 PROFILER_END();
