@@ -149,6 +149,9 @@ namespace ngPlasmid
                     PROFILER_END();
                 #endif
 
+                std::string path;
+                std::future<const std::string>*pathFuture = nullptr;
+
                 int markersLength = markers->Length();
                 for(int k = 0; k != markersLength; ++k)
                 {
@@ -192,18 +195,30 @@ namespace ngPlasmid
 
                     //std::string path = ::ngPlasmid::getTrackMarkerSVGPath(pack);
 
-                    std::future<const std::string> pathFuture = ::launchParallelRef<const std::string,::ngPlasmid::TrackMarkerPack&>(
+                    /*std::future<const std::string> pathFuture = ::launchParallelRef<const std::string,::ngPlasmid::TrackMarkerPack&>(
                         &::ngPlasmid::getTrackMarkerSVGPath,
                         pack
-                    );
+                    );*/
 
-                    std::string path = pathFuture.get();
+                    if(pathFuture)
+                    {
+                        path = pathFuture->get();
 
-                    ::Nan::Set(
-                        marker,
-                        ::ngPlasmid::JSAware::_batchedSVGPath,
-                        ::Nan::New(path).ToLocalChecked()
-                    );
+                        ::Nan::Set(
+                            ::v8::Handle<::v8::Object>::Cast(markers->Get(k-1)),
+                            ::ngPlasmid::JSAware::_batchedSVGPath,
+                            ::Nan::New(path).ToLocalChecked()
+                        );
+
+                        path = "";
+                        delete pathFuture;
+                        pathFuture = new std::future<const std::string>(
+                            ::launchParallelRef<const std::string,::ngPlasmid::TrackMarkerPack&>(
+                                &::ngPlasmid::getTrackMarkerSVGPath,
+                                pack
+                            )
+                        );
+                    }
                 }
             }
             #ifdef PROFILE_NGPLASMID
