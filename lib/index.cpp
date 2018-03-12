@@ -3,6 +3,7 @@
     #include <algorithm>
     #include <fstream>
     #include <cstring>
+    #include <ctime>
     #include <unistd.h>
     std::ofstream profOut("prof.out",std::ios::out);
     void profileOut(const char*szText)
@@ -127,6 +128,12 @@ namespace ngPlasmid
                 PROFILER_END();
             #endif
 
+            std::vector<::ngPlasmid::TrackMarkerPack>*first = nullptr;
+            std::vector<::ngPlasmid::TrackMarkerPack>*second = nullptr;
+
+            std::future<void>*firstPathFuture = nullptr;
+            std::future<void>*secondPathFuture = nullptr;
+
             int tracksLength = tracks->Length();
             for(int i = 0; i != tracksLength; ++i)
             {
@@ -188,7 +195,7 @@ namespace ngPlasmid
 
                 std::vector<::ngPlasmid::TrackMarkerPack> markerPacks;
                 int markerPacksSize = 0;
-                
+
                 int markersLength = markers->Length();
                 for(int k = 0; k != markersLength; ++k)
                 {
@@ -261,7 +268,39 @@ namespace ngPlasmid
                     }*/
                 }
 
-                //std::cerr<<"marker packs "<<markerPacks.size()<<"\n";
+                if(firstPathFuture || secondPathFuture)
+                {
+                    firstPathFuture->get();
+
+                    auto previousMarker = ::v8::Handle<::v8::Array>::Cast(
+                        ::Nan::Get(
+                            ::v8::Handle<::v8::Object>::Cast(tracks->Get(i-1)),
+                            ::Nan::New("markers").ToLocalChecked()
+                        ).ToLocalChecked()
+                    );
+                    assignPaths(
+                        previousMarker,
+                        *first
+                    );
+
+                    secondPathFuture->get();
+
+                    assignPaths(
+                        previousMarker
+                        ,*second
+                    );
+
+                    #ifdef PROFILE_NGPLASMID
+                        PROFILER_START(delete vectors);
+                    #endif
+                    delete firstPathFuture;
+                    firstPathFuture = nullptr;
+                    delete secondPathFuture;
+                    secondPathFuture = nullptr;
+                    #ifdef PROFILE_NGPLASMID
+                        PROFILER_END();
+                    #endif
+                }
 
                 if(markerPacksSize < 2000)
                 {
@@ -269,38 +308,20 @@ namespace ngPlasmid
                     continue;
                 }
 
-                std::vector<::ngPlasmid::TrackMarkerPack>*first = nullptr;
-                std::vector<::ngPlasmid::TrackMarkerPack>*second = nullptr;
+                if(!firstPathFuture || !secondPathFuture)
+                {
+                     ::split<std::vector<::ngPlasmid::TrackMarkerPack>>(&markerPacks,first,second);
 
-                ::split<std::vector<::ngPlasmid::TrackMarkerPack>>(&markerPacks,first,second);
+                    firstPathFuture = new std::future<void>(::launchParallelRef<void,std::vector<TrackMarkerPack>*&>(
+                        &::ngPlasmid::getTrackMarkerSVGPath,
+                        first
+                    ));
 
-                std::future<void> firstFuture = ::launchParallelRef<void,std::vector<TrackMarkerPack>*&>(
-                    &::ngPlasmid::getTrackMarkerSVGPath,
-                    first
-                );
-
-                std::future<void> secondFuture = ::launchParallelRef<void,std::vector<TrackMarkerPack>*&>(
-                    &::ngPlasmid::getTrackMarkerSVGPath,
-                    second
-                );
-
-                firstFuture.get();
-                
-                assignPaths(markers,*first);
-
-                secondFuture.get();
-
-                assignPaths(markers,*second);
-
-                #ifdef PROFILE_NGPLASMID
-                    PROFILER_START(delete vectors);
-                #endif
-                delete first;
-                delete second;
-                #ifdef PROFILE_NGPLASMID
-                    PROFILER_END();
-                #endif
-
+                    secondPathFuture = new std::future<void>(::launchParallelRef<void,std::vector<TrackMarkerPack>*&>(
+                        &::ngPlasmid::getTrackMarkerSVGPath,
+                        second
+                    ));
+                }
                 
             }
             #ifdef PROFILE_NGPLASMID
