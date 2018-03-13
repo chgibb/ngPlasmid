@@ -1,3 +1,6 @@
 [submodule "libProfiler"]
 	path = libProfiler
 	url = https://www.github.com/CedricGuillemet/libProfiler
+[submodule "concurrentqueue"]
+	path = concurrentqueue
+	url = https://github.com/cameron314/concurrentqueue
