@@ -30,6 +30,14 @@
         "utility": "cpp",
         "ctime": "cpp",
         "iomanip": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "future": "cpp",
+        "mutex": "cpp",
+        "atomic": "cpp",
+        "chrono": "cpp",
+        "condition_variable": "cpp",
+        "fstream": "cpp",
+        "ratio": "cpp",
+        "thread": "cpp"
     }
 }
