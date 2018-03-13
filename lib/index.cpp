@@ -194,6 +194,7 @@ namespace ngPlasmid
                 #endif
 
                 std::vector<::ngPlasmid::TrackMarkerPack> markerPacks;
+                markerPacks.reserve(4000);
                 int markerPacksSize = 0;
 
                 int markersLength = markers->Length();
@@ -237,8 +238,14 @@ namespace ngPlasmid
                         center,
                         trackRadius
                     );
+                    #ifdef PROFILE_NGPLASMID
+                        PROFILER_START(push markerPack);
+                    #endif
                     markerPacks.push_back(pack);
                     markerPacksSize++;
+                    #ifdef PROFILE_NGPLASMID
+                        PROFILER_END();
+                    #endif
 
                     //std::string path = ::ngPlasmid::getTrackMarkerSVGPath(pack);
 
