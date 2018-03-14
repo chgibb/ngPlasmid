@@ -78,7 +78,7 @@ class RenderingStrategy
 export interface AdaptiveRenderingUpdates
 {
     on(event : "render",listener : (name : RenderingStrategies,time : number) => void) : this;
-    on(event : "changedStrategies",listener : (name : RenderingStrategies) => void) : this;
+    on(event : "selectedStrategy",listener : (name : RenderingStrategies) => void) : this;
 }
 
 class AdaptiveRenderingUpdater extends EventEmitter implements AdaptiveRenderingUpdates
@@ -271,7 +271,7 @@ export class Plasmid extends Directive
 
     private useAdaptiveRendering : boolean = false;
 
-    private adaptIterations : number = 3;
+    public adaptIterations : number = 2;
 
     public enableAdaptiveRendering() : void
     {
@@ -283,8 +283,6 @@ export class Plasmid extends Directive
         this.useAdaptiveRendering = false;
     }
 
-    public adaptiveRenderingChanges : EventEmitter;
-
     public renderStart() : string
     {
         if(!this.useAdaptiveRendering)
@@ -294,16 +292,60 @@ export class Plasmid extends Directive
         {
             for(let i in this.renderingStrategies)
             {
-                if(this.renderingStrategies[i].runs.length == 0)
+                if(this.renderingStrategies[i].runs.length != this.adaptIterations)
                 {
                     let timer = new Timer();
                     let res = this.renderingStrategies[i].render(this);
                     let time = timer.stop();
                     this.adaptiveRenderingUpdates.emit("render",i,time);
                     this.renderingStrategies[i].runs.push(time);
-
+                    return res;
                 }
             }
+
+            let averages = new Array<{name:RenderingStrategies,avg:number}>();
+            for(let i in this.renderingStrategies)
+            {
+                let average = {
+                    name : <RenderingStrategies>i,
+                    avg : 0
+                };
+
+                for(let k = 0; k != this.renderingStrategies[i].runs.length; ++k)
+                {
+                    average.avg += this.renderingStrategies[i].runs[k];
+                }
+
+                average.avg = average.avg / this.renderingStrategies[i].runs.length;
+
+                averages.push(average);
+            }
+
+            let smallest : {name:RenderingStrategies,time:number} | undefined = undefined;
+            for(let i = 0; i != averages.length; ++i)
+            {
+                if(smallest == undefined)
+                {
+                    smallest = {
+                        name : averages[i].name,
+                        time : averages[i].avg
+                    };
+                }
+                else
+                {
+                    if(averages[i].avg < smallest.time)
+                    {
+                        smallest = {
+                            name : averages[i].name,
+                            time : averages[i].avg
+                        };
+                    }
+                }
+            }
+            this.disableAdaptiveRendering();
+            this.changeRenderingStrategy(smallest!.name);
+            this.adaptiveRenderingUpdates.emit("selectedStrategy",smallest!.name);
+
             return this.renderingStrategies[this.currentRenderingStrategy].render(this);
         }
     }

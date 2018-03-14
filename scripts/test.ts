@@ -337,6 +337,8 @@ let testCases : Array<TestCase> = new Array<TestCase>();
 
         console.log(`-----------------------------------------------------------------------------------------------------`);
 
+        await testCases[i].findBestStrategy();
+
     }
     console.log(`Summaries:`);
     console.log(``)

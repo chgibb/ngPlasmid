@@ -3,6 +3,9 @@ import * as fs from "fs";
 
 import {TestSummary,TestStatus} from "./testSummary";
 
+import * as html from "./../lib/html";
+import {Plasmid,AdaptiveRenderingUpdates} from "./../lib/directives";
+
 class Timer
 {
     public startEpoch : number;
@@ -380,6 +383,45 @@ export class TestCase
         let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exBatchedPBToSVGResultPath} -o ${this.exBatchedPBToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
 
         this.exBatchedPBToSVGOptimisationTime = timer.stop();
+    }
+
+    public findBestStrategy() : Promise<void>
+    {
+        return new Promise<void>(async (resolve) => {
+            let nodes = await html.loadFromString(`tests/${this.htmlFile}`);
+
+            let plasmid = new Plasmid();
+
+            if(this.jsonFile)
+                plasmid.$scope = JSON.parse(fs.readFileSync(`tests/${this.jsonFile}`).toString());
+            
+            for(let i = 0; i != nodes.length; ++i)
+            {
+                if(nodes[i].name == "plasmid")
+                {
+                    plasmid.fromNode(nodes[i]);
+                    break;
+                }
+            }
+
+            plasmid.enableAdaptiveRendering();
+            plasmid.adaptIterations = 10;
+
+            plasmid.adaptiveRenderingUpdates.on("render",function(name : string,time : number){
+                console.log(`Using ${name} took ${time}ms`);
+            });
+
+            plasmid.adaptiveRenderingUpdates.on("selectedStrategy",function(name :string){
+                console.log(`Selected strategy ${name}`);
+                resolve();
+            });
+
+            for(let i = 0; i != plasmid.adaptIterations*2+1; ++i)
+            {
+                plasmid.renderStart();
+                plasmid.renderEnd();
+            }
+        });
     }
 }
 
