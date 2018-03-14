@@ -57,7 +57,7 @@ class Timer
             this.startEpoch = Date.now();
         }
         else
-            this.startEpoch = performance.now();
+            this.startEpoch = (<any>global).performance.now();
     }
 
     public stop() : number
@@ -69,7 +69,7 @@ class Timer
         }
         else
         {
-            this.endEpoch = performance.now();
+            this.endEpoch = (<any>global).performance.now();
             return this.endEpoch - this.startEpoch;
         }
     }
