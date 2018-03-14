@@ -4,7 +4,7 @@ import * as fs from "fs";
 import {TestSummary,TestStatus} from "./testSummary";
 
 import * as html from "./../lib/html";
-import {Plasmid,AdaptiveRenderingUpdates} from "./../lib/directives";
+import {Plasmid,AdaptiveRenderingUpdates,RenderingStrategies} from "./../lib/directives";
 
 class Timer
 {
@@ -408,11 +408,15 @@ export class TestCase
             plasmid.adaptIterations = 10;
 
             plasmid.adaptiveRenderingUpdates.on("render",function(name : string,time : number){
-                console.log(`Using ${name} took ${time}ms`);
+                console.log(`${name} took ${time}`);
             });
 
-            plasmid.adaptiveRenderingUpdates.on("selectedStrategy",function(name :string){
+            plasmid.adaptiveRenderingUpdates.on("selectedStrategy",function(name :string,averages : Array<{name:RenderingStrategies,avg:number}>){
                 console.log(`Selected strategy ${name}`);
+                for(let i = 0; i != averages.length; ++i)
+                {
+                    console.log(`${averages[i].name} average: ${averages[i].avg}`);
+                }
                 resolve();
             });
 

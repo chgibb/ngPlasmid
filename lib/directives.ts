@@ -100,7 +100,7 @@ class RenderingStrategy
 export interface AdaptiveRenderingUpdates
 {
     on(event : "render",listener : (name : RenderingStrategies,time : number) => void) : this;
-    on(event : "selectedStrategy",listener : (name : RenderingStrategies) => void) : this;
+    on(event : "selectedStrategy",listener : (name : RenderingStrategies,averages : Array<{name:RenderingStrategies,avg:number}>) => void) : this;
 }
 
 class AdaptiveRenderingUpdater extends EventEmitter implements AdaptiveRenderingUpdates
@@ -366,7 +366,7 @@ export class Plasmid extends Directive
             }
             this.disableAdaptiveRendering();
             this.changeRenderingStrategy(smallest!.name);
-            this.adaptiveRenderingUpdates.emit("selectedStrategy",smallest!.name);
+            this.adaptiveRenderingUpdates.emit("selectedStrategy",smallest!.name,smallest!.time);
 
             return this.renderingStrategies[this.currentRenderingStrategy].render(this);
         }
