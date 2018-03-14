@@ -44,6 +44,14 @@ interface GenericNode<T>
     children : Array<T>;
 }
 
+let performance : any = undefined;
+
+try
+{
+    performance = require("perf_hooks");
+}
+catch(err){}
+
 class Timer
 {
     public startEpoch : number;
@@ -52,24 +60,24 @@ class Timer
 
     public constructor()
     {
-        if((<any>global).performance === undefined)
+        if(performance === undefined)
         {
             this.startEpoch = Date.now();
         }
         else
-            this.startEpoch = (<any>global).performance.now();
+            this.startEpoch = performance.now();
     }
 
     public stop() : number
     {
-        if((<any>global).performance === undefined)
+        if(performance === undefined)
         {
             this.endEpoch = Date.now();
             return Math.abs((<any>new Date(this.endEpoch)) - (<any>new Date(this.startEpoch)));
         }
         else
         {
-            this.endEpoch = (<any>global).performance.now();
+            this.endEpoch = performance.now();
             return this.endEpoch - this.startEpoch;
         }
     }

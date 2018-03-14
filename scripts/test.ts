@@ -1,20 +1,5 @@
 const chalk = require("chalk");
 
-try
-{
-    let performance = require("perf_hooks");
-    if(performance)
-        (<any>global).performance = performance;
-    else
-    {
-        console.log(`${chalk.red(`Could not acquire high-resolution timer`)}`);
-    }
-}
-catch(err)
-{
-    console.log(`${chalk.red(`Could not acquire high-resolution timer`)}`);
-}
-
 import {TestCase,cleanRawProfiles,getFileSize} from "./testCase";
 import {queueTests} from "./queueTests";
 import {validateCompileTime} from "./validateCompileTime"
