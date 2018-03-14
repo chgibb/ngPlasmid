@@ -75,6 +75,16 @@ class RenderingStrategy
     }
 }
 
+export interface AdaptiveRenderingUpdates
+{
+    on(event : "render",listener : (name : RenderingStrategies,time : number) => void) : this;
+    on(event : "changedStrategies",listener : (name : RenderingStrategies) => void) : this;
+}
+
+class AdaptiveRenderingUpdater extends EventEmitter implements AdaptiveRenderingUpdates
+{
+
+}
 
 export abstract class Directive
 {
@@ -254,12 +264,14 @@ export class Plasmid extends Directive
     private currentRenderingStrategy : RenderingStrategies = "normal";
 
     private renderingStrategies : {
-        [key in RenderingStrategies] : RenderingStrategy
+        [key : string] : RenderingStrategy
     } = <{
-        [key in RenderingStrategies] : RenderingStrategy
+        [key : string] : RenderingStrategy
     }>{};
 
     private useAdaptiveRendering : boolean = false;
+
+    private adaptIterations : number = 3;
 
     public enableAdaptiveRendering() : void
     {
@@ -280,6 +292,18 @@ export class Plasmid extends Directive
         
         else
         {
+            for(let i in this.renderingStrategies)
+            {
+                if(this.renderingStrategies[i].runs.length == 0)
+                {
+                    let timer = new Timer();
+                    let res = this.renderingStrategies[i].render(this);
+                    let time = timer.stop();
+                    this.adaptiveRenderingUpdates.emit("render",i,time);
+                    this.renderingStrategies[i].runs.push(time);
+
+                }
+            }
             return this.renderingStrategies[this.currentRenderingStrategy].render(this);
         }
     }
@@ -348,6 +372,8 @@ export class Plasmid extends Directive
         let ngPlasmidNative = require("./ngPlasmid");
         ngPlasmidNative.batchGenerateSVGPaths(this);
     }
+
+    public adaptiveRenderingUpdates : AdaptiveRenderingUpdater = new AdaptiveRenderingUpdater();
 
     public constructor()
     {
