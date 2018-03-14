@@ -366,7 +366,7 @@ export class Plasmid extends Directive
             }
             this.disableAdaptiveRendering();
             this.changeRenderingStrategy(smallest!.name);
-            this.adaptiveRenderingUpdates.emit("selectedStrategy",smallest!.name,smallest!.time);
+            this.adaptiveRenderingUpdates.emit("selectedStrategy",smallest!.name,averages);
 
             return this.renderingStrategies[this.currentRenderingStrategy].render(this);
         }
