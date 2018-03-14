@@ -48,7 +48,8 @@ let performance : any = undefined;
 
 try
 {
-    performance = require("perf_hooks");
+    let perf_hooks = require("perf_hooks");
+    performance = perf_hooks.performance;
 }
 catch(err){}
 
