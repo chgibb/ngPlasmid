@@ -26,7 +26,7 @@ import * as directives from "./../lib//directives";
 
     if(args[args.length-1] == "batched")
     {
-        plasmid.batchGenerateSVGPaths();    
+        plasmid.changeRenderingStrategy("preCalculateBatch");
     }
 
     console.log(plasmid.renderStart() + plasmid.renderEnd());

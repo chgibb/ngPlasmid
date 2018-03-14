@@ -28,11 +28,13 @@
 /// <reference path="./interpolate" />
 /// <reference path="./parseFontSize" />
 
+import {EventEmitter} from "events";
 
 import * as html from "./html"
 import * as services from "./services";
 import {interpolate} from "./interpolate";
 import {parseFontSize} from "./parseFontSize";
+
 
 interface GenericNode<T>
 {
@@ -41,6 +43,38 @@ interface GenericNode<T>
     attribs : any;
     children : Array<T>;
 }
+
+class Timer
+{
+    public startEpoch : number;
+
+    public endEpoch : number;
+
+    public constructor()
+    {
+        this.startEpoch = Date.now();
+    }
+
+    public stop() : number
+    {
+        this.endEpoch = Date.now();
+        return Math.abs((<any>new Date(this.endEpoch)) - (<any>new Date(this.startEpoch)));
+    }
+}
+
+export type RenderingStrategies = "normal" | "preCalculateBatch";
+
+class RenderingStrategy
+{
+    public render : (plasmid : Plasmid) => string;
+    public runs : Array<number> = new Array<number>();
+
+    public constructor(renderFunction : (plasmid : Plasmid) => string)
+    {
+        this.render = renderFunction;
+    }
+}
+
 
 export abstract class Directive
 {
@@ -212,37 +246,42 @@ export class Plasmid extends Directive
         this.plasmidwidth = parseFloat(interpolate(this._IplasmidWidth,this.$scope));
     }
 
+    public changeRenderingStrategy(newStrategy : RenderingStrategies)
+    {
+        this.currentRenderingStrategy = newStrategy;
+    }
+
+    private currentRenderingStrategy : RenderingStrategies = "normal";
+
+    private renderingStrategies : {
+        [key in RenderingStrategies] : RenderingStrategy
+    } = <{
+        [key in RenderingStrategies] : RenderingStrategy
+    }>{};
+
+    private useAdaptiveRendering : boolean = false;
+
+    public enableAdaptiveRendering() : void
+    {
+        this.useAdaptiveRendering = true;
+    }
+
+    public disableAdaptiveRendering() : void
+    {
+        this.useAdaptiveRendering = false;
+    }
+
+    public adaptiveRenderingChanges : EventEmitter;
+
     public renderStart() : string
     {
-        this.interpolateAttributes();
-        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L60
-        let res = "";
-
-        res += `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" `;
-
-        if(this.sequencelength)
-            res += `sequencelength="${this.sequencelength}" `;
-
-        if(this.plasmidheight)
-            res += `plasmidheight="${this.plasmidheight}" `;
-    
-        if(this.plasmidwidth)
-            res += `plasmidwidth="${this.plasmidwidth}" `;
-    
-        res += `class="ng-scope ng-isolate-scope" `;
-
-        if(this.plasmidheight)
-            res += `height="${this.plasmidheight}" ` ;
-    
-        if(this.plasmidwidth)
-            res += `width="${this.plasmidwidth}"`;
-
-        res += ">";
-        for(let i = 0; i != this.tracks.length; ++i)
+        if(!this.useAdaptiveRendering)
+            return this.renderingStrategies[this.currentRenderingStrategy].render(this);
+        
+        else
         {
-            res += this.tracks[i].renderStart();
+            return this.renderingStrategies[this.currentRenderingStrategy].render(this);
         }
-        return res;
     }
 
     public renderEnd() : string
@@ -302,7 +341,7 @@ export class Plasmid extends Directive
         throw new Error("Not supported by directive");
     }
 
-    public batchGenerateSVGPaths() : void
+    private batchGenerateSVGPaths() : void
     {
         this.interpolateAttributes();
         
@@ -315,6 +354,42 @@ export class Plasmid extends Directive
         super();
         this.tagType = "plasmid";
         this.tracks = new Array<PlasmidTrack>();
+        this.renderingStrategies["normal"] = new RenderingStrategy(function(plasmid : Plasmid){
+            plasmid.interpolateAttributes();
+            //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L60
+            let res = "";
+
+            res += `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" `;
+
+            if(plasmid.sequencelength)
+                res += `sequencelength="${plasmid.sequencelength}" `;
+
+            if(plasmid.plasmidheight)
+                res += `plasmidheight="${plasmid.plasmidheight}" `;
+    
+            if(plasmid.plasmidwidth)
+                res += `plasmidwidth="${plasmid.plasmidwidth}" `;
+    
+            res += `class="ng-scope ng-isolate-scope" `;
+
+            if(plasmid.plasmidheight)
+                res += `height="${plasmid.plasmidheight}" ` ;
+    
+            if(plasmid.plasmidwidth)
+                res += `width="${plasmid.plasmidwidth}"`;
+
+            res += ">";
+            for(let i = 0; i != plasmid.tracks.length; ++i)
+            {
+                res += plasmid.tracks[i].renderStart();
+            }
+            return res;
+        });
+
+        this.renderingStrategies["preCalculateBatch"] = new RenderingStrategy(function(plasmid : Plasmid){
+            plasmid.batchGenerateSVGPaths();
+            return plasmid.renderingStrategies["normal"].render(plasmid);
+        });
     }
 }
 

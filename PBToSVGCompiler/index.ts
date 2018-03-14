@@ -22,7 +22,7 @@ plasmid.fromNode<any>(
 
 if(args[args.length-1] == "batched")
 {
-    plasmid.batchGenerateSVGPaths();
+    plasmid.changeRenderingStrategy("preCalculateBatch");
 }
 
 console.log(plasmid.renderStart() + plasmid.renderEnd());
