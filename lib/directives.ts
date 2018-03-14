@@ -52,13 +52,26 @@ class Timer
 
     public constructor()
     {
-        this.startEpoch = Date.now();
+        if((<any>global).performance === undefined)
+        {
+            this.startEpoch = Date.now();
+        }
+        else
+            this.startEpoch = performance.now();
     }
 
     public stop() : number
     {
-        this.endEpoch = Date.now();
-        return Math.abs((<any>new Date(this.endEpoch)) - (<any>new Date(this.startEpoch)));
+        if((<any>global).performance === undefined)
+        {
+            this.endEpoch = Date.now();
+            return Math.abs((<any>new Date(this.endEpoch)) - (<any>new Date(this.startEpoch)));
+        }
+        else
+        {
+            this.endEpoch = performance.now();
+            return this.endEpoch - this.startEpoch;
+        }
     }
 }
 
