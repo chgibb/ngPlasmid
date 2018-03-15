@@ -309,7 +309,7 @@ namespace ngPlasmid
                     #endif
                 }
 
-                if(markerPacksSize < 2000)
+                if(markerPacksSize < 4000)
                 {
                     assignPaths(markers,markerPacks);
                     continue;
