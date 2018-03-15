@@ -1812,7 +1812,7 @@ export class TrackMarker extends Directive
             res = res + this.labels[i].renderStart();
         }
         res = res + `</g>`;
-        
+
         return res;
     }
     public renderEnd() : string

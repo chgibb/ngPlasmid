@@ -388,7 +388,7 @@ export class TestCase
     public findBestStrategy() : Promise<void>
     {
         return new Promise<void>(async (resolve) => {
-            let nodes = await html.loadFromString(`tests/${this.htmlFile}`);
+            let nodes = await html.loadFromString(fs.readFileSync(`tests/${this.htmlFile}`).toString());
 
             let plasmid = new Plasmid();
 
@@ -420,10 +420,10 @@ export class TestCase
                 resolve();
             });
 
+            let svg = "";
             for(let i = 0; i != plasmid.adaptIterations*2+1; ++i)
             {
-                plasmid.renderStart();
-                plasmid.renderEnd();
+                svg = plasmid.renderStart() + plasmid.renderEnd();
             }
         });
     }
