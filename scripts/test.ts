@@ -335,9 +335,16 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             }
         }
 
-        console.log(`-----------------------------------------------------------------------------------------------------`);
+        
+        console.log(`   ${chalk.cyan(`Finding Best Rendering Strategy`)}`);
+        let bestStrategy = await testCases[i].findBestStrategy();
+        console.log(`       ${chalk.cyan(`Selected ${bestStrategy}`)}`);
+        testCases[i].summary.statuses.push({
+            message : bestStrategy,
+            status : true
+        });
 
-        await testCases[i].findBestStrategy();
+        console.log(`-----------------------------------------------------------------------------------------------------`);
 
     }
     console.log(`Summaries:`);

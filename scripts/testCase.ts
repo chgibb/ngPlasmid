@@ -1,6 +1,8 @@
 import * as cp from "child_process";
 import * as fs from "fs";
 
+const chalk = require("chalk");
+
 import {TestSummary,TestStatus} from "./testSummary";
 
 import * as html from "./../lib/html";
@@ -385,9 +387,9 @@ export class TestCase
         this.exBatchedPBToSVGOptimisationTime = timer.stop();
     }
 
-    public findBestStrategy() : Promise<void>
+    public findBestStrategy() : Promise<string>
     {
-        return new Promise<void>(async (resolve) => {
+        return new Promise<string>(async (resolve) => {
             let nodes = await html.loadFromString(fs.readFileSync(`tests/${this.htmlFile}`).toString());
 
             let plasmid = new Plasmid();
@@ -408,16 +410,17 @@ export class TestCase
             plasmid.adaptIterations = 10;
 
             plasmid.adaptiveRenderingUpdates.on("render",function(name : string,time : number){
-                console.log(`${name} took ${time}`);
+                name;
+                time;
+                //console.log(`${name} took ${time}`);
             });
 
             plasmid.adaptiveRenderingUpdates.on("selectedStrategy",function(name :string,averages : Array<{name:RenderingStrategies,avg:number}>){
-                console.log(`Selected strategy ${name}`);
                 for(let i = 0; i != averages.length; ++i)
                 {
-                    console.log(`${averages[i].name} average: ${averages[i].avg}`);
+                    console.log(`       ${chalk.yellow(`${averages[i].name} average: ${averages[i].avg}`)}`);
                 }
-                resolve();
+                resolve(name);
             });
 
             let svg = "";
