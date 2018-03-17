@@ -12,6 +12,7 @@
             "cflags_cc" : [
                 "-std=c++11",
                 "-O3",
+                "-ffast-math",
                 "-Werror",
                 "-Wno-comment",
                 "-s"
