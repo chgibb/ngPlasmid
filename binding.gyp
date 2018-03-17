@@ -7,7 +7,7 @@
                 "<!(node -e \"require('nan')\")"
             ],
             "sources": [
-                "lib/index.cpp"
+                "lib/cpp/index.cpp"
             ],
             "cflags_cc" : [
                 "-std=c++11",
