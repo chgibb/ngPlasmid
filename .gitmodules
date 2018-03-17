@@ -1,0 +1,3 @@
+[submodule "libProfiler"]
+	path = libProfiler
+	url = https://www.github.com/CedricGuillemet/libProfiler

@@ -1,19 +1,28 @@
 # ngPlasmid
 
-Reimplementation of https://github.com/vixis/angularplasmid to compile AngularPlasmid templates to static SVGs.
-
-This project is available through ```npm``` as a Typescript only package. No Javascript is distributed.
+## Motivation
+This project drives the circular visualizations of [PHAT](https://github.com/chgibb/phat). Previously, PHAT made us of [AngularPlasmid](https://github.com/vixis/angularplasmid) to drive its circular visualizations. This project is a (mostly) compatible replacement for AngularPlasmid with a special focus on performance above all. 
 
 ## Usage
+This project is available through ```npm``` as a Typescript only package. No Javascript is distributed.
+
+
 ```
 npm install --save @chgibb/ngplasmid
 ```
 
-## Motivation
-This project will be gradually integrated into the SVG compilation infrastructure of [PHAT](https://github.com/chgibb/phat). PHAT makes heavy use of AngularPlasmid for circular genome visualisations. Currently, the method described in the Reference Compiler section and implemented in [```referenceCompiler/index.ts```](https://github.com/chgibb/ngPlasmid/blob/master/referenceCompiler/index.ts) is used in PHAT. As requirements have changed, performance has become a problem. We aim to solve it with this project.
+## Basic API
+The basic API revolves around the ```Plasmid``` class, representing a traditional AngularPlasmid template. ```Plasmid```s can be loaded from either HTML or protocol buffers and serialised as protocol buffers. ```$scope``` objects can be set and mutated in order to alter the rendered output. See [the HTML to SVG compiler](https://github.com/chgibb/ngPlasmid/blob/adaptiveBackend/HTMLToSVGCompiler/index.ts) used by tests for basic usage.
+
+## Adaptive Rendering
+```Plasmid```s can be set to experiment with rendering strategies on each call to ```Plasmid#renderStart``` in order to find the most performant one for their current template and the current machine. This is most useful in environments where one or more ```Plasmid```s of varying sizes and complexities are rendered over and over again (such as PHAT). By default, this is disabled. It can be enabled by calling ```Plasmid#enableAdaptiveRendering()```. A ```Plasmid``` will select from its available strategies after it has run with each strategy ```Plasmid#adaptIterations``` times. By default, this is 2. Once a ```Plasmid``` has selected a strategy, it will use that strategy on every future call to ```Plasmid#renderStart()``` and ```Plasmid#renderEnd()```. The current strategy can be overriden by calling ```Plasmid#changeRenderingStrategy(strategy)```.
+
+## Rendering Strategies
+- "normal": Typescript based. Recursively descends the ```Plasmid```s children and renders each in turn. Composes and returns the result. This is the default.
+- "preCalculateBatch": C++ based. ```ngPlasmid.node``` must have successfully compiled and be available in the current working directory for this strategy to run. ```<plasmidtrack>```s and ```<trackmarker>```s have their SVG path data precalculated in C++. If a ```<plasmidtrack>``` has more than a certain number of ```<trackmarker>```s then the calculation is batched up and split into threads. Calls the "normal" strategy to complete the remainder.
 
 ## Reference Compiler
-The compiler under ```referenceCompiler/``` uses ```ng-node-compile```, which internally makes use of ```jsdom``` and ```AngularJS``` itself to simulate a web browser environment to render the template and then extract the SVG. This is woefully slow and inefficient for obvious reasons.
+The compiler under ```referenceCompiler/``` uses ```ng-node-compile```, which internally makes use of ```jsdom``` and ```AngularJS``` itself to simulate a web browser environment to render the template and then extract the SVG. This is woefully slow and inefficient for obvious reasons. Output from this method is considered to be the source of all truth in terms of what is and is not correct output.
 
 ## HTML to SVG Compiler
 Under ```HTMLToSVGCompiler/``` is an example implementation which takes an HTML file to compile and a JSON file to use as ```$scope``` and dumps the result to standard out. This is used in testing.
@@ -24,9 +33,8 @@ Under ```HTMLToPBCompiler/``` is an example implementation which takes an HTML f
 ## Protocol Buffer to SVG Compiler
 Under ```PBToSVGCompiler/``` is an example implementation which takes a protocol buffer file and a JSON file to use as ```$scope``` and dumps the result to standard out. This is used in testing. This is envisioned to be used with extremely large inputs where the overhead of HTML parsing becomes the primary overhead.
 
-## Progress
-See AngularPlasmid's [official examples](http://angularplasmid.vixis.com/samples.php)
-### Compatibility with AngularPlasmid
+## Compatibility with AngularPlasmid
+See AngularPlasmid's [official examples](http://angularplasmid.vixis.com/samples.php)  
 ngPlasmid aims to fully support the directives of AngularPlasmid as they are used in the official examples. Directive usage in the examples differs in some ways from what the official documentation states. Where there is a conflict, we defer to compatibility with the example and its output from actually running AngularPlasmid as opposed to what the documentation states. We support all directives as they are used in the official examples.
 
 ### Breaking Changes, Incompatibility

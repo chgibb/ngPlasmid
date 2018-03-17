@@ -1,7 +1,12 @@
 import * as cp from "child_process";
 import * as fs from "fs";
 
+const chalk = require("chalk");
+
 import {TestSummary,TestStatus} from "./testSummary";
+
+import * as html from "./../lib/html";
+import {Plasmid,AdaptiveRenderingUpdates,RenderingStrategies} from "./../lib/directives";
 
 class Timer
 {
@@ -63,6 +68,13 @@ export class TestCase
     public exHTMLToSVGResultPath : string;
     public exHTMLToSVGResultOptimisedPath : string;
 
+    public exBatchedHTMLToSVGCompileTime : number;
+    public exBatchedHTMLToSVGOptimisationTime : number;
+    public exBatchedHTMLToSVGResultSize : number;
+    public exBatchedHTMLToSVGOptimisedResultSize : number;
+    public exBatchedHTMLToSVGResultPath : string;
+    public exBatchedHTMLToSVGResultOptimisedPath : string;
+
     public exHTMLtoPBCompileTime : number;
     public exHTMLToPBResultSize : number;
     public exHTMLTOPBResultPath : string;
@@ -73,6 +85,13 @@ export class TestCase
     public exPBToSVGOptimisedResultSize : number;
     public exPBToSVGResultPath : string;
     public exPBToSVGResultOptimisedPath : string;
+
+    public exBatchedPBToSVGCompileTime : number;
+    public exBatchedPBToSVGOptimisationTime : number;
+    public exBatchedPBToSVGResultSize : number;
+    public exBatchedPBToSVGOptimisedResultSize : number;
+    public exBatchedPBToSVGResultPath : string;
+    public exBatchedPBToSVGResultOptimisedPath : string;
 
     public summary : TestSummary;
 
@@ -92,10 +111,16 @@ export class TestCase
         this.exHTMLToSVGResultPath = this.makeExHTMLToSVGResultPath(this.htmlFile);
         this.exHTMLToSVGResultOptimisedPath = this.makeExHTMLToSVGResultOptimisedPath(this.htmlFile);
 
+        this.exBatchedHTMLToSVGResultPath = this.makeExBatchedHTMLToSVGResultPath(this.htmlFile);
+        this.exBatchedHTMLToSVGResultOptimisedPath = this.makeExBatchedHTMLToSVGResultOptimisedPath(this.htmlFile);
+
         this.exHTMLTOPBResultPath = this.makeEXHTMLToPBResultPath(this.htmlFile);
 
         this.exPBToSVGResultPath = this.makeExPBToSVGResultPath(this.htmlFile);
         this.exPBToSVGResultOptimisedPath = this.makeExPBToSVGResultOptimisedPath(this.htmlFile);
+
+        this.exBatchedPBToSVGResultPath = this.makeExBatchedPBToSVGResultPath(this.htmlFile);
+        this.exBatchedPBToSVGResultOptimisedPath = this.makeExBatchedPBToSVGResultOptimisedPath(this.htmlFile);
     }
 
     public makeReferenceResultPath(file : string) : string
@@ -113,9 +138,19 @@ export class TestCase
         return `${file}Ex.svg`;
     }
 
+    public makeExBatchedHTMLToSVGResultPath(file : string) : string
+    {
+        return `${file}ExBatched.svg`;
+    }
+
     public makeExHTMLToSVGResultOptimisedPath(file : string) : string
     {
         return `${file}ExO.svg`;
+    }
+
+    public makeExBatchedHTMLToSVGResultOptimisedPath(file : string) : string
+    {
+        return `${file}ExBatchedO.svg`;
     }
     
     public makeEXHTMLToPBResultPath(file : string) : string
@@ -128,9 +163,19 @@ export class TestCase
         return `${file}Ex.pb.svg`;
     }
 
+    public makeExBatchedPBToSVGResultPath(file : string) : string
+    {
+        return `${file}ExBatched.pb.svg`;
+    }
+
     public makeExPBToSVGResultOptimisedPath(file : string) : string
     {
         return `${file}ExO.pb.svg`;
+    }
+
+    public makeExBatchedPBToSVGResultOptimisedPath(file : string) : string
+    {
+        return `${file}ExBatchedO.pb.svg`;
     }
 
     public runReferenceCompiler()
@@ -163,7 +208,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.referenceResultPath} -o ${this.referenceResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.referenceResultPath} -o ${this.referenceResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
 
         this.referenceOptimisationTime = timer.stop();
     }
@@ -184,6 +229,22 @@ export class TestCase
         this.exHTMLToSVGCompileTime = timer.stop();
     }
 
+    public runExBatchedHTMLToSVGCompiler()
+    {
+        let timer : Timer = new Timer();
+
+        let res : Buffer 
+        
+        if(!this.jsonFile)
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} batched`);
+        else 
+            res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile} batched`);
+
+        fs.writeFileSync(this.exBatchedHTMLToSVGResultPath,res.toString());
+
+        this.exBatchedHTMLToSVGCompileTime = timer.stop();
+    }
+
     public getProfilingInformationForExHTMLToSVGCompiler()
     {
         if(!this.jsonFile)
@@ -199,18 +260,37 @@ export class TestCase
         this.exHTMLToSVGResultSize = getFileSize(this.exHTMLToSVGResultPath);   
     }
 
+    public getExBatchedHTMLTOSVGREsultSize()
+    {
+        this.exBatchedHTMLToSVGResultSize = getFileSize(this.exBatchedHTMLToSVGResultPath);   
+    }
+
     public getExHTMLToSVGResultOptimisedSize()
     {
         this.exHTMLToSVGOptimisedResultSize = getFileSize(this.exHTMLToSVGResultOptimisedPath);
+    }
+
+    public getExBatchedHTMLToSVGResultOptimisedSize()
+    {
+        this.exBatchedHTMLToSVGOptimisedResultSize = getFileSize(this.exBatchedHTMLToSVGResultOptimisedPath);
     }
 
     public optimiseExHTMLToSVGCompilerResult()
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.exHTMLToSVGResultPath} -o ${this.exHTMLToSVGResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exHTMLToSVGResultPath} -o ${this.exHTMLToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
 
         this.exHTMLToSVGOptimisationTime = timer.stop();
+    }
+
+    public optimiseExBatchedHTMLToSVGCompilerResult()
+    {
+        let timer : Timer = new Timer();
+
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exBatchedHTMLToSVGResultPath} -o ${this.exBatchedHTMLToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
+
+        this.exBatchedHTMLToSVGOptimisationTime = timer.stop();
     }
 
     public runExHTMLToPBCompiler()
@@ -243,6 +323,22 @@ export class TestCase
         this.exPBToSVGCompileTime = timer.stop();
     }
 
+    public runExBatchedPBToSVGCompiler()
+    {
+        let timer : Timer = new Timer();
+
+        let res : Buffer 
+        
+        if(!this.jsonFile)
+            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} batched`);
+        else 
+            res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} tests/${this.jsonFile} batched`);
+
+        fs.writeFileSync(this.exPBToSVGResultPath,res.toString());
+
+        this.exBatchedPBToSVGCompileTime = timer.stop();
+    }
+
     public getProfilingInformationForExPBToSVGCompiler()
     {
         if(!this.jsonFile)
@@ -258,18 +354,81 @@ export class TestCase
         this.exPBToSVGResultSize = getFileSize(this.exPBToSVGResultPath);   
     }
 
+    public getExBatchedPBTOSVGREsultSize()
+    {
+        this.exBatchedPBToSVGResultSize = getFileSize(this.exBatchedPBToSVGResultPath);   
+    }
+
     public getExPBToSVGResultOptimisedSize()
     {
         this.exPBToSVGOptimisedResultSize = getFileSize(this.exPBToSVGResultOptimisedPath);
     }
 
+
+    public getExBatchedPBToSVGResultOptimisedSize()
+    {
+        this.exBatchedPBToSVGOptimisedResultSize = getFileSize(this.exBatchedPBToSVGResultOptimisedPath);
+    }
     public optimiseExPBToSVGCompilerResult()
     {
         let timer : Timer = new Timer();
 
-        let res = cp.execSync(`./node_modules/.bin/svgo -i ${this.exPBToSVGResultPath} -o ${this.exPBToSVGResultOptimisedPath} --multipass --enable=sortAttrs --pretty --indent=4`);
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exPBToSVGResultPath} -o ${this.exPBToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
 
         this.exPBToSVGOptimisationTime = timer.stop();
+    }
+
+    public optimiseExBatchedPBToSVGCompilerResult()
+    {
+        let timer : Timer = new Timer();
+
+        let res = cp.execSync(`node node_modules/svgo/bin/svgo -i ${this.exBatchedPBToSVGResultPath} -o ${this.exBatchedPBToSVGResultOptimisedPath} --multipass --enable=sortAttrs --enable=cleanupNumericValues --pretty --indent=4`);
+
+        this.exBatchedPBToSVGOptimisationTime = timer.stop();
+    }
+
+    public findBestStrategy() : Promise<string>
+    {
+        return new Promise<string>(async (resolve) => {
+            let nodes = await html.loadFromString(fs.readFileSync(`tests/${this.htmlFile}`).toString());
+
+            let plasmid = new Plasmid();
+
+            if(this.jsonFile)
+                plasmid.$scope = JSON.parse(fs.readFileSync(`tests/${this.jsonFile}`).toString());
+            
+            for(let i = 0; i != nodes.length; ++i)
+            {
+                if(nodes[i].name == "plasmid")
+                {
+                    plasmid.fromNode(nodes[i]);
+                    break;
+                }
+            }
+
+            plasmid.enableAdaptiveRendering();
+            plasmid.adaptIterations = 10;
+
+            plasmid.adaptiveRenderingUpdates.on("render",function(name : string,time : number){
+                name;
+                time;
+                //console.log(`${name} took ${time}`);
+            });
+
+            plasmid.adaptiveRenderingUpdates.on("selectedStrategy",function(name :string,averages : Array<{name:RenderingStrategies,avg:number}>){
+                for(let i = 0; i != averages.length; ++i)
+                {
+                    console.log(`       ${chalk.yellow(`${averages[i].name} average: ${averages[i].avg}`)}`);
+                }
+                resolve(name);
+            });
+
+            let svg = "";
+            for(let i = 0; i != plasmid.adaptIterations*2+1; ++i)
+            {
+                svg = plasmid.renderStart() + plasmid.renderEnd();
+            }
+        });
     }
 }
 

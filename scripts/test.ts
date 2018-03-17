@@ -2,8 +2,8 @@ const chalk = require("chalk");
 
 import {TestCase,cleanRawProfiles,getFileSize} from "./testCase";
 import {queueTests} from "./queueTests";
-import {validateCompileTime} from "./validateCompileTime"
-import {validateOutputSize} from "./validateOutputSize"
+import {validateCompileTime} from "./validateCompileTime";
+import {validateOutputSize} from "./validateOutputSize";
 import {validateFileEquality} from "./validateFileEquality";
 
 let testCases : Array<TestCase> = new Array<TestCase>();
@@ -61,7 +61,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         
             if(testCases[i].exHTMLToSVGCompileTime*compileTimeFactor < testCases[i].referenceCompileTime)
             {
-                console.log(`       ${chalk.green(outString)}`);
+                console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : true
@@ -82,7 +82,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             outString = `HTML to SVG Compiler Output Size Less Than Reference's Output Size`;
             if(testCases[i].exHTMLToSVGResultSize < testCases[i].referenceResultSize)
             {
-                console.log(`       ${chalk.green(outString)}`);
+                console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : true
@@ -102,7 +102,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             let res = validateFileEquality(testCases[i].referenceResultOptimisedPath,testCases[i].exHTMLToSVGResultOptimisedPath);
             if(res)
             {
-                console.log(`       ${chalk.green(outString)}`);
+                console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : true
@@ -132,7 +132,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             outString = `HTML to Protocol Buffer Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
             if(testCases[i].exHTMLtoPBCompileTime*compileTimeFactor < testCases[i].referenceCompileTime)
             {
-                console.log(`       ${chalk.green(outString)}`);
+                console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : true
@@ -171,7 +171,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         
             if(testCases[i].exPBToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
             {
-                console.log(`       ${chalk.green(outString)}`);
+                console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : true
@@ -192,7 +192,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             outString = `PB to SVG Compiler Output Size Less Than Reference's Output Size`;
             if(testCases[i].exPBToSVGResultSize < testCases[i].referenceResultSize)
             {
-                console.log(`       ${chalk.green(outString)}`);
+                console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : true
@@ -212,7 +212,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             res = validateFileEquality(testCases[i].referenceResultOptimisedPath,testCases[i].exPBToSVGResultOptimisedPath);
             if(res)
             {
-                console.log(`       ${chalk.green(outString)}`);
+                console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : true
@@ -230,6 +230,61 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 if(testCases[i].htmlFile != "HPV1630CovTracks.html")
                     process.exit(1);
             }
+            console.log(`   ${chalk.magentaBright(`Running HTML to SVG Compiler In Batched Mode`)}`);
+            testCases[i].runExBatchedHTMLToSVGCompiler();
+            testCases[i].optimiseExBatchedHTMLToSVGCompilerResult();
+            testCases[i].getExBatchedHTMLTOSVGREsultSize();
+            testCases[i].getExBatchedHTMLToSVGResultOptimisedSize();
+            console.log(`   ${chalk.magenta(`Compile time:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGCompileTime+"ms")}`);
+            console.log(`   ${chalk.magenta(`Output size:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGResultSize+"b")}`);
+            console.log(`   ${chalk.magenta(`Optimisation time:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGOptimisationTime+"ms")}`);
+            console.log(`   ${chalk.magenta(`Optimised Output size:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGOptimisedResultSize+"b")}`);
+            console.log(`   ${chalk.magentaBright(`Validating`)}`);
+            outString = "";
+            if(testCases[i].type != "stress")
+            {
+                outString = `HTML to SVG Compiler in Batched Mode Output Can Be Reduced to the Same as the Reference`;
+                let res = validateFileEquality(testCases[i].referenceResultOptimisedPath,testCases[i].exBatchedHTMLToSVGResultOptimisedPath);
+                if(res)
+                {
+                    console.log(`       ${chalk.green(outString)} ☑️`);
+                    testCases[i].summary.statuses.push({
+                        message : outString,
+                        status : true
+                    });
+                }
+                else
+                {
+                    console.log(`       ${chalk.red(outString)}`);
+                    testCases[i].summary.statuses.push({
+                        message : outString,
+                        status : true
+                    });
+                    process.exit(1);
+                }
+            }
+            outString = `HTML to SVG Compiler in Batched Mode Compile Time Faster Than HTML to SVG Compiler`;
+            if(testCases[i].exBatchedHTMLToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
+            {
+                console.log(`       ${chalk.green(outString)} ☑️`);
+                testCases[i].summary.statuses.push({
+                    message : outString,
+                    status : true
+                });
+            }
+            else
+            {
+                console.log(`       ${chalk.red(outString)}`);
+                testCases[i].summary.statuses.push({
+                    message : outString,
+                    status : false
+                });
+                console.log(`       ${chalk.red("HTML to SVG Compiler in Batched Mode Slower By "+(testCases[i].exHTMLToSVGCompileTime - testCases[i].exBatchedHTMLToSVGCompileTime))}`);
+                if(testCases[i].type == "stress" && testCases[i].exHTMLToSVGCompileTime - testCases[i].exBatchedHTMLToSVGCompileTime <= -100)
+                {
+                    //process.exit(1);
+                }
+            }
 
             console.log(``);
             console.log(``);
@@ -245,7 +300,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             let outString = `HTML to SVG Compile Time Less Than 15 Seconds`;
             if(testCases[i].exHTMLToSVGCompileTime < 15000)
             {
-                console.log(`       ${chalk.green(outString)}`);
+                console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : true
@@ -263,7 +318,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 });
             }
             outString = `HTML to SVG Compiler Didn't Crash`;
-            console.log(`       ${chalk.green(outString)}`);
+            console.log(`       ${chalk.green(outString)} ☑️`);
             testCases[i].summary.statuses.push({
                 message : outString,
                 status : true
@@ -284,7 +339,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             outString = `Protocol Buffer to SVG Compile Time Faster Than HTML to SVG Compiler`;
             if(testCases[i].exPBToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
             {
-                console.log(`       ${chalk.green(outString)}`);
+                console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
                     message : outString,
                     status : true
@@ -301,7 +356,49 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                     status : false
                 });
             }
+
+            console.log(`   ${chalk.magentaBright(`Running HTML to SVG Compiler In Batched Mode`)}`);
+            testCases[i].runExBatchedHTMLToSVGCompiler();
+            testCases[i].getExBatchedHTMLTOSVGREsultSize();
+            console.log(`   ${chalk.magenta(`Compile time:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGCompileTime+"ms")}`);
+            console.log(`   ${chalk.magenta(`Output size:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGResultSize+"b")}`);
+            outString = `HTML to SVG Compiler in Batched Mode Compile Time Faster Than HTML to SVG Compiler`;
+            if(testCases[i].exBatchedHTMLToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
+            {
+                console.log(`       ${chalk.green(outString)} ☑️`);
+                testCases[i].summary.statuses.push({
+                    message : outString,
+                    status : true
+                });
+            }
+            else
+            {
+                console.log(`       ${chalk.red(outString)}`);
+                testCases[i].summary.statuses.push({
+                    message : outString,
+                    status : false
+                });
+                console.log(`       ${chalk.red("HTML to SVG Compiler in Batched Mode Slower By "+(testCases[i].exHTMLToSVGCompileTime - testCases[i].exBatchedHTMLToSVGCompileTime))}`);
+                if(testCases[i].type == "stress" && testCases[i].exHTMLToSVGCompileTime - testCases[i].exBatchedHTMLToSVGCompileTime <= -100)
+                {
+                    //process.exit(1);
+                }
+            }
         }
+
+        
+
+        
+        console.log(`   ${chalk.cyan(`Finding Best Rendering Strategy`)}`);
+        let bestStrategy = await testCases[i].findBestStrategy();
+        console.log(`       ${chalk.cyan(`Selected ${bestStrategy}`)}`);
+        testCases[i].summary.statuses.push({
+            message : bestStrategy,
+            status : true
+        });
+
+        console.log(`-----------------------------------------------------------------------------------------------------`);
+
     }
     console.log(`Summaries:`);
     console.log(``)
@@ -312,7 +409,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
         for(let k = 0; k != testCases[i].summary.statuses.length; ++k)
         {
             if(testCases[i].summary.statuses[k].status)
-                console.log(`   ${chalk.green(testCases[i].summary.statuses[k].message)}`);
+                console.log(`   ${chalk.green(testCases[i].summary.statuses[k].message)} ☑️`);
             else
             console.log(`   ${chalk.red(testCases[i].summary.statuses[k].message)}`);
         }

@@ -28,11 +28,13 @@
 /// <reference path="./interpolate" />
 /// <reference path="./parseFontSize" />
 
+import {EventEmitter} from "events";
 
 import * as html from "./html"
 import * as services from "./services";
 import {interpolate} from "./interpolate";
 import {parseFontSize} from "./parseFontSize";
+
 
 interface GenericNode<T>
 {
@@ -42,15 +44,83 @@ interface GenericNode<T>
     children : Array<T>;
 }
 
+let performance : any = undefined;
+
+try
+{
+    let perf_hooks = require("perf_hooks");
+    performance = perf_hooks.performance;
+}
+catch(err){}
+
+class Timer
+{
+    public startEpoch : number;
+
+    public endEpoch : number;
+
+    public constructor()
+    {
+        if(performance === undefined)
+        {
+            this.startEpoch = Date.now();
+        }
+        else
+            this.startEpoch = performance.now();
+    }
+
+    public stop() : number
+    {
+        if(performance === undefined)
+        {
+            this.endEpoch = Date.now();
+            return Math.abs((<any>new Date(this.endEpoch)) - (<any>new Date(this.startEpoch)));
+        }
+        else
+        {
+            this.endEpoch = performance.now();
+            return this.endEpoch - this.startEpoch;
+        }
+    }
+}
+
+export type RenderingStrategies = "normal" | "preCalculateBatch";
+
+class RenderingStrategy
+{
+    public render : (plasmid : Plasmid) => string;
+    public runs : Array<number> = new Array<number>();
+
+    public constructor(renderFunction : (plasmid : Plasmid) => string)
+    {
+        this.render = renderFunction;
+    }
+}
+
+export interface AdaptiveRenderingUpdates
+{
+    on(event : "render",listener : (name : RenderingStrategies,time : number) => void) : this;
+    on(event : "selectedStrategy",listener : (name : RenderingStrategies,averages : Array<{name:RenderingStrategies,avg:number}>) => void) : this;
+}
+
+class AdaptiveRenderingUpdater extends EventEmitter implements AdaptiveRenderingUpdates
+{
+
+}
+
 export abstract class Directive
 {
-    tagType : "plasmid" |
+    public tagType : "plasmid" |
     "plasmidtrack" |
     "tracklabel" |
     "trackscale" |
     "trackmarker" |
     "markerlabel" | 
     "svgelement";
+
+    public _batchedSVGPath : string;
+
+    public abstract generateSVGPath() : string;
 
     public abstract renderStart() : string;
 
@@ -208,37 +278,98 @@ export class Plasmid extends Directive
         this.plasmidwidth = parseFloat(interpolate(this._IplasmidWidth,this.$scope));
     }
 
+    public changeRenderingStrategy(newStrategy : RenderingStrategies)
+    {
+        this.currentRenderingStrategy = newStrategy;
+    }
+
+    private currentRenderingStrategy : RenderingStrategies = "normal";
+
+    private renderingStrategies : {
+        [key : string] : RenderingStrategy
+    } = <{
+        [key : string] : RenderingStrategy
+    }>{};
+
+    private useAdaptiveRendering : boolean = false;
+
+    public adaptIterations : number = 2;
+
+    public enableAdaptiveRendering() : void
+    {
+        this.useAdaptiveRendering = true;
+    }
+
+    public disableAdaptiveRendering() : void
+    {
+        this.useAdaptiveRendering = false;
+    }
+
     public renderStart() : string
     {
-        this.interpolateAttributes();
-        //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L60
-        let res = "";
-
-        res += `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" `;
-
-        if(this.sequencelength)
-            res += `sequencelength="${this.sequencelength}" `;
-
-        if(this.plasmidheight)
-            res += `plasmidheight="${this.plasmidheight}" `;
-    
-        if(this.plasmidwidth)
-            res += `plasmidwidth="${this.plasmidwidth}" `;
-    
-        res += `class="ng-scope ng-isolate-scope" `;
-
-        if(this.plasmidheight)
-            res += `height="${this.plasmidheight}" ` ;
-    
-        if(this.plasmidwidth)
-            res += `width="${this.plasmidwidth}"`;
-
-        res += ">";
-        for(let i = 0; i != this.tracks.length; ++i)
+        if(!this.useAdaptiveRendering)
+            return this.renderingStrategies[this.currentRenderingStrategy].render(this);
+        
+        else
         {
-            res += this.tracks[i].renderStart();
+            for(let i in this.renderingStrategies)
+            {
+                if(this.renderingStrategies[i].runs.length != this.adaptIterations)
+                {
+                    let timer = new Timer();
+                    let res = this.renderingStrategies[i].render(this);
+                    let time = timer.stop();
+                    this.adaptiveRenderingUpdates.emit("render",i,time);
+                    this.renderingStrategies[i].runs.push(time);
+                    return res;
+                }
+            }
+
+            let averages = new Array<{name:RenderingStrategies,avg:number}>();
+            for(let i in this.renderingStrategies)
+            {
+                let average = {
+                    name : <RenderingStrategies>i,
+                    avg : 0
+                };
+
+                for(let k = 0; k != this.renderingStrategies[i].runs.length; ++k)
+                {
+                    average.avg += this.renderingStrategies[i].runs[k];
+                }
+
+                average.avg = average.avg / this.renderingStrategies[i].runs.length;
+
+                averages.push(average);
+            }
+
+            let smallest : {name:RenderingStrategies,time:number} | undefined = undefined;
+            for(let i = 0; i != averages.length; ++i)
+            {
+                if(smallest == undefined)
+                {
+                    smallest = {
+                        name : averages[i].name,
+                        time : averages[i].avg
+                    };
+                }
+                else
+                {
+                    if(averages[i].avg < smallest.time)
+                    {
+                        smallest = {
+                            name : averages[i].name,
+                            time : averages[i].avg
+                        };
+                    }
+                }
+            }
+            this.disableAdaptiveRendering();
+            this.changeRenderingStrategy(smallest!.name);
+            this.adaptiveRenderingUpdates.emit("selectedStrategy",smallest!.name,averages);
+
+            return this.renderingStrategies[this.currentRenderingStrategy].render(this);
         }
-        return res;
     }
 
     public renderEnd() : string
@@ -281,10 +412,16 @@ export class Plasmid extends Directive
             if(node.children[i].name == "plasmidtrack")
             {
                 let track : PlasmidTrack = new PlasmidTrack(this);
+                track.$scope = this.$scope;
                 track.fromNode(node.children[i]);
                 this.tracks.push(track);
             }
         }
+    }
+
+    public generateSVGPath() : string
+    {
+        return "";
     }
 
     public getSVGPath() : string | undefined
@@ -292,11 +429,57 @@ export class Plasmid extends Directive
         throw new Error("Not supported by directive");
     }
 
+    private batchGenerateSVGPaths() : void
+    {
+        this.interpolateAttributes();
+        
+        let ngPlasmidNative = require("./ngPlasmid");
+        ngPlasmidNative.batchGenerateSVGPaths(this);
+    }
+
+    public adaptiveRenderingUpdates : AdaptiveRenderingUpdater = new AdaptiveRenderingUpdater();
+
     public constructor()
     {
         super();
         this.tagType = "plasmid";
         this.tracks = new Array<PlasmidTrack>();
+        this.renderingStrategies["normal"] = new RenderingStrategy(function(plasmid : Plasmid){
+            plasmid.interpolateAttributes();
+            //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L60
+            let res = "";
+
+            res += `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" `;
+
+            if(plasmid.sequencelength)
+                res += `sequencelength="${plasmid.sequencelength}" `;
+
+            if(plasmid.plasmidheight)
+                res += `plasmidheight="${plasmid.plasmidheight}" `;
+    
+            if(plasmid.plasmidwidth)
+                res += `plasmidwidth="${plasmid.plasmidwidth}" `;
+    
+            res += `class="ng-scope ng-isolate-scope" `;
+
+            if(plasmid.plasmidheight)
+                res += `height="${plasmid.plasmidheight}" ` ;
+    
+            if(plasmid.plasmidwidth)
+                res += `width="${plasmid.plasmidwidth}"`;
+
+            res += ">";
+            for(let i = 0; i != plasmid.tracks.length; ++i)
+            {
+                res += plasmid.tracks[i].renderStart();
+            }
+            return res;
+        });
+
+        this.renderingStrategies["preCalculateBatch"] = new RenderingStrategy(function(plasmid : Plasmid){
+            plasmid.batchGenerateSVGPaths();
+            return plasmid.renderingStrategies["normal"].render(plasmid);
+        });
     }
 }
 
@@ -348,10 +531,7 @@ export class PlasmidTrack extends Directive
 
     public children : Array<TrackLabel | TrackScale | TrackMarker>;
 
-    public get $scope() : any
-    {
-        return this.plasmid.$scope;
-    }
+    public $scope : any;
 
     public _Iradius : string;
 
@@ -451,7 +631,7 @@ export class PlasmidTrack extends Directive
         return undefined;
     }
 
-    public getSVGPath() : string | undefined
+    public generateSVGPath() : string
     {
         return services.pathDonut(
             this.center.x,
@@ -459,6 +639,18 @@ export class PlasmidTrack extends Directive
             this.radius,
             this.width
         );
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        if(this._batchedSVGPath)
+        {
+            let res = this._batchedSVGPath;
+            this._batchedSVGPath = "";
+            return res;
+        }
+        
+        return this.generateSVGPath();
     }
 
     public interpolateAttributes() : void
@@ -528,6 +720,7 @@ export class PlasmidTrack extends Directive
             if(node.children[i].name == "tracklabel")
             {
                 let label = new TrackLabel(this);
+                label.$scope = this.plasmid.$scope;
                 label.fromNode(node.children[i]);
                 this.labels.push(label);
                 this.children.push(label);
@@ -535,6 +728,7 @@ export class PlasmidTrack extends Directive
             else if(node.children[i].name == "trackmarker")
             {
                 let marker = new TrackMarker(this);
+                marker.$scope = this.plasmid.$scope;
                 marker.fromNode(node.children[i]);
                 this.markers.push(marker);
                 this.children.push(marker);
@@ -542,6 +736,7 @@ export class PlasmidTrack extends Directive
             else if(node.children[i].name == "trackscale")
             {
                 let scale = new TrackScale(this);
+                scale.$scope = this.plasmid.$scope;
                 scale.fromNode(node.children[i]);
                 this.scales.push(scale);
                 this.children.push(scale);
@@ -579,10 +774,7 @@ export class TrackLabel extends Directive
      */
     public track : PlasmidTrack;
     
-    public get $scope() : any
-    {
-        return this.track.$scope;
-    }
+    public $scope : any;
 
     public get center() : services.Point
     {
@@ -752,6 +944,11 @@ export class TrackLabel extends Directive
         }
     }
 
+    public generateSVGPath() : string
+    {
+        return "";
+    }
+
     public getSVGPath() : string | undefined
     {
         throw new Error("Not supported by directive");
@@ -811,10 +1008,7 @@ export class TrackScale extends Directive
      */
     public track : PlasmidTrack;
 
-    public get $scope() : any
-    {
-        return this.track.$scope;
-    }
+    public $scope : any;
 
     public get radius() : number
     {
@@ -1023,9 +1217,20 @@ export class TrackScale extends Directive
         return this.radius + (this.labelvadjust * (this.inwardflg ? -1 : 1));
     }
 
-    public getSVGPath() : string | undefined
+    public generateSVGPath() : string
     {
         return services.pathScale(this.track.center.x,this.track.center.y,this.radius,this.interval,this.total,this.ticksize);
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        if(this._batchedSVGPath)
+        {
+            let res = this._batchedSVGPath;
+            this._batchedSVGPath = "";
+            return res;
+        }
+        return this.generateSVGPath();
     }
 
     public interpolateAttributes() : void
@@ -1242,10 +1447,7 @@ export class TrackMarker extends Directive
      */
     public labels : Array<MarkerLabel>;
 
-    public get $scope() : any
-    {
-        return this.track.$scope;
-    }
+    public $scope : any;
 
     public getPath() : string
     {
@@ -1554,9 +1756,20 @@ export class TrackMarker extends Directive
         }
     }
 
-    public getSVGPath() : string | undefined
+    public generateSVGPath() : string
     {
         return this.getPath();
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        if(this._batchedSVGPath)
+        {
+            let res = this._batchedSVGPath;
+            this._batchedSVGPath = "";
+            return res;
+        }
+        return this.generateSVGPath();
     }
 
     public interpolateAttributes() : void
@@ -1599,7 +1812,7 @@ export class TrackMarker extends Directive
             res = res + this.labels[i].renderStart();
         }
         res = res + `</g>`;
-        
+
         return res;
     }
     public renderEnd() : string
@@ -1681,6 +1894,7 @@ export class TrackMarker extends Directive
             if(node.children[i].name == "markerlabel")
             {
                 let label = new MarkerLabel(this);
+                label.$scope = this.track.plasmid.$scope;
                 label.fromNode(node.children[i]);
                 this.labels.push(label);
             }
@@ -1728,10 +1942,7 @@ export class MarkerLabel extends Directive
 
     public classList : Array<string>;
 
-    public get $scope() : any
-    {
-        return this.marker.$scope;
-    }
+    public $scope : any;
 
     public get showlineflg() : boolean
     {
@@ -1992,7 +2203,7 @@ export class MarkerLabel extends Directive
         return services.pathArc(this.marker.center.x, this.marker.center.y, radius + Number(vAdjust || 0), startAngle + Number(hAdjust || 0), endAngle + Number(hAdjust || 0), 1);
     }
 
-    public getSVGPath() : string | undefined
+    public generateSVGPath() : string
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L950
         let VALIGN_MIDDLE = "middle";
@@ -2018,6 +2229,17 @@ export class MarkerLabel extends Directive
             let dst = this.halign === HALIGN_START ? dstV.begin : this.halign === HALIGN_END ? dstV.end : dstV.middle;
             return ["M", (<services.Point>src).x, (<services.Point>src).y, "L", dst.x, dst.y].join(" ");
         }
+    }
+
+    public getSVGPath() : string | undefined
+    {
+        if(this._batchedSVGPath)
+        {
+            let res = this._batchedSVGPath;
+            this._batchedSVGPath = "";
+            return res;
+        }
+        return this.generateSVGPath();
     }
 
     public interpolateAttributes() : void

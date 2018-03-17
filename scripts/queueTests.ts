@@ -148,28 +148,28 @@ export function queueTests() : Array<TestCase>
         htmlFile : "HPV16L6R1BareSNPs.html",
         jsonFile :"HPV16L6R1BareSNPs.json",
         name : "L6R1 SNPs on HPV16",
-        type : "stress"
+        type : "example"
     }));
 
     testCases.push(new TestCase(<TestCaseInit>{
         htmlFile : "HPV16WithL6R1SNPs.html",
         jsonFile :"HPV16WithL6R1SNPs.json",
         name : "HPV16 With L6R1 SNPs",
-        type : "stress"
+        type : "example"
     }));
 
     testCases.push(new TestCase(<TestCaseInit>{
         htmlFile : "ch38.html",
         jsonFile :"ch38.json",
         name : "Stress Test: ch38",
-        type : "stress"
+        type : "example"
     }));
 
     testCases.push(new TestCase(<TestCaseInit>{
         htmlFile : "L6R1HPV16Cov.html",
         jsonFile :"L6R1HPV16Cov.json",
         name : "Stress Test: HPV16 L6R1 Coverage Track",
-        type : "stress"
+        type : "example"
     }));
 
     testCases.push(new TestCase(<TestCaseInit>{
