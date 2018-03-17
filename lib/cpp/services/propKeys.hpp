@@ -28,6 +28,10 @@ namespace ngPlasmid
         void initPropKeys();
         void initPropKeys()
         {
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_START(initPropKeys);
+            #endif
+
             ::ngPlasmid::JSAware::interpolateAttributes = ::Nan::New("interpolateAttributes").ToLocalChecked();
             ::ngPlasmid::JSAware::_batchedSVGPath = ::Nan::New("_batchedSVGPath").ToLocalChecked();
 
@@ -48,6 +52,10 @@ namespace ngPlasmid
             ::ngPlasmid::JSAware::_start = ::Nan::New("_start").ToLocalChecked();
             ::ngPlasmid::JSAware::_end = ::Nan::New("_end").ToLocalChecked();
             ::ngPlasmid::JSAware::_vadjust = ::Nan::New("_vadjust").ToLocalChecked();
+            
+            #ifdef PROFILE_NGPLASMID
+                PROFILER_END();
+            #endif
         }
     }
 }

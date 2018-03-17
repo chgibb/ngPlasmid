@@ -13,73 +13,37 @@
     #define USE_PROFILER 1
     #define LIB_PROFILER_IMPLEMENTATION
     #define LIB_PROFILER_PRINTF profileOut
-    #include "../libProfiler/libProfiler.h"
+    #include "../../libProfiler/libProfiler.h"
 #endif
 
 #include <nan.h>
 
-#include "cpp/directivePacks/trackMarker.hpp"
-#include "cpp/parallelize.hpp"
-
-#include "propKeys.hpp"
-#include "pathComplexArc.hpp"
-#include "pathDonut.hpp"
-#include "getPath.hpp"
-#include "getAngle.hpp"
+#include "directivePacks/trackMarker.hpp"
+#include "services/parallelize.hpp"
+#include "services/split.hpp"
+#include "services/assignPaths.hpp"
+#include "services/propKeys.hpp"
+#include "services/pathComplexArc.hpp"
+#include "services/pathDonut.hpp"
+#include "services/getPath.hpp"
+#include "services/getAngle.hpp"
 
 
 void Init(::v8::Local<::v8::Object>);
 
-template <class Container>
-void split(Container*in,Container*&l,Container*&r)
-{
-    #ifdef PROFILE_NGPLASMID
-        PROFILER_START(split);
-    #endif
-
-    size_t middle = in->size()/2;
-
-    l = new Container(in->begin(),in->begin() + middle);
-    r = new Container(in->begin() + middle,in->end());
-    
-    #ifdef PROFILE_NGPLASMID
-        PROFILER_END();
-    #endif
-}
-
 namespace ngPlasmid
 {
-    inline void assignPaths(::v8::Handle<::v8::Array>&markers,std::vector<::ngPlasmid::TrackMarkerPack>&packs)
-    {
-        #ifdef PROFILE_NGPLASMID
-            PROFILER_START(assignPaths);
-        #endif
-
-        auto end = packs.end();
-        for(auto it = packs.begin(); it != end; ++it)
-        {
-            ::Nan::Set(
-                ::v8::Handle<::v8::Object>::Cast(markers->Get(it->index)),
-                ::ngPlasmid::JSAware::_batchedSVGPath,
-                ::Nan::New(it->path).ToLocalChecked()
-            );
-        }
-
-        #ifdef PROFILE_NGPLASMID
-            PROFILER_END();
-        #endif
-    }
     namespace JSExport
     {
         void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&);
         void batchGenerateSVGPaths(const ::Nan::FunctionCallbackInfo<::v8::Value>&args)
         {
-            ::ngPlasmid::JSAware::initPropKeys();
-
             #ifdef PROFILE_NGPLASMID
                 PROFILER_ENABLE;
                 PROFILER_START(batchGenerateSVGPaths);
             #endif
+
+            ::ngPlasmid::JSAware::initPropKeys();
             
             ::v8::Isolate*isolate = args.GetIsolate();
 
@@ -246,33 +210,6 @@ namespace ngPlasmid
                     #ifdef PROFILE_NGPLASMID
                         PROFILER_END();
                     #endif
-
-                    //std::string path = ::ngPlasmid::getTrackMarkerSVGPath(pack);
-
-                    /*std::future<const std::string> pathFuture = ::launchParallelRef<const std::string,::ngPlasmid::TrackMarkerPack&>(
-                        &::ngPlasmid::getTrackMarkerSVGPath,
-                        pack
-                    );*/
-
-                    /*if(pathFuture)
-                    {
-                        path = pathFuture->get();
-
-                        ::Nan::Set(
-                            ::v8::Handle<::v8::Object>::Cast(markers->Get(k-1)),
-                            ::ngPlasmid::JSAware::_batchedSVGPath,
-                            ::Nan::New(path).ToLocalChecked()
-                        );
-
-                        path = "";
-                        delete pathFuture;
-                        pathFuture = new std::future<const std::string>(
-                            ::launchParallelRef<const std::string,::ngPlasmid::TrackMarkerPack&>(
-                                &::ngPlasmid::getTrackMarkerSVGPath,
-                                pack
-                            )
-                        );
-                    }*/
                 }
 
                 if(firstPathFuture || secondPathFuture)
@@ -317,14 +254,14 @@ namespace ngPlasmid
 
                 if(!firstPathFuture || !secondPathFuture)
                 {
-                     ::split<std::vector<::ngPlasmid::TrackMarkerPack>>(&markerPacks,first,second);
+                     ::ngPlasmid::split<std::vector<::ngPlasmid::TrackMarkerPack>>(&markerPacks,first,second);
 
-                    firstPathFuture = new std::future<void>(::launchParallelRef<void,std::vector<TrackMarkerPack>*&>(
+                    firstPathFuture = new std::future<void>(::ngPlasmid::launchParallelRef<void,std::vector<TrackMarkerPack>*&>(
                         &::ngPlasmid::getTrackMarkerSVGPath,
                         first
                     ));
 
-                    secondPathFuture = new std::future<void>(::launchParallelRef<void,std::vector<TrackMarkerPack>*&>(
+                    secondPathFuture = new std::future<void>(::ngPlasmid::launchParallelRef<void,std::vector<TrackMarkerPack>*&>(
                         &::ngPlasmid::getTrackMarkerSVGPath,
                         second
                     ));

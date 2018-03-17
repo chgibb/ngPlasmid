@@ -4,11 +4,11 @@
 
 #include <nan.h>
 
-#include "../../propKeys.hpp"
-#include "../../point.hpp"
-#include "../../angle.hpp"
-#include "../../pathArc.hpp"
-#include "../../getAngle.hpp"
+#include "../services/propKeys.hpp"
+#include "../services/point.hpp"
+#include "../services/angle.hpp"
+#include "../services/pathArc.hpp"
+#include "../services/getAngle.hpp"
 
 namespace ngPlasmid
 {
