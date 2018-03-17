@@ -162,14 +162,14 @@ export function queueTests() : Array<TestCase>
         htmlFile : "ch38.html",
         jsonFile :"ch38.json",
         name : "Stress Test: ch38",
-        type : "stress"
+        type : "example"
     }));
 
     testCases.push(new TestCase(<TestCaseInit>{
         htmlFile : "L6R1HPV16Cov.html",
         jsonFile :"L6R1HPV16Cov.json",
         name : "Stress Test: HPV16 L6R1 Coverage Track",
-        type : "stress"
+        type : "example"
     }));
 
     testCases.push(new TestCase(<TestCaseInit>{
