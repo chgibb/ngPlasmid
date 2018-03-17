@@ -303,16 +303,40 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             }
         }
 
-        console.log(`   ${chalk.magentaBright(`Running HTML to SVG Compiler With Batched Services`)}`);
+        console.log(`   ${chalk.magentaBright(`Running HTML to SVG Compiler In Batched Mode`)}`);
         testCases[i].runExBatchedHTMLToSVGCompiler();
-        //testCases[i].optimiseExBatchedHTMLToSVGCompilerResult();
+        testCases[i].optimiseExBatchedHTMLToSVGCompilerResult();
         testCases[i].getExBatchedHTMLTOSVGREsultSize();
-        //testCases[i].getExBatchedHTMLToSVGResultOptimisedSize();
+        testCases[i].getExBatchedHTMLToSVGResultOptimisedSize();
         console.log(`   ${chalk.magenta(`Compile time:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGCompileTime+"ms")}`);
         console.log(`   ${chalk.magenta(`Output size:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGResultSize+"b")}`);
         console.log(`   ${chalk.magenta(`Optimisation time:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGOptimisationTime+"ms")}`);
         console.log(`   ${chalk.magenta(`Optimised Output size:`)} ${chalk.yellow(testCases[i].exBatchedHTMLToSVGOptimisedResultSize+"b")}`);
-        let outString = `HTML to SVG Compiler With Batched Services Compile Time Faster Than HTML to SVG Compiler`;
+        console.log(`   ${chalk.magentaBright(`Validating`)}`);
+        let outString = "";
+        if(testCases[i].type != "stress")
+        {
+            outString = `HTML to SVG Compiler in Batched Mode Output Can Be Reduced to the Same as the Reference`;
+            let res = validateFileEquality(testCases[i].referenceResultOptimisedPath,testCases[i].exBatchedHTMLToSVGResultOptimisedPath);
+            if(res)
+            {
+                console.log(`       ${chalk.green(outString)} ☑️`);
+                testCases[i].summary.statuses.push({
+                    message : outString,
+                    status : true
+                });
+            }
+            else
+            {
+                console.log(`       ${chalk.red(outString)}`);
+                testCases[i].summary.statuses.push({
+                    message : outString,
+                    status : true
+                });
+                process.exit(1);
+            }
+        }
+        outString = `HTML to SVG Compiler in Batched Mode Compile Time Faster Than HTML to SVG Compiler`;
         if(testCases[i].exBatchedHTMLToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
         {
             console.log(`       ${chalk.green(outString)} ☑️`);
@@ -328,7 +352,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 message : outString,
                 status : false
             });
-            console.log(`       ${chalk.red("HTML to SVG Compiler With Batched Services Slower By "+(testCases[i].exHTMLToSVGCompileTime - testCases[i].exBatchedHTMLToSVGCompileTime))}`);
+            console.log(`       ${chalk.red("HTML to SVG Compiler in Batched Mode Slower By "+(testCases[i].exHTMLToSVGCompileTime - testCases[i].exBatchedHTMLToSVGCompileTime))}`);
             if(testCases[i].type == "stress" && testCases[i].exHTMLToSVGCompileTime - testCases[i].exBatchedHTMLToSVGCompileTime <= -100)
             {
                 //process.exit(1);
