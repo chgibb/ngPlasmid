@@ -3,13 +3,13 @@
 
 rm -rf build/
 
-node-gyp configure
+node-gyp configure --release --no-debug
 if [ $? != 0 ]; then
     printf "node-gyp configure failed\n"
 	exit 1
 fi
 
-node-gyp build
+node-gyp build --release --no-debug
 if [ $? != 0 ]; then
     printf "node-gyp build failed\n"
 	exit 1
