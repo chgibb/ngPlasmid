@@ -19,7 +19,7 @@
             ],
             "msvs_settings" : {
                 "VCCLCompilerTool" : {
-                    "BasicRuntimeChecks" : 0,
+                    "BasicRuntimeChecks" : false,
                     "AdditionalOptions" : [
                         "/Ox",
                         "/fp:fast"
