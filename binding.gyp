@@ -21,7 +21,7 @@
                 "VCCLCompilerTool" : {
                     "AdditionalOptions" : [
                         "/Ox",
-                        "fp:fast"
+                        "/fp:fast"
                     ]
                 }
             }
