@@ -16,7 +16,15 @@
                 "-Werror",
                 "-Wno-comment",
                 "-s"
-            ]
+            ],
+            "msvs_settings" : {
+                "VCCLCompilerTool" : {
+                    "AdditionalOptions" : [
+                        "/Ox",
+                        "fp:fast"
+                    ]
+                }
+            }
         }
     ]
 }
