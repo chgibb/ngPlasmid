@@ -20,6 +20,7 @@
             "msvs_settings" : {
                 "VCCLCompilerTool" : {
                     "AdditionalOptions" : [
+                        "/Ox",
                         "/fp:fast"
                     ]
                 }
