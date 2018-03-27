@@ -8,5 +8,6 @@ install:
 test_script:
   - node --version
   - npm --version
+  - echo %npm_config_debug%
   - npm test
   
