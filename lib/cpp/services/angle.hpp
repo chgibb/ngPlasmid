@@ -4,7 +4,7 @@ namespace ngPlasmid
 {
     struct Angle
     {
-        long double start;
-        long double end;
+        float start;
+        float end;
     };
 }

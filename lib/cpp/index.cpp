@@ -75,7 +75,7 @@ namespace ngPlasmid
             ).ToLocalChecked()->NumberValue();
 
 
-            long double seqLength = ::Nan::Get(
+            float seqLength = ::Nan::Get(
                 plasmid,
                 ::Nan::New("sequencelength").ToLocalChecked()
             ).ToLocalChecked()->NumberValue();
@@ -133,7 +133,7 @@ namespace ngPlasmid
                 #ifdef PROFILE_NGPLASMID
                     PROFILER_START(get#plasmid#tracks[]#radius);
                 #endif
-                long double trackRadius = ::Nan::Get(
+                float trackRadius = ::Nan::Get(
                     track,
                     ::ngPlasmid::JSAware::radius
                 ).ToLocalChecked()->NumberValue();

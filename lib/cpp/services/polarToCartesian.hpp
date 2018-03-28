@@ -7,15 +7,15 @@
 
 namespace ngPlasmid
 {
-    const long double JS_PI = 3.141592653589793;
+    const float JS_PI = 3.141592653589793;
     inline ::ngPlasmid::Point polarToCartesian(
-        long double centerX,
-        long double centerY,
-        long double radius,
-        long double angleInDegrees
+        float centerX,
+        float centerY,
+        float radius,
+        float angleInDegrees
     ) {
         ::ngPlasmid::Point res;
-        long double angleInRadians = (angleInDegrees - 90) * JS_PI / 180.0;
+        float angleInRadians = (angleInDegrees - 90) * JS_PI / 180.0;
         res.x = centerX + (radius * std::cos(angleInRadians));
         res.y = centerY + (radius * std::sin(angleInRadians));
         return res;

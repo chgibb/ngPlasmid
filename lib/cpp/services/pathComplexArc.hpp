@@ -12,18 +12,18 @@
 namespace ngPlasmid
 {
     inline const std::string pathComplexArc(
-        long double x,
-        long double y,
-        long double radius,
-        long double startAngle,
-        long double endAngle,
-        long double width,
-        long double arrowStartWidth,
-        long double arrowStartLength,
-        long double arrowStartAngle,
-        long double arrowEndWidth,
-        long double arrowEndLength,
-        long double arrowEndAngle
+        float x,
+        float y,
+        float radius,
+        float startAngle,
+        float endAngle,
+        float width,
+        float arrowStartWidth,
+        float arrowStartLength,
+        float arrowStartAngle,
+        float arrowEndWidth,
+        float arrowEndLength,
+        float arrowEndAngle
     ) {
         //std::stringstream ss;
         //std::string ss;
@@ -63,7 +63,7 @@ namespace ngPlasmid
         start2 = ::ngPlasmid::polarToCartesian(x, y, radius + width, endAngle);
         arcSweep = endAngle - startAngle <= 180 ? '0' : '1';
 
-        //ss.precision(std::numeric_limits<long double>::digits10 + 1);
+        //ss.precision(std::numeric_limits<float>::digits10 + 1);
 
         ss<<"M";
         ss<<" ";

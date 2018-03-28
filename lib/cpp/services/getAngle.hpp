@@ -8,21 +8,21 @@ namespace ngPlasmid
 {
     namespace JSAware
     {
-        ::ngPlasmid::Angle getAngle(const ::v8::Handle<::v8::Object>&,long double);
-        ::ngPlasmid::Angle getAngle(const ::v8::Handle<::v8::Object>&marker,long double seqLength)
+        ::ngPlasmid::Angle getAngle(const ::v8::Handle<::v8::Object>&,float);
+        ::ngPlasmid::Angle getAngle(const ::v8::Handle<::v8::Object>&marker,float seqLength)
         {
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(getAngle);
             #endif
             
-            long double startAngle;
-            long double endAngle;
-            long double end;
+            float startAngle;
+            float endAngle;
+            float end;
 
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(get#marker#start);
             #endif
-            long double markerStart = ::Nan::Get(
+            float markerStart = ::Nan::Get(
                 marker,
                 ::ngPlasmid::JSAware::_start
             ).ToLocalChecked()->NumberValue();
@@ -33,7 +33,7 @@ namespace ngPlasmid
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(get#marker#end);
             #endif
-            long double markerEnd = ::Nan::Get(
+            float markerEnd = ::Nan::Get(
                 marker,
                 ::ngPlasmid::JSAware::_end
             ).ToLocalChecked()->NumberValue();

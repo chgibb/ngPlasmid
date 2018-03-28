@@ -18,24 +18,24 @@ namespace ngPlasmid
     class TrackMarkerPack
     {
         public:
-            long double radius;
-            long double inner;
-            long double arrowStartWidth;
-            long double arrowStartLength;
-            long double arrowStartAngle;
-            long double arrowEndWidth;
-            long double arrowEndLength;
-            long double arrowEndAngle;
-            long double radiusInner;
-            long double x;
-            long double y;
-            long double width;
-            long double start;
-            long double end;
-            long double vadjust;
-            long double seqLength;
+            float radius;
+            float inner;
+            float arrowStartWidth;
+            float arrowStartLength;
+            float arrowStartAngle;
+            float arrowEndWidth;
+            float arrowEndLength;
+            float arrowEndAngle;
+            float radiusInner;
+            float x;
+            float y;
+            float width;
+            float start;
+            float end;
+            float vadjust;
+            float seqLength;
             ::ngPlasmid::Point center;
-            long double trackRadius;
+            float trackRadius;
 
             int index;
             std::string path;
@@ -51,9 +51,9 @@ namespace ngPlasmid
         auto end = packs->end();
         for(auto it = packs->begin(); it != end; ++it)
         {
-            long double startAngle;
-            long double endAngle;
-            long double end;
+            float startAngle;
+            float endAngle;
+            float end;
 
             startAngle = (it->start / it->seqLength) * 360;
             end = it->end || it->start;
@@ -91,16 +91,16 @@ namespace ngPlasmid
         void setTrackMarkerPackProps(
             const ::v8::Handle<::v8::Object>&,
             TrackMarkerPack&,
-            long double,
+            float,
             ::ngPlasmid::Point&,
-            long double
+            float
         );
         void setTrackMarkerPackProps(
             const ::v8::Handle<::v8::Object>&marker,
             TrackMarkerPack&pack,
-            long double seqLength,
+            float seqLength,
             ::ngPlasmid::Point&center,
-            long double trackRadius
+            float trackRadius
         ) {
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(JSAware::setTrackMarkerPackProps);

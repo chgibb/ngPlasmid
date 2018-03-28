@@ -11,16 +11,16 @@
 namespace ngPlasmid
 {
     inline std::string pathDonut(
-        long double,
-        long double,
-        long double,
-        long double
+        float,
+        float,
+        float,
+        float
     );
 
     namespace JSAware
     {
-        void pathDonut(const ::v8::Handle<::v8::Object>&,long double);
-        void pathDonut(const ::v8::Handle<::v8::Object>&track,long double radius)
+        void pathDonut(const ::v8::Handle<::v8::Object>&,float);
+        void pathDonut(const ::v8::Handle<::v8::Object>&track,float radius)
         {
             #ifdef PROFILE_NGPLASMID
                 PROFILER_START(JSAware::pathDonut);
@@ -43,19 +43,19 @@ namespace ngPlasmid
                 center,
                 ::ngPlasmid::JSAware::x
             ).ToLocalChecked();
-            long double x = xProp->NumberValue();
+            float x = xProp->NumberValue();
 
             ::v8::Local<::v8::Value> yProp = ::Nan::Get(
                 center,
                 ::ngPlasmid::JSAware::y
             ).ToLocalChecked();
-            long double y = yProp->NumberValue();
+            float y = yProp->NumberValue();
             
             ::v8::Local<::v8::Value> widthProp = ::Nan::Get(
                 track,
                 ::ngPlasmid::JSAware::width
             ).ToLocalChecked();
-            long double width = widthProp->NumberValue();
+            float width = widthProp->NumberValue();
 
             ::Nan::Set(
                 track,
@@ -77,10 +77,10 @@ namespace ngPlasmid
     }
 
     inline std::string pathDonut(
-        long double x,
-        long double y,
-        long double radius,
-        long double width
+        float x,
+        float y,
+        float radius,
+        float width
     ) {
         #ifdef PROFILE_NGPLASMID
             PROFILER_START(pathDonut);
