@@ -40,5 +40,10 @@
   },
   "optionalDependencies": {
     "htmlparser2": "^3.9.2"
+  },
+  "jest" : {
+    "testPathIgnorePatterns" : [
+      "/scripts/"
+    ]
   }
 }
