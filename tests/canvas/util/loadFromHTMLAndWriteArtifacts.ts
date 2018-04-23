@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import * as cp from "child_process";
 
 const svg2img = require("svg2img");
 
@@ -25,6 +26,7 @@ export function loadFromHTMLAndWriteArtifacts(file : string,scope : any) : Promi
             res.$scope = scope;
 
         fs.writeFileSync(`${file}.svg`,res.renderStart()+res.renderEnd());
+        cp.execSync(`./node_modules/.bin/canvgc ${file}.svg ${file}Cmds.js`);
 
         await new Promise<void>((innerResolve) => {
             svg2img(res.renderStart()+res.renderEnd(),function(err : any,buff : Buffer){

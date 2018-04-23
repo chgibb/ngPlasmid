@@ -8,6 +8,8 @@ export function plasmidToBuffer(plasmid : Plasmid) : Buffer | undefined
 
     let canvas = Canvas.createCanvas(plasmid.dimensions.width,plasmid.dimensions.height);
 
+    plasmid.toCanvas(<CanvasRenderingContext2D>canvas.getContext("2d"));
+
     res = canvas.toBuffer();
 
     return res;

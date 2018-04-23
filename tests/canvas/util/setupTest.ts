@@ -19,6 +19,10 @@ export function setupTest(file : string) : void
         expect(fs.existsSync(`${file}.html.png`));
     });
 
+    it(`should have generated canvas commands from SVG`,async function(){
+        expect(fs.existsSync(`${file}Cmds.js`));
+    });
+
     it(`should render PNG direct from plasmid`,async function(){
         let buff = plasmidToBuffer(plasmid);
         expect(buff).toBeDefined();

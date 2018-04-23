@@ -34,6 +34,7 @@ import * as html from "./html"
 import * as services from "./services";
 import {interpolate} from "./interpolate";
 import {parseFontSize} from "./parseFontSize";
+import {plasmidToCanvas} from "./canvas/plasmid";
 
 
 interface GenericNode<T>
@@ -438,6 +439,11 @@ export class Plasmid extends Directive
     }
 
     public adaptiveRenderingUpdates : AdaptiveRenderingUpdater = new AdaptiveRenderingUpdater();
+
+    public toCanvas(ctx : CanvasRenderingContext2D) : void
+    {
+        plasmidToCanvas(this,ctx);
+    }
 
     public constructor()
     {
