@@ -28,6 +28,20 @@ export function loadFromHTMLAndWriteArtifacts(file : string,scope : any) : Promi
         fs.writeFileSync(`${file}.svg`,res.renderStart()+res.renderEnd());
         cp.execSync(`./node_modules/.bin/canvgc ${file}.svg ${file}Cmds.js`);
 
+        let rawCmds = fs.readFileSync(`${file}Cmds.js`);
+        fs.writeFileSync(`${file}Cmds.js`,`
+        let cmds = ${rawCmds}
+        const Canvas = require("canvas");
+        let canvas = new Canvas.createCanvas(cmds.w,cmds.h);
+        let p = {
+            stack : 0
+        };
+        cmds.d[0](canvas.getContext("2d"),p);
+        const fs = require("fs");
+        fs.writeFileSync("${file}Cmds.js.png",canvas.toBuffer());
+        `);
+        cp.execSync(`node ${file}Cmds.js`);
+
         await new Promise<void>((innerResolve) => {
             svg2img(res.renderStart()+res.renderEnd(),function(err : any,buff : Buffer){
                 if(err)

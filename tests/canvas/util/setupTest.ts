@@ -23,13 +23,17 @@ export function setupTest(file : string) : void
         expect(fs.existsSync(`${file}Cmds.js`));
     });
 
+    it(`should be able to execute generated canvas commands`,async function(){
+        expect(fs.existsSync(`${file}Cmds.js.png`));
+    });
+
     it(`should render PNG direct from plasmid`,async function(){
         let buff = plasmidToBuffer(plasmid);
         expect(buff).toBeDefined();
-        fs.writeFileSync(`${file}Ref.html.png`,buff);
+        fs.writeFileSync(`${file}Ex.html.png`,buff);
     });
 
     it(`buffers should have the same content`,async function(){
-        expect(fs.readFileSync(`${file}.html.png`)).toEqual(fs.readFileSync(`${file}Ref.html.png`));
+        expect(fs.readFileSync(`${file}Ex.html.png`)).toEqual(fs.readFileSync(`${file}.html.png`));
     });
 }
