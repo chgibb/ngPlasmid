@@ -5,3 +5,5 @@ rm *.svg
 rm *.pb
 rm *.png
 rm *.js
+
+exit 0
