@@ -30,4 +30,6 @@ import * as directives from "./../lib//directives";
     }
 
     console.log(plasmid.renderStart() + plasmid.renderEnd());
-})();
+})().catch((err) => {
+    console.error(err);
+});

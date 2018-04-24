@@ -24,4 +24,6 @@ import * as pbDirectives from "./../lib/pb/node";
         }
         let pb = pbDirectives.Node.create(plasmidToPB(plasmid));
         fs.writeFileSync(args[1],pbDirectives.Node.encode(pb).finish());
-})();
+})().catch((err) => {
+    console.error(err);
+});
