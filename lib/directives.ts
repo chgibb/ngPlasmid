@@ -35,6 +35,7 @@ import * as services from "./services";
 import {interpolate} from "./interpolate";
 import {parseFontSize} from "./parseFontSize";
 import {plasmidToCanvas} from "./canvas/plasmid";
+import {plasmidTrackToCanvas} from "./canvas/plasmidTrack";
 
 
 interface GenericNode<T>
@@ -750,6 +751,12 @@ export class PlasmidTrack extends Directive
             }
         }
     }
+
+    public toCanvas(ctx : CanvasRenderingContext2D) : void
+    {
+        plasmidTrackToCanvas(this,ctx);
+    }
+
 
     public constructor(plasmid : Plasmid)
     {
