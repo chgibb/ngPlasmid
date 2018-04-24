@@ -2,7 +2,4 @@
 
 import {setupTest} from "./util/setupTest";
 
-//setupTest("1track");
-it(``,()=>{
-    expect(true);
-});
+setupTest("1track");
