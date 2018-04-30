@@ -55,7 +55,15 @@ export function setupTest(file : string) : void
     else
     {
         (async function(){
-            plasmid = await loadFromHTMLAndWriteArtifacts(`${file}.html`,undefined);
+            let scope : any = undefined;
+            if(fs.existsSync(`tests/canvas/res/${file}.json`))
+            {
+                scope = JSON.parse(fs.readFileSync(`tests/canvas/res/${file}.json`).toString());
+            }
+            plasmid = await loadFromHTMLAndWriteArtifacts(`${file}.html`,scope);
+
+            let buff = plasmidToBuffer(plasmid);
+            fs.writeFileSync(`${file}Ex.html.png`,buff);
         })().catch((err) => {
             console.error(err);
         });
