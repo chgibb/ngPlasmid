@@ -13,7 +13,12 @@ export function setupTest(file : string) : void
     if((<any>global).beforeAll)
     {
         beforeAll(async function(){
-            plasmid = await loadFromHTMLAndWriteArtifacts(`${file}.html`,undefined);
+            let scope : any = undefined;
+            if(fs.existsSync(`tests/canvas/res/${file}.json`))
+            {
+                scope = JSON.parse(fs.readFileSync(`tests/canvas/res/${file}.json`).toString());
+            }
+            plasmid = await loadFromHTMLAndWriteArtifacts(`${file}.html`,scope);
         });
 
         it(`should have rendered PNG and SVG from HTML`,async function(){
