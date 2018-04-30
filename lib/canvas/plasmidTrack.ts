@@ -4,6 +4,8 @@ import {drawSVGarcOnCanvas} from "./utils";
 
 export function plasmidTrackToCanvas(track : PlasmidTrack,ctx : CanvasRenderingContext2D) : void
 {
+    track.interpolateAttributes();
+    
     let style = parseStyle(track.trackstyle);    
     if(style && style["fill"])
         ctx.fillStyle = style["fill"];
@@ -44,6 +46,8 @@ export function plasmidTrackToCanvas(track : PlasmidTrack,ctx : CanvasRenderingC
 
     ctx.fill("evenodd");
     ctx.stroke();
+
+    ctx.restore();
 
     for(let i = 0; i != track.children.length; ++i)
     {
