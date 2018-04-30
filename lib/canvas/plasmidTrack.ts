@@ -10,14 +10,14 @@ export function plasmidTrackToCanvas(track : PlasmidTrack,ctx : CanvasRenderingC
 
     let d = track.getSVGPath()!.split(" ");
 
-    /*ctx.strokeStyle = "rgba(0,0,0,0)";
+    ctx.strokeStyle = "rgba(0,0,0,0)";
     ctx.beginPath();
-    ctx.moveTo(parseInt(d[1]),parseInt(d[2]));
+    ctx.moveTo(parseFloat(d[1]),parseFloat(d[2]));
 
     drawSVGarcOnCanvas(
         ctx,
-        parseInt(d[0]),
-        parseInt(d[1]),
+        parseFloat(d[1]),
+        parseFloat(d[2]),
         parseFloat(d[4]),
         parseFloat(d[5]),
         parseFloat(d[6]),
@@ -27,41 +27,21 @@ export function plasmidTrackToCanvas(track : PlasmidTrack,ctx : CanvasRenderingC
         parseFloat(d[10])
     );
 
+    ctx.moveTo(parseFloat(d[12]),parseFloat(d[13]));
+
+    drawSVGarcOnCanvas(
+        ctx,
+        parseFloat(d[12]),
+        parseFloat(d[13]),
+        parseFloat(d[15]),
+        parseFloat(d[16]),
+        parseFloat(d[17]),
+        parseFloat(d[18]),
+        parseFloat(d[19]),
+        parseFloat(d[20]),
+        parseFloat(d[21]),
+    );
+
     ctx.fill("evenodd");
     ctx.stroke();
-    ctx.restore();*/
-let $ = ctx;
-   // $.save();
-$.strokeStyle = "rgba(0,0,0,0)";
-//$.lineCap = "butt";
-//$.lineJoin = "miter";
-//$.miterLimit = 4;
-//$.font = "   10px sans-serif";
-//$.translate(0,0);
-//$.save();
-$.fillStyle = "#ccc";
-$.font = "   10px sans-serif";
-$.beginPath();
-//$.moveTo(187.479056,67.500002);
-ctx.moveTo(parseFloat(d[1]),parseFloat(d[2]));
-//$.translate(187.49999999996874,187.5);
-ctx.translate(parseFloat(d[1]),parseFloat(d[1]));
-$.rotate(0);
-$.scale(1,1);
-$.arc(0,0,120,-1.5709708597198357,-1.570796326794939,<any>1);
-$.scale(1,1);
-$.rotate(0);
-$.translate(-187.49999999996874,-187.5);
-$.moveTo(187.478183,62.500002);
-$.translate(187.49999999994367,187.5);
-$.rotate(0);
-$.scale(1,1);
-$.arc(0,0,125,-1.5709708597196457,-1.570796326794749,<any>1);
-$.scale(1,1);
-$.rotate(0);
-$.translate(-187.49999999994367,-187.5);
-$.fill("evenodd");
-$.stroke();
-$.restore();
-$.restore();
 }
