@@ -44,4 +44,9 @@ export function plasmidTrackToCanvas(track : PlasmidTrack,ctx : CanvasRenderingC
 
     ctx.fill("evenodd");
     ctx.stroke();
+
+    for(let i = 0; i != track.children.length; ++i)
+    {
+        track.children[i].toCanvas(ctx);
+    }
 }

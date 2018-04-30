@@ -36,6 +36,7 @@ import {interpolate} from "./interpolate";
 import {parseFontSize} from "./parseFontSize";
 import {plasmidToCanvas} from "./canvas/plasmid";
 import {plasmidTrackToCanvas} from "./canvas/plasmidTrack";
+import {trackLabelToCanvas} from "./canvas/trackLabel";
 
 
 interface GenericNode<T>
@@ -131,6 +132,8 @@ export abstract class Directive
     public abstract getSVGPath() : string | undefined;
 
     public abstract interpolateAttributes() : void;
+
+    public abstract toCanvas(ctx : CanvasRenderingContext2D) : void
     
 }
 
@@ -967,6 +970,11 @@ export class TrackLabel extends Directive
         throw new Error("Not supported by directive");
     }
 
+    public toCanvas(ctx : CanvasRenderingContext2D) : void
+    {
+        trackLabelToCanvas(this,ctx);
+    }
+
     public constructor(track : PlasmidTrack)
     {
         super();
@@ -1379,6 +1387,11 @@ export class TrackScale extends Directive
             }
         }
         
+    }
+
+    public toCanvas(ctx : CanvasRenderingContext2D) : void
+    {
+        ctx;
     }
 
     public constructor(track : PlasmidTrack)
@@ -1912,6 +1925,11 @@ export class TrackMarker extends Directive
                 this.labels.push(label);
             }
         }
+    }
+
+    public toCanvas(ctx : CanvasRenderingContext2D) : void
+    {
+        ctx;
     }
 
     public constructor(track : PlasmidTrack)
@@ -2489,6 +2507,11 @@ export class MarkerLabel extends Directive
         {
             this.linestyle = node.attribs.linestyle;
         }
+    }
+
+    public toCanvas(ctx : CanvasRenderingContext2D) : void
+    {
+        ctx;
     }
 
     public constructor(trackMarker : TrackMarker)
