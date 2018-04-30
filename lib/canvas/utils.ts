@@ -1,3 +1,20 @@
+/**
+ * 
+ * Adapted from https://stackoverflow.com/questions/6729056/mapping-svg-arcto-to-html-canvas-arcto?noredirect=1&lq=1
+ * and https://github.com/canvg/canvg
+ * 
+ * @export
+ * @param {CanvasRenderingContext2D} ctx 
+ * @param {number} lastX 
+ * @param {number} lastY 
+ * @param {number} rx 
+ * @param {number} ry 
+ * @param {number} xAxisRotation 
+ * @param {number} largeArcFlag 
+ * @param {number} sweepFlag 
+ * @param {number} x 
+ * @param {number} y 
+ */
 export function drawSVGarcOnCanvas(
     ctx : CanvasRenderingContext2D,
     lastX : number,
@@ -10,13 +27,6 @@ export function drawSVGarcOnCanvas(
     x : number,
     y : number
 ) : void {
-    //--------------------
-    // rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y
-    // are the 6 data items in the SVG path declaration following the A
-    //
-    // lastX and lastY are the previous point on the path before the arc
-    //--------------------
-    // useful functions
     let m = function(v : any){
         return Math.sqrt(Math.pow (v[0],2) + Math.pow (v[1],2))
     };
@@ -26,7 +36,6 @@ export function drawSVGarcOnCanvas(
     let ang = function(u : any,v : any){
         return ((u[0]*v[1] < u[1]*v[0])? -1 : 1) * Math.acos (r (u,v))
     };
-    //--------------------
 
     let currpX =  Math.cos (xAxisRotation) * (lastX - x) / 2.0 + Math.sin (xAxisRotation) * (lastY - y) / 2.0 ;
     let currpY = -Math.sin (xAxisRotation) * (lastX - x) / 2.0 + Math.cos (xAxisRotation) * (lastY - y) / 2.0 ;
