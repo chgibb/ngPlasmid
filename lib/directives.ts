@@ -37,6 +37,7 @@ import {parseFontSize} from "./parseFontSize";
 import {plasmidToCanvas} from "./canvas/plasmid";
 import {plasmidTrackToCanvas} from "./canvas/plasmidTrack";
 import {trackLabelToCanvas} from "./canvas/trackLabel";
+import {trackMarkerToCanvas} from "./canvas/trackMarker";
 
 
 interface GenericNode<T>
@@ -1929,7 +1930,7 @@ export class TrackMarker extends Directive
 
     public toCanvas(ctx : CanvasRenderingContext2D) : void
     {
-        ctx;
+        trackMarkerToCanvas(this,ctx);
     }
 
     public constructor(track : PlasmidTrack)
