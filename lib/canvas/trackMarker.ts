@@ -9,8 +9,35 @@ export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingCo
     let style = parseStyle(marker.markerstyle);    
     if(style && style["fill"])
         ctx.fillStyle = style["fill"];
+    if(style && style["stroke"])
+        ctx.strokeStyle = style["stroke"];
     
     let d = marker.getSVGPath()!.split(" ");
+
+    //line
+    if(d.length == 6)
+    {
+        //indexes; path compontents
+        //0 1 2; M 123 123
+        //3 4 5; L 123 123
+
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+
+        ctx.moveTo(parseFloat(d[1]),parseFloat(d[2]));
+        ctx.lineTo(parseFloat(d[4]),parseFloat(d[5]));
+
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+
+        return;
+    }
+
+    if(d.length == 11)
+    {
+        console.log("other; todo");
+    }
 
     //pathComplexArc
     if(d.length == 44)
@@ -27,8 +54,10 @@ export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingCo
         //34 35 36; L 123 123
         //37 38 39; L 123 123
         //40 41 42; L 123 123
+        //43; z
 
         ctx.beginPath();
+
         ctx.moveTo(parseFloat(d[1]),parseFloat(d[2]));
         drawSVGarcOnCanvas(
             ctx,
@@ -68,5 +97,7 @@ export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingCo
 
         ctx.fill();
         ctx.stroke();
+
+        return;
     }
 }
