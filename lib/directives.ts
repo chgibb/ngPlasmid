@@ -38,6 +38,7 @@ import {plasmidToCanvas} from "./canvas/plasmid";
 import {plasmidTrackToCanvas} from "./canvas/plasmidTrack";
 import {trackLabelToCanvas} from "./canvas/trackLabel";
 import {trackMarkerToCanvas} from "./canvas/trackMarker";
+import {trackScaleToCanvas} from "./canvas/trackScale";
 
 
 interface GenericNode<T>
@@ -1392,7 +1393,7 @@ export class TrackScale extends Directive
 
     public toCanvas(ctx : CanvasRenderingContext2D) : void
     {
-        ctx;
+        trackScaleToCanvas(this,ctx);
     }
 
     public constructor(track : PlasmidTrack)
