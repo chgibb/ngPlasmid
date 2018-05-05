@@ -29,9 +29,6 @@ export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingCo
 
         ctx.fill();
         ctx.stroke();
-        ctx.restore();
-
-        return;
     }
 
     if(d.length == 11)
@@ -97,7 +94,6 @@ export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingCo
 
         ctx.fill();
         ctx.stroke();
-
-        return;
     }
+    ctx.restore();
 }

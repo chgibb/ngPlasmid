@@ -24,4 +24,5 @@ export function trackLabelToCanvas(label : TrackLabel,ctx : CanvasRenderingConte
 
     ctx.fillText(text,x,y);
     ctx.strokeText(text,x,y);
+    ctx.restore();
 }
