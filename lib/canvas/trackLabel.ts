@@ -13,7 +13,7 @@ export function trackLabelToCanvas(label : TrackLabel,ctx : CanvasRenderingConte
 
     let weight = style ? (style["font-weight"] ? style["font-weight"] : "") : "";
     let size = style ? (style["font-size"] ? style["font-size"] : "") : "";
-    let font = "sans-serif";
+    let font = style ? (style["font-family"] ? style["font-family"] : "Times New Roman") : "Times New Roman";
     let text = label.text ? label.text : "";
 
     ctx.font = " " + weight + " " + size + " " + font;
