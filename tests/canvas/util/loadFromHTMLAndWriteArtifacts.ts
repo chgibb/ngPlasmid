@@ -46,19 +46,6 @@ export function loadFromHTMLAndWriteArtifacts(file : string,scope : any) : Promi
             cp.execSync(`node ${file}Cmds.js`);
         }
         catch(err){}
-            
-
-        await new Promise<void>((innerResolve) => {
-            svg2img(res.renderStart()+res.renderEnd(),function(err : any,buff : Buffer){
-                if(err)
-                    throw err;
-                else
-                {
-                    fs.writeFileSync(`${file}.png`,buff);
-                    return innerResolve();
-                }
-            });
-        });
 
         return resolve(res);
     });
