@@ -1,6 +1,7 @@
 import * as fs from "fs";
 
-const looksSame = require("looks-same");
+const PNG = require("pngjs").PNG;
+const pixelMatch = require("pixelmatch");
 
 import {loadFromHTMLAndWriteArtifacts} from "./loadFromHTMLAndWriteArtifacts";
 import {plasmidToBuffer} from "./plasmidToBuffer";
@@ -36,32 +37,37 @@ export function setupTest(file : string) : void
         });
 
         it(`PNG from plasmid and rasterized SVG should appear the same`,async function(){
-            expect(await new Promise<boolean>(async (resolve,reject) => {
-                looksSame(`${file}Ex.html.png`,`tests/canvas/res/${file}.png`,{tolerance:35},async function(error : string,equal : boolean){
-                    if(error)
-                        return reject(error);
-                    if(!equal)
-                    {
-                        await new Promise<void>((resolve,reject) => {
-                            looksSame.createDiff({
-                                reference: `tests/canvas/res/${file}.png`,
-                                current: `${file}Ex.html.png`,
-                                diff: `${file}.diff.png`,
-                                highlightColor: '#ff00ff', 
-                                strict: false,
-                                tolerance: 35
-                            },function(error : string){
-                                if(error)
-                                    return reject(error);
-                                return resolve();
-                            });
-                        });
-                    }
-                    resolve(equal);
+            expect(await new Promise<number>(async (resolve) => {
+                let img1 = await new Promise<any>((resolve) => {
+                    let png = new PNG();
+                    fs.createReadStream(`${file}Ex.html.png`).pipe(png).on("parsed",() => {
+                        return resolve(png);
+                    });
                 });
+
+                let img2 = await new Promise<any>((resolve) => {
+                    let png = new PNG();
+                    fs.createReadStream(`tests/canvas/res/${file}.png`).pipe(png).on("parsed",() => {
+                        return resolve(png);
+                    });
+                });
+
+                let diff = new PNG({
+                    width : img1.width,
+                    height : img1.height
+                });
+
+                let numDiff : number = pixelMatch(img1.data,img2.data,diff.data,img1.width,img1.height,{threshold : 0.1});
+
+                await new Promise<void>((resolve) => {
+                    diff.pack().pipe(fs.createWriteStream(`${file}.diff.png`));
+                    return resolve();
+                });
+
+                return resolve(numDiff ? numDiff : 0);
             }).catch((err) => {
                 console.error(err);
-            })).toBe(true);
+            })).toBeLessThan(30);
         });
     }
     else

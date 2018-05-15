@@ -30,6 +30,7 @@
     "looks-same": "^3.3.0",
     "nan": "^2.8.0",
     "optimize-js": "^1.0.3",
+    "pixelmatch": "^4.0.2",
     "protobufjs": "^6.8.0",
     "rollup": "^0.52.0",
     "rollup-plugin-commonjs": "^8.2.6",
