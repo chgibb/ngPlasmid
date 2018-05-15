@@ -67,7 +67,7 @@ export function setupTest(file : string) : void
                 return resolve(numDiff ? numDiff : 0);
             }).catch((err) => {
                 console.error(err);
-            })).toBeLessThan(30);
+            })).toBeLessThan(450);
         });
     }
     else
