@@ -9,7 +9,7 @@ import {Plasmid} from "../../../lib/directives";
 
 let plasmid : Plasmid;
 
-export function setupTest(file : string) : void
+export function setupTest(file : string,diffPixels : number) : void
 {
     if((<any>global).beforeAll)
     {
@@ -67,7 +67,7 @@ export function setupTest(file : string) : void
                 return resolve(numDiff ? numDiff : 0);
             }).catch((err) => {
                 console.error(err);
-            })).toBeLessThan(450);
+            })).toBeLessThan(diffPixels);
         });
     }
     else
