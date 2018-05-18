@@ -2,4 +2,4 @@
 
 import {setupTest} from "./util/setupTest";
 
-setupTest("plasmid");
+setupTest("plasmid",0);

@@ -2,4 +2,4 @@
 
 import {setupTest} from "./util/setupTest";
 
-setupTest("1markerlabel");
+setupTest("1markerlabel",0);

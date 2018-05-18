@@ -2,4 +2,4 @@
 
 import {setupTest} from "./util/setupTest";
 
-setupTest("2track");
+setupTest("2track",0);

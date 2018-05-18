@@ -2,4 +2,4 @@
 
 import {setupTest} from "./util/setupTest";
 
-setupTest("1trackscale");
+setupTest("1trackscale",49);
