@@ -67,7 +67,7 @@ export function setupTest(file : string,diffPixels : number) : void
                 return resolve(numDiff ? numDiff : 0);
             }).catch((err) => {
                 console.error(err);
-            })).toBeLessThan(diffPixels);
+            })).toBeLessThanOrEqual(diffPixels);
         });
     }
     else
