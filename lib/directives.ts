@@ -123,6 +123,13 @@ export abstract class Directive
     "markerlabel" | 
     "svgelement";
 
+    protected _canDrawToCanvas = true;
+
+    public get canDrawToCanvas() : boolean
+    {
+        return this._canDrawToCanvas;
+    }
+
     public _batchedSVGPath : string;
 
     public abstract generateSVGPath() : string;
@@ -1921,6 +1928,7 @@ export class TrackMarker extends Directive
         {
             if(node.children[i].name == "markerlabel")
             {
+                this._canDrawToCanvas = false;
                 let label = new MarkerLabel(this);
                 label.$scope = this.track.plasmid.$scope;
                 label.fromNode(node.children[i]);
@@ -1931,6 +1939,10 @@ export class TrackMarker extends Directive
 
     public toCanvas(ctx : CanvasRenderingContext2D) : void
     {
+        if(!this.canDrawToCanvas)
+        {
+            throw new Error("Cannot draw to canvas due to <markerlabel>s being present");
+        }
         trackMarkerToCanvas(this,ctx);
     }
 
@@ -2514,6 +2526,7 @@ export class MarkerLabel extends Directive
     public toCanvas(ctx : CanvasRenderingContext2D) : void
     {
         ctx;
+        throw new Error("Illegal operation: <markerlabel>s cannot be drawn to HTML canvas");
     }
 
     public constructor(trackMarker : TrackMarker)
