@@ -1,3 +1,6 @@
+/// <reference path="./../directives" />
+/// <reference path="./../parseStyle" />
+
 import {TrackScale} from "./../directives";
 import {parseStyle} from "./../parseStyle";
 

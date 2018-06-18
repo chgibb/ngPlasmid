@@ -1,3 +1,7 @@
+/// <reference path="./../directives" />
+/// <reference path="./../parseStyle" />
+/// <reference path="./utils.ts" />
+
 import {TrackMarker} from "./../directives";
 import {parseStyle} from "./../parseStyle";
 import {drawSVGarcOnCanvas} from "./utils";
