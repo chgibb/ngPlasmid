@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "bash scripts/clean.bash && bash scripts/test.bash",
-    "install": "bash scripts/buildNativeModule.bash"
+    "test": "bash scripts/clean.bash && bash scripts/test.bash"
   },
   "author": "",
   "license": "GPL3.0",
