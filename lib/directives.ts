@@ -27,6 +27,11 @@
 /// <reference path="./services" />
 /// <reference path="./interpolate" />
 /// <reference path="./parseFontSize" />
+/// <reference path="./canvas/plasmid" />
+/// <reference path="./canvas/plasmidTrack" />
+/// <reference path="./canvas/trackLabel" />
+/// <reference path="./canvas/trackMarker" />
+/// <reference path="./canvas/trackScale" />
 
 import {EventEmitter} from "events";
 
@@ -34,6 +39,11 @@ import * as html from "./html"
 import * as services from "./services";
 import {interpolate} from "./interpolate";
 import {parseFontSize} from "./parseFontSize";
+import {plasmidToCanvas} from "./canvas/plasmid";
+import {plasmidTrackToCanvas} from "./canvas/plasmidTrack";
+import {trackLabelToCanvas} from "./canvas/trackLabel";
+import {trackMarkerToCanvas} from "./canvas/trackMarker";
+import {trackScaleToCanvas} from "./canvas/trackScale";
 
 
 interface GenericNode<T>
@@ -118,6 +128,13 @@ export abstract class Directive
     "markerlabel" | 
     "svgelement";
 
+    protected _canDrawToCanvas = true;
+
+    public get canDrawToCanvas() : boolean
+    {
+        return this._canDrawToCanvas;
+    }
+
     public _batchedSVGPath : string;
 
     public abstract generateSVGPath() : string;
@@ -129,6 +146,8 @@ export abstract class Directive
     public abstract getSVGPath() : string | undefined;
 
     public abstract interpolateAttributes() : void;
+
+    public abstract toCanvas(ctx : CanvasRenderingContext2D) : void
     
 }
 
@@ -439,6 +458,11 @@ export class Plasmid extends Directive
 
     public adaptiveRenderingUpdates : AdaptiveRenderingUpdater = new AdaptiveRenderingUpdater();
 
+    public toCanvas(ctx : CanvasRenderingContext2D) : void
+    {
+        plasmidToCanvas(this,ctx);
+    }
+
     public constructor()
     {
         super();
@@ -745,6 +769,12 @@ export class PlasmidTrack extends Directive
         }
     }
 
+    public toCanvas(ctx : CanvasRenderingContext2D) : void
+    {
+        plasmidTrackToCanvas(this,ctx);
+    }
+
+
     public constructor(plasmid : Plasmid)
     {
         super();
@@ -952,6 +982,11 @@ export class TrackLabel extends Directive
     public getSVGPath() : string | undefined
     {
         throw new Error("Not supported by directive");
+    }
+
+    public toCanvas(ctx : CanvasRenderingContext2D) : void
+    {
+        trackLabelToCanvas(this,ctx);
     }
 
     public constructor(track : PlasmidTrack)
@@ -1366,6 +1401,11 @@ export class TrackScale extends Directive
             }
         }
         
+    }
+
+    public toCanvas(ctx : CanvasRenderingContext2D) : void
+    {
+        trackScaleToCanvas(this,ctx);
     }
 
     public constructor(track : PlasmidTrack)
@@ -1893,12 +1933,22 @@ export class TrackMarker extends Directive
         {
             if(node.children[i].name == "markerlabel")
             {
+                this._canDrawToCanvas = false;
                 let label = new MarkerLabel(this);
                 label.$scope = this.track.plasmid.$scope;
                 label.fromNode(node.children[i]);
                 this.labels.push(label);
             }
         }
+    }
+
+    public toCanvas(ctx : CanvasRenderingContext2D) : void
+    {
+        if(!this.canDrawToCanvas)
+        {
+            throw new Error("Cannot draw to canvas due to <markerlabel>s being present");
+        }
+        trackMarkerToCanvas(this,ctx);
     }
 
     public constructor(track : PlasmidTrack)
@@ -2476,6 +2526,12 @@ export class MarkerLabel extends Directive
         {
             this.linestyle = node.attribs.linestyle;
         }
+    }
+
+    public toCanvas(ctx : CanvasRenderingContext2D) : void
+    {
+        ctx;
+        throw new Error("Illegal operation: <markerlabel>s cannot be drawn to HTML canvas");
     }
 
     public constructor(trackMarker : TrackMarker)
