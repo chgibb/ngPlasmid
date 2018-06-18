@@ -27,6 +27,11 @@
 /// <reference path="./services" />
 /// <reference path="./interpolate" />
 /// <reference path="./parseFontSize" />
+/// <reference path="./canvas/plasmid" />
+/// <reference path="./canvas/plasmidTrack" />
+/// <reference path="./canvas/trackLabel" />
+/// <reference path="./canvas/trackMarker" />
+/// <reference path="./canvas/trackScale" />
 
 import {EventEmitter} from "events";
 
