@@ -11,6 +11,9 @@ export function loadFromHTMLAndWriteArtifacts(file : string,scope : any) : Promi
     return new Promise<Plasmid>(async (resolve) => {
         let res = new Plasmid();
 
+        if(scope)
+            res.$scope = scope;
+
         let nodes = await html.loadFromString(fs.readFileSync(`tests/canvas/res/${file}`).toString());
 
         for(let i = 0; i != nodes.length; ++ i)
@@ -21,9 +24,6 @@ export function loadFromHTMLAndWriteArtifacts(file : string,scope : any) : Promi
                 break;
             }
         }
-
-        if(scope)
-            res.$scope = scope;
 
         fs.writeFileSync(`${file}.svg`,res.renderStart()+res.renderEnd());
         
