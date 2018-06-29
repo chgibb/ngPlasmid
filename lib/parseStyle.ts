@@ -17,6 +17,8 @@ export function parseStyle(styleAttrib : string) : {[k : string] : string} | und
 
     while(i--)
     {
+        if(!styles[i])
+            continue;
         let style = styles[i].split(":");
         if(!style[0] || !style[1])
             return undefined;
