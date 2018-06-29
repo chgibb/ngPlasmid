@@ -4,19 +4,34 @@
 
 import {PlasmidTrack} from "./../directives";
 import {parseStyle} from "./../parseStyle";
-import {drawSVGarcOnCanvas} from "./utils";
+import {drawSVGarcOnCanvas,splitRGBA} from "./utils";
 
 export function plasmidTrackToCanvas(track : PlasmidTrack,ctx : CanvasRenderingContext2D) : void
 {
+    ctx.save();
+    
     track.interpolateAttributes();
     
     let style = parseStyle(track.trackstyle);    
     if(style && style["fill"])
-        ctx.fillStyle = style["fill"];
+    {
+        let components = splitRGBA(style["fill"]);
+
+        //set default alpha channel if it was not provided
+        if(!components[3])
+        {
+            ctx.fillStyle = `rgba(${components[0]},${components[1]},${components[2]},0.0)`;
+            ctx.strokeStyle =`rgba(${components[0]},${components[1]},${components[2]},0);`
+        }
+        else
+        {
+            ctx.fillStyle = `rgba(${components[0]},${components[1]},${components[2]},${components[3]})`;
+            ctx.strokeStyle = `rgba(${components[0]},${components[1]},${components[2]},${components[3]})`;
+        }
+    }
 
     let d = track.getSVGPath()!.split(" ");
 
-    ctx.strokeStyle = "rgba(0,0,0,0)";
     ctx.beginPath();
     ctx.moveTo(parseFloat(d[1]),parseFloat(d[2]));
 

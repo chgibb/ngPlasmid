@@ -8,6 +8,8 @@ import {drawSVGarcOnCanvas} from "./utils";
 
 export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingContext2D) : void
 {
+    ctx.save();
+
     marker.interpolateAttributes();
     
     let style = parseStyle(marker.markerstyle);    
@@ -96,6 +98,7 @@ export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingCo
         ctx.lineTo(parseFloat(d[38]),parseFloat(d[39]));
         ctx.lineTo(parseFloat(d[41]),parseFloat(d[42]));
 
+        ctx.closePath();
         ctx.fill();
         ctx.stroke();
     }

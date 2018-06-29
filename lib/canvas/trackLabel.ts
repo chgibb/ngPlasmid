@@ -6,6 +6,8 @@ import {parseStyle} from "./../parseStyle";
 
 export function trackLabelToCanvas(label : TrackLabel,ctx : CanvasRenderingContext2D) : void
 {
+    ctx.save();
+    
     label.interpolateAttributes();
 
     ctx.fillStyle = "#000";

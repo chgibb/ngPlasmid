@@ -20,6 +20,7 @@ export function drawSVGarcOnCanvas(
     ctx: CanvasRenderingContext2D, lastX: number, lastY: number, rx: number,
     ry: number, xAxisRotation: number, largeArcFlag: number, sweepFlag: number,
     x: number, y: number): void {
+        ctx.save();
   let m = function(v: any) {
     return Math.sqrt(Math.pow(v[0], 2) + Math.pow(v[1], 2))
   };
@@ -75,4 +76,18 @@ export function drawSVGarcOnCanvas(
   ctx.scale(1 / sx, 1 / sy);
   ctx.rotate(-xAxisRotation);
   ctx.translate(-centpX, -centpY);
+  ctx.restore();
+}
+
+
+/**
+ * Adapted from comment by bob https://stackoverflow.com/questions/10970958/get-a-color-component-from-an-rgb-string-in-javascript
+ *
+ * @export
+ * @param {string} rgba
+ * @returns {Array<string>}
+ */
+export function splitRGBA(rgba : string) : Array<string>
+{
+    return rgba.replace(/[^\d,.]/g, '').split(',')
 }

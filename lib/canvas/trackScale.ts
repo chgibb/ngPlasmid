@@ -6,6 +6,8 @@ import {parseStyle} from "./../parseStyle";
 
 export function trackScaleToCanvas(scale : TrackScale,ctx : CanvasRenderingContext2D) : void
 {
+    ctx.save();
+    
     scale.interpolateAttributes();
 
     let style = parseStyle(scale.style);    
