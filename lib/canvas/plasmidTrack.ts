@@ -15,18 +15,28 @@ export function plasmidTrackToCanvas(track : PlasmidTrack,ctx : CanvasRenderingC
     let style = parseStyle(track.trackstyle);    
     if(style && style["fill"])
     {
-        let components = splitRGBA(style["fill"]);
-
-        //set default alpha channel if it was not provided
-        if(!components[3])
+        //rgb or rgba colour
+        if(style["fill"][0] != "#")
         {
-            ctx.fillStyle = `rgba(${components[0]},${components[1]},${components[2]},0.0)`;
-            ctx.strokeStyle =`rgba(${components[0]},${components[1]},${components[2]},0);`
+            let components = splitRGBA(style["fill"]);
+
+            //set default alpha channel if it was not provided
+            if(!components[3])
+            {
+                ctx.fillStyle = `rgba(${components[0]},${components[1]},${components[2]},0.0)`;
+                ctx.strokeStyle =`rgba(${components[0]},${components[1]},${components[2]},0);`
+            }
+            else
+            {
+                ctx.fillStyle = `rgba(${components[0]},${components[1]},${components[2]},${components[3]})`;
+                ctx.strokeStyle = `rgba(${components[0]},${components[1]},${components[2]},${components[3]})`;
+            }
         }
+        //hex colour
         else
         {
-            ctx.fillStyle = `rgba(${components[0]},${components[1]},${components[2]},${components[3]})`;
-            ctx.strokeStyle = `rgba(${components[0]},${components[1]},${components[2]},${components[3]})`;
+            ctx.fillStyle = style["fill"];
+            ctx.strokeStyle = ctx.fillStyle;
         }
     }
 

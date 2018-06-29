@@ -4,7 +4,7 @@
 
 import {TrackMarker} from "./../directives";
 import {parseStyle} from "./../parseStyle";
-import {drawSVGarcOnCanvas} from "./utils";
+import {drawSVGarcOnCanvas,trimTrailingChars} from "./utils";
 
 export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingContext2D) : void
 {
@@ -12,11 +12,15 @@ export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingCo
 
     marker.interpolateAttributes();
     
+    ctx.strokeStyle = "rgba(0,0,0,0)";
+
     let style = parseStyle(marker.markerstyle);    
     if(style && style["fill"])
         ctx.fillStyle = style["fill"];
     if(style && style["stroke"])
         ctx.strokeStyle = style["stroke"];
+    if(style && style["stroke-width"])
+        ctx.lineWidth = parseInt(trimTrailingChars(style["stroke-width"],2));
     
     let d = marker.getSVGPath()!.split(" ");
 
