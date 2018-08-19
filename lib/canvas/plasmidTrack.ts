@@ -24,7 +24,7 @@ export function plasmidTrackToCanvas(track : PlasmidTrack,ctx : CanvasRenderingC
             if(!components[3])
             {
                 ctx.fillStyle = `rgba(${components[0]},${components[1]},${components[2]},0.0)`;
-                ctx.strokeStyle =`rgba(${components[0]},${components[1]},${components[2]},0);`
+                ctx.strokeStyle =`rgba(${components[0]},${components[1]},${components[2]},0.0)`;
             }
             else
             {
