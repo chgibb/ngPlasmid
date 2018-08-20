@@ -138,6 +138,7 @@ export abstract class Directive
     public _batchedSVGPath : string;
 
     public abstract generateSVGPath() : string;
+    public abstract generateSVGPathNumeric() : Array<number>;
 
     public abstract renderStart() : string;
 
@@ -443,6 +444,11 @@ export class Plasmid extends Directive
         return "";
     }
 
+    public generateSVGPathNumeric() : Array<number>
+    {
+        return new Array<number>();
+    }
+
     public getSVGPath() : string | undefined
     {
         throw new Error("Not supported by directive");
@@ -658,6 +664,16 @@ export class PlasmidTrack extends Directive
     public generateSVGPath() : string
     {
         return services.pathDonut(
+            this.center.x,
+            this.center.y,
+            this.radius,
+            this.width
+        );
+    }
+
+    public generateSVGPathNumeric() : Array<number>
+    {
+        return services.pathDonutNumeric(
             this.center.x,
             this.center.y,
             this.radius,
@@ -979,6 +995,11 @@ export class TrackLabel extends Directive
         return "";
     }
 
+    public generateSVGPathNumeric() : Array<number>
+    {
+        return new Array<number>();
+    }
+
     public getSVGPath() : string | undefined
     {
         throw new Error("Not supported by directive");
@@ -1255,6 +1276,11 @@ export class TrackScale extends Directive
     public generateSVGPath() : string
     {
         return services.pathScale(this.track.center.x,this.track.center.y,this.radius,this.interval,this.total,this.ticksize);
+    }
+
+    public generateSVGPathNumeric() : Array<number>
+    {
+        return new Array<number>();
     }
 
     public getSVGPath() : string | undefined
@@ -1801,6 +1827,14 @@ export class TrackMarker extends Directive
         return this.getPath();
     }
 
+    public generateSVGPathNumeric() : Array<number>
+    {
+        let center = this.track.center;
+        let angle = this.angle;
+        let radius = this.radius;
+        return services.pathArcNumeric(center.x, center.y, radius.inner, angle.start, angle.end, this.width, this.arrowstart, this.arrowend);
+    }
+
     public getSVGPath() : string | undefined
     {
         if(this._batchedSVGPath)
@@ -2279,6 +2313,11 @@ export class MarkerLabel extends Directive
             let dst = this.halign === HALIGN_START ? dstV.begin : this.halign === HALIGN_END ? dstV.end : dstV.middle;
             return ["M", (<services.Point>src).x, (<services.Point>src).y, "L", dst.x, dst.y].join(" ");
         }
+    }
+
+    public generateSVGPathNumeric() : Array<number>
+    {
+        return new Array<number>();
     }
 
     public getSVGPath() : string | undefined

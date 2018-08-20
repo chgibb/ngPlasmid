@@ -22,7 +22,7 @@ export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingCo
     if(style && style["stroke-width"])
         ctx.lineWidth = parseInt(trimTrailingChars(style["stroke-width"],2));
     
-    let d = marker.getSVGPath()!.split(" ");
+    let d = marker.generateSVGPathNumeric();
 
     //line
     if(d.length == 6)
@@ -34,8 +34,8 @@ export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingCo
         ctx.beginPath();
         ctx.lineWidth = 2;
 
-        ctx.moveTo(parseFloat(d[1]),parseFloat(d[2]));
-        ctx.lineTo(parseFloat(d[4]),parseFloat(d[5]));
+        ctx.moveTo(d[1],d[2]);
+        ctx.lineTo(d[4],d[5]);
 
         ctx.fill();
         ctx.stroke();
@@ -65,42 +65,42 @@ export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingCo
 
         ctx.beginPath();
 
-        ctx.moveTo(parseFloat(d[1]),parseFloat(d[2]));
+        ctx.moveTo(d[1],d[2]);
         drawSVGarcOnCanvas(
             ctx,
-            parseFloat(d[1]),
-            parseFloat(d[2]),
-            parseFloat(d[4]),
-            parseFloat(d[5]),
-            parseFloat(d[6]),
-            parseFloat(d[7]),
-            parseFloat(d[8]),
-            parseFloat(d[9]),
-            parseFloat(d[10])
+            d[1],
+            d[2],
+            d[4],
+            d[5],
+            d[6],
+            d[7],
+            d[8],
+            d[9],
+            d[10]
         );
 
-        ctx.lineTo(parseFloat(d[12]),parseFloat(d[13]));
-        ctx.lineTo(parseFloat(d[15]),parseFloat(d[16]));
-        ctx.lineTo(parseFloat(d[18]),parseFloat(d[19]));
-        ctx.lineTo(parseFloat(d[21]),parseFloat(d[22]));
+        ctx.lineTo(d[12],d[13]);
+        ctx.lineTo(d[15],d[16]);
+        ctx.lineTo(d[18],d[19]);
+        ctx.lineTo(d[21],d[22]);
         
         drawSVGarcOnCanvas(
             ctx,
-            parseFloat(d[21]),
-            parseFloat(d[22]),
-            parseFloat(d[24]),
-            parseFloat(d[25]),
-            parseFloat(d[26]),
-            parseFloat(d[27]),
-            parseFloat(d[28]),
-            parseFloat(d[29]),
-            parseFloat(d[30])
+            d[21],
+            d[22],
+            d[24],
+            d[25],
+            d[26],
+            d[27],
+            d[28],
+            d[29],
+            d[30]
         );
 
-        ctx.lineTo(parseFloat(d[32]),parseFloat(d[33]));
-        ctx.lineTo(parseFloat(d[35]),parseFloat(d[36]));
-        ctx.lineTo(parseFloat(d[38]),parseFloat(d[39]));
-        ctx.lineTo(parseFloat(d[41]),parseFloat(d[42]));
+        ctx.lineTo(d[32],d[33]);
+        ctx.lineTo(d[35],d[36]);
+        ctx.lineTo(d[38],d[39]);
+        ctx.lineTo(d[41],d[42]);
 
         ctx.closePath();
         ctx.fill();

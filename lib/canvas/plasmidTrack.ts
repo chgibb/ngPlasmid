@@ -40,37 +40,37 @@ export function plasmidTrackToCanvas(track : PlasmidTrack,ctx : CanvasRenderingC
         }
     }
 
-    let d = track.getSVGPath()!.split(" ");
+    let d = track.generateSVGPathNumeric();
 
     ctx.beginPath();
-    ctx.moveTo(parseFloat(d[1]),parseFloat(d[2]));
+    ctx.moveTo(d[1],d[2]);
 
     drawSVGarcOnCanvas(
         ctx,
-        parseFloat(d[1]),
-        parseFloat(d[2]),
-        parseFloat(d[4]),
-        parseFloat(d[5]),
-        parseFloat(d[6]),
-        parseFloat(d[7]),
-        parseFloat(d[8]),
-        parseFloat(d[9]),
-        parseFloat(d[10])
+        d[1],
+        d[2],
+        d[4],
+        d[5],
+        d[6],
+        d[7],
+        d[8],
+        d[9],
+        d[10]
     );
 
-    ctx.moveTo(parseFloat(d[12]),parseFloat(d[13]));
+    ctx.moveTo(d[12],d[13]);
 
     drawSVGarcOnCanvas(
         ctx,
-        parseFloat(d[12]),
-        parseFloat(d[13]),
-        parseFloat(d[15]),
-        parseFloat(d[16]),
-        parseFloat(d[17]),
-        parseFloat(d[18]),
-        parseFloat(d[19]),
-        parseFloat(d[20]),
-        parseFloat(d[21]),
+        d[12],
+        d[13],
+        d[15],
+        d[16],
+        d[17],
+        d[18],
+        d[19],
+        d[20],
+        d[21]
     );
 
     ctx.fill("evenodd");
