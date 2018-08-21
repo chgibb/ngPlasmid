@@ -432,7 +432,6 @@ export class Plasmid extends Directive
             if(node.children[i].name == "plasmidtrack")
             {
                 let track : PlasmidTrack = new PlasmidTrack(this);
-                track.$scope = this.$scope;
                 track.fromNode(node.children[i]);
                 this.tracks.push(track);
             }
@@ -561,7 +560,10 @@ export class PlasmidTrack extends Directive
 
     public children : Array<TrackLabel | TrackScale | TrackMarker>;
 
-    public $scope : any;
+    public get $scope() : any
+    {
+        return this.plasmid.$scope;
+    }
 
     public _Iradius : string;
 
@@ -760,7 +762,6 @@ export class PlasmidTrack extends Directive
             if(node.children[i].name == "tracklabel")
             {
                 let label = new TrackLabel(this);
-                label.$scope = this.plasmid.$scope;
                 label.fromNode(node.children[i]);
                 this.labels.push(label);
                 this.children.push(label);
@@ -768,7 +769,6 @@ export class PlasmidTrack extends Directive
             else if(node.children[i].name == "trackmarker")
             {
                 let marker = new TrackMarker(this);
-                marker.$scope = this.plasmid.$scope;
                 marker.fromNode(node.children[i]);
                 this.markers.push(marker);
                 this.children.push(marker);
@@ -776,7 +776,6 @@ export class PlasmidTrack extends Directive
             else if(node.children[i].name == "trackscale")
             {
                 let scale = new TrackScale(this);
-                scale.$scope = this.plasmid.$scope;
                 scale.fromNode(node.children[i]);
                 this.scales.push(scale);
                 this.children.push(scale);
@@ -820,7 +819,10 @@ export class TrackLabel extends Directive
      */
     public track : PlasmidTrack;
     
-    public $scope : any;
+    public get $scope() : any
+    {
+        return this.track.$scope;
+    }
 
     public get center() : services.Point
     {
@@ -1064,7 +1066,10 @@ export class TrackScale extends Directive
      */
     public track : PlasmidTrack;
 
-    public $scope : any;
+    public get $scope() : any
+    {
+        return this.track.$scope;
+    }
 
     public get radius() : number
     {
@@ -1513,7 +1518,10 @@ export class TrackMarker extends Directive
      */
     public labels : Array<MarkerLabel>;
 
-    public $scope : any;
+    public get $scope() : any
+    {
+        return this.track.$scope;
+    }
 
     public getPath() : string
     {
@@ -1969,7 +1977,6 @@ export class TrackMarker extends Directive
             {
                 this._canDrawToCanvas = false;
                 let label = new MarkerLabel(this);
-                label.$scope = this.track.plasmid.$scope;
                 label.fromNode(node.children[i]);
                 this.labels.push(label);
             }
@@ -2026,7 +2033,10 @@ export class MarkerLabel extends Directive
 
     public classList : Array<string>;
 
-    public $scope : any;
+    public get $scope() : any
+    {
+        return this.marker.$scope;
+    }
 
     public get showlineflg() : boolean
     {
