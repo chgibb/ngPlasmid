@@ -1,6 +1,6 @@
 import { TrackMarker } from "./trackMarker";
 import { Directive } from "./directive";
-import { parseFontSize } from "./parseFontSize";
+import { parseFontSize } from "./svg/services/parseFontSize";
 import { interpolate } from "./interpolate";
 import { GenericNode } from "./genericNode";
 import { pathArc } from "./svg/services/pathArc";
