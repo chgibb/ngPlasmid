@@ -29,8 +29,8 @@ import { PlasmidTrack } from "./plasmidTrack";
 import { interpolate } from "./interpolate";
 import { GenericNode } from "./genericNode";
 import { EventEmitter } from "events";
-import { Point } from "./svg/services/point";
-import { Dimensions } from "./svg/services/dimensions";
+import { Point } from "./services/svg/point";
+import { Dimensions } from "./services/svg/dimensionsions";
 
 let performance : any = undefined;
 

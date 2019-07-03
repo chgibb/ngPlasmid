@@ -1,12 +1,12 @@
 import { TrackMarker } from "./trackMarker";
 import { Directive } from "./directive";
-import { parseFontSize } from "./svg/services/parseFontSize";
+import { parseFontSize } from "./services/svg/parseFontSize";
 import { interpolate } from "./interpolate";
 import { GenericNode } from "./genericNode";
-import { pathArc } from "./svg/services/pathArc";
-import { Point } from "./svg/services/point";
-import { PositionComponent } from "./svg/services/positionComponent";
-import { Position } from "./svg/services/position";
+import { pathArc } from "./services/svg/pathArc";
+import { Point } from "./services/svg/point";
+import { PositionComponent } from "./services/svg/positionComponent";
+import { Position } from "./services/svg/position";
 
 /**
  * A marker can optionally have a number of markerlabel elements.

@@ -4,15 +4,15 @@ import { interpolate } from "./interpolate";
 import { trackMarkerToCanvas } from "./canvas/trackMarker";
 import { GenericNode } from "./genericNode";
 import { MarkerLabel } from "./markerLabel";
-import { Arrow } from "./svg/services/arrow";
-import { pathArc } from "./svg/services/pathArc";
-import { Point } from "./svg/services/point";
-import { Radius } from "./svg/services/radius";
-import { Angle } from "./svg/services/angle";
-import { PositionComponent } from "./svg/services/positionComponent";
-import { Position } from "./svg/services/position";
-import { polarToCartesian } from "./svg/services/polarToCartesian";
-import { pathArcNumeric } from "./svg/services/pathArcNumeric";
+import { Arrow } from "./services/svg/arrow";
+import { pathArc } from "./services/svg/pathArchArc";
+import { Point } from "./services/svg/point";
+import { Radius } from "./services/svg/radius";
+import { Angle } from "./services/svg/anglengle";
+import { PositionComponent } from "./services/svg/positionComponent";
+import { Position } from "./services/svg/position";
+import { polarToCartesian } from "./services/svg/polarToCartesiansian";
+import { pathArcNumeric } from "./services/svg/pathArcNumericeric";
 
 /**
  * The primary mechanism to indicate special features on the track is provided by this element using the properties below.

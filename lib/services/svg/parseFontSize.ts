@@ -1,4 +1,4 @@
-import {parseStyle} from "../../parseStyle";
+import {parseStyle} from "../parseStyle";
 
 /**
  * Parses the value of font-size:valuepx out of the CSS string style.
