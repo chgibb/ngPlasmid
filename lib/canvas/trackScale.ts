@@ -1,7 +1,4 @@
-/// <reference path="./../directives" />
-/// <reference path="./../parseStyle" />
-
-import {TrackScale} from "./../directives";
+import {TrackScale} from "./../trackScale";
 import {parseStyle} from "./../parseStyle";
 
 export function trackScaleToCanvas(scale : TrackScale,ctx : CanvasRenderingContext2D) : void

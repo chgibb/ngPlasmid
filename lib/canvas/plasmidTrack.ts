@@ -1,8 +1,4 @@
-/// <reference path="./../directives" />
-/// <reference path="./../parseStyle" />
-/// <reference path="./utils.ts" />
-
-import {PlasmidTrack} from "./../directives";
+import {PlasmidTrack} from "./../plasmidTrack";
 import {parseStyle} from "./../parseStyle";
 import {drawSVGarcOnCanvas,splitRGBA} from "./utils";
 

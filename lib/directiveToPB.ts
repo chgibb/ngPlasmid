@@ -1,7 +1,12 @@
-import * as ngDirectives from "./directives";
 import * as pbDirectives from "./pb/node";
+import { Plasmid } from "./plasmid";
+import { PlasmidTrack } from "./plasmidTrack";
+import { TrackLabel } from "./trackLabel";
+import { TrackMarker } from "./trackMarker";
+import { TrackScale } from "./trackScale";
+import { MarkerLabel } from "./markerLabel";
 
-export function plasmidToPB(plasmid : ngDirectives.Plasmid) : pbDirectives.Node
+export function plasmidToPB(plasmid : Plasmid) : pbDirectives.Node
 {
     let res : pbDirectives.Node = pbDirectives.Node.create(<pbDirectives.INode>{
         name : "plasmid",
@@ -28,7 +33,7 @@ export function plasmidToPB(plasmid : ngDirectives.Plasmid) : pbDirectives.Node
     return res;
 }
 
-export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbDirectives.Node
+export function plasmidTrackToPB(plasmidTrack : PlasmidTrack) : pbDirectives.Node
 {
     let res : pbDirectives.Node = pbDirectives.Node.create({
         name : "plasmidtrack",
@@ -47,7 +52,7 @@ export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbD
             res.children.push(
                 pbDirectives.Node.create(
                     trackLabelToIPB(
-                        (<ngDirectives.TrackLabel>plasmidTrack.children[i])
+                        (<TrackLabel>plasmidTrack.children[i])
                     )
                 )
             );
@@ -57,7 +62,7 @@ export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbD
             res.children.push(
                 pbDirectives.Node.create(
                     trackMarkertoIPB(
-                        (<ngDirectives.TrackMarker>plasmidTrack.children[i])
+                        (<TrackMarker>plasmidTrack.children[i])
                     )
                 )
             );
@@ -67,7 +72,7 @@ export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbD
             res.children.push(
                 pbDirectives.Node.create(
                     trackScaleToIPB(
-                        (<ngDirectives.TrackScale>plasmidTrack.children[i])
+                        (<TrackScale>plasmidTrack.children[i])
                     )
                 )
             );
@@ -77,7 +82,7 @@ export function plasmidTrackToPB(plasmidTrack : ngDirectives.PlasmidTrack) : pbD
     return res;
 }
 
-export function trackLabelToIPB(trackLabel : ngDirectives.TrackLabel) : pbDirectives.INode
+export function trackLabelToIPB(trackLabel : TrackLabel) : pbDirectives.INode
 {
     let res : pbDirectives.INode = <pbDirectives.INode>{
         name : "tracklabel",
@@ -94,7 +99,7 @@ export function trackLabelToIPB(trackLabel : ngDirectives.TrackLabel) : pbDirect
     return res;
 }
 
-export function trackScaleToIPB(trackScale : ngDirectives.TrackScale) : pbDirectives.INode
+export function trackScaleToIPB(trackScale : TrackScale) : pbDirectives.INode
 {
     let res : pbDirectives.INode = <pbDirectives.INode>{
         name : "trackscale",
@@ -116,7 +121,7 @@ export function trackScaleToIPB(trackScale : ngDirectives.TrackScale) : pbDirect
     return res;
 }
 
-export function trackMarkertoIPB(trackMarker : ngDirectives.TrackMarker) : pbDirectives.INode
+export function trackMarkertoIPB(trackMarker : TrackMarker) : pbDirectives.INode
 {
     let res : pbDirectives.INode = <pbDirectives.INode>{
         name : "trackmarker",
@@ -142,7 +147,7 @@ export function trackMarkertoIPB(trackMarker : ngDirectives.TrackMarker) : pbDir
         res.children.push(
             new pbDirectives.Node(
                 markerLabelToIPB(
-                    (<ngDirectives.MarkerLabel>trackMarker.labels[i])
+                    (<MarkerLabel>trackMarker.labels[i])
                 )
             )
         );
@@ -151,7 +156,7 @@ export function trackMarkertoIPB(trackMarker : ngDirectives.TrackMarker) : pbDir
     return res;
 }
 
-export function markerLabelToIPB(markerLabel : ngDirectives.MarkerLabel) : pbDirectives.INode
+export function markerLabelToIPB(markerLabel : MarkerLabel) : pbDirectives.INode
 {
     let res : pbDirectives.INode = <pbDirectives.INode>{
         name : "markerlabel",

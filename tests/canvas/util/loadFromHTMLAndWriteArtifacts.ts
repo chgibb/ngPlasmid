@@ -3,7 +3,7 @@ import * as cp from "child_process";
 
 const svg2img = require("svg2img");
 
-import {Plasmid} from "./../../../lib/directives";
+import {Plasmid} from "./../../../lib/plasmid";
 import * as html from "./../../../lib/html";
 
 export function loadFromHTMLAndWriteArtifacts(file : string,scope : any) : Promise<Plasmid>

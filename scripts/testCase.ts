@@ -6,7 +6,7 @@ const chalk = require("chalk");
 import {TestSummary,TestStatus} from "./testSummary";
 
 import * as html from "./../lib/html";
-import {Plasmid,AdaptiveRenderingUpdates,RenderingStrategies} from "./../lib/directives";
+import {Plasmid,AdaptiveRenderingUpdates,RenderingStrategies} from "./../lib/plasmid";
 
 class Timer
 {

@@ -5,14 +5,14 @@ import * as fs from "fs";
 let args = process.argv.slice(2);
 
 import * as html from "./../lib/html";
-import * as ngDirectives from "./../lib//directives";
 import {plasmidToPB} from "./../lib/directiveToPB";
 import * as pbDirectives from "./../lib/pb/node";
+import { Plasmid } from "../lib/plasmid";
 
 (async function(){
     let nodes = await html.loadFromString(fs.readFileSync(args[0]).toString());
     
-        let plasmid = new ngDirectives.Plasmid();
+        let plasmid = new Plasmid();
 
         for(let i = 0; i != nodes.length; ++ i)
         {

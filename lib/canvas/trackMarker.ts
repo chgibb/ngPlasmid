@@ -1,8 +1,4 @@
-/// <reference path="./../directives" />
-/// <reference path="./../parseStyle" />
-/// <reference path="./utils.ts" />
-
-import {TrackMarker} from "./../directives";
+import {TrackMarker} from "./../trackMarker";
 import {parseStyle} from "./../parseStyle";
 import {drawSVGarcOnCanvas,trimTrailingChars} from "./utils";
 

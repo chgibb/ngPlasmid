@@ -5,7 +5,7 @@ const pixelMatch = require("pixelmatch");
 
 import {loadFromHTMLAndWriteArtifacts} from "./loadFromHTMLAndWriteArtifacts";
 import {plasmidToBuffer} from "./plasmidToBuffer";
-import {Plasmid} from "../../../lib/directives";
+import {Plasmid} from "../../../lib/plasmid";
 
 let plasmid : Plasmid;
 

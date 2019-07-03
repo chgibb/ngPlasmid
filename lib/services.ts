@@ -253,7 +253,7 @@ function pathComplexArc(
     arrowStart : Arrow,
     arrowEnd : Arrow
 ) : string {
-    //https://github.com/vixis/angularplasmid/blob/master/src/js/services.js#L155
+    //https://github.com/vixis/angularplasmid/blob/master/src/js/js#L155
 
     let start : Point; 
     let start2 : Point
@@ -309,7 +309,7 @@ function pathComplexArcNumeric(
     arrowStart : Arrow,
     arrowEnd : Arrow
 ) : Array<number> {
-    //https://github.com/vixis/angularplasmid/blob/master/src/js/services.js#L155
+    //https://github.com/vixis/angularplasmid/blob/master/src/js/js#L155
 
     let start : Point; 
     let start2 : Point
@@ -432,7 +432,7 @@ export function Numeric(numberVal : number,numberDefault : number) : number
 
 function round10(value : any, exp : any) : number
 {
-    //https://github.com/vixis/angularplasmid/blob/9ea10c4ed21ee5c2879659dc0b5d3d57086ef873/src/js/services.js#L21
+    //https://github.com/vixis/angularplasmid/blob/9ea10c4ed21ee5c2879659dc0b5d3d57086ef873/src/js/js#L21
     var type = 'round';
     // If the exp is undefined or zero...
     if (typeof exp === 'undefined' || +exp === 0) {
