@@ -3,7 +3,8 @@ import { PlasmidTrack } from "./plasmidTrack";
 import { interpolate } from "./interpolate";
 import { GenericNode } from "./genericNode";
 import { trackScaleToCanvas } from "./canvas/trackScale";
-import { pathScale, elementScaleLabels } from "./services";
+import { pathScale } from "./svg/services/pathScale";
+import { elementScaleLabels } from "./svg/services/elementScaleLabels";
 
 /**
  * This element provides labels and tickmarks for the track.

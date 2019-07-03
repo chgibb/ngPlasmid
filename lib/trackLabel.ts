@@ -3,7 +3,7 @@ import { PlasmidTrack } from "./plasmidTrack";
 import { interpolate } from "./interpolate";
 import { trackLabelToCanvas } from "./canvas/trackLabel";
 import { GenericNode } from "./genericNode";
-import { Point } from "./services";
+import { Point } from "./svg/services/point";
 
 /**
  * Draws a label in the middle of a track

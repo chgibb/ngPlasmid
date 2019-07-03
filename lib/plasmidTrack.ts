@@ -6,7 +6,10 @@ import { GenericNode } from "./genericNode";
 import { TrackMarker } from "./trackMarker";
 import { TrackScale } from "./trackScale";
 import { TrackLabel } from "./trackLabel";
-import { Point, polarToCartesian, pathDonut, pathDonutNumeric } from "./services";
+import { Point } from "./svg/services/point";
+import { pathDonut } from "./svg/services/pathDonut";
+import { polarToCartesian } from "./svg/services/polarToCartesian";
+import { pathDonutNumeric } from "./svg/services/pathDonutNumeric";
 
 /**
  * This element draws the plasmid's circular backbone within which a number of different features can be drawn.

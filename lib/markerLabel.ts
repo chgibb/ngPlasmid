@@ -3,7 +3,10 @@ import { Directive } from "./directive";
 import { parseFontSize } from "./parseFontSize";
 import { interpolate } from "./interpolate";
 import { GenericNode } from "./genericNode";
-import { pathArc, PositionComponent, Point,Position } from "./services";
+import { pathArc } from "./svg/services/pathArc";
+import { Point } from "./svg/services/point";
+import { PositionComponent } from "./svg/services/positionComponent";
+import { Position } from "./svg/services/position";
 
 /**
  * A marker can optionally have a number of markerlabel elements.
