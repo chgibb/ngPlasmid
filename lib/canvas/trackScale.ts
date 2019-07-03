@@ -1,5 +1,5 @@
 import {TrackScale} from "./../trackScale";
-import {parseStyle} from "./../parseStyle";
+import {parseStyle} from "../services/parseStyle";
 
 export function trackScaleToCanvas(scale : TrackScale,ctx : CanvasRenderingContext2D) : void
 {

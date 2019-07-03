@@ -1,6 +1,6 @@
 /// <reference types="jest" />
 
-import {parseStyle} from "./parseStyle";
+import {parseStyle} from "./services/parseStyle";
 
 it(`should parse style string 1`,() => {
     expect(parseStyle(`fill-opacity:0.0;fill:rgb(0, 0, 0)`)).toEqual({

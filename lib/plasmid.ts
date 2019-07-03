@@ -30,7 +30,7 @@ import { interpolate } from "./interpolate";
 import { GenericNode } from "./genericNode";
 import { EventEmitter } from "events";
 import { Point } from "./services/svg/point";
-import { Dimensions } from "./services/svg/dimensionsions";
+import { Dimensions } from "./services/svg/dimensions";
 
 let performance : any = undefined;
 

@@ -1,5 +1,5 @@
 import {TrackLabel} from "./../trackLabel";
-import {parseStyle} from "./../parseStyle";
+import {parseStyle} from "../services/parseStyle";
 
 export function trackLabelToCanvas(label : TrackLabel,ctx : CanvasRenderingContext2D) : void
 {

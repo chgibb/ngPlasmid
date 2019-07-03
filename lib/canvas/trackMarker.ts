@@ -1,5 +1,5 @@
 import {TrackMarker} from "./../trackMarker";
-import {parseStyle} from "./../parseStyle";
+import {parseStyle} from "../services/parseStyle";
 import {drawSVGarcOnCanvas,trimTrailingChars} from "./utils";
 
 export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingContext2D) : void
