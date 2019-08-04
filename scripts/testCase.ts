@@ -1,12 +1,12 @@
 import * as cp from "child_process";
 import * as fs from "fs";
 
-const chalk = require("chalk");
 
 import {TestSummary,TestStatus} from "./testSummary";
-
 import * as html from "./../lib/html";
 import {Plasmid,AdaptiveRenderingUpdates,RenderingStrategies} from "./../lib/plasmid";
+
+const chalk = require("chalk");
 
 class Timer
 {
@@ -43,7 +43,8 @@ export function cleanRawProfiles() : void
     {
         cp.execSync("rm *.log");
     }
-    catch(err){}
+    catch(err)
+    {}
 }
 
 export class TestCase
@@ -182,7 +183,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res : Buffer 
+        let res : Buffer; 
         
         if(!this.jsonFile)
             res = cp.execSync(`node referenceCompiler/index tests/${this.htmlFile}`);
@@ -217,7 +218,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res : Buffer 
+        let res : Buffer; 
         
         if(!this.jsonFile)
             res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile}`);
@@ -233,7 +234,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res : Buffer 
+        let res : Buffer; 
         
         if(!this.jsonFile)
             res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} batched`);
@@ -252,7 +253,7 @@ export class TestCase
         else 
             cp.execSync(`node --prof HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
         
-        return cp.execSync(`node --prof-process *.log`).toString();
+        return cp.execSync("node --prof-process *.log").toString();
     }
 
     public getExHTMLTOSVGREsultSize()
@@ -311,7 +312,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res : Buffer 
+        let res : Buffer; 
         
         if(!this.jsonFile)
             res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath}`);
@@ -327,7 +328,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res : Buffer 
+        let res : Buffer; 
         
         if(!this.jsonFile)
             res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} batched`);
@@ -346,7 +347,7 @@ export class TestCase
         else 
             cp.execSync(`node --prof PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} tests/${this.jsonFile}`);
         
-        return cp.execSync(`node --prof-process *.log`).toString();
+        return cp.execSync("node --prof-process *.log").toString();
     }
 
     public getExPBTOSVGREsultSize()
@@ -389,7 +390,8 @@ export class TestCase
 
     public findBestStrategy() : Promise<string>
     {
-        return new Promise<string>(async (resolve) => {
+        return new Promise<string>(async (resolve) => 
+        {
             let nodes = await html.loadFromString(fs.readFileSync(`tests/${this.htmlFile}`).toString());
 
             let plasmid = new Plasmid();
@@ -409,13 +411,15 @@ export class TestCase
             plasmid.enableAdaptiveRendering();
             plasmid.adaptIterations = 10;
 
-            plasmid.adaptiveRenderingUpdates.on("render",function(name : string,time : number){
+            plasmid.adaptiveRenderingUpdates.on("render",function(name : string,time : number)
+            {
                 name;
                 time;
                 //console.log(`${name} took ${time}`);
             });
 
-            plasmid.adaptiveRenderingUpdates.on("selectedStrategy",function(name :string,averages : Array<{name:RenderingStrategies,avg:number}>){
+            plasmid.adaptiveRenderingUpdates.on("selectedStrategy",function(name :string,averages : Array<{name:RenderingStrategies,avg:number}>)
+            {
                 for(let i = 0; i != averages.length; ++i)
                 {
                     console.log(`       ${chalk.yellow(`${averages[i].name} average: ${averages[i].avg}`)}`);

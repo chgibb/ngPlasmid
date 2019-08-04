@@ -1,4 +1,4 @@
-import { round10 } from "./round10";
+import {round10} from "./round10";
 
 export function pathScale(
     x : number,
@@ -7,7 +7,8 @@ export function pathScale(
     interval : number,
     total : number,
     tickLength : number
-) : string {
+) : string 
+{
     x = Number(x || 0);
     y = Number(y || 0);
     radius = Number(radius || 0);
@@ -22,9 +23,10 @@ export function pathScale(
     let numTicks : number = Number(interval) > 0 ? Number(total) / Number(interval) : 0;
     let beta : number = 2 * Math.PI / numTicks;
     let precision : number = -1;
-    let d : string = '';
+    let d : string = "";
     
-    for (i = 0; i < numTicks; i += 1) {
+    for (i = 0; i < numTicks; i += 1) 
+    {
         alpha = beta * i - Math.PI / 2;
         cos = Math.cos(alpha);
         sin = Math.sin(alpha);

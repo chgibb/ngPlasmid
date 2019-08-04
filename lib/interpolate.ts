@@ -40,13 +40,13 @@ export class Token
     private determineTokenType() : void
     {
         //' quoted string literal
-        if(this.value[0] == `'` && this.value[this.value.length-1] == `'`)
+        if(this.value[0] == "'" && this.value[this.value.length-1] == "'")
         {
             this.type = "string";
             return;
         }
         //one-time bound variable
-        if(this.value[0] == `:` && this.value[1] == `:`)
+        if(this.value[0] == ":" && this.value[1] == ":")
         {
             this.type = "scopeAccess";
             return;
@@ -76,7 +76,7 @@ export class Token
     private evaluateScopeAccess($scope : any,varAccess : string) : string
     {
         //trim the leading :: off of one-time bound variable names
-        if(varAccess[0] == `:` && varAccess[1] == `:`)
+        if(varAccess[0] == ":" && varAccess[1] == ":")
         {
             varAccess = varAccess.substring(2,varAccess.length);
         }

@@ -1,14 +1,16 @@
 import * as fs from "fs";
 import * as cp from "child_process";
 
-const svg2img = require("svg2img");
 
 import {Plasmid} from "./../../../lib/plasmid";
 import * as html from "./../../../lib/html";
 
+const svg2img = require("svg2img");
+
 export function loadFromHTMLAndWriteArtifacts(file : string,scope : any) : Promise<Plasmid>
 {
-    return new Promise<Plasmid>(async (resolve) => {
+    return new Promise<Plasmid>(async (resolve) => 
+    {
         let res = new Plasmid();
 
         if(scope)
@@ -45,7 +47,8 @@ export function loadFromHTMLAndWriteArtifacts(file : string,scope : any) : Promi
             `);
             cp.execSync(`node ${file}Cmds.js`);
         }
-        catch(err){}
+        catch(err)
+        {}
 
         return resolve(res);
     });

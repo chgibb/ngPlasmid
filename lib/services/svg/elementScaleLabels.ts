@@ -1,5 +1,5 @@
-import { Label } from "./label";
-import { round10 } from "./round10";
+import {Label} from "./label";
+import {round10} from "./round10";
 
 export function elementScaleLabels(
     x : number,
@@ -7,7 +7,8 @@ export function elementScaleLabels(
     radius : number,
     interval : number,
     total : number
-) : Array<Label> {
+) : Array<Label> 
+{
     x = Number(x);
     y = Number(y);
     radius = Number(radius);
@@ -15,15 +16,16 @@ export function elementScaleLabels(
     total = Number(total);
     
     let alpha : number;
-    let sin : number
-    let cos : number 
+    let sin : number;
+    let cos : number; 
     let i : number;
     let numTicks : number = Number(interval) > 0 ? Number(total) / Number(interval) : 0;
     let beta : number = 2 * Math.PI / numTicks;
     let precision : number = -1;
     let labelArr : Array<Label> = new Array<Label>();
     
-    for (i = 0; i < numTicks; i += 1) {
+    for (i = 0; i < numTicks; i += 1) 
+    {
         alpha = beta * i - Math.PI / 2;
         cos = Math.cos(alpha);
         sin = Math.sin(alpha);

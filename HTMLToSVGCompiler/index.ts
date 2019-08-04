@@ -4,10 +4,12 @@ import * as fs from "fs";
 
 let args = process.argv.slice(2);
 
-import * as html from "./../lib/html";
-import { Plasmid } from "../lib/plasmid";
+import {Plasmid} from "../lib/plasmid";
 
-(async function(){
+import * as html from "./../lib/html";
+
+(async function()
+{
     let nodes = await html.loadFromString(fs.readFileSync(args[0]).toString());
 
     let plasmid = new Plasmid();
@@ -30,6 +32,7 @@ import { Plasmid } from "../lib/plasmid";
     }
 
     console.log(plasmid.renderStart() + plasmid.renderEnd());
-})().catch((err) => {
+})().catch((err) => 
+{
     console.error(err);
 });

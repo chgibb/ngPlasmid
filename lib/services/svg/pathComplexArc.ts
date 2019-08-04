@@ -1,6 +1,6 @@
-import { polarToCartesian } from "./polarToCartesian";
-import { Point } from "./point";
-import { Arrow } from "./arrow";
+import {polarToCartesian} from "./polarToCartesian";
+import {Point} from "./point";
+import {Arrow} from "./arrow";
 
 export function pathComplexArc(
     x : number,
@@ -11,11 +11,12 @@ export function pathComplexArc(
     width : number,
     arrowStart : Arrow,
     arrowEnd : Arrow
-) : string {
+) : string 
+{
     //https://github.com/vixis/angularplasmid/blob/master/src/js/js#L155
 
     let start : Point; 
-    let start2 : Point
+    let start2 : Point;
     let end : Point;
     let arcSweep : number | string;
     let arrow_start_1 : Point;

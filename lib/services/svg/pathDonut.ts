@@ -1,12 +1,13 @@
-import { polarToCartesian } from "./polarToCartesian";
-import { Ring } from "./ring";
+import {polarToCartesian} from "./polarToCartesian";
+import {Ring} from "./ring";
 
 export function pathDonut(
     x : number,
     y : number,
     radius : number,
     width : number
-) : string {
+) : string 
+{
     let innerRing : Ring;
     let outerRing : Ring;
     let path;

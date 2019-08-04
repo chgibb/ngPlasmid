@@ -1,12 +1,12 @@
-import { TrackMarker } from "./trackMarker";
-import { Directive } from "./directive";
-import { parseFontSize } from "./services/svg/parseFontSize";
-import { interpolate } from "./interpolate";
-import { GenericNode } from "./genericNode";
-import { pathArc } from "./services/svg/pathArc";
-import { Point } from "./services/svg/point";
-import { PositionComponent } from "./services/svg/positionComponent";
-import { Position } from "./services/svg/position";
+import {TrackMarker} from "./trackMarker";
+import {Directive} from "./directive";
+import {parseFontSize} from "./services/svg/parseFontSize";
+import {interpolate} from "./interpolate";
+import {GenericNode} from "./genericNode";
+import {pathArc} from "./services/svg/pathArc";
+import {Point} from "./services/svg/point";
+import {PositionComponent} from "./services/svg/positionComponent";
+import {Position} from "./services/svg/position";
 
 /**
  * A marker can optionally have a number of markerlabel elements.
@@ -273,7 +273,8 @@ export class MarkerLabel extends Directive
         let endAngle;
 
         markerRadius = this.marker.radius;
-        switch (vAlign) {
+        switch (vAlign) 
+        {
         case VALIGN_INNER:
             radius = markerRadius.inner;
             break;
@@ -286,7 +287,8 @@ export class MarkerLabel extends Directive
         }
 
         markerAngle = this.marker.angle;
-        switch (hAlign) {
+        switch (hAlign) 
+        {
         case HALIGN_START:
             startAngle = markerAngle.start;
             endAngle = markerAngle.start + 359.99;
@@ -318,7 +320,7 @@ export class MarkerLabel extends Directive
             let fontSize = 0;
             fontSize = this.labelstyle ? parseFontSize(this.labelstyle) : 0;
             let fontAdjust = (this.valign === VALIGN_OUTER) ? 0 : (this.valign === VALIGN_INNER) ? Number(fontSize || 0) : Number(fontSize || 0) / 2;
-            return this.getPath(this.hadjust,this.vadjust - fontAdjust,this.halign,this.valign)
+            return this.getPath(this.hadjust,this.vadjust - fontAdjust,this.halign,this.valign);
         }
         else
         {
@@ -360,7 +362,7 @@ export class MarkerLabel extends Directive
         this.interpolateAttributes();
         let res = "";
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L935
-        let id = 'TPATH' + (Math.random() + 1).toString(36).substring(3, 7);
+        let id = "TPATH" + (Math.random() + 1).toString(36).substring(3, 7);
 
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L950
         let VALIGN_MIDDLE = "middle";
@@ -370,7 +372,7 @@ export class MarkerLabel extends Directive
         let HALIGN_START = "start";
         let HALIGN_END = "end";
 
-        res += `<g`;
+        res += "<g";
 
         if(this.type)
             res += ` type="${this.type}" `;
@@ -378,15 +380,15 @@ export class MarkerLabel extends Directive
         if(this.text)
             res += ` text="${this.text}" `;
         
-        res += `>`;
+        res += ">";
 
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1002
         if(!this.showlineflg)
-            res += `<path></path>`;
+            res += "<path></path>";
 
         else
         {
-            res += `<path`;
+            res += "<path";
 
             res += ` d="${this.getSVGPath()}" `;
 
@@ -396,12 +398,12 @@ export class MarkerLabel extends Directive
             if(this.linestyle)
                 res += ` style="${this.linestyle}"`;
 
-            res += `></path>`;
+            res += "></path>";
         }
 
-        res += `<path`;
+        res += "<path";
         res += ` id="${id}" `;
-        res += ` style="fill:none;stroke:none" `;
+        res += " style=\"fill:none;stroke:none\" ";
         
         let fontSize = 0;
         fontSize = this.labelstyle ? parseFontSize(this.labelstyle) : 0;
@@ -410,25 +412,25 @@ export class MarkerLabel extends Directive
             
             res += ` d="${this.getSVGPath()}" `;
         }
-        res += `></path>`;
+        res += "></path>";
 
-        res += `<text`;
+        res += "<text";
         
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L977
         switch(this.halign)
         {
-            case HALIGN_START:
-                res += ` text-anchor="start" `;
+        case HALIGN_START:
+            res += " text-anchor=\"start\" ";
             break;
-            case HALIGN_END:
-                res += ` text-anchor="end" `;
+        case HALIGN_END:
+            res += " text-anchor=\"end\" ";
             break;
-            default:
-                res += ` text-anchor="middle" `;
+        default:
+            res += " text-anchor=\"middle\" ";
             break;
         }
 
-        res += ` alignment-baseline="middle" `;
+        res += " alignment-baseline=\"middle\" ";
 
         //emitting <markerlabel class="..." and <markerlabel labelclass="..." is inconsistent
         //if labelclass is present, we ignore class
@@ -443,7 +445,7 @@ export class MarkerLabel extends Directive
             }
             if(this.classList.length != 0)
                 classAttrib += " ";
-            classAttrib += `ng-scope ng-isolate-scope`;
+            classAttrib += "ng-scope ng-isolate-scope";
 
             res += ` class="${classAttrib}" `;
         }
@@ -460,27 +462,27 @@ export class MarkerLabel extends Directive
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L959
         if(this.type == "path")
         {
-            res += ` x="" y="" `;
-            res += `>`;
+            res += " x=\"\" y=\"\" ";
+            res += ">";
 
             res += `<textPath href="#${id}" `;
 
-            res += ` class="ng-scope" `;
+            res += " class=\"ng-scope\" ";
 
             if(this.halign == HALIGN_START)
             {
-                res += ` startOffset="0%" `;
+                res += " startOffset=\"0%\" ";
             }
             else if(this.halign == HALIGN_END)
             {
-                res += ` startOffset="100%" `;
+                res += " startOffset=\"100%\" ";
             }
             else
             {
-                res += ` startOffset="50%" `;
+                res += " startOffset=\"50%\" ";
             }
 
-            res += `>`;
+            res += ">";
 
             if(this.text !== undefined)
                 res += `${this.text}`;
@@ -492,11 +494,11 @@ export class MarkerLabel extends Directive
         {
             let pos = this.marker.getPosition(this.hadjust,this.vadjust,this.halign,this.valign);
             res += ` x="${(<Point>pos).x}" y="${(<Point>pos).y}" `;
-            res += `>`;
+            res += ">";
             res += `${this.text !== undefined ? this.text : ""}`;
         }
         
-        res +=  "</text></g>"
+        res +=  "</text></g>";
 
         return res;
     }

@@ -23,14 +23,15 @@
 
  */
 
-import { Directive } from "./directive";
-import { plasmidToCanvas } from "./canvas/plasmid";
-import { PlasmidTrack } from "./plasmidTrack";
-import { interpolate } from "./interpolate";
-import { GenericNode } from "./genericNode";
-import { EventEmitter } from "events";
-import { Point } from "./services/svg/point";
-import { Dimensions } from "./services/svg/dimensions";
+import {EventEmitter} from "events";
+
+import {Directive} from "./directive";
+import {plasmidToCanvas} from "./canvas/plasmid";
+import {PlasmidTrack} from "./plasmidTrack";
+import {interpolate} from "./interpolate";
+import {GenericNode} from "./genericNode";
+import {Point} from "./services/svg/point";
+import {Dimensions} from "./services/svg/dimensions";
 
 let performance : any = undefined;
 
@@ -39,7 +40,8 @@ try
     let perf_hooks = require("perf_hooks");
     performance = perf_hooks.performance;
 }
-catch(err){}
+catch(err)
+{}
 
 class Timer
 {
@@ -152,7 +154,7 @@ export class Plasmid extends Directive
         return {
             x : d.width / 2,
             y : d.height / 2
-        }
+        };
     }
 
     /**
@@ -168,7 +170,7 @@ export class Plasmid extends Directive
         return {
             height : this.plasmidheight,
             width : this.plasmidwidth
-        }
+        };
     }
 
     private _sequencelength : number;
@@ -345,7 +347,7 @@ export class Plasmid extends Directive
         {
             res += this.tracks[i].renderEnd();
         }
-        res += `</svg>`;
+        res += "</svg>";
         return res;
     }
 
@@ -418,12 +420,13 @@ export class Plasmid extends Directive
         super();
         this.tagType = "plasmid";
         this.tracks = new Array<PlasmidTrack>();
-        this.renderingStrategies["normal"] = new RenderingStrategy(function(plasmid : Plasmid){
+        this.renderingStrategies["normal"] = new RenderingStrategy(function(plasmid : Plasmid)
+        {
             plasmid.interpolateAttributes();
             //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L60
             let res = "";
 
-            res += `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" `;
+            res += "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" ";
 
             if(plasmid.sequencelength)
                 res += `sequencelength="${plasmid.sequencelength}" `;
@@ -434,7 +437,7 @@ export class Plasmid extends Directive
             if(plasmid.plasmidwidth)
                 res += `plasmidwidth="${plasmid.plasmidwidth}" `;
     
-            res += `class="ng-scope ng-isolate-scope" `;
+            res += "class=\"ng-scope ng-isolate-scope\" ";
 
             if(plasmid.plasmidheight)
                 res += `height="${plasmid.plasmidheight}" ` ;
@@ -450,7 +453,8 @@ export class Plasmid extends Directive
             return res;
         });
 
-        this.renderingStrategies["preCalculateBatch"] = new RenderingStrategy(function(plasmid : Plasmid){
+        this.renderingStrategies["preCalculateBatch"] = new RenderingStrategy(function(plasmid : Plasmid)
+        {
             plasmid.batchGenerateSVGPaths();
             return plasmid.renderingStrategies["normal"].render(plasmid);
         });

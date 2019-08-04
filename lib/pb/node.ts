@@ -32,13 +32,15 @@ export interface INode {
 }
 
 /** Represent a node in the directive hierarchy */
-export class Node implements INode {
+export class Node implements INode 
+{
     [key : string] : (string | null | undefined) | { [k : string] : any };
     /**
      * Constructs a new Node.
      * @param [properties] Properties to set
      */
-    constructor(properties?: INode) {
+    constructor(properties?: INode) 
+    {
         this.children = [];
         if (properties)
             for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
@@ -63,7 +65,8 @@ export class Node implements INode {
      * @param [properties] Properties to set
      * @returns Node instance
      */
-    public static create(properties?: INode): Node {
+    public static create(properties?: INode): Node 
+    {
         return new Node(properties);
     }
 
@@ -73,7 +76,8 @@ export class Node implements INode {
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encode(message: INode, writer?: any): any {
+    public static encode(message: INode, writer?: any): any 
+    {
         if (!writer)
             writer = $Writer.create();
         writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
@@ -91,7 +95,8 @@ export class Node implements INode {
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encodeDelimited(message: INode, writer?: any): any {
+    public static encodeDelimited(message: INode, writer?: any): any 
+    {
         return this.encode(message, writer).ldelim();
     }
 
@@ -103,38 +108,41 @@ export class Node implements INode {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: (any | Uint8Array), length?: number): Node {
+    public static decode(reader: (any | Uint8Array), length?: number): Node 
+    {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
         var end = length === undefined ? reader.len : reader.pos + length, message = new Node();
-        while (reader.pos < end) {
+        while (reader.pos < end) 
+        {
             var tag = reader.uint32();
-            switch (tag >>> 3) {
-                case 1:
-                    message.name = reader.string();
-                    break;
-                case 2:
-                    message.type = reader.string();
-                    break;
-                case 3:
-                    message.attribs = Attributes.decode(reader, reader.uint32());
-                    break;
-                case 4:
-                    if (!(message.children && message.children.length))
-                        message.children = [];
-                    message.children.push(Node.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            switch (tag >>> 3) 
+            {
+            case 1:
+                message.name = reader.string();
+                break;
+            case 2:
+                message.type = reader.string();
+                break;
+            case 3:
+                message.attribs = Attributes.decode(reader, reader.uint32());
+                break;
+            case 4:
+                if (!(message.children && message.children.length))
+                    message.children = [];
+                message.children.push(Node.decode(reader, reader.uint32()));
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         if (!message.hasOwnProperty("name"))
-            throw new $util.ProtocolError("missing required 'name'", { instance: message });
+            throw new $util.ProtocolError("missing required 'name'", {instance: message});
         if (!message.hasOwnProperty("type"))
-            throw new $util.ProtocolError("missing required 'type'", { instance: message });
+            throw new $util.ProtocolError("missing required 'type'", {instance: message});
         if (!message.hasOwnProperty("attribs"))
-            throw new $util.ProtocolError("missing required 'attribs'", { instance: message });
+            throw new $util.ProtocolError("missing required 'attribs'", {instance: message});
         return message;
     }
 
@@ -145,7 +153,8 @@ export class Node implements INode {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: (any | Uint8Array)): Node {
+    public static decodeDelimited(reader: (any | Uint8Array)): Node 
+    {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
@@ -156,7 +165,8 @@ export class Node implements INode {
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null) {
+    public static verify(message: { [k: string]: any }): (string | null) 
+    {
         if (typeof message !== "object" || message === null)
             return "object expected";
         if (!$util.isString(message.name))
@@ -168,10 +178,12 @@ export class Node implements INode {
             if (error)
                 return "attribs." + error;
         }
-        if (message.children != null && message.hasOwnProperty("children")) {
+        if (message.children != null && message.hasOwnProperty("children")) 
+        {
             if (!Array.isArray(message.children))
                 return "children: array expected";
-            for (var i = 0; i < message.children.length; ++i) {
+            for (var i = 0; i < message.children.length; ++i) 
+            {
                 var error = Node.verify(message.children[i]);
                 if (error)
                     return "children." + error;
@@ -185,7 +197,8 @@ export class Node implements INode {
      * @param object Plain object
      * @returns Node
      */
-    public static fromObject(object: { [k: string]: any }): Node {
+    public static fromObject(object: { [k: string]: any }): Node 
+    {
         if (object instanceof Node)
             return object;
         var message = new Node();
@@ -193,16 +206,19 @@ export class Node implements INode {
             message.name = String(object.name);
         if (object.type != null)
             message.type = String(object.type);
-        if (object.attribs != null) {
+        if (object.attribs != null) 
+        {
             if (typeof object.attribs !== "object")
                 throw TypeError(".Node.attribs: object expected");
             message.attribs = Attributes.fromObject(object.attribs);
         }
-        if (object.children) {
+        if (object.children) 
+        {
             if (!Array.isArray(object.children))
                 throw TypeError(".Node.children: array expected");
             message.children = [];
-            for (var i = 0; i < object.children.length; ++i) {
+            for (var i = 0; i < object.children.length; ++i) 
+            {
                 if (typeof object.children[i] !== "object")
                     throw TypeError(".Node.children: object expected");
                 message.children[i] = Node.fromObject(object.children[i]);
@@ -217,13 +233,15 @@ export class Node implements INode {
      * @param [options] Conversion options
      * @returns Plain object
      */
-    public static toObject(message: Node, options?: any): { [k: string]: any } {
+    public static toObject(message: Node, options?: any): { [k: string]: any } 
+    {
         if (!options)
             options = {};
         let object: Node = (<any>{});
         if (options.arrays || options.defaults)
             object.children = [];
-        if (options.defaults) {
+        if (options.defaults) 
+        {
             object.name = "";
             object.type = "";
             object.attribs = (<any>null);
@@ -234,7 +252,8 @@ export class Node implements INode {
             object.type = message.type;
         if (message.attribs != null && message.hasOwnProperty("attribs"))
             object.attribs = Attributes.toObject((<any>message).attribs, options);
-        if (message.children && message.children.length) {
+        if (message.children && message.children.length) 
+        {
             object.children = [];
             for (var j = 0; j < message.children.length; ++j)
                 object.children[j] = (<any>Node.toObject((<any>message).children[j], options));
@@ -246,7 +265,8 @@ export class Node implements INode {
      * Converts this Node to JSON.
      * @returns JSON object
      */
-    public toJSON(): { [k: string]: any } {
+    public toJSON(): { [k: string]: any } 
+    {
         return Node.toObject(this, $protobuf.util.toJSONOptions);
     }
 }
@@ -416,13 +436,15 @@ export interface IAttributes {
 }
 
 /** All possible attributes of a Node */
-export class Attributes implements IAttributes {
+export class Attributes implements IAttributes 
+{
     [key : string] : (string | null | undefined) | { [k : string] : any };
     /**
      * Constructs a new Attributes.
      * @param [properties] Properties to set
      */
-    constructor(properties?: IAttributes) {
+    constructor(properties?: IAttributes) 
+    {
         if (properties)
             for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
@@ -594,7 +616,8 @@ export class Attributes implements IAttributes {
      * @param [properties] Properties to set
      * @returns Attributes instance
      */
-    public static create(properties?: IAttributes): Attributes {
+    public static create(properties?: IAttributes): Attributes 
+    {
         return new Attributes(properties);
     }
 
@@ -604,7 +627,8 @@ export class Attributes implements IAttributes {
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encode(message: IAttributes, writer?: any): any {
+    public static encode(message: IAttributes, writer?: any): any 
+    {
         if (!writer)
             writer = $Writer.create();
         if (message.plasmidheight != null && message.hasOwnProperty("plasmidheight"))
@@ -696,7 +720,8 @@ export class Attributes implements IAttributes {
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encodeDelimited(message: IAttributes, writer?: any): any {
+    public static encodeDelimited(message: IAttributes, writer?: any): any 
+    {
         return this.encode(message, writer).ldelim();
     }
 
@@ -708,136 +733,139 @@ export class Attributes implements IAttributes {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: (any | Uint8Array), length?: number): Attributes {
+    public static decode(reader: (any | Uint8Array), length?: number): Attributes 
+    {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
         var end = length === undefined ? reader.len : reader.pos + length, message = new Attributes();
-        while (reader.pos < end) {
+        while (reader.pos < end) 
+        {
             var tag = reader.uint32();
-            switch (tag >>> 3) {
-                case 1:
-                    message.plasmidheight = reader.string();
-                    break;
-                case 2:
-                    message.plasmidwidth = reader.string();
-                    break;
-                case 3:
-                    message.sequencelength = reader.string();
-                    break;
-                case 4:
-                    message.sequence = reader.string();
-                    break;
-                case 5:
-                    message.radius = reader.string();
-                    break;
-                case 6:
-                    message.width = reader.string();
-                    break;
-                case 7:
-                    message.trackstyle = reader.string();
-                    break;
-                case 8:
-                    message.text = reader.string();
-                    break;
-                case 9:
-                    message.vadjust = reader.string();
-                    break;
-                case 10:
-                    message.hadjust = reader.string();
-                    break;
-                case 11:
-                    message.labelstyle = reader.string();
-                    break;
-                case 12:
-                    message.interval = reader.string();
-                    break;
-                case 13:
-                    message.ticksize = reader.string();
-                    break;
-                case 14:
-                    message.direction = reader.string();
-                    break;
-                case 15:
-                    message.style = reader.string();
-                    break;
-                case 16:
-                    message.showlabels = reader.string();
-                    break;
-                case 17:
-                    message.labelvadjust = reader.string();
-                    break;
-                case 18:
-                    message.labelclass = reader.string();
-                    break;
-                case 19:
-                    message.start = reader.string();
-                    break;
-                case 20:
-                    message.end = reader.string();
-                    break;
-                case 21:
-                    message.markerstyle = reader.string();
-                    break;
-                case 22:
-                    message.wadjust = reader.string();
-                    break;
-                case 23:
-                    message.markergroup = reader.string();
-                    break;
-                case 24:
-                    message.arrowstartlength = reader.string();
-                    break;
-                case 25:
-                    message.arrowstartwidth = reader.string();
-                    break;
-                case 26:
-                    message.arrowstartangle = reader.string();
-                    break;
-                case 27:
-                    message.arrowendlength = reader.string();
-                    break;
-                case 28:
-                    message.arrowendwidth = reader.string();
-                    break;
-                case 29:
-                    message.arrowendangle = reader.string();
-                    break;
-                case 30:
-                    message.markerclick = reader.string();
-                    break;
-                case 31:
-                    message.valign = reader.string();
-                    break;
-                case 32:
-                    message.halign = reader.string();
-                    break;
-                case 33:
-                    message.type = reader.string();
-                    break;
-                case 34:
-                    message.showline = reader.string();
-                    break;
-                case 35:
-                    message.linestyle = reader.string();
-                    break;
-                case 36:
-                    message.lineclass = reader.string();
-                    break;
-                case 37:
-                    message.linevadjust = reader.string();
-                    break;
-                case 38:
-                    message.labelclick = reader.string();
-                    break;
-                case 39:
-                    message["class"] = reader.string();
-                    break;
-                case 40:
-                    message.markerclass = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            switch (tag >>> 3) 
+            {
+            case 1:
+                message.plasmidheight = reader.string();
+                break;
+            case 2:
+                message.plasmidwidth = reader.string();
+                break;
+            case 3:
+                message.sequencelength = reader.string();
+                break;
+            case 4:
+                message.sequence = reader.string();
+                break;
+            case 5:
+                message.radius = reader.string();
+                break;
+            case 6:
+                message.width = reader.string();
+                break;
+            case 7:
+                message.trackstyle = reader.string();
+                break;
+            case 8:
+                message.text = reader.string();
+                break;
+            case 9:
+                message.vadjust = reader.string();
+                break;
+            case 10:
+                message.hadjust = reader.string();
+                break;
+            case 11:
+                message.labelstyle = reader.string();
+                break;
+            case 12:
+                message.interval = reader.string();
+                break;
+            case 13:
+                message.ticksize = reader.string();
+                break;
+            case 14:
+                message.direction = reader.string();
+                break;
+            case 15:
+                message.style = reader.string();
+                break;
+            case 16:
+                message.showlabels = reader.string();
+                break;
+            case 17:
+                message.labelvadjust = reader.string();
+                break;
+            case 18:
+                message.labelclass = reader.string();
+                break;
+            case 19:
+                message.start = reader.string();
+                break;
+            case 20:
+                message.end = reader.string();
+                break;
+            case 21:
+                message.markerstyle = reader.string();
+                break;
+            case 22:
+                message.wadjust = reader.string();
+                break;
+            case 23:
+                message.markergroup = reader.string();
+                break;
+            case 24:
+                message.arrowstartlength = reader.string();
+                break;
+            case 25:
+                message.arrowstartwidth = reader.string();
+                break;
+            case 26:
+                message.arrowstartangle = reader.string();
+                break;
+            case 27:
+                message.arrowendlength = reader.string();
+                break;
+            case 28:
+                message.arrowendwidth = reader.string();
+                break;
+            case 29:
+                message.arrowendangle = reader.string();
+                break;
+            case 30:
+                message.markerclick = reader.string();
+                break;
+            case 31:
+                message.valign = reader.string();
+                break;
+            case 32:
+                message.halign = reader.string();
+                break;
+            case 33:
+                message.type = reader.string();
+                break;
+            case 34:
+                message.showline = reader.string();
+                break;
+            case 35:
+                message.linestyle = reader.string();
+                break;
+            case 36:
+                message.lineclass = reader.string();
+                break;
+            case 37:
+                message.linevadjust = reader.string();
+                break;
+            case 38:
+                message.labelclick = reader.string();
+                break;
+            case 39:
+                message["class"] = reader.string();
+                break;
+            case 40:
+                message.markerclass = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -850,7 +878,8 @@ export class Attributes implements IAttributes {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: (any | Uint8Array)): Attributes {
+    public static decodeDelimited(reader: (any | Uint8Array)): Attributes 
+    {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
@@ -861,7 +890,8 @@ export class Attributes implements IAttributes {
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null) {
+    public static verify(message: { [k: string]: any }): (string | null) 
+    {
         if (typeof message !== "object" || message === null)
             return "object expected";
         if (message.plasmidheight != null && message.hasOwnProperty("plasmidheight"))
@@ -992,7 +1022,8 @@ export class Attributes implements IAttributes {
      * @param object Plain object
      * @returns Attributes
      */
-    public static fromObject(object: { [k: string]: any }): Attributes {
+    public static fromObject(object: { [k: string]: any }): Attributes 
+    {
         if (object instanceof Attributes)
             return object;
         var message = new Attributes();
@@ -1085,11 +1116,13 @@ export class Attributes implements IAttributes {
      * @param [options] Conversion options
      * @returns Plain object
      */
-    public static toObject(message: Attributes, options?: any): { [k: string]: any } {
+    public static toObject(message: Attributes, options?: any): { [k: string]: any } 
+    {
         if (!options)
             options = {};
         let object: Attributes = (<any>{});
-        if (options.defaults) {
+        if (options.defaults) 
+        {
             object.plasmidheight = "";
             object.plasmidwidth = "";
             object.sequencelength = "";
@@ -1218,7 +1251,8 @@ export class Attributes implements IAttributes {
      * Converts this Attributes to JSON.
      * @returns JSON object
      */
-    public toJSON(): { [k: string]: any } {
+    public toJSON(): { [k: string]: any } 
+    {
         return Attributes.toObject(this, $protobuf.util.toJSONOptions);
     }
 }

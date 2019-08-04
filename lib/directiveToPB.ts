@@ -1,10 +1,10 @@
 import * as pbDirectives from "./pb/node";
-import { Plasmid } from "./plasmid";
-import { PlasmidTrack } from "./plasmidTrack";
-import { TrackLabel } from "./trackLabel";
-import { TrackMarker } from "./trackMarker";
-import { TrackScale } from "./trackScale";
-import { MarkerLabel } from "./markerLabel";
+import {Plasmid} from "./plasmid";
+import {PlasmidTrack} from "./plasmidTrack";
+import {TrackLabel} from "./trackLabel";
+import {TrackMarker} from "./trackMarker";
+import {TrackScale} from "./trackScale";
+import {MarkerLabel} from "./markerLabel";
 
 export function plasmidToPB(plasmid : Plasmid) : pbDirectives.Node
 {

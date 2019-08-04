@@ -1,15 +1,15 @@
-import { plasmidTrackToCanvas } from "./canvas/plasmidTrack";
-import { Directive } from "./directive";
-import { Plasmid } from "./plasmid";
-import { interpolate } from "./interpolate";
-import { GenericNode } from "./genericNode";
-import { TrackMarker } from "./trackMarker";
-import { TrackScale } from "./trackScale";
-import { TrackLabel } from "./trackLabel";
-import { Point } from "./services/svg/point";
-import { pathDonut } from "./services/svg/pathDonut";
-import { polarToCartesian } from "./services/svg/polarToCartesian";
-import { pathDonutNumeric } from "./services/svg/pathDonutNumeric";
+import {plasmidTrackToCanvas} from "./canvas/plasmidTrack";
+import {Directive} from "./directive";
+import {Plasmid} from "./plasmid";
+import {interpolate} from "./interpolate";
+import {GenericNode} from "./genericNode";
+import {TrackMarker} from "./trackMarker";
+import {TrackScale} from "./trackScale";
+import {TrackLabel} from "./trackLabel";
+import {Point} from "./services/svg/point";
+import {pathDonut} from "./services/svg/pathDonut";
+import {polarToCartesian} from "./services/svg/polarToCartesian";
+import {pathDonutNumeric} from "./services/svg/pathDonutNumeric";
 
 /**
  * This element draws the plasmid's circular backbone within which a number of different features can be drawn.
@@ -134,7 +134,8 @@ export class PlasmidTrack extends Directive
         pos : number,
         positionOption : 0 | 1 | 2,
         radiusAdjust : number
-    ) : Point | undefined {
+    ) : Point | undefined 
+    {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L222
         radiusAdjust = Number(radiusAdjust || 0);
         pos = Number(pos);
@@ -143,10 +144,12 @@ export class PlasmidTrack extends Directive
             radius, angle, center = this.center,
             seqLen = this.plasmid.sequencelength;
 
-        if (seqLen > 0) {
+        if (seqLen > 0) 
+        {
             angle = (pos / seqLen) * 360;
 
-            switch (positionOption) {
+            switch (positionOption) 
+            {
             case POSITION_OPTION_INNER:
                 radius = this.radius + radiusAdjust;
                 break;
@@ -206,12 +209,12 @@ export class PlasmidTrack extends Directive
         this.interpolateAttributes();
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L179
         let res = "";
-        res = res + `<path class="ng-scope ng-isolate-scope" fill-rule="evenodd" `;
+        res = res + "<path class=\"ng-scope ng-isolate-scope\" fill-rule=\"evenodd\" ";
 
         res = res + ` d="${this.getSVGPath()}" `;
         if(this.trackstyle)
-            res = res + ` style="${this.trackstyle}"`
-        res = res + `></path>`;
+            res = res + ` style="${this.trackstyle}"`;
+        res = res + "></path>";
         
         for(let i = 0; i != this.children.length; ++i)
         {

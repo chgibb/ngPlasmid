@@ -1,9 +1,9 @@
-import { Directive } from "./directive";
-import { PlasmidTrack } from "./plasmidTrack";
-import { interpolate } from "./interpolate";
-import { trackLabelToCanvas } from "./canvas/trackLabel";
-import { GenericNode } from "./genericNode";
-import { Point } from "./services/svg/point";
+import {Directive} from "./directive";
+import {PlasmidTrack} from "./plasmidTrack";
+import {interpolate} from "./interpolate";
+import {trackLabelToCanvas} from "./canvas/trackLabel";
+import {GenericNode} from "./genericNode";
+import {Point} from "./services/svg/point";
 
 /**
  * Draws a label in the middle of a track
@@ -133,7 +133,7 @@ export class TrackLabel extends Directive
 
         let center = this.track.center;
 
-        res += `<text`;
+        res += "<text";
         if(this.text)
         {
             res += ` text="${this.text}" `;
@@ -143,7 +143,7 @@ export class TrackLabel extends Directive
             res += ` labelstyle="${this.labelstyle}" `;
         }
         res += ` class="${this.labelclass ? `${this.labelclass} ` : ""}ng-scope ng-isolate-scope"`;
-        res += ` text-anchor="middle" alignment-baseline="middle" `;
+        res += " text-anchor=\"middle\" alignment-baseline=\"middle\" ";
         res += ` x="${center.x+this.hadjust}" y="${center.y+this.vadjust}" `;
         
         if(this.labelstyle)

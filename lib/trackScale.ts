@@ -1,10 +1,10 @@
-import { Directive } from "./directive";
-import { PlasmidTrack } from "./plasmidTrack";
-import { interpolate } from "./interpolate";
-import { GenericNode } from "./genericNode";
-import { trackScaleToCanvas } from "./canvas/trackScale";
-import { pathScale } from "./services/svg/pathScale";
-import { elementScaleLabels } from "./services/svg/elementScaleLabels";
+import {Directive} from "./directive";
+import {PlasmidTrack} from "./plasmidTrack";
+import {interpolate} from "./interpolate";
+import {GenericNode} from "./genericNode";
+import {trackScaleToCanvas} from "./canvas/trackScale";
+import {pathScale} from "./services/svg/pathScale";
+import {elementScaleLabels} from "./services/svg/elementScaleLabels";
 
 /**
  * This element provides labels and tickmarks for the track.
@@ -299,7 +299,7 @@ export class TrackScale extends Directive
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L352
         let res = "";
 
-        res += `<g`;
+        res += "<g";
         if(this.interval)
         {
             res += ` interval="${this.interval}" `;
@@ -312,7 +312,7 @@ export class TrackScale extends Directive
         {
             res += ` ticksize="${this.ticksize}" `;
         }
-        res += `>`;
+        res += ">";
 
         let classAttrib = "";
         for(let i = 0; i != this.classList.length; ++i)
@@ -323,22 +323,22 @@ export class TrackScale extends Directive
         }
         if(this.classList.length == 1)
             classAttrib += " ";
-        classAttrib += `ng-scope ng-isolate-scope`;
+        classAttrib += "ng-scope ng-isolate-scope";
         res += `<path class="${classAttrib}" `;
         if(this.style)
         {
             res += ` style="${this.style}" `;
         }
         res += ` d="${this.getSVGPath()}" `;
-        res += `></path>`
-        res += `<g>`;
+        res += "></path>";
+        res += "<g>";
         if(this.showlabels)
         {
             //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L380
             let labels = elementScaleLabels(this.track.center.x,this.track.center.y,this.labelradius,this.interval,this.total);
             for(let i = 0; i != labels.length; ++i)
             {
-                res += `<text`;
+                res += "<text";
                 if(this.labelclass)
                 {
                     res += ` class="${this.labelclass}" `;
@@ -352,8 +352,8 @@ export class TrackScale extends Directive
                 res += ` text-anchor="middle" alignment-baseline="middle">${labels[i].text}</text>`;
             }
         }
-        res += `</g>`;
-        res += `</g>`;
+        res += "</g>";
+        res += "</g>";
         return res;
     }
     public renderEnd() : string

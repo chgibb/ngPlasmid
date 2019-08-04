@@ -72,7 +72,7 @@ export function queueTests() : Array<TestCase>
         jsonFile : "sectionIndicator.json",
         name : "Section Indicator",
         type : "directive"
-    }))
+    }));
 
     testCases.push(new TestCase(<TestCaseInit>{
         htmlFile : "HSP70.html",

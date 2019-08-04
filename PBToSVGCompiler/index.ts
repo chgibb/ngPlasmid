@@ -4,8 +4,9 @@ import * as fs from "fs";
 
 let args = process.argv.slice(2);
 
+import {Plasmid} from "../lib/plasmid";
+
 import * as pbDirectives from "./../lib/pb/node";
-import { Plasmid } from "../lib/plasmid";
 
 let plasmid = new Plasmid();
 

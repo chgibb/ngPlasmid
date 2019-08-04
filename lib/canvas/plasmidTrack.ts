@@ -1,5 +1,6 @@
-import {PlasmidTrack} from "./../plasmidTrack";
 import {parseStyle} from "../services/parseStyle";
+
+import {PlasmidTrack} from "./../plasmidTrack";
 import {drawSVGarcOnCanvas,splitRGBA} from "./utils";
 
 export function plasmidTrackToCanvas(track : PlasmidTrack,ctx : CanvasRenderingContext2D) : void

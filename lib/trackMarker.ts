@@ -1,18 +1,18 @@
-import { Directive } from "./directive";
-import { PlasmidTrack } from "./plasmidTrack";
-import { interpolate } from "./interpolate";
-import { trackMarkerToCanvas } from "./canvas/trackMarker";
-import { GenericNode } from "./genericNode";
-import { MarkerLabel } from "./markerLabel";
-import { Arrow } from "./services/svg/arrow";
-import { pathArc } from "./services/svg/pathArc";
-import { Point } from "./services/svg/point";
-import { Radius } from "./services/svg/radius";
-import { Angle } from "./services/svg/angle";
-import { PositionComponent } from "./services/svg/positionComponent";
-import { Position } from "./services/svg/position";
-import { polarToCartesian } from "./services/svg/polarToCartesian";
-import { pathArcNumeric } from "./services/svg/pathArcNumeric";
+import {Directive} from "./directive";
+import {PlasmidTrack} from "./plasmidTrack";
+import {interpolate} from "./interpolate";
+import {trackMarkerToCanvas} from "./canvas/trackMarker";
+import {GenericNode} from "./genericNode";
+import {MarkerLabel} from "./markerLabel";
+import {Arrow} from "./services/svg/arrow";
+import {pathArc} from "./services/svg/pathArc";
+import {Point} from "./services/svg/point";
+import {Radius} from "./services/svg/radius";
+import {Angle} from "./services/svg/angle";
+import {PositionComponent} from "./services/svg/positionComponent";
+import {Position} from "./services/svg/position";
+import {polarToCartesian} from "./services/svg/polarToCartesian";
+import {pathArcNumeric} from "./services/svg/pathArcNumeric";
 
 /**
  * The primary mechanism to indicate special features on the track is provided by this element using the properties below.
@@ -114,7 +114,8 @@ export class TrackMarker extends Directive
         vAdjust? : number,
         hAlign? : string,
         vAlign? : string
-    ) : Position<PositionComponent<Point>> | Point {
+    ) : Position<PositionComponent<Point>> | Point 
+    {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L666
         let HALIGN_MIDDLE = "middle";
         let HALIGN_START = "start";
@@ -134,28 +135,31 @@ export class TrackMarker extends Directive
         hAdjust = (hAdjust ? hAdjust : 0);
         vAdjust = (vAdjust ? vAdjust : 0);
 
-        if (vAlign !== undefined && hAlign !== undefined) {
-            switch (vAlign) {
-                case VALIGN_INNER:
-                    radius =  markerRadius.inner + vAdjust;
+        if (vAlign !== undefined && hAlign !== undefined) 
+        {
+            switch (vAlign) 
+            {
+            case VALIGN_INNER:
+                radius =  markerRadius.inner + vAdjust;
                 break;
-                case VALIGN_OUTER:
-                    radius =  markerRadius.outer + vAdjust;
+            case VALIGN_OUTER:
+                radius =  markerRadius.outer + vAdjust;
                 break;
-                default:
-                    radius =  markerRadius.middle + vAdjust;
+            default:
+                radius =  markerRadius.middle + vAdjust;
                 break;
             }
 
-            switch (hAlign) {
-                case HALIGN_START:
-                    angle = markerAngle.start + hAdjust;
+            switch (hAlign) 
+            {
+            case HALIGN_START:
+                angle = markerAngle.start + hAdjust;
                 break;
-                case HALIGN_END:
-                    angle = markerAngle.end + hAdjust;
+            case HALIGN_END:
+                angle = markerAngle.end + hAdjust;
                 break;
-                default:
-                    angle = markerAngle.middle + hAdjust;
+            default:
+                angle = markerAngle.middle + hAdjust;
                 break;
             }
 
@@ -328,7 +332,7 @@ export class TrackMarker extends Directive
             width : this.arrowendwidth ? this.arrowendwidth : 0,
             length : this.arrowendlength ? this.arrowendlength : 0,
             angle : this.arrowendangle ? this.arrowendangle : 0
-        }
+        };
     }
 
     private _markergroup : string;
@@ -386,12 +390,14 @@ export class TrackMarker extends Directive
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L836
         let plasmidSeq = this.track.plasmid.sequence;
-        let markerSeq = '';
+        let markerSeq = "";
     
-        if (this.start > this.end) {
+        if (this.start > this.end) 
+        {
             return plasmidSeq.substring(this.start - 1, plasmidSeq.length - 1) + plasmidSeq.substring(0, this.end - 1);
         } 
-        else {
+        else 
+        {
             return plasmidSeq.substring(this.start - 1, this.end - 1);
         }
     }
@@ -446,26 +452,26 @@ export class TrackMarker extends Directive
             }
             if(this.classList.length != 0)
                 classAttrib = classAttrib + " ";
-            classAttrib = classAttrib + `ng-scope ng-isolate-scope`;
+            classAttrib = classAttrib + "ng-scope ng-isolate-scope";
         }
         else
             classAttrib = this.markerclass;
         res = res + `<path class="${classAttrib}" d="${this.getSVGPath()}" `;
         if(this.markerstyle)
             res = res + ` style="${this.markerstyle}"`;
-        res = res + `></path>`;
+        res = res + "></path>";
 
         for(let i = 0; i != this.labels.length; ++i)
         {
             res = res + this.labels[i].renderStart();
         }
-        res = res + `</g>`;
+        res = res + "</g>";
 
         return res;
     }
     public renderEnd() : string
     {
-        let res = ``;
+        let res = "";
         for(let i = 0; i != this.labels.length; ++i)
         {
             res = res + this.labels[i].renderEnd();
@@ -496,7 +502,7 @@ export class TrackMarker extends Directive
         }
         if(node.attribs.arrowstartlength)
         {
-            this.arrowstartlength = parseFloat(node.attribs.arrowstartlength)
+            this.arrowstartlength = parseFloat(node.attribs.arrowstartlength);
         }
         if(node.attribs.arrowendlength)
         {

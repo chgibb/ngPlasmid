@@ -1,11 +1,12 @@
-import { Point } from "./point";
+import {Point} from "./point";
 
 export function polarToCartesian(
     centerX : number,
     centerY : number,
     radius : number,
     angleInDegrees : number
-) : Point {
+) : Point 
+{
     let angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
     return {
         x : centerX + (radius * Math.cos(angleInRadians)),

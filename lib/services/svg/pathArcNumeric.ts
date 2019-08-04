@@ -1,7 +1,7 @@
-import { polarToCartesian } from "./polarToCartesian";
-import { Point } from "./point";
-import { Arrow } from "./arrow";
-import { pathComplexArcNumeric } from "./pathComplexArcNumeric";
+import {polarToCartesian} from "./polarToCartesian";
+import {Point} from "./point";
+import {Arrow} from "./arrow";
+import {pathComplexArcNumeric} from "./pathComplexArcNumeric";
 
 export function pathArcNumeric(
     x : number,
@@ -12,7 +12,8 @@ export function pathArcNumeric(
     width : number,
     arrowStart? : Arrow,
     arrowEnd? : Arrow
-) : Array<number> {
+) : Array<number> 
+{
     let d : Array<number>;
     let start : Point; 
     let end : Point;
@@ -26,26 +27,35 @@ export function pathArcNumeric(
     arrowStart = arrowStart || {width : 0, length : 0, angle: 0};
     arrowEnd = arrowEnd || {width : 0, length : 0, angle: 0};
 
-    if (startAngle === endAngle) {
+    if (startAngle === endAngle) 
+    {
         // Draw a line
         start = polarToCartesian(x, y, radius, startAngle);
         end = polarToCartesian(x, y, radius + width, startAngle);
         d = [0, start.x, start.y, 0, end.x, end.y];
-    } else {
+    }
+    else 
+    {
         //Draw a "simple" arc if the width is 1
-        if (width === 1) {
+        if (width === 1) 
+        {
             start = polarToCartesian(x, y, radius, startAngle);
             end = polarToCartesian(x, y, radius, endAngle);
-            if (startAngle < endAngle) {
+            if (startAngle < endAngle) 
+            {
                 arcSweep = endAngle - startAngle <= 180 ? 0 : 1;
-            } else {
+            }
+            else 
+            {
                 arcSweep = endAngle - startAngle <= 180 ? 1 : 0;
             }
             d = [
                 0, start.x, start.y,
                 0, radius, radius, 0, arcSweep, 1, end.x, end.y
             ];
-        } else {
+        }
+        else 
+        {
 
             // Draw a "complex" arc (We start drawing in reverse, which is why start uses endAngle)
             return pathComplexArcNumeric(x,y,radius,startAngle,endAngle,width,arrowStart,arrowEnd);
