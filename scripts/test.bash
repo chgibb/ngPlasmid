@@ -1,8 +1,6 @@
 #!/bin/bash
 (set -o igncr) 2>/dev/null && set -o igncr; # For Cygwin on Windows compatibility
 
-bash scripts/buildNativeModule.bash
-
 ./scripts/genPBCode.bash
 
 ./node_modules/.bin/tsc

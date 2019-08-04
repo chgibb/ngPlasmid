@@ -1,5 +1,3 @@
-require("./../lib/ngPlasmid");
-
 import * as fs from "fs";
 
 let args = process.argv.slice(2);
@@ -18,10 +16,5 @@ let buffer = fs.readFileSync(args[0]);
 plasmid.fromNode<any>(
     pbDirectives.Node.decode(buffer)
 );
-
-if(args[args.length-1] == "batched")
-{
-    plasmid.changeRenderingStrategy("preCalculateBatch");
-}
 
 console.log(plasmid.renderStart() + plasmid.renderEnd());

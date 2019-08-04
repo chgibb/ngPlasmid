@@ -74,7 +74,7 @@ class Timer
     }
 }
 
-export type RenderingStrategies = "normal" | "preCalculateBatch";
+export type RenderingStrategies = "normal";
 
 class RenderingStrategy
 {
@@ -400,14 +400,6 @@ export class Plasmid extends Directive
         throw new Error("Not supported by directive");
     }
 
-    private batchGenerateSVGPaths() : void
-    {
-        this.interpolateAttributes();
-        
-        let ngPlasmidNative = require("./ngPlasmid");
-        ngPlasmidNative.batchGenerateSVGPaths(this);
-    }
-
     public adaptiveRenderingUpdates : AdaptiveRenderingUpdater = new AdaptiveRenderingUpdater();
 
     public toCanvas(ctx : CanvasRenderingContext2D) : void
@@ -451,12 +443,6 @@ export class Plasmid extends Directive
                 res += plasmid.tracks[i].renderStart();
             }
             return res;
-        });
-
-        this.renderingStrategies["preCalculateBatch"] = new RenderingStrategy(function(plasmid : Plasmid)
-        {
-            plasmid.batchGenerateSVGPaths();
-            return plasmid.renderingStrategies["normal"].render(plasmid);
         });
     }
 }

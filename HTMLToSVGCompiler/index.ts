@@ -1,5 +1,3 @@
-require("./../lib/ngPlasmid");
-
 import * as fs from "fs";
 
 let args = process.argv.slice(2);
@@ -24,11 +22,6 @@ import * as html from "./../lib/html";
             plasmid.fromNode(nodes[i]);
             break;
         }
-    }
-
-    if(args[args.length-1] == "batched")
-    {
-        plasmid.changeRenderingStrategy("preCalculateBatch");
     }
 
     console.log(plasmid.renderStart() + plasmid.renderEnd());
