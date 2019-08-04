@@ -1,5 +1,5 @@
 import {plasmidTrackToCanvas} from "./canvas/plasmidTrack";
-import {Directive} from "./directive";
+import {Directive, TagType} from "./directive";
 import {Plasmid} from "./plasmid";
 import {interpolate} from "./interpolate";
 import {GenericNode} from "./genericNode";
@@ -21,9 +21,9 @@ import {pathDonutNumeric} from "./services/svg/pathDonutNumeric";
  */
 export class PlasmidTrack extends Directive
 {
-    public _Itrackstyle : string;
+    public _Itrackstyle : string | undefined;
 
-    public trackstyle : string;
+    public trackstyle : string | undefined;
 
     /**
      * Reference to the parent plasmid element
@@ -64,9 +64,9 @@ export class PlasmidTrack extends Directive
         return this.plasmid.$scope;
     }
 
-    public _Iradius : string;
+    public _Iradius : string | undefined;
 
-    private _radius : number;
+    private _radius : number | undefined;
 
     /**
      * The radius (in pixels) of the track.
@@ -87,9 +87,9 @@ export class PlasmidTrack extends Directive
         this._radius = radius;
     }
 
-    public _Iwidth : string;
+    public _Iwidth : string | undefined;
 
-    private _width : number;
+    private _width : number | undefined;
 
     /**
      * The thickness (in pixels) of the plasmid ring. Defaults to 25 if nothing provided
@@ -187,13 +187,6 @@ export class PlasmidTrack extends Directive
 
     public getSVGPath() : string | undefined
     {
-        if(this._batchedSVGPath)
-        {
-            let res = this._batchedSVGPath;
-            this._batchedSVGPath = "";
-            return res;
-        }
-        
         return this.generateSVGPath();
     }
 
@@ -291,6 +284,7 @@ export class PlasmidTrack extends Directive
         plasmidTrackToCanvas(this,ctx);
     }
 
+    public tagType : TagType;
 
     public constructor(plasmid : Plasmid)
     {

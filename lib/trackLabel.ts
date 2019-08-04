@@ -1,4 +1,4 @@
-import {Directive} from "./directive";
+import {Directive, TagType} from "./directive";
 import {PlasmidTrack} from "./plasmidTrack";
 import {interpolate} from "./interpolate";
 import {trackLabelToCanvas} from "./canvas/trackLabel";
@@ -33,9 +33,9 @@ export class TrackLabel extends Directive
         return this.track.center;
     }
 
-    public _Itext : string;
+    public _Itext : string | undefined;
 
-    private _text : string;
+    private _text : string | undefined;
     
     /**
      * 	Text of the label to draw
@@ -43,44 +43,44 @@ export class TrackLabel extends Directive
      * @type {string}
      * @memberof TrackLabel
      */
-    public get text() : string
+    public get text() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L542
         return this._text;
     }
-    public set text(text : string)
+    public set text(text : string | undefined)
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L542
         this._text = text;
     }
 
-    private _labelclass : string;
+    private _labelclass : string | undefined;
 
-    public get labelclass() : string
+    public get labelclass() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L547
         return this._labelclass;
     }
-    public set labelclass(labelclass : string)
+    public set labelclass(labelclass : string | undefined)
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L547
         this._labelclass = labelclass;
     }
 
-    private _labelstyle : string;
+    private _labelstyle : string | undefined;
 
-    public get labelstyle() : string
+    public get labelstyle() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L552
         return this._labelstyle;
     }
-    public set labelstyle(labelstyle : string)
+    public set labelstyle(labelstyle : string | undefined)
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L552
         this._labelstyle = labelstyle;
     }
 
-    private _hadjust : number;
+    private _hadjust : number | undefined;
     
     /**
      * Horizontal offset of the label from the center of the track.
@@ -100,7 +100,7 @@ export class TrackLabel extends Directive
         this._hadjust = hadjust;
     }
 
-    private _vadjust : number;
+    private _vadjust : number | undefined;
     
     /**
      * Vertical offset of the label from the center of the track.
@@ -214,6 +214,8 @@ export class TrackLabel extends Directive
     {
         trackLabelToCanvas(this,ctx);
     }
+
+    public tagType : TagType;
 
     public constructor(track : PlasmidTrack)
     {

@@ -57,11 +57,11 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 compileTimeFactor = 35;
             if(testCases[i].htmlFile == "HPV1615CovTracks.html")
                 compileTimeFactor = 85;
-            console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime/testCases[i].exHTMLToSVGCompileTime).toFixed(2)}x faster than the reference`)}`);
+            console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime!/testCases[i].exHTMLToSVGCompileTime!).toFixed(2)}x faster than the reference`)}`);
             let outString = `HTML to SVG Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
 
         
-            if(testCases[i].exHTMLToSVGCompileTime*compileTimeFactor < testCases[i].referenceCompileTime)
+            if(testCases[i].exHTMLToSVGCompileTime!*compileTimeFactor < testCases[i].referenceCompileTime!)
             {
                 console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
@@ -82,7 +82,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             }
         
             outString = "HTML to SVG Compiler Output Size Less Than Reference's Output Size";
-            if(testCases[i].exHTMLToSVGResultSize < testCases[i].referenceResultSize)
+            if(testCases[i].exHTMLToSVGResultSize! < testCases[i].referenceResultSize!)
             {
                 console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
@@ -129,10 +129,10 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             console.log(`   ${chalk.blue("Compile time:")} ${chalk.yellow(testCases[i].exHTMLtoPBCompileTime+"ms")}`);
             console.log(`   ${chalk.blue("Output size:")} ${chalk.yellow(testCases[i].exHTMLToPBResultSize+"b")}`);
             console.log(`   ${chalk.cyan("Validating")}`);
-            console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime/testCases[i].exHTMLtoPBCompileTime).toFixed(2)}x faster than the reference`)}`);
+            console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime!/testCases[i].exHTMLtoPBCompileTime!).toFixed(2)}x faster than the reference`)}`);
             compileTimeFactor = 4;
             outString = `HTML to Protocol Buffer Compile Time At Least ${compileTimeFactor}x Faster Than Reference`;
-            if(testCases[i].exHTMLtoPBCompileTime*compileTimeFactor < testCases[i].referenceCompileTime)
+            if(testCases[i].exHTMLtoPBCompileTime!*compileTimeFactor < testCases[i].referenceCompileTime!)
             {
                 console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
@@ -167,11 +167,11 @@ let testCases : Array<TestCase> = new Array<TestCase>();
                 compileTimeFactor = 35;
             if(testCases[i].htmlFile == "HPV1615CovTracks.html")
                 compileTimeFactor = 85;
-            console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime/testCases[i].exPBToSVGCompileTime).toFixed(2)}x faster than the reference`)}`);
+            console.log(`       ${chalk.yellow(`Compile time was ${(testCases[i].referenceCompileTime!/testCases[i].exPBToSVGCompileTime!).toFixed(2)}x faster than the reference`)}`);
             outString = "Protocol Buffer to SVG Compile Time Faster Than HTML to SVG Compiler";
 
         
-            if(testCases[i].exPBToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
+            if(testCases[i].exPBToSVGCompileTime! < testCases[i].exHTMLToSVGCompileTime!)
             {
                 console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
@@ -192,7 +192,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             }
 
             outString = "PB to SVG Compiler Output Size Less Than Reference's Output Size";
-            if(testCases[i].exPBToSVGResultSize < testCases[i].referenceResultSize)
+            if(testCases[i].exPBToSVGResultSize! < testCases[i].referenceResultSize!)
             {
                 console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
@@ -245,7 +245,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             console.log(`   ${chalk.blue("Output size:")} ${chalk.yellow(testCases[i].exHTMLToSVGResultSize+"b")}`);
             console.log(`   ${chalk.cyan("Validating")}`);
             let outString = "HTML to SVG Compile Time Less Than 15 Seconds";
-            if(testCases[i].exHTMLToSVGCompileTime < 15000)
+            if(testCases[i].exHTMLToSVGCompileTime! < 15000)
             {
                 console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({
@@ -284,7 +284,7 @@ let testCases : Array<TestCase> = new Array<TestCase>();
             console.log(`   ${chalk.blue("Output size:")} ${chalk.yellow(testCases[i].exPBToSVGResultSize+"b")}`);
 
             outString = "Protocol Buffer to SVG Compile Time Faster Than HTML to SVG Compiler";
-            if(testCases[i].exPBToSVGCompileTime < testCases[i].exHTMLToSVGCompileTime)
+            if(testCases[i].exPBToSVGCompileTime! < testCases[i].exHTMLToSVGCompileTime!)
             {
                 console.log(`       ${chalk.green(outString)} ☑️`);
                 testCases[i].summary.statuses.push({

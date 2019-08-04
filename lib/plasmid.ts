@@ -25,7 +25,7 @@
 
 import {EventEmitter} from "events";
 
-import {Directive} from "./directive";
+import {Directive, TagType} from "./directive";
 import {plasmidToCanvas} from "./canvas/plasmid";
 import {PlasmidTrack} from "./plasmidTrack";
 import {interpolate} from "./interpolate";
@@ -47,7 +47,7 @@ class Timer
 {
     public startEpoch : number;
 
-    public endEpoch : number;
+    public endEpoch : number | undefined;
 
     public constructor()
     {
@@ -69,7 +69,7 @@ class Timer
         else
         {
             this.endEpoch = performance.now();
-            return this.endEpoch - this.startEpoch;
+            return this.endEpoch! - this.startEpoch;
         }
     }
 }
@@ -110,7 +110,7 @@ class AdaptiveRenderingUpdater extends EventEmitter implements AdaptiveRendering
  */
 export class Plasmid extends Directive
 {
-    public _IplasmidHeight : string;
+    public _IplasmidHeight : string | undefined;
 
     /**
      * Height (in pixels) of the box that surrounds the plasmid
@@ -118,9 +118,9 @@ export class Plasmid extends Directive
      * @type {number}
      * @memberof Plasmid
      */
-    public plasmidheight : number;
+    public plasmidheight : number | undefined;
 
-    public _IplasmidWidth : string;
+    public _IplasmidWidth : string | undefined;
 
     /**
      * Width (in pixels) of the box that surrounds the plasmid
@@ -128,7 +128,7 @@ export class Plasmid extends Directive
      * @type {number}
      * @memberof Plasmid
      */
-    public plasmidwidth : number;
+    public plasmidwidth : number | undefined;
 
     public $scope : any;
 
@@ -168,8 +168,8 @@ export class Plasmid extends Directive
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L86
         return {
-            height : this.plasmidheight,
-            width : this.plasmidwidth
+            height : this.plasmidheight ? this.plasmidheight : 0,
+            width : this.plasmidwidth ? this.plasmidwidth : 0
         };
     }
 
@@ -213,12 +213,12 @@ export class Plasmid extends Directive
         this._sequence = sequence;
     }
 
-    private _plasmidclass : string;
+    private _plasmidclass : string | undefined;
 
     public get plasmidclass() : string
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L104
-        return this._plasmidclass;
+        return this._plasmidclass ? this._plasmidclass : "";
     }
     public set plasmidclass(plasmidclass : string)
     {
@@ -226,14 +226,14 @@ export class Plasmid extends Directive
         this._plasmidclass = plasmidclass;
     }
 
-    private _plasmidtstyle : string;
+    private _plasmidtstyle : string | undefined;
 
-    public get plasmidstyle() : string
+    public get plasmidstyle() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L109
         return this._plasmidtstyle;
     }
-    public set plasmidstyle(plasmidstyle : string)
+    public set plasmidstyle(plasmidstyle : string | undefined)
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L109
         this._plasmidtstyle = plasmidstyle;
@@ -407,10 +407,15 @@ export class Plasmid extends Directive
         plasmidToCanvas(this,ctx);
     }
 
+    public tagType : TagType;
+
     public constructor()
     {
         super();
         this.tagType = "plasmid";
+        this._sequence = "";
+        this._sequencelength = 0;
+
         this.tracks = new Array<PlasmidTrack>();
         this.renderingStrategies["normal"] = new RenderingStrategy(function(plasmid : Plasmid)
         {

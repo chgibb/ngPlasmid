@@ -19,13 +19,13 @@ let $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.ut
 export interface INode {
     [key : string] : (string | null | undefined) | { [k : string] : any };
     /** Node name. Should be the name of the directive this Node represents */
-    name: string;
+    name: string | undefined;
 
     /** For compatibility with the existing HTML to Directive conversion, should be "node" */
-    type: string;
+    type: string | undefined;
 
     /** Attribute pack */
-    attribs: IAttributes;
+    attribs: IAttributes | undefined;
 
     /** Top-level nested children */
     children?: (INode[] | null);
@@ -49,13 +49,13 @@ export class Node implements INode
     }
 
     /** Node name. Should be the name of the directive this Node represents */
-    public name: string;
+    public name: string | undefined;
 
     /** For compatibility with the existing HTML to Directive conversion, should be "node" */
-    public type: string;
+    public type: string | undefined;
 
     /** Attribute pack */
-    public attribs: IAttributes;
+    public attribs: IAttributes | undefined;
 
     /** Top-level nested children */
     public children: INode[];
@@ -452,93 +452,93 @@ export class Attributes implements IAttributes
     }
 
     /** Height (in pixels) of the box that surrounds the plasmid */
-    public plasmidheight: string;
+    public plasmidheight: string | undefined;
 
     /** Width (in pixels) of the box that surrounds the plasmid */
-    public plasmidwidth: string;
+    public plasmidwidth: string | undefined;
 
     /**
      * Size, in nucleotides, of the plasmid represented.
      * If the sequence attribute is specified, sequencelength will not be used.
      * Rather, the length of the sequence will be calcaulated from the provided sequence
      */
-    public sequencelength: string;
+    public sequencelength: string | undefined;
 
     /** Series of nucleotides (ex. 'ATTACGATG') that represents the plasmid to be drawn */
-    public sequence: string;
+    public sequence: string | undefined;
 
     /**
      * The radius (in pixels) of the track.
      * The radius is inherited by any component that is declared within this plasmidtrack.
      * Defaults to 100 if nothing provided
      */
-    public radius: string;
+    public radius: string | undefined;
 
     /**
      * The thickness (in pixels) of the plasmid ring.
      * Defaults to 25 if nothing provided
      */
-    public width: string;
+    public width: string | undefined;
 
     /** Attributes trackstyle. */
-    public trackstyle: string;
+    public trackstyle: string | undefined;
 
     /** Text of the label to draw */
-    public text: string;
+    public text: string | undefined;
 
     /**
      * Vertical offset of the label from the center of the track.
      * A positive number means that the label will be drawn further down,
      * while a negative number will make the label be drawn further up
      */
-    public vadjust: string;
+    public vadjust: string | undefined;
 
     /**
      * Horizontal offset of the label from the center of the track.
      * A positive number means that the label will be drawn closer to the right,
      * while a negative number means the label will be be drawn closer to the left
      */
-    public hadjust: string;
+    public hadjust: string | undefined;
 
     /** Indicate the style of the labels directly using this property */
-    public labelstyle: string;
+    public labelstyle: string | undefined;
 
     /**
      * How often a tick mark should be placed.
      * The interval is used along with the plasmid's sequence length to determine how many tick marks to show
      */
-    public interval: string;
+    public interval: string | undefined;
 
     /**
      * Vertical size of the tick marks.
      * If negative, the ticks grow inward.
      * The width of the tickmarks can be styled using the CSS stroke-width property
      */
-    public ticksize: string;
+    public ticksize: string | undefined;
 
     /** Determine which side of the track the ticks and labels should appear */
-    public direction: string;
+    public direction: string | undefined;
 
     /** Attributes style. */
-    public style: string;
+    public style: string | undefined;
 
     /** Determines if labels will be shown or not */
-    public showlabels: string;
+    public showlabels: string | undefined;
 
     /** Distance of the labels to their respective tick marks */
-    public labelvadjust: string;
+    public labelvadjust: string | undefined;
 
     /** Provide a class name to style the labels */
-    public labelclass: string;
+    public labelclass: string | undefined;
 
     /** Starting position of the marker in relation to the plasmid's sequence */
-    public start: string;
+    public start: string | undefined;
 
     /** Ending position of the marker in relation to the plasmid's sequence */
-    public end: string;
+    public end: string | undefined;
 
     /** Attributes markerstyle. */
-    public markerstyle: string;
+    public markerstyle: string | undefined;
 
     /**
      * Offset width of the marker in relation the track's width.
@@ -546,70 +546,70 @@ export class Attributes implements IAttributes
      * while a positive number will make it thicker.
      * A value of 0 means the marker will be the same width of the track
      */
-    public wadjust: string;
+    public wadjust: string | undefined;
 
     /** Label a group of markers by giving them a unique name using this property */
-    public markergroup: string;
+    public markergroup: string | undefined;
 
     /** The length, width, and angle of a the starting arrow head can be specified here */
-    public arrowstartlength: string;
+    public arrowstartlength: string | undefined;
 
     /** The length, width, and angle of a the starting arrow head can be specified here */
-    public arrowstartwidth: string;
+    public arrowstartwidth: string | undefined;
 
     /** The length, width, and angle of a the starting arrow head can be specified here */
-    public arrowstartangle: string;
+    public arrowstartangle: string | undefined;
 
     /** The length, width, and angle of a the ending arrow head can be specified here */
-    public arrowendlength: string;
+    public arrowendlength: string | undefined;
 
     /** The length, width, and angle of a the ending arrow head can be specified here */
-    public arrowendwidth: string;
+    public arrowendwidth: string | undefined;
 
     /** The length, width, and angle of a the ending arrow head can be specified here */
-    public arrowendangle: string;
+    public arrowendangle: string | undefined;
 
     /**
      * Used to indicate a call-back when a marker is clicked.
      * The call-back should be defined on the controller scope that contains the plasmid
      */
-    public markerclick: string;
+    public markerclick: string | undefined;
 
     /** Vertical alignment of the label with the marker */
-    public valign: string;
+    public valign: string | undefined;
 
     /** Horizontal alignment of the label with the marker */
-    public halign: string;
+    public halign: string | undefined;
 
     /** Labels can either be drawn normally, or can follow the circular path of the marker */
-    public type: string;
+    public type: string | undefined;
 
     /**
      * Determines if line will be drawn from the label to the marker.
      * By default, the line connects the middle of the label with the middle of the marker
      */
-    public showline: string;
+    public showline: string | undefined;
 
     /** Style of the line going from the label to the marker */
-    public linestyle: string;
+    public linestyle: string | undefined;
 
     /** Class name of the line going from the label to the marker */
-    public lineclass: string;
+    public lineclass: string | undefined;
 
     /** Vertical adjustment of the line to the label */
-    public linevadjust: string;
+    public linevadjust: string | undefined;
 
     /**
      * Used to indicate a call-back when a label is clicked.
      * The call-back should be defined on the controller scope that contains the plasmid
      */
-    public labelclick: string;
+    public labelclick: string | undefined;
 
     /** Attributes class. */
-    public class: string;
+    public class: string | undefined;
 
     /** Attributes markerclass. */
-    public markerclass: string;
+    public markerclass: string | undefined;
 
     /**
      * Creates a new Attributes instance using the specified properties.
@@ -627,90 +627,90 @@ export class Attributes implements IAttributes
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encode(message: IAttributes, writer?: any): any 
+    public static encode(message: IAttributes | undefined, writer?: any): any 
     {
         if (!writer)
             writer = $Writer.create();
-        if (message.plasmidheight != null && message.hasOwnProperty("plasmidheight"))
-            writer.uint32(/* id 1, wireType 2 =*/10).string(message.plasmidheight);
-        if (message.plasmidwidth != null && message.hasOwnProperty("plasmidwidth"))
-            writer.uint32(/* id 2, wireType 2 =*/18).string(message.plasmidwidth);
-        if (message.sequencelength != null && message.hasOwnProperty("sequencelength"))
-            writer.uint32(/* id 3, wireType 2 =*/26).string(message.sequencelength);
-        if (message.sequence != null && message.hasOwnProperty("sequence"))
-            writer.uint32(/* id 4, wireType 2 =*/34).string(message.sequence);
-        if (message.radius != null && message.hasOwnProperty("radius"))
-            writer.uint32(/* id 5, wireType 2 =*/42).string(message.radius);
-        if (message.width != null && message.hasOwnProperty("width"))
-            writer.uint32(/* id 6, wireType 2 =*/50).string(message.width);
-        if (message.trackstyle != null && message.hasOwnProperty("trackstyle"))
-            writer.uint32(/* id 7, wireType 2 =*/58).string(message.trackstyle);
-        if (message.text != null && message.hasOwnProperty("text"))
-            writer.uint32(/* id 8, wireType 2 =*/66).string(message.text);
-        if (message.vadjust != null && message.hasOwnProperty("vadjust"))
-            writer.uint32(/* id 9, wireType 2 =*/74).string(message.vadjust);
-        if (message.hadjust != null && message.hasOwnProperty("hadjust"))
-            writer.uint32(/* id 10, wireType 2 =*/82).string(message.hadjust);
-        if (message.labelstyle != null && message.hasOwnProperty("labelstyle"))
-            writer.uint32(/* id 11, wireType 2 =*/90).string(message.labelstyle);
-        if (message.interval != null && message.hasOwnProperty("interval"))
-            writer.uint32(/* id 12, wireType 2 =*/98).string(message.interval);
-        if (message.ticksize != null && message.hasOwnProperty("ticksize"))
-            writer.uint32(/* id 13, wireType 2 =*/106).string(message.ticksize);
-        if (message.direction != null && message.hasOwnProperty("direction"))
-            writer.uint32(/* id 14, wireType 2 =*/114).string(message.direction);
-        if (message.style != null && message.hasOwnProperty("style"))
-            writer.uint32(/* id 15, wireType 2 =*/122).string(message.style);
-        if (message.showlabels != null && message.hasOwnProperty("showlabels"))
-            writer.uint32(/* id 16, wireType 2 =*/130).string(message.showlabels);
-        if (message.labelvadjust != null && message.hasOwnProperty("labelvadjust"))
-            writer.uint32(/* id 17, wireType 2 =*/138).string(message.labelvadjust);
-        if (message.labelclass != null && message.hasOwnProperty("labelclass"))
-            writer.uint32(/* id 18, wireType 2 =*/146).string(message.labelclass);
-        if (message.start != null && message.hasOwnProperty("start"))
-            writer.uint32(/* id 19, wireType 2 =*/154).string(message.start);
-        if (message.end != null && message.hasOwnProperty("end"))
-            writer.uint32(/* id 20, wireType 2 =*/162).string(message.end);
-        if (message.markerstyle != null && message.hasOwnProperty("markerstyle"))
-            writer.uint32(/* id 21, wireType 2 =*/170).string(message.markerstyle);
-        if (message.wadjust != null && message.hasOwnProperty("wadjust"))
-            writer.uint32(/* id 22, wireType 2 =*/178).string(message.wadjust);
-        if (message.markergroup != null && message.hasOwnProperty("markergroup"))
-            writer.uint32(/* id 23, wireType 2 =*/186).string(message.markergroup);
-        if (message.arrowstartlength != null && message.hasOwnProperty("arrowstartlength"))
-            writer.uint32(/* id 24, wireType 2 =*/194).string(message.arrowstartlength);
-        if (message.arrowstartwidth != null && message.hasOwnProperty("arrowstartwidth"))
-            writer.uint32(/* id 25, wireType 2 =*/202).string(message.arrowstartwidth);
-        if (message.arrowstartangle != null && message.hasOwnProperty("arrowstartangle"))
-            writer.uint32(/* id 26, wireType 2 =*/210).string(message.arrowstartangle);
-        if (message.arrowendlength != null && message.hasOwnProperty("arrowendlength"))
-            writer.uint32(/* id 27, wireType 2 =*/218).string(message.arrowendlength);
-        if (message.arrowendwidth != null && message.hasOwnProperty("arrowendwidth"))
-            writer.uint32(/* id 28, wireType 2 =*/226).string(message.arrowendwidth);
-        if (message.arrowendangle != null && message.hasOwnProperty("arrowendangle"))
-            writer.uint32(/* id 29, wireType 2 =*/234).string(message.arrowendangle);
-        if (message.markerclick != null && message.hasOwnProperty("markerclick"))
-            writer.uint32(/* id 30, wireType 2 =*/242).string(message.markerclick);
-        if (message.valign != null && message.hasOwnProperty("valign"))
-            writer.uint32(/* id 31, wireType 2 =*/250).string(message.valign);
-        if (message.halign != null && message.hasOwnProperty("halign"))
-            writer.uint32(/* id 32, wireType 2 =*/258).string(message.halign);
-        if (message.type != null && message.hasOwnProperty("type"))
-            writer.uint32(/* id 33, wireType 2 =*/266).string(message.type);
-        if (message.showline != null && message.hasOwnProperty("showline"))
-            writer.uint32(/* id 34, wireType 2 =*/274).string(message.showline);
-        if (message.linestyle != null && message.hasOwnProperty("linestyle"))
-            writer.uint32(/* id 35, wireType 2 =*/282).string(message.linestyle);
-        if (message.lineclass != null && message.hasOwnProperty("lineclass"))
-            writer.uint32(/* id 36, wireType 2 =*/290).string(message.lineclass);
-        if (message.linevadjust != null && message.hasOwnProperty("linevadjust"))
-            writer.uint32(/* id 37, wireType 2 =*/298).string(message.linevadjust);
-        if (message.labelclick != null && message.hasOwnProperty("labelclick"))
-            writer.uint32(/* id 38, wireType 2 =*/306).string(message.labelclick);
-        if (message["class"] != null && message.hasOwnProperty("class"))
-            writer.uint32(/* id 39, wireType 2 =*/314).string((<any>message["class"]));
-        if (message.markerclass != null && message.hasOwnProperty("markerclass"))
-            writer.uint32(/* id 40, wireType 2 =*/322).string(message.markerclass);
+        if (message!.plasmidheight != null && message!.hasOwnProperty("plasmidheight"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message!.plasmidheight);
+        if (message!.plasmidwidth != null && message!.hasOwnProperty("plasmidwidth"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message!.plasmidwidth);
+        if (message!.sequencelength != null && message!.hasOwnProperty("sequencelength"))
+            writer.uint32(/* id 3, wireType 2 =*/26).string(message!.sequencelength);
+        if (message!.sequence != null && message!.hasOwnProperty("sequence"))
+            writer.uint32(/* id 4, wireType 2 =*/34).string(message!.sequence);
+        if (message!.radius != null && message!.hasOwnProperty("radius"))
+            writer.uint32(/* id 5, wireType 2 =*/42).string(message!.radius);
+        if (message!.width != null && message!.hasOwnProperty("width"))
+            writer.uint32(/* id 6, wireType 2 =*/50).string(message!.width);
+        if (message!.trackstyle != null && message!.hasOwnProperty("trackstyle"))
+            writer.uint32(/* id 7, wireType 2 =*/58).string(message!.trackstyle);
+        if (message!.text != null && message!.hasOwnProperty("text"))
+            writer.uint32(/* id 8, wireType 2 =*/66).string(message!.text);
+        if (message!.vadjust != null && message!.hasOwnProperty("vadjust"))
+            writer.uint32(/* id 9, wireType 2 =*/74).string(message!.vadjust);
+        if (message!.hadjust != null && message!.hasOwnProperty("hadjust"))
+            writer.uint32(/* id 10, wireType 2 =*/82).string(message!.hadjust);
+        if (message!.labelstyle != null && message!.hasOwnProperty("labelstyle"))
+            writer.uint32(/* id 11, wireType 2 =*/90).string(message!.labelstyle);
+        if (message!.interval != null && message!.hasOwnProperty("interval"))
+            writer.uint32(/* id 12, wireType 2 =*/98).string(message!.interval);
+        if (message!.ticksize != null && message!.hasOwnProperty("ticksize"))
+            writer.uint32(/* id 13, wireType 2 =*/106).string(message!.ticksize);
+        if (message!.direction != null && message!.hasOwnProperty("direction"))
+            writer.uint32(/* id 14, wireType 2 =*/114).string(message!.direction);
+        if (message!.style != null && message!.hasOwnProperty("style"))
+            writer.uint32(/* id 15, wireType 2 =*/122).string(message!.style);
+        if (message!.showlabels != null && message!.hasOwnProperty("showlabels"))
+            writer.uint32(/* id 16, wireType 2 =*/130).string(message!.showlabels);
+        if (message!.labelvadjust != null && message!.hasOwnProperty("labelvadjust"))
+            writer.uint32(/* id 17, wireType 2 =*/138).string(message!.labelvadjust);
+        if (message!.labelclass != null && message!.hasOwnProperty("labelclass"))
+            writer.uint32(/* id 18, wireType 2 =*/146).string(message!.labelclass);
+        if (message!.start != null && message!.hasOwnProperty("start"))
+            writer.uint32(/* id 19, wireType 2 =*/154).string(message!.start);
+        if (message!.end != null && message!.hasOwnProperty("end"))
+            writer.uint32(/* id 20, wireType 2 =*/162).string(message!.end);
+        if (message!.markerstyle != null && message!.hasOwnProperty("markerstyle"))
+            writer.uint32(/* id 21, wireType 2 =*/170).string(message!.markerstyle);
+        if (message!.wadjust != null && message!.hasOwnProperty("wadjust"))
+            writer.uint32(/* id 22, wireType 2 =*/178).string(message!.wadjust);
+        if (message!.markergroup != null && message!.hasOwnProperty("markergroup"))
+            writer.uint32(/* id 23, wireType 2 =*/186).string(message!.markergroup);
+        if (message!.arrowstartlength != null && message!.hasOwnProperty("arrowstartlength"))
+            writer.uint32(/* id 24, wireType 2 =*/194).string(message!.arrowstartlength);
+        if (message!.arrowstartwidth != null && message!.hasOwnProperty("arrowstartwidth"))
+            writer.uint32(/* id 25, wireType 2 =*/202).string(message!.arrowstartwidth);
+        if (message!.arrowstartangle != null && message!.hasOwnProperty("arrowstartangle"))
+            writer.uint32(/* id 26, wireType 2 =*/210).string(message!.arrowstartangle);
+        if (message!.arrowendlength != null && message!.hasOwnProperty("arrowendlength"))
+            writer.uint32(/* id 27, wireType 2 =*/218).string(message!.arrowendlength);
+        if (message!.arrowendwidth != null && message!.hasOwnProperty("arrowendwidth"))
+            writer.uint32(/* id 28, wireType 2 =*/226).string(message!.arrowendwidth);
+        if (message!.arrowendangle != null && message!.hasOwnProperty("arrowendangle"))
+            writer.uint32(/* id 29, wireType 2 =*/234).string(message!.arrowendangle);
+        if (message!.markerclick != null && message!.hasOwnProperty("markerclick"))
+            writer.uint32(/* id 30, wireType 2 =*/242).string(message!.markerclick);
+        if (message!.valign != null && message!.hasOwnProperty("valign"))
+            writer.uint32(/* id 31, wireType 2 =*/250).string(message!.valign);
+        if (message!.halign != null && message!.hasOwnProperty("halign"))
+            writer.uint32(/* id 32, wireType 2 =*/258).string(message!.halign);
+        if (message!.type != null && message!.hasOwnProperty("type"))
+            writer.uint32(/* id 33, wireType 2 =*/266).string(message!.type);
+        if (message!.showline != null && message!.hasOwnProperty("showline"))
+            writer.uint32(/* id 34, wireType 2 =*/274).string(message!.showline);
+        if (message!.linestyle != null && message!.hasOwnProperty("linestyle"))
+            writer.uint32(/* id 35, wireType 2 =*/282).string(message!.linestyle);
+        if (message!.lineclass != null && message!.hasOwnProperty("lineclass"))
+            writer.uint32(/* id 36, wireType 2 =*/290).string(message!.lineclass);
+        if (message!.linevadjust != null && message!.hasOwnProperty("linevadjust"))
+            writer.uint32(/* id 37, wireType 2 =*/298).string(message!.linevadjust);
+        if (message!.labelclick != null && message!.hasOwnProperty("labelclick"))
+            writer.uint32(/* id 38, wireType 2 =*/306).string(message!.labelclick);
+        if (message!["class"] != null && message!.hasOwnProperty("class"))
+            writer.uint32(/* id 39, wireType 2 =*/314).string((<any>message!["class"]));
+        if (message!.markerclass != null && message!.hasOwnProperty("markerclass"))
+            writer.uint32(/* id 40, wireType 2 =*/322).string(message!.markerclass);
         return writer;
     }
 

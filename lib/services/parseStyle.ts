@@ -6,7 +6,7 @@
  * @param {string} styleAttrib 
  * @returns {({[k : string] : string} | undefined)} 
  */
-export function parseStyle(styleAttrib : string) : {[k : string] : string} | undefined
+export function parseStyle(styleAttrib : string | undefined) : {[k : string] : string} | undefined
 {
     if(!styleAttrib)
         return undefined;

@@ -1,12 +1,14 @@
+export type TagType = "plasmid" |
+"plasmidtrack" |
+"tracklabel" |
+"trackscale" |
+"trackmarker" |
+"markerlabel" | 
+"svgelement";
+
 export abstract class Directive
 {
-    public tagType : "plasmid" |
-    "plasmidtrack" |
-    "tracklabel" |
-    "trackscale" |
-    "trackmarker" |
-    "markerlabel" | 
-    "svgelement";
+    public abstract tagType : TagType;
 
     protected _canDrawToCanvas = true;
 
@@ -14,8 +16,6 @@ export abstract class Directive
     {
         return this._canDrawToCanvas;
     }
-
-    public _batchedSVGPath : string;
 
     public abstract generateSVGPath() : string;
     public abstract generateSVGPathNumeric() : Array<number>;

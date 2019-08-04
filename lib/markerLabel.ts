@@ -1,5 +1,5 @@
 import {TrackMarker} from "./trackMarker";
-import {Directive} from "./directive";
+import {Directive, TagType} from "./directive";
 import {parseFontSize} from "./services/svg/parseFontSize";
 import {interpolate} from "./interpolate";
 import {GenericNode} from "./genericNode";
@@ -18,7 +18,7 @@ import {Position} from "./services/svg/position";
  */
 export class MarkerLabel extends Directive
 {
-    public _Ishowline : string;
+    public _Ishowline : string | undefined;
 
     /**
      * Determines if line will be drawn from the label to the marker.
@@ -27,7 +27,7 @@ export class MarkerLabel extends Directive
      * @type {("0" | "1")}
      * @memberof MarkerLabel
      */
-    public showline : "0" | "1";
+    public showline : "0" | "1" | undefined;
 
     /**
      * Areference to the parent marker element
@@ -50,7 +50,7 @@ export class MarkerLabel extends Directive
         return this.showline === "1" ? true : false;
     }
 
-    private _halign : "middle" | "inner" | "outer" | "end" | "start";
+    private _halign : "middle" | "inner" | "outer" | "end" | "start" | undefined;
 
     /**
      * Horizontal alignment of the label with the marker
@@ -69,7 +69,7 @@ export class MarkerLabel extends Directive
         this._halign = halign;
     }
 
-    private _valign : "middle" | "inner" | "outer";
+    private _valign : "middle" | "inner" | "outer" | undefined;
     
     /**
      * Vertical alignment of the label with the marker
@@ -88,7 +88,7 @@ export class MarkerLabel extends Directive
         this._valign = valign;
     }
 
-    private _hadjust : number;
+    private _hadjust : number | undefined;
 
     /**
      * Horizontal offset of the label from the marker.
@@ -109,9 +109,9 @@ export class MarkerLabel extends Directive
         this._hadjust = hadjust;
     }
 
-    public _Ivadjust : string;
+    public _Ivadjust : string | undefined;
 
-    private _vadjust : number;
+    private _vadjust : number | undefined;
 
     /**
      * Vertical offset of the label from the marker.
@@ -132,7 +132,7 @@ export class MarkerLabel extends Directive
         this._vadjust = vadjust;
     }
 
-    private _type : string;
+    private _type : string | undefined;
 
     /**
      * Labels can either be drawn normally, or can follow the circular path of the marker
@@ -140,18 +140,18 @@ export class MarkerLabel extends Directive
      * @type {string}
      * @memberof MarkerLabel
      */
-    public get type() : string
+    public get type() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1082
         return this._type;   
     }
 
-    public set type(type : string)
+    public set type(type : string | undefined)
     {
         this._type = type;
     }
 
-    private _linevadjust : number;
+    private _linevadjust : number | undefined;
     
     /**
      * Vertical adjustment of the line to the label
@@ -170,33 +170,33 @@ export class MarkerLabel extends Directive
         this._linevadjust = linevadjust;
     }
 
-    private _labelclass : string;
+    private _labelclass : string | undefined;
 
-    public get labelclass() : string
+    public get labelclass() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1092
         return this._labelclass;
     }
 
-    public set labelclass(labelclass : string)
+    public set labelclass(labelclass : string | undefined)
     {
         this._labelclass = labelclass;
     }
 
-    private _labelstyle : string;
+    private _labelstyle : string | undefined;
 
-    public get labelstyle() : string
+    public get labelstyle() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1097
         return this._labelstyle;
     }
 
-    public set labelstyle(labelstyle : string)
+    public set labelstyle(labelstyle : string | undefined)
     {
         this._labelstyle = labelstyle;
     }
 
-    private _linestyle : string;
+    private _linestyle : string | undefined;
 
     /**
      * Style of the line going from the label to the marker
@@ -204,20 +204,20 @@ export class MarkerLabel extends Directive
      * @type {string}
      * @memberof MarkerLabel
      */
-    public get linestyle() : string
+    public get linestyle() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1102
         return this._linestyle;
     }
 
-    public set linestyle(linestyle : string)
+    public set linestyle(linestyle : string | undefined)
     {
         this._linestyle = linestyle;
     }
 
-    public _Ilineclass : string;
+    public _Ilineclass : string | undefined;
 
-    private _lineclass : string;
+    private _lineclass : string | undefined;
 
     /**
      * Class name of the line going from the label to the marker
@@ -225,20 +225,20 @@ export class MarkerLabel extends Directive
      * @type {string}
      * @memberof MarkerLabel
      */
-    public get lineclass() : string
+    public get lineclass() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1107
         return this._lineclass;
     }
 
-    public set lineclass(lineclass : string)
+    public set lineclass(lineclass : string | undefined)
     {
         this._lineclass = lineclass;
     }
 
-    public _Itext : string;
+    public _Itext : string | undefined;
 
-    private _text : string;
+    private _text : string | undefined;
 
     /**
      * Text of the label
@@ -246,13 +246,13 @@ export class MarkerLabel extends Directive
      * @type {string}
      * @memberof MarkerLabel
      */
-    public get text() : string
+    public get text() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L1112
         return this._text;
     }
 
-    public set text(text : string)
+    public set text(text : string | undefined)
     {
         this._text = text;
     }
@@ -340,12 +340,6 @@ export class MarkerLabel extends Directive
 
     public getSVGPath() : string | undefined
     {
-        if(this._batchedSVGPath)
-        {
-            let res = this._batchedSVGPath;
-            this._batchedSVGPath = "";
-            return res;
-        }
         return this.generateSVGPath();
     }
 
@@ -590,6 +584,8 @@ export class MarkerLabel extends Directive
         ctx;
         throw new Error("Illegal operation: <markerlabel>s cannot be drawn to HTML canvas");
     }
+
+    public tagType : TagType;
 
     public constructor(trackMarker : TrackMarker)
     {

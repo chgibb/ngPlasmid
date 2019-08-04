@@ -4,7 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "strict": true,
-    "strictPropertyInitialization": false,
+    "strictPropertyInitialization": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,

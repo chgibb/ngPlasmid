@@ -1,4 +1,4 @@
-import {Directive} from "./directive";
+import {Directive, TagType} from "./directive";
 import {PlasmidTrack} from "./plasmidTrack";
 import {interpolate} from "./interpolate";
 import {trackMarkerToCanvas} from "./canvas/trackMarker";
@@ -33,12 +33,12 @@ export class TrackMarker extends Directive
      * @type {number}
      * @memberof TrackMarker
      */
-    public arrowstartlength : number;
+    public arrowstartlength : number | undefined;
 
 
-    public arrowstartwidth : number
+    public arrowstartwidth : number | undefined;
 
-    public arrowstartangle : number;
+    public arrowstartangle : number | undefined;
 
     /**
      * The length, width, and angle of a the ending arrow head can be specified here
@@ -46,9 +46,9 @@ export class TrackMarker extends Directive
      * @type {number}
      * @memberof TrackMarker
      */
-    public arrowendlength : number;
+    public arrowendlength : number | undefined;
 
-    public arrowendwidth : number;
+    public arrowendwidth : number | undefined;
 
     /**
      * The length, width, and angle of a the ending arrow head can be specified here
@@ -56,7 +56,7 @@ export class TrackMarker extends Directive
      * @type {Arrow}
      * @memberof TrackMarker
      */
-    public arrowendangle : Arrow;
+    public arrowendangle : Arrow | undefined;
 
     /**
      * The API docs don't specify that <trackmarker>s can have a class attribute, but there are official examples which do.
@@ -241,7 +241,7 @@ export class TrackMarker extends Directive
         };
     }
 
-    private _vadjust : number;
+    private _vadjust : number | undefined;
 
     /**
      * Offset in pixels from the track. 
@@ -260,9 +260,9 @@ export class TrackMarker extends Directive
         this._vadjust = vadjust;
     }
 
-    public _Iwadjust : string;
+    public _Iwadjust : string | undefined;
 
-    private _wadjust : number;
+    private _wadjust : number | undefined;
 
     /**
      * Offset width of the marker in relation the track's width.
@@ -288,9 +288,9 @@ export class TrackMarker extends Directive
         return this.track.width + this.wadjust;
     }
 
-    public _Istart : string;
+    public _Istart : string | undefined;
 
-    private _start : number;
+    private _start : number | undefined;
 
     public get start() : number
     {
@@ -302,8 +302,8 @@ export class TrackMarker extends Directive
         this._start = start;
     }
 
-    public _Iend : string;
-    private _end : number;
+    public _Iend : string | undefined;
+    private _end : number | undefined;
 
     public get end() : number
     {
@@ -335,7 +335,7 @@ export class TrackMarker extends Directive
         };
     }
 
-    private _markergroup : string;
+    private _markergroup : string | undefined;
 
     /**
      * Label a group of markers by giving them a unique name using this property
@@ -343,38 +343,38 @@ export class TrackMarker extends Directive
      * @type {string}
      * @memberof TrackMarker
      */
-    public get markergroup() : string
+    public get markergroup() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L821
         return this._markergroup;
     }
-    public set markergroup(markergroup : string)
+    public set markergroup(markergroup : string | undefined)
     {
         this._markergroup = markergroup;
     }
 
-    private _markerclass : string;
+    private _markerclass : string | undefined;
 
-    public get markerclass() : string
+    public get markerclass() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L826
         return this._markerclass;
     }
-    public set markerclass(markerclass : string)
+    public set markerclass(markerclass : string | undefined)
     {
         this._markerclass = markerclass;
     }
 
-    public _Imarkerstyle : string;
+    public _Imarkerstyle : string | undefined;
 
-    private _markerstyle : string;
+    private _markerstyle : string | undefined;
 
-    public get markerstyle() : string
+    public get markerstyle() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L831
         return this._markerstyle;
     }
-    public set markerstyle(markerstyle : string)
+    public set markerstyle(markerstyle : string | undefined)
     {
         this._markerstyle = markerstyle;
     }
@@ -417,12 +417,6 @@ export class TrackMarker extends Directive
 
     public getSVGPath() : string | undefined
     {
-        if(this._batchedSVGPath)
-        {
-            let res = this._batchedSVGPath;
-            this._batchedSVGPath = "";
-            return res;
-        }
         return this.generateSVGPath();
     }
 
@@ -563,6 +557,8 @@ export class TrackMarker extends Directive
         }
         trackMarkerToCanvas(this,ctx);
     }
+
+    public tagType : TagType;
 
     public constructor(track : PlasmidTrack)
     {

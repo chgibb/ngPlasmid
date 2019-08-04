@@ -1,4 +1,4 @@
-import {Directive} from "./directive";
+import {Directive, TagType} from "./directive";
 import {PlasmidTrack} from "./plasmidTrack";
 import {interpolate} from "./interpolate";
 import {GenericNode} from "./genericNode";
@@ -32,9 +32,9 @@ export class TrackScale extends Directive
      */
     public classList : Array<string>;
 
-    public style : string;
+    public style : string | undefined;
 
-    public _Idirection : string;
+    public _Idirection : string | undefined;
 
     /**
      * Determine which side of the track the ticks and labels should appear
@@ -42,7 +42,7 @@ export class TrackScale extends Directive
      * @type {("in" | "out")}
      * @memberof TrackScale
      */
-    public direction : "in" | "out";
+    public direction : "in" | "out" | undefined;
 
     /**
      * A reference to the parent track element
@@ -63,9 +63,9 @@ export class TrackScale extends Directive
         return (this.inwardflg ? this.track.radius : this.track.radius + this.track.width) +  ((this.inwardflg ? -1 : 1) * this.vadjust) + (this.inwardflg ? -(this.ticksize) : 0);
     }
 
-    public _Iinterval : string;
+    public _Iinterval : string | undefined;
 
-    private _interval : number;
+    private _interval : number | undefined;
 
     /**
      * How often a tick mark should be placed.
@@ -86,9 +86,9 @@ export class TrackScale extends Directive
         this._interval = interval;
     }
 
-    public _Ivadjust : string;
+    public _Ivadjust : string | undefined;
 
-    private _vadjust : number;
+    private _vadjust : number | undefined;
 
     /**
      * Offset in pixels from the track.
@@ -110,7 +110,7 @@ export class TrackScale extends Directive
         this._vadjust = vadjust;
     }
 
-    private _ticksize : number;
+    private _ticksize : number | undefined;
 
     /**
      * Vertical size of the tick marks.
@@ -144,7 +144,7 @@ export class TrackScale extends Directive
         return this.track.plasmid.sequencelength;
     }
 
-    public _IshowLabelsAttrib : string;
+    public _IshowLabelsAttrib : string | undefined;
 
     /**
      * The original implementation has showlabels constrained to "0" or "1", but when 
@@ -156,7 +156,7 @@ export class TrackScale extends Directive
      * @type {("0" | "1")}
      * @memberof TrackScale
      */
-    public showLabelsAttrib : "0" | "1";
+    public showLabelsAttrib : "0" | "1" | undefined;
 
     /**
      * Determines if labels will be shown or not
@@ -171,7 +171,7 @@ export class TrackScale extends Directive
         return this.showLabelsAttrib === "1" ? true : false;
     }
 
-    private _labelvadjust : number;
+    private _labelvadjust : number | undefined;
 
     /**
      * Distance of the labels to their respective tick marks
@@ -191,34 +191,34 @@ export class TrackScale extends Directive
         this._labelvadjust = labelvadjust;
     }
 
-    private _tickclass : string;
+    private _tickclass : string | undefined;
 
-    public get tickclass() : string
+    public get tickclass() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L436
         return this._tickclass;
     }
 
-    public set tickclass(tickclass : string)
+    public set tickclass(tickclass : string | undefined)
     {
         this._tickclass = tickclass;
     }
 
-    private _tickstyle : string;
+    private _tickstyle : string | undefined;
 
-    public get tickstyle() : string
+    public get tickstyle() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L441
         return this._tickstyle;
     }
 
-    public set tickstyle(tickstyle : string)
+    public set tickstyle(tickstyle : string | undefined)
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L441
         this._tickstyle = tickstyle;
     }
 
-    private _labelclass : string;
+    private _labelclass : string | undefined;
 
     /**
      * Provide a class name to style the labels
@@ -226,19 +226,19 @@ export class TrackScale extends Directive
      * @type {string}
      * @memberof TrackScale
      */
-    public get labelclass() : string
+    public get labelclass() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L446
         return this._labelclass;
     }
 
-    public set labelclass(labelclass : string)
+    public set labelclass(labelclass : string | undefined)
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L446
         this._labelclass = labelclass;
     }
 
-    private _labelstyle : string;
+    private _labelstyle : string | undefined;
 
     /**
      * Indicate the style of the labels directly using this property
@@ -246,13 +246,13 @@ export class TrackScale extends Directive
      * @type {string}
      * @memberof TrackScale
      */
-    public get labelstyle() : string
+    public get labelstyle() : string | undefined
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L451
         return this._labelstyle;
     }
 
-    public set labelstyle(labelstyle : string)
+    public set labelstyle(labelstyle : string | undefined)
     {
         //https://github.com/vixis/angularplasmid/blob/master/src/js/directives.js#L451
         this._labelstyle = labelstyle;
@@ -276,12 +276,6 @@ export class TrackScale extends Directive
 
     public getSVGPath() : string | undefined
     {
-        if(this._batchedSVGPath)
-        {
-            let res = this._batchedSVGPath;
-            this._batchedSVGPath = "";
-            return res;
-        }
         return this.generateSVGPath();
     }
 
@@ -424,6 +418,8 @@ export class TrackScale extends Directive
     {
         trackScaleToCanvas(this,ctx);
     }
+
+    public tagType : TagType;
 
     public constructor(track : PlasmidTrack)
     {

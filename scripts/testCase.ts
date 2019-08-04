@@ -11,7 +11,7 @@ const chalk = require("chalk");
 class Timer
 {
     public startEpoch : number;
-    public endEpoch : number;
+    public endEpoch : number  | undefined;
     public constructor()
     {
         this.startEpoch = Date.now();
@@ -55,42 +55,42 @@ export class TestCase
     public name : string;
     public inputSize : number;
 
-    public referenceCompileTime : number;
-    public referenceResultSize : number;
-    public referenceOptimisationTime : number;
-    public referenceOptimisedResultSize : number;
+    public referenceCompileTime : number | undefined;
+    public referenceResultSize : number | undefined;
+    public referenceOptimisationTime : number | undefined;
+    public referenceOptimisedResultSize : number | undefined;
     public referenceResultPath : string;
     public referenceResultOptimisedPath : string;
 
-    public exHTMLToSVGCompileTime : number;
-    public exHTMLToSVGOptimisationTime : number;
-    public exHTMLToSVGResultSize : number;
-    public exHTMLToSVGOptimisedResultSize : number;
+    public exHTMLToSVGCompileTime : number | undefined;
+    public exHTMLToSVGOptimisationTime : number | undefined;
+    public exHTMLToSVGResultSize : number | undefined;
+    public exHTMLToSVGOptimisedResultSize : number | undefined;
     public exHTMLToSVGResultPath : string;
     public exHTMLToSVGResultOptimisedPath : string;
 
-    public exBatchedHTMLToSVGCompileTime : number;
-    public exBatchedHTMLToSVGOptimisationTime : number;
-    public exBatchedHTMLToSVGResultSize : number;
-    public exBatchedHTMLToSVGOptimisedResultSize : number;
+    public exBatchedHTMLToSVGCompileTime : number | undefined;
+    public exBatchedHTMLToSVGOptimisationTime : number | undefined;
+    public exBatchedHTMLToSVGResultSize : number | undefined;
+    public exBatchedHTMLToSVGOptimisedResultSize : number | undefined;
     public exBatchedHTMLToSVGResultPath : string;
     public exBatchedHTMLToSVGResultOptimisedPath : string;
 
-    public exHTMLtoPBCompileTime : number;
-    public exHTMLToPBResultSize : number;
+    public exHTMLtoPBCompileTime : number | undefined;
+    public exHTMLToPBResultSize : number | undefined;
     public exHTMLTOPBResultPath : string;
 
-    public exPBToSVGCompileTime : number;
-    public exPBToSVGOptimisationTime : number;
-    public exPBToSVGResultSize : number;
-    public exPBToSVGOptimisedResultSize : number;
+    public exPBToSVGCompileTime : number | undefined;
+    public exPBToSVGOptimisationTime : number | undefined;
+    public exPBToSVGResultSize : number | undefined;
+    public exPBToSVGOptimisedResultSize : number | undefined;
     public exPBToSVGResultPath : string;
     public exPBToSVGResultOptimisedPath : string;
 
-    public exBatchedPBToSVGCompileTime : number;
-    public exBatchedPBToSVGOptimisationTime : number;
-    public exBatchedPBToSVGResultSize : number;
-    public exBatchedPBToSVGOptimisedResultSize : number;
+    public exBatchedPBToSVGCompileTime : number | undefined;
+    public exBatchedPBToSVGOptimisationTime : number | undefined;
+    public exBatchedPBToSVGResultSize : number | undefined;
+    public exBatchedPBToSVGOptimisedResultSize : number | undefined;
     public exBatchedPBToSVGResultPath : string;
     public exBatchedPBToSVGResultOptimisedPath : string;
 
