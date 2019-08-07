@@ -1,16 +1,16 @@
-require("./../lib/ngPlasmid");
-
 import * as fs from "fs";
 
 let args = process.argv.slice(2);
 
-import * as html from "./../lib/html";
-import * as directives from "./../lib//directives";
+import {Plasmid} from "../lib/plasmid";
 
-(async function(){
+import * as html from "./../lib/html";
+
+(async function()
+{
     let nodes = await html.loadFromString(fs.readFileSync(args[0]).toString());
 
-    let plasmid = new directives.Plasmid();
+    let plasmid = new Plasmid();
 
     if(args[1] && args[1] != "batched")
         plasmid.$scope = JSON.parse(fs.readFileSync(args[1]).toString());
@@ -24,12 +24,8 @@ import * as directives from "./../lib//directives";
         }
     }
 
-    if(args[args.length-1] == "batched")
-    {
-        plasmid.changeRenderingStrategy("preCalculateBatch");
-    }
-
     console.log(plasmid.renderStart() + plasmid.renderEnd());
-})().catch((err) => {
+})().catch((err) => 
+{
     console.error(err);
 });

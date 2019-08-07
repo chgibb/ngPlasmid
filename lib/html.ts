@@ -14,9 +14,11 @@ export interface Node
 export function loadFromString(htmlString : string) : Promise<Array<Node>>
 {
     const htmlparser = require("htmlparser2");
-    return new Promise<Array<Node>>((resolve,reject) => {
+    return new Promise<Array<Node>>((resolve,reject) => 
+    {
 
-        const handler = new htmlparser.DomHandler(function(error : any,dom : any){
+        const handler = new htmlparser.DomHandler(function(error : any,dom : any)
+        {
             if(error)
                 reject(error);
             else

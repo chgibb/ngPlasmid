@@ -1,8 +1,6 @@
-/// <reference path="./../directives" />
-/// <reference path="./../parseStyle" />
+import {parseStyle} from "../services/parseStyle";
 
-import {TrackLabel} from "./../directives";
-import {parseStyle} from "./../parseStyle";
+import {TrackLabel} from "./../trackLabel";
 
 export function trackLabelToCanvas(label : TrackLabel,ctx : CanvasRenderingContext2D) : void
 {

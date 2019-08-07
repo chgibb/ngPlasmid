@@ -16,7 +16,8 @@ const outOpts = {
     format : "cjs"
 };
 
-(async function(){
+(async function()
+{
     const bundle = await rollup.rollup(inOpts);
     await bundle.write(outOpts);
 })();

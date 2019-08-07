@@ -1,6 +1,7 @@
+import {Plasmid} from "./../../../lib/plasmid";
+
 const Canvas = require("canvas");
 
-import {Plasmid} from "./../../../lib/directives";
 
 export function plasmidToBuffer(plasmid : Plasmid) : Buffer | undefined
 {

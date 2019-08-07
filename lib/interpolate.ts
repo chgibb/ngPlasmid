@@ -12,7 +12,7 @@ export class Token
      * @type {("scopeAccess" | "string" | "number" | "addition")}
      * @memberof Token
      */
-    public type : "scopeAccess" | "string" | "number" | "addition";
+    public type : "scopeAccess" | "string" | "number" | "addition" | "unknown";
 
     /**
      * Raw value of the token, as it appears in the expression
@@ -28,7 +28,7 @@ export class Token
      * @type {(string | number)}
      * @memberof Token
      */
-    public interpValue : string | number;
+    public interpValue : string | number | undefined;
 
     /**
      * Populates type property given value property
@@ -40,13 +40,13 @@ export class Token
     private determineTokenType() : void
     {
         //' quoted string literal
-        if(this.value[0] == `'` && this.value[this.value.length-1] == `'`)
+        if(this.value[0] == "'" && this.value[this.value.length-1] == "'")
         {
             this.type = "string";
             return;
         }
         //one-time bound variable
-        if(this.value[0] == `:` && this.value[1] == `:`)
+        if(this.value[0] == ":" && this.value[1] == ":")
         {
             this.type = "scopeAccess";
             return;
@@ -76,7 +76,7 @@ export class Token
     private evaluateScopeAccess($scope : any,varAccess : string) : string
     {
         //trim the leading :: off of one-time bound variable names
-        if(varAccess[0] == `:` && varAccess[1] == `:`)
+        if(varAccess[0] == ":" && varAccess[1] == ":")
         {
             varAccess = varAccess.substring(2,varAccess.length);
         }
@@ -122,6 +122,8 @@ export class Token
      */
     public constructor(value : string)
     {
+        this.type = "unknown";
+        this.value = "";
         if(value == "+")
         {
             this.type = "addition";
@@ -173,10 +175,14 @@ export function tokenize(exp : string) : Array<Token>
  * @param {*} $scope 
  * @returns {string} 
  */
-export function interpolate(value : string,$scope : any) : string
+export function interpolate(value : string | undefined,$scope : any) : string
 {
-    if(!$scope || !value)
+    if(!$scope && (value || value == ""))
         return value;
+    
+    if(value === undefined)
+        return "";
+        
     //If the entire attribute value is not a valid inerpolation expression, then simply return the value
     if(value[0] != "{" || value[1] != "{" || value[value.length-1] != "}" || value[value.length-2] != "}")
         return value;

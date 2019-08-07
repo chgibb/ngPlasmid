@@ -1,9 +1,6 @@
-/// <reference path="./../directives" />
-/// <reference path="./../parseStyle" />
-/// <reference path="./utils.ts" />
+import {parseStyle} from "../services/parseStyle";
 
-import {PlasmidTrack} from "./../directives";
-import {parseStyle} from "./../parseStyle";
+import {PlasmidTrack} from "./../plasmidTrack";
 import {drawSVGarcOnCanvas,splitRGBA} from "./utils";
 
 export function plasmidTrackToCanvas(track : PlasmidTrack,ctx : CanvasRenderingContext2D) : void

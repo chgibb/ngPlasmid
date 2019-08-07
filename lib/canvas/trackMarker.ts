@@ -1,9 +1,6 @@
-/// <reference path="./../directives" />
-/// <reference path="./../parseStyle" />
-/// <reference path="./utils.ts" />
+import {parseStyle} from "../services/parseStyle";
 
-import {TrackMarker} from "./../directives";
-import {parseStyle} from "./../parseStyle";
+import {TrackMarker} from "./../trackMarker";
 import {drawSVGarcOnCanvas,trimTrailingChars} from "./utils";
 
 export function trackMarkerToCanvas(marker : TrackMarker,ctx : CanvasRenderingContext2D) : void

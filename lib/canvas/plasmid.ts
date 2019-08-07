@@ -1,6 +1,4 @@
-/// <reference path="./../directives" />
-
-import {Plasmid} from "./../directives";
+import {Plasmid} from "../plasmid";
 
 export function plasmidToCanvas(plasmid : Plasmid,ctx : CanvasRenderingContext2D) : void
 {

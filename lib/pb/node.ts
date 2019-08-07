@@ -19,26 +19,28 @@ let $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.ut
 export interface INode {
     [key : string] : (string | null | undefined) | { [k : string] : any };
     /** Node name. Should be the name of the directive this Node represents */
-    name: string;
+    name: string | undefined;
 
     /** For compatibility with the existing HTML to Directive conversion, should be "node" */
-    type: string;
+    type: string | undefined;
 
     /** Attribute pack */
-    attribs: IAttributes;
+    attribs: IAttributes | undefined;
 
     /** Top-level nested children */
     children?: (INode[] | null);
 }
 
 /** Represent a node in the directive hierarchy */
-export class Node implements INode {
+export class Node implements INode 
+{
     [key : string] : (string | null | undefined) | { [k : string] : any };
     /**
      * Constructs a new Node.
      * @param [properties] Properties to set
      */
-    constructor(properties?: INode) {
+    constructor(properties?: INode) 
+    {
         this.children = [];
         if (properties)
             for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
@@ -47,13 +49,13 @@ export class Node implements INode {
     }
 
     /** Node name. Should be the name of the directive this Node represents */
-    public name: string;
+    public name: string | undefined;
 
     /** For compatibility with the existing HTML to Directive conversion, should be "node" */
-    public type: string;
+    public type: string | undefined;
 
     /** Attribute pack */
-    public attribs: IAttributes;
+    public attribs: IAttributes | undefined;
 
     /** Top-level nested children */
     public children: INode[];
@@ -63,7 +65,8 @@ export class Node implements INode {
      * @param [properties] Properties to set
      * @returns Node instance
      */
-    public static create(properties?: INode): Node {
+    public static create(properties?: INode): Node 
+    {
         return new Node(properties);
     }
 
@@ -73,7 +76,8 @@ export class Node implements INode {
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encode(message: INode, writer?: any): any {
+    public static encode(message: INode, writer?: any): any 
+    {
         if (!writer)
             writer = $Writer.create();
         writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
@@ -91,7 +95,8 @@ export class Node implements INode {
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encodeDelimited(message: INode, writer?: any): any {
+    public static encodeDelimited(message: INode, writer?: any): any 
+    {
         return this.encode(message, writer).ldelim();
     }
 
@@ -103,38 +108,41 @@ export class Node implements INode {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: (any | Uint8Array), length?: number): Node {
+    public static decode(reader: (any | Uint8Array), length?: number): Node 
+    {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
         var end = length === undefined ? reader.len : reader.pos + length, message = new Node();
-        while (reader.pos < end) {
+        while (reader.pos < end) 
+        {
             var tag = reader.uint32();
-            switch (tag >>> 3) {
-                case 1:
-                    message.name = reader.string();
-                    break;
-                case 2:
-                    message.type = reader.string();
-                    break;
-                case 3:
-                    message.attribs = Attributes.decode(reader, reader.uint32());
-                    break;
-                case 4:
-                    if (!(message.children && message.children.length))
-                        message.children = [];
-                    message.children.push(Node.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            switch (tag >>> 3) 
+            {
+            case 1:
+                message.name = reader.string();
+                break;
+            case 2:
+                message.type = reader.string();
+                break;
+            case 3:
+                message.attribs = Attributes.decode(reader, reader.uint32());
+                break;
+            case 4:
+                if (!(message.children && message.children.length))
+                    message.children = [];
+                message.children.push(Node.decode(reader, reader.uint32()));
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         if (!message.hasOwnProperty("name"))
-            throw new $util.ProtocolError("missing required 'name'", { instance: message });
+            throw new $util.ProtocolError("missing required 'name'", {instance: message});
         if (!message.hasOwnProperty("type"))
-            throw new $util.ProtocolError("missing required 'type'", { instance: message });
+            throw new $util.ProtocolError("missing required 'type'", {instance: message});
         if (!message.hasOwnProperty("attribs"))
-            throw new $util.ProtocolError("missing required 'attribs'", { instance: message });
+            throw new $util.ProtocolError("missing required 'attribs'", {instance: message});
         return message;
     }
 
@@ -145,7 +153,8 @@ export class Node implements INode {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: (any | Uint8Array)): Node {
+    public static decodeDelimited(reader: (any | Uint8Array)): Node 
+    {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
@@ -156,7 +165,8 @@ export class Node implements INode {
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null) {
+    public static verify(message: { [k: string]: any }): (string | null) 
+    {
         if (typeof message !== "object" || message === null)
             return "object expected";
         if (!$util.isString(message.name))
@@ -168,10 +178,12 @@ export class Node implements INode {
             if (error)
                 return "attribs." + error;
         }
-        if (message.children != null && message.hasOwnProperty("children")) {
+        if (message.children != null && message.hasOwnProperty("children")) 
+        {
             if (!Array.isArray(message.children))
                 return "children: array expected";
-            for (var i = 0; i < message.children.length; ++i) {
+            for (var i = 0; i < message.children.length; ++i) 
+            {
                 var error = Node.verify(message.children[i]);
                 if (error)
                     return "children." + error;
@@ -185,7 +197,8 @@ export class Node implements INode {
      * @param object Plain object
      * @returns Node
      */
-    public static fromObject(object: { [k: string]: any }): Node {
+    public static fromObject(object: { [k: string]: any }): Node 
+    {
         if (object instanceof Node)
             return object;
         var message = new Node();
@@ -193,16 +206,19 @@ export class Node implements INode {
             message.name = String(object.name);
         if (object.type != null)
             message.type = String(object.type);
-        if (object.attribs != null) {
+        if (object.attribs != null) 
+        {
             if (typeof object.attribs !== "object")
                 throw TypeError(".Node.attribs: object expected");
             message.attribs = Attributes.fromObject(object.attribs);
         }
-        if (object.children) {
+        if (object.children) 
+        {
             if (!Array.isArray(object.children))
                 throw TypeError(".Node.children: array expected");
             message.children = [];
-            for (var i = 0; i < object.children.length; ++i) {
+            for (var i = 0; i < object.children.length; ++i) 
+            {
                 if (typeof object.children[i] !== "object")
                     throw TypeError(".Node.children: object expected");
                 message.children[i] = Node.fromObject(object.children[i]);
@@ -217,13 +233,15 @@ export class Node implements INode {
      * @param [options] Conversion options
      * @returns Plain object
      */
-    public static toObject(message: Node, options?: any): { [k: string]: any } {
+    public static toObject(message: Node, options?: any): { [k: string]: any } 
+    {
         if (!options)
             options = {};
         let object: Node = (<any>{});
         if (options.arrays || options.defaults)
             object.children = [];
-        if (options.defaults) {
+        if (options.defaults) 
+        {
             object.name = "";
             object.type = "";
             object.attribs = (<any>null);
@@ -234,7 +252,8 @@ export class Node implements INode {
             object.type = message.type;
         if (message.attribs != null && message.hasOwnProperty("attribs"))
             object.attribs = Attributes.toObject((<any>message).attribs, options);
-        if (message.children && message.children.length) {
+        if (message.children && message.children.length) 
+        {
             object.children = [];
             for (var j = 0; j < message.children.length; ++j)
                 object.children[j] = (<any>Node.toObject((<any>message).children[j], options));
@@ -246,7 +265,8 @@ export class Node implements INode {
      * Converts this Node to JSON.
      * @returns JSON object
      */
-    public toJSON(): { [k: string]: any } {
+    public toJSON(): { [k: string]: any } 
+    {
         return Node.toObject(this, $protobuf.util.toJSONOptions);
     }
 }
@@ -416,13 +436,15 @@ export interface IAttributes {
 }
 
 /** All possible attributes of a Node */
-export class Attributes implements IAttributes {
+export class Attributes implements IAttributes 
+{
     [key : string] : (string | null | undefined) | { [k : string] : any };
     /**
      * Constructs a new Attributes.
      * @param [properties] Properties to set
      */
-    constructor(properties?: IAttributes) {
+    constructor(properties?: IAttributes) 
+    {
         if (properties)
             for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
@@ -430,93 +452,93 @@ export class Attributes implements IAttributes {
     }
 
     /** Height (in pixels) of the box that surrounds the plasmid */
-    public plasmidheight: string;
+    public plasmidheight: string | undefined;
 
     /** Width (in pixels) of the box that surrounds the plasmid */
-    public plasmidwidth: string;
+    public plasmidwidth: string | undefined;
 
     /**
      * Size, in nucleotides, of the plasmid represented.
      * If the sequence attribute is specified, sequencelength will not be used.
      * Rather, the length of the sequence will be calcaulated from the provided sequence
      */
-    public sequencelength: string;
+    public sequencelength: string | undefined;
 
     /** Series of nucleotides (ex. 'ATTACGATG') that represents the plasmid to be drawn */
-    public sequence: string;
+    public sequence: string | undefined;
 
     /**
      * The radius (in pixels) of the track.
      * The radius is inherited by any component that is declared within this plasmidtrack.
      * Defaults to 100 if nothing provided
      */
-    public radius: string;
+    public radius: string | undefined;
 
     /**
      * The thickness (in pixels) of the plasmid ring.
      * Defaults to 25 if nothing provided
      */
-    public width: string;
+    public width: string | undefined;
 
     /** Attributes trackstyle. */
-    public trackstyle: string;
+    public trackstyle: string | undefined;
 
     /** Text of the label to draw */
-    public text: string;
+    public text: string | undefined;
 
     /**
      * Vertical offset of the label from the center of the track.
      * A positive number means that the label will be drawn further down,
      * while a negative number will make the label be drawn further up
      */
-    public vadjust: string;
+    public vadjust: string | undefined;
 
     /**
      * Horizontal offset of the label from the center of the track.
      * A positive number means that the label will be drawn closer to the right,
      * while a negative number means the label will be be drawn closer to the left
      */
-    public hadjust: string;
+    public hadjust: string | undefined;
 
     /** Indicate the style of the labels directly using this property */
-    public labelstyle: string;
+    public labelstyle: string | undefined;
 
     /**
      * How often a tick mark should be placed.
      * The interval is used along with the plasmid's sequence length to determine how many tick marks to show
      */
-    public interval: string;
+    public interval: string | undefined;
 
     /**
      * Vertical size of the tick marks.
      * If negative, the ticks grow inward.
      * The width of the tickmarks can be styled using the CSS stroke-width property
      */
-    public ticksize: string;
+    public ticksize: string | undefined;
 
     /** Determine which side of the track the ticks and labels should appear */
-    public direction: string;
+    public direction: string | undefined;
 
     /** Attributes style. */
-    public style: string;
+    public style: string | undefined;
 
     /** Determines if labels will be shown or not */
-    public showlabels: string;
+    public showlabels: string | undefined;
 
     /** Distance of the labels to their respective tick marks */
-    public labelvadjust: string;
+    public labelvadjust: string | undefined;
 
     /** Provide a class name to style the labels */
-    public labelclass: string;
+    public labelclass: string | undefined;
 
     /** Starting position of the marker in relation to the plasmid's sequence */
-    public start: string;
+    public start: string | undefined;
 
     /** Ending position of the marker in relation to the plasmid's sequence */
-    public end: string;
+    public end: string | undefined;
 
     /** Attributes markerstyle. */
-    public markerstyle: string;
+    public markerstyle: string | undefined;
 
     /**
      * Offset width of the marker in relation the track's width.
@@ -524,77 +546,78 @@ export class Attributes implements IAttributes {
      * while a positive number will make it thicker.
      * A value of 0 means the marker will be the same width of the track
      */
-    public wadjust: string;
+    public wadjust: string | undefined;
 
     /** Label a group of markers by giving them a unique name using this property */
-    public markergroup: string;
+    public markergroup: string | undefined;
 
     /** The length, width, and angle of a the starting arrow head can be specified here */
-    public arrowstartlength: string;
+    public arrowstartlength: string | undefined;
 
     /** The length, width, and angle of a the starting arrow head can be specified here */
-    public arrowstartwidth: string;
+    public arrowstartwidth: string | undefined;
 
     /** The length, width, and angle of a the starting arrow head can be specified here */
-    public arrowstartangle: string;
+    public arrowstartangle: string | undefined;
 
     /** The length, width, and angle of a the ending arrow head can be specified here */
-    public arrowendlength: string;
+    public arrowendlength: string | undefined;
 
     /** The length, width, and angle of a the ending arrow head can be specified here */
-    public arrowendwidth: string;
+    public arrowendwidth: string | undefined;
 
     /** The length, width, and angle of a the ending arrow head can be specified here */
-    public arrowendangle: string;
+    public arrowendangle: string | undefined;
 
     /**
      * Used to indicate a call-back when a marker is clicked.
      * The call-back should be defined on the controller scope that contains the plasmid
      */
-    public markerclick: string;
+    public markerclick: string | undefined;
 
     /** Vertical alignment of the label with the marker */
-    public valign: string;
+    public valign: string | undefined;
 
     /** Horizontal alignment of the label with the marker */
-    public halign: string;
+    public halign: string | undefined;
 
     /** Labels can either be drawn normally, or can follow the circular path of the marker */
-    public type: string;
+    public type: string | undefined;
 
     /**
      * Determines if line will be drawn from the label to the marker.
      * By default, the line connects the middle of the label with the middle of the marker
      */
-    public showline: string;
+    public showline: string | undefined;
 
     /** Style of the line going from the label to the marker */
-    public linestyle: string;
+    public linestyle: string | undefined;
 
     /** Class name of the line going from the label to the marker */
-    public lineclass: string;
+    public lineclass: string | undefined;
 
     /** Vertical adjustment of the line to the label */
-    public linevadjust: string;
+    public linevadjust: string | undefined;
 
     /**
      * Used to indicate a call-back when a label is clicked.
      * The call-back should be defined on the controller scope that contains the plasmid
      */
-    public labelclick: string;
+    public labelclick: string | undefined;
 
     /** Attributes class. */
-    public class: string;
+    public class: string | undefined;
 
     /** Attributes markerclass. */
-    public markerclass: string;
+    public markerclass: string | undefined;
 
     /**
      * Creates a new Attributes instance using the specified properties.
      * @param [properties] Properties to set
      * @returns Attributes instance
      */
-    public static create(properties?: IAttributes): Attributes {
+    public static create(properties?: IAttributes): Attributes 
+    {
         return new Attributes(properties);
     }
 
@@ -604,89 +627,90 @@ export class Attributes implements IAttributes {
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encode(message: IAttributes, writer?: any): any {
+    public static encode(message: IAttributes | undefined, writer?: any): any 
+    {
         if (!writer)
             writer = $Writer.create();
-        if (message.plasmidheight != null && message.hasOwnProperty("plasmidheight"))
-            writer.uint32(/* id 1, wireType 2 =*/10).string(message.plasmidheight);
-        if (message.plasmidwidth != null && message.hasOwnProperty("plasmidwidth"))
-            writer.uint32(/* id 2, wireType 2 =*/18).string(message.plasmidwidth);
-        if (message.sequencelength != null && message.hasOwnProperty("sequencelength"))
-            writer.uint32(/* id 3, wireType 2 =*/26).string(message.sequencelength);
-        if (message.sequence != null && message.hasOwnProperty("sequence"))
-            writer.uint32(/* id 4, wireType 2 =*/34).string(message.sequence);
-        if (message.radius != null && message.hasOwnProperty("radius"))
-            writer.uint32(/* id 5, wireType 2 =*/42).string(message.radius);
-        if (message.width != null && message.hasOwnProperty("width"))
-            writer.uint32(/* id 6, wireType 2 =*/50).string(message.width);
-        if (message.trackstyle != null && message.hasOwnProperty("trackstyle"))
-            writer.uint32(/* id 7, wireType 2 =*/58).string(message.trackstyle);
-        if (message.text != null && message.hasOwnProperty("text"))
-            writer.uint32(/* id 8, wireType 2 =*/66).string(message.text);
-        if (message.vadjust != null && message.hasOwnProperty("vadjust"))
-            writer.uint32(/* id 9, wireType 2 =*/74).string(message.vadjust);
-        if (message.hadjust != null && message.hasOwnProperty("hadjust"))
-            writer.uint32(/* id 10, wireType 2 =*/82).string(message.hadjust);
-        if (message.labelstyle != null && message.hasOwnProperty("labelstyle"))
-            writer.uint32(/* id 11, wireType 2 =*/90).string(message.labelstyle);
-        if (message.interval != null && message.hasOwnProperty("interval"))
-            writer.uint32(/* id 12, wireType 2 =*/98).string(message.interval);
-        if (message.ticksize != null && message.hasOwnProperty("ticksize"))
-            writer.uint32(/* id 13, wireType 2 =*/106).string(message.ticksize);
-        if (message.direction != null && message.hasOwnProperty("direction"))
-            writer.uint32(/* id 14, wireType 2 =*/114).string(message.direction);
-        if (message.style != null && message.hasOwnProperty("style"))
-            writer.uint32(/* id 15, wireType 2 =*/122).string(message.style);
-        if (message.showlabels != null && message.hasOwnProperty("showlabels"))
-            writer.uint32(/* id 16, wireType 2 =*/130).string(message.showlabels);
-        if (message.labelvadjust != null && message.hasOwnProperty("labelvadjust"))
-            writer.uint32(/* id 17, wireType 2 =*/138).string(message.labelvadjust);
-        if (message.labelclass != null && message.hasOwnProperty("labelclass"))
-            writer.uint32(/* id 18, wireType 2 =*/146).string(message.labelclass);
-        if (message.start != null && message.hasOwnProperty("start"))
-            writer.uint32(/* id 19, wireType 2 =*/154).string(message.start);
-        if (message.end != null && message.hasOwnProperty("end"))
-            writer.uint32(/* id 20, wireType 2 =*/162).string(message.end);
-        if (message.markerstyle != null && message.hasOwnProperty("markerstyle"))
-            writer.uint32(/* id 21, wireType 2 =*/170).string(message.markerstyle);
-        if (message.wadjust != null && message.hasOwnProperty("wadjust"))
-            writer.uint32(/* id 22, wireType 2 =*/178).string(message.wadjust);
-        if (message.markergroup != null && message.hasOwnProperty("markergroup"))
-            writer.uint32(/* id 23, wireType 2 =*/186).string(message.markergroup);
-        if (message.arrowstartlength != null && message.hasOwnProperty("arrowstartlength"))
-            writer.uint32(/* id 24, wireType 2 =*/194).string(message.arrowstartlength);
-        if (message.arrowstartwidth != null && message.hasOwnProperty("arrowstartwidth"))
-            writer.uint32(/* id 25, wireType 2 =*/202).string(message.arrowstartwidth);
-        if (message.arrowstartangle != null && message.hasOwnProperty("arrowstartangle"))
-            writer.uint32(/* id 26, wireType 2 =*/210).string(message.arrowstartangle);
-        if (message.arrowendlength != null && message.hasOwnProperty("arrowendlength"))
-            writer.uint32(/* id 27, wireType 2 =*/218).string(message.arrowendlength);
-        if (message.arrowendwidth != null && message.hasOwnProperty("arrowendwidth"))
-            writer.uint32(/* id 28, wireType 2 =*/226).string(message.arrowendwidth);
-        if (message.arrowendangle != null && message.hasOwnProperty("arrowendangle"))
-            writer.uint32(/* id 29, wireType 2 =*/234).string(message.arrowendangle);
-        if (message.markerclick != null && message.hasOwnProperty("markerclick"))
-            writer.uint32(/* id 30, wireType 2 =*/242).string(message.markerclick);
-        if (message.valign != null && message.hasOwnProperty("valign"))
-            writer.uint32(/* id 31, wireType 2 =*/250).string(message.valign);
-        if (message.halign != null && message.hasOwnProperty("halign"))
-            writer.uint32(/* id 32, wireType 2 =*/258).string(message.halign);
-        if (message.type != null && message.hasOwnProperty("type"))
-            writer.uint32(/* id 33, wireType 2 =*/266).string(message.type);
-        if (message.showline != null && message.hasOwnProperty("showline"))
-            writer.uint32(/* id 34, wireType 2 =*/274).string(message.showline);
-        if (message.linestyle != null && message.hasOwnProperty("linestyle"))
-            writer.uint32(/* id 35, wireType 2 =*/282).string(message.linestyle);
-        if (message.lineclass != null && message.hasOwnProperty("lineclass"))
-            writer.uint32(/* id 36, wireType 2 =*/290).string(message.lineclass);
-        if (message.linevadjust != null && message.hasOwnProperty("linevadjust"))
-            writer.uint32(/* id 37, wireType 2 =*/298).string(message.linevadjust);
-        if (message.labelclick != null && message.hasOwnProperty("labelclick"))
-            writer.uint32(/* id 38, wireType 2 =*/306).string(message.labelclick);
-        if (message["class"] != null && message.hasOwnProperty("class"))
-            writer.uint32(/* id 39, wireType 2 =*/314).string((<any>message["class"]));
-        if (message.markerclass != null && message.hasOwnProperty("markerclass"))
-            writer.uint32(/* id 40, wireType 2 =*/322).string(message.markerclass);
+        if (message!.plasmidheight != null && message!.hasOwnProperty("plasmidheight"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message!.plasmidheight);
+        if (message!.plasmidwidth != null && message!.hasOwnProperty("plasmidwidth"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message!.plasmidwidth);
+        if (message!.sequencelength != null && message!.hasOwnProperty("sequencelength"))
+            writer.uint32(/* id 3, wireType 2 =*/26).string(message!.sequencelength);
+        if (message!.sequence != null && message!.hasOwnProperty("sequence"))
+            writer.uint32(/* id 4, wireType 2 =*/34).string(message!.sequence);
+        if (message!.radius != null && message!.hasOwnProperty("radius"))
+            writer.uint32(/* id 5, wireType 2 =*/42).string(message!.radius);
+        if (message!.width != null && message!.hasOwnProperty("width"))
+            writer.uint32(/* id 6, wireType 2 =*/50).string(message!.width);
+        if (message!.trackstyle != null && message!.hasOwnProperty("trackstyle"))
+            writer.uint32(/* id 7, wireType 2 =*/58).string(message!.trackstyle);
+        if (message!.text != null && message!.hasOwnProperty("text"))
+            writer.uint32(/* id 8, wireType 2 =*/66).string(message!.text);
+        if (message!.vadjust != null && message!.hasOwnProperty("vadjust"))
+            writer.uint32(/* id 9, wireType 2 =*/74).string(message!.vadjust);
+        if (message!.hadjust != null && message!.hasOwnProperty("hadjust"))
+            writer.uint32(/* id 10, wireType 2 =*/82).string(message!.hadjust);
+        if (message!.labelstyle != null && message!.hasOwnProperty("labelstyle"))
+            writer.uint32(/* id 11, wireType 2 =*/90).string(message!.labelstyle);
+        if (message!.interval != null && message!.hasOwnProperty("interval"))
+            writer.uint32(/* id 12, wireType 2 =*/98).string(message!.interval);
+        if (message!.ticksize != null && message!.hasOwnProperty("ticksize"))
+            writer.uint32(/* id 13, wireType 2 =*/106).string(message!.ticksize);
+        if (message!.direction != null && message!.hasOwnProperty("direction"))
+            writer.uint32(/* id 14, wireType 2 =*/114).string(message!.direction);
+        if (message!.style != null && message!.hasOwnProperty("style"))
+            writer.uint32(/* id 15, wireType 2 =*/122).string(message!.style);
+        if (message!.showlabels != null && message!.hasOwnProperty("showlabels"))
+            writer.uint32(/* id 16, wireType 2 =*/130).string(message!.showlabels);
+        if (message!.labelvadjust != null && message!.hasOwnProperty("labelvadjust"))
+            writer.uint32(/* id 17, wireType 2 =*/138).string(message!.labelvadjust);
+        if (message!.labelclass != null && message!.hasOwnProperty("labelclass"))
+            writer.uint32(/* id 18, wireType 2 =*/146).string(message!.labelclass);
+        if (message!.start != null && message!.hasOwnProperty("start"))
+            writer.uint32(/* id 19, wireType 2 =*/154).string(message!.start);
+        if (message!.end != null && message!.hasOwnProperty("end"))
+            writer.uint32(/* id 20, wireType 2 =*/162).string(message!.end);
+        if (message!.markerstyle != null && message!.hasOwnProperty("markerstyle"))
+            writer.uint32(/* id 21, wireType 2 =*/170).string(message!.markerstyle);
+        if (message!.wadjust != null && message!.hasOwnProperty("wadjust"))
+            writer.uint32(/* id 22, wireType 2 =*/178).string(message!.wadjust);
+        if (message!.markergroup != null && message!.hasOwnProperty("markergroup"))
+            writer.uint32(/* id 23, wireType 2 =*/186).string(message!.markergroup);
+        if (message!.arrowstartlength != null && message!.hasOwnProperty("arrowstartlength"))
+            writer.uint32(/* id 24, wireType 2 =*/194).string(message!.arrowstartlength);
+        if (message!.arrowstartwidth != null && message!.hasOwnProperty("arrowstartwidth"))
+            writer.uint32(/* id 25, wireType 2 =*/202).string(message!.arrowstartwidth);
+        if (message!.arrowstartangle != null && message!.hasOwnProperty("arrowstartangle"))
+            writer.uint32(/* id 26, wireType 2 =*/210).string(message!.arrowstartangle);
+        if (message!.arrowendlength != null && message!.hasOwnProperty("arrowendlength"))
+            writer.uint32(/* id 27, wireType 2 =*/218).string(message!.arrowendlength);
+        if (message!.arrowendwidth != null && message!.hasOwnProperty("arrowendwidth"))
+            writer.uint32(/* id 28, wireType 2 =*/226).string(message!.arrowendwidth);
+        if (message!.arrowendangle != null && message!.hasOwnProperty("arrowendangle"))
+            writer.uint32(/* id 29, wireType 2 =*/234).string(message!.arrowendangle);
+        if (message!.markerclick != null && message!.hasOwnProperty("markerclick"))
+            writer.uint32(/* id 30, wireType 2 =*/242).string(message!.markerclick);
+        if (message!.valign != null && message!.hasOwnProperty("valign"))
+            writer.uint32(/* id 31, wireType 2 =*/250).string(message!.valign);
+        if (message!.halign != null && message!.hasOwnProperty("halign"))
+            writer.uint32(/* id 32, wireType 2 =*/258).string(message!.halign);
+        if (message!.type != null && message!.hasOwnProperty("type"))
+            writer.uint32(/* id 33, wireType 2 =*/266).string(message!.type);
+        if (message!.showline != null && message!.hasOwnProperty("showline"))
+            writer.uint32(/* id 34, wireType 2 =*/274).string(message!.showline);
+        if (message!.linestyle != null && message!.hasOwnProperty("linestyle"))
+            writer.uint32(/* id 35, wireType 2 =*/282).string(message!.linestyle);
+        if (message!.lineclass != null && message!.hasOwnProperty("lineclass"))
+            writer.uint32(/* id 36, wireType 2 =*/290).string(message!.lineclass);
+        if (message!.linevadjust != null && message!.hasOwnProperty("linevadjust"))
+            writer.uint32(/* id 37, wireType 2 =*/298).string(message!.linevadjust);
+        if (message!.labelclick != null && message!.hasOwnProperty("labelclick"))
+            writer.uint32(/* id 38, wireType 2 =*/306).string(message!.labelclick);
+        if (message!["class"] != null && message!.hasOwnProperty("class"))
+            writer.uint32(/* id 39, wireType 2 =*/314).string((<any>message!["class"]));
+        if (message!.markerclass != null && message!.hasOwnProperty("markerclass"))
+            writer.uint32(/* id 40, wireType 2 =*/322).string(message!.markerclass);
         return writer;
     }
 
@@ -696,7 +720,8 @@ export class Attributes implements IAttributes {
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encodeDelimited(message: IAttributes, writer?: any): any {
+    public static encodeDelimited(message: IAttributes, writer?: any): any 
+    {
         return this.encode(message, writer).ldelim();
     }
 
@@ -708,136 +733,139 @@ export class Attributes implements IAttributes {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: (any | Uint8Array), length?: number): Attributes {
+    public static decode(reader: (any | Uint8Array), length?: number): Attributes 
+    {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
         var end = length === undefined ? reader.len : reader.pos + length, message = new Attributes();
-        while (reader.pos < end) {
+        while (reader.pos < end) 
+        {
             var tag = reader.uint32();
-            switch (tag >>> 3) {
-                case 1:
-                    message.plasmidheight = reader.string();
-                    break;
-                case 2:
-                    message.plasmidwidth = reader.string();
-                    break;
-                case 3:
-                    message.sequencelength = reader.string();
-                    break;
-                case 4:
-                    message.sequence = reader.string();
-                    break;
-                case 5:
-                    message.radius = reader.string();
-                    break;
-                case 6:
-                    message.width = reader.string();
-                    break;
-                case 7:
-                    message.trackstyle = reader.string();
-                    break;
-                case 8:
-                    message.text = reader.string();
-                    break;
-                case 9:
-                    message.vadjust = reader.string();
-                    break;
-                case 10:
-                    message.hadjust = reader.string();
-                    break;
-                case 11:
-                    message.labelstyle = reader.string();
-                    break;
-                case 12:
-                    message.interval = reader.string();
-                    break;
-                case 13:
-                    message.ticksize = reader.string();
-                    break;
-                case 14:
-                    message.direction = reader.string();
-                    break;
-                case 15:
-                    message.style = reader.string();
-                    break;
-                case 16:
-                    message.showlabels = reader.string();
-                    break;
-                case 17:
-                    message.labelvadjust = reader.string();
-                    break;
-                case 18:
-                    message.labelclass = reader.string();
-                    break;
-                case 19:
-                    message.start = reader.string();
-                    break;
-                case 20:
-                    message.end = reader.string();
-                    break;
-                case 21:
-                    message.markerstyle = reader.string();
-                    break;
-                case 22:
-                    message.wadjust = reader.string();
-                    break;
-                case 23:
-                    message.markergroup = reader.string();
-                    break;
-                case 24:
-                    message.arrowstartlength = reader.string();
-                    break;
-                case 25:
-                    message.arrowstartwidth = reader.string();
-                    break;
-                case 26:
-                    message.arrowstartangle = reader.string();
-                    break;
-                case 27:
-                    message.arrowendlength = reader.string();
-                    break;
-                case 28:
-                    message.arrowendwidth = reader.string();
-                    break;
-                case 29:
-                    message.arrowendangle = reader.string();
-                    break;
-                case 30:
-                    message.markerclick = reader.string();
-                    break;
-                case 31:
-                    message.valign = reader.string();
-                    break;
-                case 32:
-                    message.halign = reader.string();
-                    break;
-                case 33:
-                    message.type = reader.string();
-                    break;
-                case 34:
-                    message.showline = reader.string();
-                    break;
-                case 35:
-                    message.linestyle = reader.string();
-                    break;
-                case 36:
-                    message.lineclass = reader.string();
-                    break;
-                case 37:
-                    message.linevadjust = reader.string();
-                    break;
-                case 38:
-                    message.labelclick = reader.string();
-                    break;
-                case 39:
-                    message["class"] = reader.string();
-                    break;
-                case 40:
-                    message.markerclass = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            switch (tag >>> 3) 
+            {
+            case 1:
+                message.plasmidheight = reader.string();
+                break;
+            case 2:
+                message.plasmidwidth = reader.string();
+                break;
+            case 3:
+                message.sequencelength = reader.string();
+                break;
+            case 4:
+                message.sequence = reader.string();
+                break;
+            case 5:
+                message.radius = reader.string();
+                break;
+            case 6:
+                message.width = reader.string();
+                break;
+            case 7:
+                message.trackstyle = reader.string();
+                break;
+            case 8:
+                message.text = reader.string();
+                break;
+            case 9:
+                message.vadjust = reader.string();
+                break;
+            case 10:
+                message.hadjust = reader.string();
+                break;
+            case 11:
+                message.labelstyle = reader.string();
+                break;
+            case 12:
+                message.interval = reader.string();
+                break;
+            case 13:
+                message.ticksize = reader.string();
+                break;
+            case 14:
+                message.direction = reader.string();
+                break;
+            case 15:
+                message.style = reader.string();
+                break;
+            case 16:
+                message.showlabels = reader.string();
+                break;
+            case 17:
+                message.labelvadjust = reader.string();
+                break;
+            case 18:
+                message.labelclass = reader.string();
+                break;
+            case 19:
+                message.start = reader.string();
+                break;
+            case 20:
+                message.end = reader.string();
+                break;
+            case 21:
+                message.markerstyle = reader.string();
+                break;
+            case 22:
+                message.wadjust = reader.string();
+                break;
+            case 23:
+                message.markergroup = reader.string();
+                break;
+            case 24:
+                message.arrowstartlength = reader.string();
+                break;
+            case 25:
+                message.arrowstartwidth = reader.string();
+                break;
+            case 26:
+                message.arrowstartangle = reader.string();
+                break;
+            case 27:
+                message.arrowendlength = reader.string();
+                break;
+            case 28:
+                message.arrowendwidth = reader.string();
+                break;
+            case 29:
+                message.arrowendangle = reader.string();
+                break;
+            case 30:
+                message.markerclick = reader.string();
+                break;
+            case 31:
+                message.valign = reader.string();
+                break;
+            case 32:
+                message.halign = reader.string();
+                break;
+            case 33:
+                message.type = reader.string();
+                break;
+            case 34:
+                message.showline = reader.string();
+                break;
+            case 35:
+                message.linestyle = reader.string();
+                break;
+            case 36:
+                message.lineclass = reader.string();
+                break;
+            case 37:
+                message.linevadjust = reader.string();
+                break;
+            case 38:
+                message.labelclick = reader.string();
+                break;
+            case 39:
+                message["class"] = reader.string();
+                break;
+            case 40:
+                message.markerclass = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -850,7 +878,8 @@ export class Attributes implements IAttributes {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: (any | Uint8Array)): Attributes {
+    public static decodeDelimited(reader: (any | Uint8Array)): Attributes 
+    {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
@@ -861,7 +890,8 @@ export class Attributes implements IAttributes {
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null) {
+    public static verify(message: { [k: string]: any }): (string | null) 
+    {
         if (typeof message !== "object" || message === null)
             return "object expected";
         if (message.plasmidheight != null && message.hasOwnProperty("plasmidheight"))
@@ -992,7 +1022,8 @@ export class Attributes implements IAttributes {
      * @param object Plain object
      * @returns Attributes
      */
-    public static fromObject(object: { [k: string]: any }): Attributes {
+    public static fromObject(object: { [k: string]: any }): Attributes 
+    {
         if (object instanceof Attributes)
             return object;
         var message = new Attributes();
@@ -1085,11 +1116,13 @@ export class Attributes implements IAttributes {
      * @param [options] Conversion options
      * @returns Plain object
      */
-    public static toObject(message: Attributes, options?: any): { [k: string]: any } {
+    public static toObject(message: Attributes, options?: any): { [k: string]: any } 
+    {
         if (!options)
             options = {};
         let object: Attributes = (<any>{});
-        if (options.defaults) {
+        if (options.defaults) 
+        {
             object.plasmidheight = "";
             object.plasmidwidth = "";
             object.sequencelength = "";
@@ -1218,7 +1251,8 @@ export class Attributes implements IAttributes {
      * Converts this Attributes to JSON.
      * @returns JSON object
      */
-    public toJSON(): { [k: string]: any } {
+    public toJSON(): { [k: string]: any } 
+    {
         return Attributes.toObject(this, $protobuf.util.toJSONOptions);
     }
 }

@@ -1,17 +1,17 @@
 import * as cp from "child_process";
 import * as fs from "fs";
 
-const chalk = require("chalk");
 
 import {TestSummary,TestStatus} from "./testSummary";
-
 import * as html from "./../lib/html";
-import {Plasmid,AdaptiveRenderingUpdates,RenderingStrategies} from "./../lib/directives";
+import {Plasmid,AdaptiveRenderingUpdates,RenderingStrategies} from "./../lib/plasmid";
+
+const chalk = require("chalk");
 
 class Timer
 {
     public startEpoch : number;
-    public endEpoch : number;
+    public endEpoch : number  | undefined;
     public constructor()
     {
         this.startEpoch = Date.now();
@@ -43,7 +43,8 @@ export function cleanRawProfiles() : void
     {
         cp.execSync("rm *.log");
     }
-    catch(err){}
+    catch(err)
+    {}
 }
 
 export class TestCase
@@ -54,42 +55,42 @@ export class TestCase
     public name : string;
     public inputSize : number;
 
-    public referenceCompileTime : number;
-    public referenceResultSize : number;
-    public referenceOptimisationTime : number;
-    public referenceOptimisedResultSize : number;
+    public referenceCompileTime : number | undefined;
+    public referenceResultSize : number | undefined;
+    public referenceOptimisationTime : number | undefined;
+    public referenceOptimisedResultSize : number | undefined;
     public referenceResultPath : string;
     public referenceResultOptimisedPath : string;
 
-    public exHTMLToSVGCompileTime : number;
-    public exHTMLToSVGOptimisationTime : number;
-    public exHTMLToSVGResultSize : number;
-    public exHTMLToSVGOptimisedResultSize : number;
+    public exHTMLToSVGCompileTime : number | undefined;
+    public exHTMLToSVGOptimisationTime : number | undefined;
+    public exHTMLToSVGResultSize : number | undefined;
+    public exHTMLToSVGOptimisedResultSize : number | undefined;
     public exHTMLToSVGResultPath : string;
     public exHTMLToSVGResultOptimisedPath : string;
 
-    public exBatchedHTMLToSVGCompileTime : number;
-    public exBatchedHTMLToSVGOptimisationTime : number;
-    public exBatchedHTMLToSVGResultSize : number;
-    public exBatchedHTMLToSVGOptimisedResultSize : number;
+    public exBatchedHTMLToSVGCompileTime : number | undefined;
+    public exBatchedHTMLToSVGOptimisationTime : number | undefined;
+    public exBatchedHTMLToSVGResultSize : number | undefined;
+    public exBatchedHTMLToSVGOptimisedResultSize : number | undefined;
     public exBatchedHTMLToSVGResultPath : string;
     public exBatchedHTMLToSVGResultOptimisedPath : string;
 
-    public exHTMLtoPBCompileTime : number;
-    public exHTMLToPBResultSize : number;
+    public exHTMLtoPBCompileTime : number | undefined;
+    public exHTMLToPBResultSize : number | undefined;
     public exHTMLTOPBResultPath : string;
 
-    public exPBToSVGCompileTime : number;
-    public exPBToSVGOptimisationTime : number;
-    public exPBToSVGResultSize : number;
-    public exPBToSVGOptimisedResultSize : number;
+    public exPBToSVGCompileTime : number | undefined;
+    public exPBToSVGOptimisationTime : number | undefined;
+    public exPBToSVGResultSize : number | undefined;
+    public exPBToSVGOptimisedResultSize : number | undefined;
     public exPBToSVGResultPath : string;
     public exPBToSVGResultOptimisedPath : string;
 
-    public exBatchedPBToSVGCompileTime : number;
-    public exBatchedPBToSVGOptimisationTime : number;
-    public exBatchedPBToSVGResultSize : number;
-    public exBatchedPBToSVGOptimisedResultSize : number;
+    public exBatchedPBToSVGCompileTime : number | undefined;
+    public exBatchedPBToSVGOptimisationTime : number | undefined;
+    public exBatchedPBToSVGResultSize : number | undefined;
+    public exBatchedPBToSVGOptimisedResultSize : number | undefined;
     public exBatchedPBToSVGResultPath : string;
     public exBatchedPBToSVGResultOptimisedPath : string;
 
@@ -182,7 +183,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res : Buffer 
+        let res : Buffer; 
         
         if(!this.jsonFile)
             res = cp.execSync(`node referenceCompiler/index tests/${this.htmlFile}`);
@@ -217,7 +218,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res : Buffer 
+        let res : Buffer; 
         
         if(!this.jsonFile)
             res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile}`);
@@ -233,7 +234,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res : Buffer 
+        let res : Buffer; 
         
         if(!this.jsonFile)
             res = cp.execSync(`node HTMLToSVGCompiler/index tests/${this.htmlFile} batched`);
@@ -252,7 +253,7 @@ export class TestCase
         else 
             cp.execSync(`node --prof HTMLToSVGCompiler/index tests/${this.htmlFile} tests/${this.jsonFile}`);
         
-        return cp.execSync(`node --prof-process *.log`).toString();
+        return cp.execSync("node --prof-process *.log").toString();
     }
 
     public getExHTMLTOSVGREsultSize()
@@ -311,7 +312,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res : Buffer 
+        let res : Buffer; 
         
         if(!this.jsonFile)
             res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath}`);
@@ -327,7 +328,7 @@ export class TestCase
     {
         let timer : Timer = new Timer();
 
-        let res : Buffer 
+        let res : Buffer; 
         
         if(!this.jsonFile)
             res = cp.execSync(`node PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} batched`);
@@ -346,7 +347,7 @@ export class TestCase
         else 
             cp.execSync(`node --prof PBToSVGCompiler/index ${this.exHTMLTOPBResultPath} tests/${this.jsonFile}`);
         
-        return cp.execSync(`node --prof-process *.log`).toString();
+        return cp.execSync("node --prof-process *.log").toString();
     }
 
     public getExPBTOSVGREsultSize()
@@ -389,7 +390,8 @@ export class TestCase
 
     public findBestStrategy() : Promise<string>
     {
-        return new Promise<string>(async (resolve) => {
+        return new Promise<string>(async (resolve) => 
+        {
             let nodes = await html.loadFromString(fs.readFileSync(`tests/${this.htmlFile}`).toString());
 
             let plasmid = new Plasmid();
@@ -409,13 +411,15 @@ export class TestCase
             plasmid.enableAdaptiveRendering();
             plasmid.adaptIterations = 10;
 
-            plasmid.adaptiveRenderingUpdates.on("render",function(name : string,time : number){
+            plasmid.adaptiveRenderingUpdates.on("render",function(name : string,time : number)
+            {
                 name;
                 time;
                 //console.log(`${name} took ${time}`);
             });
 
-            plasmid.adaptiveRenderingUpdates.on("selectedStrategy",function(name :string,averages : Array<{name:RenderingStrategies,avg:number}>){
+            plasmid.adaptiveRenderingUpdates.on("selectedStrategy",function(name :string,averages : Array<{name:RenderingStrategies,avg:number}>)
+            {
                 for(let i = 0; i != averages.length; ++i)
                 {
                     console.log(`       ${chalk.yellow(`${averages[i].name} average: ${averages[i].avg}`)}`);
